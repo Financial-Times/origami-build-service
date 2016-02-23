@@ -1,0 +1,5 @@
+{
+	"name": "globmain",
+	"main": ["*.scss"],
+	"ignore": ["*.js"]
+}

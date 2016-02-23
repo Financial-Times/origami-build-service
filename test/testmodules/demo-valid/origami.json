@@ -1,0 +1,8 @@
+{
+	"demos": [
+		{
+			"name": "main",
+			"template": "demos/src/main.mustache"
+		}
+	]
+}

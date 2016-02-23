@@ -1,0 +1,10 @@
+{
+	"name":"test-package2",
+	"main": [
+		"bar.scss",
+		"*.js"
+	],
+	"dependencies": {
+		"t1dep": "./test1/"
+	}
+}

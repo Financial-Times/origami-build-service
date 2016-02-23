@@ -1,0 +1,6 @@
+{
+	"name":"conflict2",
+	"dependencies": {
+		"impossible": "git://github.com/Modernizr/Modernizr.git#2.7.0"
+	}
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Origami Build Service",
+  "description": "The Origami build service",
+  "image": "heroku/cedar:14"
+}

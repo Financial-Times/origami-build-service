@@ -1,0 +1,5 @@
+{
+	"name": "missingmain",
+	"main": ["it/does/not/exist.js"],
+	"ignore": ["also missing"]
+}
