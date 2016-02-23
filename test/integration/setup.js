@@ -23,7 +23,8 @@ before(function() {
 		whitelist: '*'
 	});
 	this.app = createApp({
-		buildSystem: this.buildSystem
+		buildSystem: this.buildSystem,
+		staticBundlesDirectory: `${__dirname}/mock-static-bundles`
 	});
 });
 

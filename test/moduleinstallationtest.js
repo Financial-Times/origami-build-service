@@ -58,23 +58,23 @@ suite('installation-remote', function() {
 	});
 
 	spawnTestWithTempdir('install-implied-main has_external_dependency', function*(tmpdir){
-		const moduleset = new ModuleSet(['Financial-Times/o-ft-forms']);
+		const moduleset = new ModuleSet(['Financial-Times/o-forms']);
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 
 		const installed = yield installation.install();
-		assert('o-ft-forms' in installed);
+		assert('o-forms' in installed);
 
 		const list = yield installation.list();
-		assert('o-ft-forms' in list);
-		assert.include(list['o-ft-forms'].paths[0], 'bower_components/o-ft-forms/main.scss');
+		assert('o-forms' in list);
+		assert.include(list['o-forms'].paths[0], 'bower_components/o-forms/main.scss');
 
-		const path = installation.getPathToComponentsFile('o-ft-forms', '../../main.scss');
-		assert.include(path, 'bower_components/o-ft-forms/main.scss');
+		const path = installation.getPathToComponentsFile('o-forms', '../../main.scss');
+		assert.include(path, 'bower_components/o-forms/main.scss');
 		assert.notInclude(path, '..');
 
 		const cssStream = yield (new CssBundler({log:log})).getContent(installation, moduleset);
 		const css = yield testhelper.bufferStream(cssStream);
-		assert.include(css, '.o-ft-forms__label');
+		assert.include(css, '.o-forms-label');
 	});
 
 	spawnTestWithTempdir('css-no-minify has_external_dependency', function*(tmpdir) {

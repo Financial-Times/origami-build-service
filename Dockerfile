@@ -20,14 +20,6 @@ RUN echo "export PATH=\"/app/heroku/node/bin:/app/bin:/app/user/node_modules/.bi
 # Configure git to use HTTPS instead of SSH
 RUN echo '[url "https://"]\n    insteadOf = git://' > /app/.gitconfig
 
-# Ruby is already installed in cedar-14. Configure gem location and install sass gem
-# (only required for /v1 build service endpoint)
-ENV GEM_HOME /app/.gems
-RUN echo "export GEM_HOME=/app/.gems\n" >> /app/.profile.d/gems.sh
-ENV PATH /app/.gems/bin:$PATH
-RUN echo "export PATH=\"/app/.gems/bin:\$PATH\"" >> /app/.profile.d/gems.sh
-RUN gem install sass
-
 # Make the app directory the CWD for running the service
 WORKDIR /app/user
 RUN echo "cd /app/user" >> /app/.profile.d/nodejs.sh
@@ -45,6 +37,7 @@ COPY lib /app/user/lib
 COPY docs /app/user/docs
 COPY test /app/user/test
 COPY tools /app/user/tools
+COPY deprecated /app/user/deprecated
 
 # For dev, allow mounting of filesystem from outside the container
 VOLUME /app/user/lib
