@@ -1,4 +1,4 @@
-# Origami Build service
+# Origami Build service [![Circle CI](https://circleci.com/gh/Financial-Times/origami-build-service.svg?style=svg)](https://circleci.com/gh/Financial-Times/origami-build-service)
 
 Creates bundles of JavaScript and CSS from building Origami and Origami-compatible modules, and provides a proxy for static file serving from Origami repos.
 
