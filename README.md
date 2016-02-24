@@ -10,7 +10,7 @@ To set up a development environment, download and install the docker toolkit (ht
 
     brew tap caskroom/homebrew-cask
     brew install brew-cask
-    brew cask install docker-machine docker-compose
+    brew cask install dockertoolbox docker-compose
 
 You may now have to change the owner of your `.docker` directory if it is owned by root:
 
