@@ -1,0 +1,14 @@
+
+machine:
+  node:
+    version: 4.3.1
+
+dependencies:
+  override:
+    - gem install sass
+    - npm install
+
+test:
+  override:
+    - npm run lint
+    - npm test
