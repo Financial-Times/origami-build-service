@@ -1,0 +1,7 @@
+/*unminified*/
+@import "o-assets/main";
+#test-css-ok {
+	hello: world;
+	silent-var: $test-css-ok-is-silent;
+	url: url(oAssetsResolve('README', test-css-ok));
+}

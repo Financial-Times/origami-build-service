@@ -18,6 +18,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha ./test",
+    "test-unit": "NODE_ENV=test ./node_modules/.bin/mocha ./test/unit --recursive",
+    "test-integration": "NODE_ENV=test ./node_modules/.bin/mocha ./test/integration --recursive",
     "test-coverage": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- ./test",
     "test-jenkins": "NODE_ENV=test JUNIT_REPORT_PATH=report.xml mocha --reporter mocha-jenkins-reporter",
     "lint": "./node_modules/.bin/eslint .",
@@ -63,7 +65,9 @@
     "mkdirp": "^0.5.0",
     "mocha": "^2.2.0",
     "mocha-jenkins-reporter": "^0.1.6",
+    "mockery": "^1.4.0",
     "nodemon": "^1.2.1",
+    "sinon": "^1.17.3",
     "supertest": "^0.13.0"
   },
   "engines": {
