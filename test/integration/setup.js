@@ -1,8 +1,5 @@
 'use strict';
 
-// Slightly nasty hack to suppress Graphite warning logs
-process.env.GRAPHITE_HOST = 'localhost';
-
 const BuildSystem = require('../../lib/buildsystem');
 const createApp = require('../../lib');
 const log = require('../../lib/utils/log');
