@@ -1,9 +1,0 @@
-{
-	"name": "test-css-ok",
-	"main": [
-		"test-css-ok.scss"
-	],
-	"dependencies": {
-		"o-assets": "~0.4.4"
-	}
-}

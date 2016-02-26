@@ -1,5 +1,6 @@
 'use strict';
 
+const assert = require('chai').assert;
 const request = require('supertest');
 
 describe('GET /v2/bundles/css', function() {
@@ -7,7 +8,7 @@ describe('GET /v2/bundles/css', function() {
 	this.slow(5000);
 
 	describe('when a valid module is requested', function() {
-		const moduleName = __dirname + '/mock-modules/test-css-ok';
+		const moduleName = 'mock-modules/test-ok';
 
 		beforeEach(function() {
 			const now = (new Date()).toISOString();
@@ -21,13 +22,40 @@ describe('GET /v2/bundles/css', function() {
 		});
 
 		it('should respond with the bundled CSS', function(done) {
-			this.request.expect(`/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=test-css-ok%40undefined%2Co-autoinit%401.2.0&shrinkwrap=o-assets%400.4.5\n */\n#test-css-ok{hello:world;silent-var:false;url:url(//build.origami.ft.com/files/test-css-ok@*/README)}`).end(done);
+			this.request.expect(`/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=test-ok%40undefined%2Co-autoinit%401.2.0&shrinkwrap=test-dependency%40undefined\n */\n#test-ok{hello:world}#test-dependency{dependency:true}`).end(done);
+		});
+
+		it('should minify the bundle', function(done) {
+			this.request.end((error, response) => {
+				assert.notInclude(response.text, '/* unminified */');
+				done(error);
+			});
 		});
 
 	});
 
-	describe('when a nonexistent module is requested', function() {
-		const moduleName = __dirname + '/mock-modules/test-404';
+	describe('when a valid module is requested (with no minification)', function() {
+		const moduleName = 'mock-modules/test-ok';
+
+		beforeEach(function() {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}&minify=none`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function(done) {
+			this.request.expect(200).end(done);
+		});
+
+		it('should respond with the bundled CSS unminified', function(done) {
+			this.request.expect(/\/\* unminified \*\//i).end(done);
+		});
+
+	});
+
+	describe('when an invalid module is requested (nonexistent)', function() {
+		const moduleName = 'mock-modules/test-404';
 
 		beforeEach(function() {
 			const now = (new Date()).toISOString();
@@ -41,7 +69,45 @@ describe('GET /v2/bundles/css', function() {
 		});
 
 		it('should respond with an error message in a CSS comment', function(done) {
-			this.request.expect(`/*\n\nPackage ${moduleName} not found\n\n{\n  "endpoint": {\n    "name": "test-404",\n    "source": "${moduleName}",\n    "target": "*"\n  }\n}\n\n*/\n`).end(done);
+			this.request.expect(/^\/\*\n\nPackage .* not found/i).end(done);
+		});
+
+	});
+
+	describe('when an invalid module is requested (Sass compilation error)', function() {
+		const moduleName = 'mock-modules/test-compile-error';
+
+		beforeEach(function() {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 560 status', function(done) {
+			this.request.expect(560).end(done);
+		});
+
+		it('should respond with an error message in a CSS comment', function(done) {
+			this.request.expect(/^\/\*\n\ncannot complete build due to compilation error from build tools:/i).end(done);
+		});
+
+	});
+
+	describe('when the modules parameter is missing', function() {
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v2/bundles/css`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(400).end(done);
+		});
+
+		it('should respond with an error message in a CSS comment', function(done) {
+			this.request.expect('/*\n\nMissing \'modules\' query argument\n\n*/\n').end(done);
 		});
 
 	});

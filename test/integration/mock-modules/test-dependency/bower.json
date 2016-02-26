@@ -1,0 +1,8 @@
+{
+	"name": "test-dependency",
+	"main": [
+		"main.js",
+		"main.scss"
+	],
+	"dependencies": {}
+}
