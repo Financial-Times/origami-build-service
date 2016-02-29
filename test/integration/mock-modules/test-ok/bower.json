@@ -1,0 +1,10 @@
+{
+	"name": "test-ok",
+	"main": [
+		"main.js",
+		"main.scss"
+	],
+	"dependencies": {
+		"test-dependency": "mock-modules/test-dependency"
+	}
+}

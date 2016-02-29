@@ -76,7 +76,29 @@ In dev, this is configured in docker-compose.yml.  In live, it's `heroku config`
 
 ## Testing and monitoring
 
-To run the tests start a container with the command `npm test` instead of the one configured in docker-compose.
+The tests are split into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. Use the following commands to run tests:
+
+```sh
+npm test                  # run all of the tests
+npm run test-unit         # run the unit tests
+npm run test-integration  # run the integration tests
+npm run test-old          # run the old suite of tests
+```
+
+You can run the _unit_ tests with coverage reporting, which we've configured to expect >= 90% coverage:
+
+```sh
+npm run test-coverage
+```
+
+The code will also need to pass linting on CI, you can run the linter locally with:
+
+```sh
+npm run lint
+```
+
+We run the tests and linter on CI, you can view [results on CircleCI](https://circleci.com/gh/Financial-Times/origami-build-service). Tests and linting must pass before a pull request will be merged.
+
 
 ### Monitoring
 

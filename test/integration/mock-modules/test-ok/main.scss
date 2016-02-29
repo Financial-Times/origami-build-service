@@ -1,0 +1,5 @@
+/* unminified */
+#test-ok {
+	hello: world;
+}
+@import "test-dependency/main";
