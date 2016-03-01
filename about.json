@@ -12,7 +12,7 @@
 	],
 	"dateCreated": "2013-11-05",
 	"contacts": [
-		{ "name": "Origami team", "email": "origami-support@ft.com", "rel": "owner", "domain": "All support enquiries" }
+		{ "name": "Origami team", "email": "origami.support@ft.com", "rel": "owner", "domain": "All support enquiries" }
 	],
 	"links": [
 		{"url": "https://github.com/Financial-Times/origami-build-service/issues", "category": "issues"},
