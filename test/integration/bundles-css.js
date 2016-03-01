@@ -47,6 +47,24 @@ describe('GET /bundles/css', function() {
 			this.request.expect('/* STATIC BUNDLE (bundles/css) */\n').end(done);
 		});
 
+		it('should ignore URL encoding when checking for static bundles', function(done) {
+			const pathUnencoded = `/bundles/css?modules=${moduleName}^1.0.0`;
+			const pathEncoded = `/bundles/css?modules=${moduleName}%5E1.0.0`;
+			const expectedContent = '/* STATIC BUNDLE (bundles/css) */\n';
+
+			request(this.app)
+				.get(pathUnencoded)
+				.set('Connection', 'close')
+				.expect(expectedContent)
+				.end(() => {
+					request(this.app)
+						.get(pathEncoded)
+						.set('Connection', 'close')
+						.expect(expectedContent)
+						.end(done);
+				});
+		});
+
 	});
 
 });
