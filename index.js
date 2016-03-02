@@ -1,7 +1,5 @@
-#!/usr/bin/env node --harmony
+#!/usr/bin/env node
 'use strict';
-
-require('es6-shim');
 
 const createApp = require('./lib/index');
 const log = require('./lib/utils/log');

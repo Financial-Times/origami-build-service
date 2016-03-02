@@ -1,6 +1,5 @@
 'use strict';
 
-require('es6-shim');
 const libdir = process.env.COVER ? '../lib-cov' : '../lib';
 
 const uuid = require('uuid');
