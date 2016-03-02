@@ -57,13 +57,13 @@
     "uuid": "^1.4.1"
   },
   "devDependencies": {
-    "chai": "^1.9.1",
-    "eslint": "^2.1.0",
+    "chai": "^3.5.0",
+    "eslint": "^2.2.0",
     "istanbul": "^0.4.2",
-    "mkdirp": "^0.5.0",
-    "mocha": "^2.2.0",
+    "mkdirp": "^0.5.1",
+    "mocha": "^2.4.5",
     "mockery": "^1.4.0",
-    "nodemon": "^1.2.1",
+    "nodemon": "^1.9.1",
     "sinon": "^1.17.3",
     "supertest": "^0.13.0"
   },
