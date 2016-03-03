@@ -3,6 +3,7 @@
 const assert = require('chai').assert;
 const mockery = require('mockery');
 const sinon = require('sinon');
+require('sinon-as-promised');
 
 sinon.assert.expose(assert, {
 	includeFail: false,
