@@ -10,7 +10,6 @@ RUN apk add --update g++ gcc git make python && rm -rf /var/cache/apk
 # Install Node.js dependencies
 COPY package.json /app/
 RUN npm install --production && rm -rf ~/.npm
-RUN npm dedupe
 
 # Copy across the application
 COPY . /app/
