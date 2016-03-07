@@ -27,8 +27,8 @@
     "lint": "./node_modules/.bin/eslint .",
 
     "compose": "git describe --tags > ./appversion; docker-compose build; rm -f ./appversion",
-    "build": "git describe --tags > ./appversion; docker build -t registry.heroku.com/origami-buildservice-rowan/web .; rm -f ./appversion",
-    "deploy": "docker push registry.heroku.com/origami-buildservice-rowan/web"
+    "build": "git describe --tags > ./appversion; docker build -t registry.heroku.com/origami-buildservice-rowan-qa/web .; rm -f ./appversion",
+    "deploy": "docker push registry.heroku.com/origami-buildservice-rowan-qa/web"
   },
   "dependencies": {
     "blocked": "^1.1.0",
