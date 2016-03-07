@@ -5,7 +5,7 @@ const mockery = require('mockery');
 const path = require('path');
 const sinon = require('sinon');
 
-describe('lib/static-bundle', function() {
+describe('deprecated/static-bundle', function() {
 	let fs;
 	let pfs;
 	let staticBundle;
@@ -14,7 +14,7 @@ describe('lib/static-bundle', function() {
 	beforeEach(function() {
 
 		uniqueid = require('../mock/uniqueid.mock');
-		mockery.registerMock('./utils/uniqueid', uniqueid);
+		mockery.registerMock('../lib/utils/uniqueid', uniqueid);
 
 		fs = require('../mock/fs.mock');
 		mockery.registerMock('fs', fs);
@@ -22,7 +22,7 @@ describe('lib/static-bundle', function() {
 		pfs = require('../mock/q-io-fs.mock');
 		mockery.registerMock('q-io/fs', pfs);
 
-		staticBundle = require('../../../lib/static-bundle');
+		staticBundle = require('../../../deprecated/static-bundle');
 	});
 
 	it('should export an object', function() {

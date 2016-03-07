@@ -3,10 +3,10 @@
 const fs = require('fs');
 const path = require('path');
 const pfs = require('q-io/fs');
-const uniqueid = require('./utils/uniqueid');
+const uniqueid = require('../lib/utils/uniqueid');
 const URL = require('url');
 
-const defaultStaticBundlesDirectory = path.resolve(__dirname, '../deprecated/static-bundles');
+const defaultStaticBundlesDirectory = path.resolve(__dirname, 'static-bundles');
 
 function getStaticBundleStream(url, staticBundlesDirectory) {
 	const filePath = module.exports.getStaticBundleFilePath(url, staticBundlesDirectory);
