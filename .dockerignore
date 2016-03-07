@@ -1,0 +1,10 @@
+.e*
+.git
+.gitignore
+circle.yml
+coverage
+docker-compose.yml
+Dockerfile
+node_modules
+Procfile
+README.md

@@ -17,6 +17,7 @@
   },
   "scripts": {
     "start": "node index.js",
+
     "test": "npm run test-unit && npm run test-integration && npm run test-old",
     "test-old": "NODE_ENV=test ./node_modules/.bin/mocha ./test",
     "test-unit": "NODE_ENV=test ./node_modules/.bin/mocha ./test/unit --recursive",
@@ -24,9 +25,10 @@
     "test-instrument": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- ./test/unit --recursive",
     "test-coverage": "npm run test-instrument && ./node_modules/.bin/istanbul check-coverage --statement 90 --branch 90 --function 90",
     "lint": "./node_modules/.bin/eslint .",
-    "deploy-prod": "git describe --tags > ./appversion; heroku docker:release --app origami-buildservice-eu; rm -f ./appversion",
-    "deploy-qa": "git describe --tags > ./appversion; heroku docker:release --app origami-buildservice-qa; rm -f ./appversion",
-    "build": "touch ./appversion; docker-compose build; rm -f ./appversion"
+
+    "compose": "git describe --tags > ./appversion; docker-compose build; rm -f ./appversion",
+    "build": "git describe --tags > ./appversion; docker build -t registry.heroku.com/origami-buildservice-rowan/web .; rm -f ./appversion",
+    "deploy": "docker push registry.heroku.com/origami-buildservice-rowan/web"
   },
   "dependencies": {
     "blocked": "^1.1.0",
@@ -44,6 +46,7 @@
     "lru-cache": "^2.6.5",
     "measured": "^1.0.0",
     "mime": "^1.2.11",
+    "mkdirp": "^0.5.1",
     "morgan": "^1.6.1",
     "origami-build-tools": "^5.0.0",
     "q": "^1.0.1",
@@ -60,7 +63,6 @@
     "chai": "^3.5.0",
     "eslint": "^2.2.0",
     "istanbul": "^0.4.2",
-    "mkdirp": "^0.5.1",
     "mocha": "^2.4.5",
     "mockery": "^1.4.0",
     "nodemon": "^1.9.1",
