@@ -5,11 +5,12 @@ WORKDIR /app
 
 # Install additional dependencies required to build modules
 # TODO comment on _why_ these are here
-RUN apk add --update g++ gcc git make python && rm -rf /var/cache/apk
+RUN apk add --no-cache --update g++ gcc git make python
 
 # Install Node.js dependencies
 COPY package.json /app/
-RUN npm install --production && rm -rf ~/.npm
+RUN npm install -g nodemon && npm cache clean
+RUN npm install --production && npm cache clean
 
 # Copy across the application
 COPY . /app/

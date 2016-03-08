@@ -9,4 +9,4 @@ web:
     PORT: 8080
     NODE_ENV: "development"
     LOG_LEVEL: "trace"
-  command: "nodemon -L -x 'node' index.js | ./node_modules/.bin/bunyan -o short"
+  command: "nodemon -L index.js | ./node_modules/.bin/bunyan -o short"
