@@ -31,7 +31,7 @@ eval $(docker-machine env)
 Find out the IP address of the machine:
 
 ```sh
-docker-machine ip dev
+docker-machine ip
 ```
 
 In the build service's working directory, use `docker-compose` to build and start a container:
@@ -44,7 +44,7 @@ docker-compose up
 Now you can access the app at the IP address discovered earlier, over HTTP on port 8080:
 
 ```sh
-open "http://$(docker-machine ip dev):8080/"
+open "http://$(docker-machine ip):8080/"
 ```
 
 To SSH into the web container run:
