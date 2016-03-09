@@ -4,7 +4,7 @@ FROM mhart/alpine-node:4
 WORKDIR /app
 
 # Install additional dependencies required to build modules
-# TODO comment on _why_ these are here
+# We need these to build native dependencies (mostly node-sass)
 RUN apk add --no-cache --update g++ gcc git make python
 
 # Configure git to use HTTPS instead of SSH
