@@ -9,8 +9,9 @@ RUN apk add --no-cache --update g++ gcc git make python
 
 # Install Node.js dependencies
 COPY package.json /app/
-RUN npm install -g nodemon && npm cache clean
-RUN npm install --production && npm cache clean
+RUN npm install -g nodemon
+RUN npm install --production
+RUN npm cache clean
 
 # Copy across the application
 COPY . /app/
