@@ -7,6 +7,9 @@ WORKDIR /app
 # TODO comment on _why_ these are here
 RUN apk add --no-cache --update g++ gcc git make python
 
+# Configure git to use HTTPS instead of SSH
+RUN echo '[url "https://"]\n    insteadOf = git://' > /app/.gitconfig
+
 # Install Node.js dependencies
 COPY package.json /app/
 RUN npm install -g nodemon
