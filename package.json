@@ -64,7 +64,6 @@
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
     "mockery": "^1.4.0",
-    "nodemon": "^1.9.1",
     "sinon": "^1.17.3",
     "supertest": "^0.13.0"
   },
