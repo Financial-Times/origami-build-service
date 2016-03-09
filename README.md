@@ -2,12 +2,12 @@
 
 Creates bundles of JavaScript and CSS from building Origami and Origami-compatible modules, and provides a proxy for static file serving from Origami repos.
 
-See [the live service](https://build.origami.ft.com/) for API information
+See [the production service](https://build.origami.ft.com/) for API information
 
 
 ## Development set up
 
-To set up a development environment, you'll need `docker-compose` and `docker`. You can either use the [Docker Mac set up guide](http://docs.docker.com/mac/step_one/), or use homebrew:
+To set up a development environment, you'll need `docker-compose` and `docker` as well as virtualisation software, such as [VirtualBox](https://www.virtualbox.org/), if you're on a Mac. You can either use the [Docker Mac set up guide](http://docs.docker.com/mac/step_one/), or use [homebrew](http://brew.sh/):
 
 ```sh
 brew tap caskroom/homebrew-cask
@@ -15,20 +15,17 @@ brew install brew-cask
 brew cask install dockertoolbox docker-compose
 ```
 
-Create a virtual machine to run the application's containers, and put that machine's config into your environment, both right now and on next login. The default size didn't appear to be large enough so this will create one with an increased disk size:
+Create a virtual machine to run the application's containers, and put that machine's config into your environment. The default size didn't appear to be large enough so this will create one with an increased disk size:
 
 ```sh
-# Create a Docker machine named "dev" (you can choose a different name if you like)
-docker-machine create --driver virtualbox --virtualbox-disk-size "50000" dev
+# Create a Docker machine
+docker-machine create --driver virtualbox --virtualbox-disk-size "50000"
 
 # Output the Docker machine environment config
-docker-machine env dev
+docker-machine env
 
 # Add the machine's config to your current environment
-eval $(docker-machine env dev)
-
-# Add the machine's config to your environment in future sessions
-echo "eval $(docker-machine env dev)" >> ~/.profile
+eval $(docker-machine env)
 ```
 
 Find out the IP address of the machine:
@@ -59,14 +56,7 @@ docker-compose run web sh
 
 ## Deployment
 
-You need to be authenticated with Heroku (this app is `origami-buildservice-eu` and `origami-buildservice-qa`). We deploy continuously to QA via CircleCI, and use a Heroku pipeline to promote QA deployments to production. (TODO link to the pipeline here).
-
-You can also deploy manually if you need to for some reason, but it's best to leave this to continuous deployment. Run:
-
-```sh
-npm run build
-npm run deploy
-```
+You need to be authenticated with [Heroku](https://heroku.com) (this app is `origami-buildservice-eu` and `origami-buildservice-qa`). We deploy continuously to QA via [CircleCI](https://circleci.com/gh/Financial-Times/origami-build-service), and use a [Heroku pipeline](https://dashboard.heroku.com/pipelines/5d8d698d-1940-48bb-8967-e07b9e7d1272) to promote QA deployments to production.
 
 
 ## Orchestration files
@@ -80,7 +70,7 @@ The following files are used in build, test and deploy automation:
 
 ## Configuration
 
-In dev, this is configured in docker-compose.yml.  In live, it's `heroku config`
+In dev, this is configured in `docker-compose.yml`. In production, it's `heroku config`.
 
 * `PORT`: The port to run the application on. This is set by docker-compose locally, and Heroku in production.
 * `NODE_ENV`: Standard Node convention for specifying which type of environment we're in, 'development' or 'production'.
@@ -93,7 +83,7 @@ In dev, this is configured in docker-compose.yml.  In live, it's `heroku config`
 
 ## Testing
 
-The tests are split into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. To run tests on your machine you'll need to install Node.js and run `npm install --only=development`. Then you can run the following commands:
+The tests are split into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. To run tests on your machine you'll need to install [Node.js](https://nodejs.org/) and run `npm install --only=development`. Then you can run the following commands:
 
 ```sh
 npm test                  # run all of the tests
