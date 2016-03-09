@@ -26,8 +26,7 @@
     "test-coverage": "npm run test-instrument && ./node_modules/.bin/istanbul check-coverage --statement 90 --branch 90 --function 90",
     "lint": "./node_modules/.bin/eslint .",
 
-    "compose": "git describe --tags > ./appversion; docker-compose build; rm -f ./appversion",
-    "build": "git describe --tags > ./appversion; docker build -t registry.heroku.com/origami-buildservice-rowan-qa/web .; rm -f ./appversion",
+    "build": "docker build -t registry.heroku.com/origami-buildservice-rowan-qa/web .",
     "deploy": "docker push registry.heroku.com/origami-buildservice-rowan-qa/web"
   },
   "dependencies": {

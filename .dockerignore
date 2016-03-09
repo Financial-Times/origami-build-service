@@ -6,5 +6,5 @@ coverage
 docker-compose.yml
 Dockerfile
 node_modules
-Procfile
+npm-debug.log
 README.md

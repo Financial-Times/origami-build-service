@@ -3,10 +3,11 @@ web:
   build: .
   volumes:
     - "./lib:/app/lib"
+    - "./deprecated:/app/deprecated"
   ports:
     - "8080:8080"
   environment:
     PORT: 8080
     NODE_ENV: "development"
     LOG_LEVEL: "trace"
-  command: "nodemon -L index.js | ./node_modules/.bin/bunyan -o short"
+  command: "nodemon --legacy-watch index.js | ./node_modules/.bin/bunyan -o short"
