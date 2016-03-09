@@ -83,7 +83,7 @@ In dev, this is configured in `docker-compose.yml`. In production, it's `heroku 
 
 ## Testing
 
-The tests are split into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. To run tests on your machine you'll need to install [Node.js](https://nodejs.org/) and run `npm install --only=development`. Then you can run the following commands:
+The tests are split into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. To run tests on your machine you'll need to install [Node.js](https://nodejs.org/) and run `npm install`. Then you can run the following commands:
 
 ```sh
 npm test                  # run all of the tests
@@ -111,13 +111,10 @@ We run the tests and linter on CI, you can view [results on CircleCI](https://ci
 
 ### Pingdom Checks
 
-- `Origami Build Service EU Origin (HTTPS) `
+We use [Pingdom](https://my.pingdom.com/reports/uptime#check=1299983) to monitor uptime:
 
-Checks that the Heroku App is responding to HTTPS requests.
-
-- `Origami Build Service EU Origin (HTTP)`
-
-Checks that the Heroku App is responding to HTTP requests.
+- `Origami Build Service EU Origin (HTTPS)` checks that the Heroku App is responding to HTTPS requests.
+- `Origami Build Service EU Origin (HTTP)` checks that the Heroku App is responding to HTTP requests.
 
 There are various checks for the edge endpoint too.
 
@@ -173,17 +170,6 @@ This is further simplified with `Q.async()` which enables waiting for promises w
     });
 
 `Q.async` returns a promise as well, so it can be chained with other promises.
-
-
-## Troubleshooting
-
-### npm install fails with `ENOENT`
-
-npm sometimes caches incomplete modules. Run `npm cache clean`.
-
-### TypeError: Arguments to path.join must be strings
-
-That's a bug in Bower. Apply https://github.com/bower/bower/pull/1434
 
 
 ## Licence
