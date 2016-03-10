@@ -1,4 +1,6 @@
-.e*
+.editorconfig
+.eslintignore
+.eslintrc
 .git
 .gitignore
 circle.yml
