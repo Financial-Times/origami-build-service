@@ -56,7 +56,15 @@ docker-compose run web sh
 
 ## Deployment
 
-You need to be authenticated with [Heroku](https://heroku.com) (this app is `origami-buildservice-eu` and `origami-buildservice-qa`). We deploy continuously to QA via [CircleCI](https://circleci.com/gh/Financial-Times/origami-build-service), and use a [Heroku pipeline](https://dashboard.heroku.com/pipelines/5d8d698d-1940-48bb-8967-e07b9e7d1272) to promote QA deployments to production.
+You need to be authenticated with [Heroku](https://heroku.com) (this app is `origami-buildservice-eu` and `origami-buildservice-qa`). We deploy continuously to QA via [CircleCI](https://circleci.com/gh/Financial-Times/origami-build-service), ~~and use a [Heroku pipeline](https://dashboard.heroku.com/pipelines/5d8d698d-1940-48bb-8967-e07b9e7d1272) to promote QA deployments to production~~.
+
+:warning: Currently we're having to manually deploy to production while we wait for Heroku Docker/pipeline support. Deploy the last QA image by running the following, avoiding having to build locally:
+
+```sh
+docker pull registry.heroku.com/origami-buildservice-qa/web
+docker tag registry.heroku.com/origami-buildservice-qa/web registry.heroku.com/origami-buildservice-eu/web
+docker push registry.heroku.com/origami-buildservice-eu/web
+```
 
 
 ## Orchestration files
