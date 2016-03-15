@@ -34,7 +34,7 @@
     "bunyan": "^1.5.1",
     "cheerio": "^0.17.0",
     "commander": "^2.3.0",
-    "diskspace": "git+http://github.com/Financial-Times/diskspace.js.git",
+    "diskspace": "git+http://github.com/Financial-Times/diskspace.js.git#alpine",
     "express": "^4.12.3",
     "express-ftwebservice": "^2.0.2",
     "glob": "^4.0.5",
