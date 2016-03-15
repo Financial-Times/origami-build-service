@@ -2,81 +2,88 @@
 
 Creates bundles of JavaScript and CSS from building Origami and Origami-compatible modules, and provides a proxy for static file serving from Origami repos.
 
-See [the live service](https://build.origami.ft.com/) for API information
+See [the production service](https://build.origami.ft.com/) for API information
+
 
 ## Development set up
 
-To set up a development environment, download and install the docker toolkit (http://docs.docker.com/mac/step_one/).  You'll need `docker-compose` and `docker`.  Or use homebrew:
+To set up a development environment, you'll need `docker-compose` and `docker` as well as virtualisation software, such as [VirtualBox](https://www.virtualbox.org/), if you're on a Mac. You can either use the [Docker Mac set up guide](http://docs.docker.com/mac/step_one/), or use [homebrew](http://brew.sh/):
 
-    brew tap caskroom/homebrew-cask
-    brew install brew-cask
-    brew cask install dockertoolbox docker-compose
+```sh
+brew tap caskroom/homebrew-cask
+brew install brew-cask
+brew cask install dockertoolbox docker-compose
+```
 
-You may now have to change the owner of your `.docker` directory if it is owned by root:
+Create a virtual machine to run the application's containers, and put that machine's config into your environment. The default size didn't appear to be large enough so this will create one with an increased disk size:
 
-    chown -R `whoami` ~/.docker
+```sh
+# Create a Docker machine
+docker-machine create --driver virtualbox --virtualbox-disk-size "50000"
 
-Create a virtual machine to run the application's containers, and put that machine's config into your environment, both right now and on next login.  The default size didn't appear to be large enough so this will create one with an increased disk size:
+# Output the Docker machine environment config
+docker-machine env
 
-    docker-machine create --driver virtualbox --virtualbox-disk-size "50000" dev
-    docker-machine env dev
-    eval $(docker-machine env dev)
-    echo "eval $(docker-machine env dev)" >> ~/.profile
+# Add the machine's config to your current environment
+eval $(docker-machine env)
+```
 
 Find out the IP address of the machine:
 
-    docker-machine ip dev
+```sh
+docker-machine ip
+```
 
-In the build service's working directory, run the build and start the app:
+In the build service's working directory, use `docker-compose` to build and start a container:
 
-    npm run build
-    docker-compose up
+```sh
+docker-compose build
+docker-compose up
+```
 
-Now you can access the app at the IP address discovered earlier, over HTTP on port 8080.  So eg in the browser go to http://192.168.99.102:8080/ (if that was the IP given by `docker-machine ip dev`)
+Now you can access the app at the IP address discovered earlier, over HTTP on port 8080:
 
-To SSH into the web container, you first need to SSH into the Docker VM, and then into the container you want:
+```sh
+open "http://$(docker-machine ip):8080/"
+```
 
-    - docker-machine ssh dev
-    - docker ps
-    - docker exec -i -t buildservice_web_1 bash
+To SSH into the web container run:
+
+```sh
+docker-compose run web sh
+```
+
 
 ## Deployment
 
-You need to be authenticated with Heroku (this app is `origami-buildservicce-eu` and `origami-buildservice-qa`) - and you need the Heroku docker plugin: `heroku plugins:install heroku-docker`.
+You need to be authenticated with [Heroku](https://heroku.com) (this app is `origami-buildservice-eu` and `origami-buildservice-qa`). We deploy continuously to QA via [CircleCI](https://circleci.com/gh/Financial-Times/origami-build-service), and use a [Heroku pipeline](https://dashboard.heroku.com/pipelines/5d8d698d-1940-48bb-8967-e07b9e7d1272) to promote QA deployments to production.
 
-Then, run `npm run deploy-qa` or `npm run deploy-prod`.  We use npm to wrap the Heroku docker release process so that an `appversion` file can be stamped with the current version of the app so that the `/__about` endpoint can correctly describe which version of the app has been deployed.
 
 ## Orchestration files
 
 The following files are used in build, test and deploy automation:
 
-* `.dockerignore`: used to ignore things when adding files to the Docker image.  Generally this will be the same as the `.gitignore` file as the build happens at the container creation time.  See the `Dockerfile` for more info.
-* `app.json`: Heroku standard application metadata
-* `Dockerfile`: Builds the web container. For local development, this is run as-is by docker-compose. When deployed to Heroku, only the files created inside /app will be uploaded to the Heroku environment, so things like setting environment variables needs to be done both in the standard Docker way (`ENV` commands) and also be writing profile scripts that will be run on startup in Heroku's environment.
+* `.dockerignore`: used to ignore things when adding files to the Docker image. Generally this will be the same as the `.gitignore` file as the build happens at the container creation time.
+* `Dockerfile`: Builds the web container. For local development, this is run as-is by docker-compose. For deployment, this container is pushed to Heroku's docker registry.
 * `docker-compose.yml`: Creates the environment for local development by specifying how the web container should be run on the local docker-machine VM.
-* `Procfile`: The command to run in Heroku environments.  Essentially the Heroku equivalent of docker-compose.yml
-* `netrc`: TODO
+
 
 ## Configuration
 
-In dev, this is configured in docker-compose.yml.  In live, it's `heroku config`
+In dev, this is configured in `docker-compose.yml`. In production, it's `heroku config`.
 
-* `PORT`: Port used by Apache to serve HTTP traffic.  Must match container's exposed ports config.  Should not be configured explicitly on Heroku
-* `NODE_ENV`: Standard Node convention for specifying which type of environment we're in, 'development' or 'production'
-* `SENTRY_DSN`: URL of the Sentry project to use to collect runtime errors, exceptions and log messages
-* `GRAPHITE_HOST`: The host of the Graphite server used to gather metrics
-* `LOG_LEVEL`: Syslog-compatible level at which to emit log events to stdout ('trace', 'debug', 'info', 'warn', 'error', or 'crit')
-* `SLACK_CHANNEL`: Slack channel to post new module notifications in
-* `BUILD_SERVICE_HOST`: Hostname of the build service to use for fetching module metadata
-* `VIEW_CACHE_PATH`: Path on disk to use to cache view templates in Twig
-* `DEBUG_KEY`: String, if set in a `Debug` HTTP header, will set dev mode to true for that request only.
-* `GITHUB_USERNAME`: A GitHub username which has access to any private repositories that bower needs to see
-* `GITHUB_PASSWORD`: The GitHub password corresponding to `GITHUB_USERNAME`
+* `PORT`: The port to run the application on. This is set by docker-compose locally, and Heroku in production.
+* `NODE_ENV`: Standard Node convention for specifying which type of environment we're in, 'development' or 'production'.
+* `SENTRY_DSN`: URL of the Sentry project to use to collect runtime errors, exceptions and log messages.
+* `GRAPHITE_HOST`: The host of the Graphite server used to gather metrics.
+* `LOG_LEVEL`: Syslog-compatible level at which to emit log events to stdout ('trace', 'debug', 'info', 'warn', 'error', or 'crit').
+* `GITHUB_USERNAME`: A GitHub username which has access to any private repositories that bower needs to see.
+* `GITHUB_PASSWORD`: The GitHub password corresponding to `GITHUB_USERNAME`.
 
 
-## Testing and monitoring
+## Testing
 
-The tests are split into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. Use the following commands to run tests:
+The tests are split into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. To run tests on your machine you'll need to install [Node.js](https://nodejs.org/) and run `npm install`. Then you can run the following commands:
 
 ```sh
 npm test                  # run all of the tests
@@ -100,28 +107,26 @@ npm run lint
 We run the tests and linter on CI, you can view [results on CircleCI](https://circleci.com/gh/Financial-Times/origami-build-service). Tests and linting must pass before a pull request will be merged.
 
 
-### Monitoring
+## Monitoring
 
-#### Pingdom Checks
+### Pingdom Checks
 
-- `Origami Build Service EU Origin (HTTPS) `
+We use [Pingdom](https://my.pingdom.com/reports/uptime#check=1299983) to monitor uptime:
 
-Checks that the Heroku App is responding to HTTPS requests.
-
-- `Origami Build Service EU Origin (HTTP)`
-
-Checks that the Heroku App is responding to HTTP requests.
+- `Origami Build Service EU Origin (HTTPS)` checks that the Heroku App is responding to HTTPS requests.
+- `Origami Build Service EU Origin (HTTP)` checks that the Heroku App is responding to HTTP requests.
 
 There are various checks for the edge endpoint too.
 
-### Maintenance
 
-#### Disk space
+## Maintenance
+
+### Disk space
 
 Temp files are stored in `/tmp/buildservice-$PID`. If you run low on disk
 space you may need to restart Dynos.
 
-### Memory Usage
+## Memory Usage
 
 Restart the service when memory usage becomes too high. (Restart dynos).
 
@@ -165,17 +170,6 @@ This is further simplified with `Q.async()` which enables waiting for promises w
     });
 
 `Q.async` returns a promise as well, so it can be chained with other promises.
-
-
-## Troubleshooting
-
-### npm install fails with `ENOENT`
-
-npm sometimes caches incomplete modules. Delete `~/.npm/`.
-
-### TypeError: Arguments to path.join must be strings
-
-That's a bug in Bower. Apply https://github.com/bower/bower/pull/1434
 
 
 ## Licence
