@@ -1,7 +1,7 @@
 {
   "name": "buildservice",
   "description": "Origami build service",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "homepage": "http://build.origami.ft.com/",
   "keywords": [
     "origami"
@@ -17,7 +17,6 @@
   },
   "scripts": {
     "start": "node index.js",
-
     "test": "npm run test-unit && npm run test-integration && npm run test-old",
     "test-old": "NODE_ENV=test ./node_modules/.bin/mocha ./test",
     "test-unit": "NODE_ENV=test ./node_modules/.bin/mocha ./test/unit --recursive",
@@ -25,7 +24,6 @@
     "test-instrument": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- ./test/unit --recursive",
     "test-coverage": "npm run test-instrument && ./node_modules/.bin/istanbul check-coverage --statement 90 --branch 90 --function 90",
     "lint": "./node_modules/.bin/eslint .",
-
     "build": "docker build -t registry.heroku.com/origami-buildservice-qa/web .",
     "deploy": "docker push registry.heroku.com/origami-buildservice-qa/web"
   },
