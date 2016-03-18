@@ -109,7 +109,6 @@ suite('installation-remote', function() {
 			assert(false); // we shouldn't get to this point
 		} catch (err) {
 			assert.strictEqual(err.code, 'ENOTFOUND');
-			assert.include(err.message, 'Package o-module-that-does-not-exist not found');
 		}
 	});
 
@@ -122,7 +121,6 @@ suite('installation-remote', function() {
 			assert(false); // we shouldn't get to this point
 		} catch (err) {
 			assert.strictEqual(err.code, 'ENOTFOUND');
-			assert.include(err.message, 'Unable to fetch \'o-module-that-does-not-exist\' from \'https://github.com/Financial-Times/o-module-that-does-not-exist.git\', because: remote: Repository not found');
 		}
 	});
 });
