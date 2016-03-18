@@ -187,7 +187,7 @@ const buildSystem = new BuildSystem({
 
 				let hostName = host.url.host;
 				let port = 80;
-				if (host.url.host.contains(':')) {
+				if (host.url.host.includes(':')) {
 					const splitUrl = host.url.host.split(':');
 					hostName = splitUrl[0];
 					port = splitUrl[1];
