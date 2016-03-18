@@ -99,4 +99,28 @@ suite('installation-remote', function() {
 		assert.notInclude(css, 'o-ft-icons/build/ft-icons');
 		assert.include(css, 'o-ft-icons@', 'Subresource needs to be versioned');
 	});
+
+	spawnTestWithTempdir('install-external nonexistant-module', function*(tmpdir) {
+		// don't create this module, please
+		const moduleset = new ModuleSet(['o-module-that-does-not-exist']);
+		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
+		try {
+			yield installation.install();
+			assert(false); // we shouldn't get to this point
+		} catch (err) {
+			assert.strictEqual(err.code, 'ENOTFOUND');
+		}
+	});
+
+	spawnTestWithTempdir('install-external nonexistant-git-repo', function*(tmpdir) {
+		// don't create this module, please
+		const moduleset = new ModuleSet(['https://github.com/Financial-Times/o-module-that-does-not-exist.git']);
+		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
+		try {
+			yield installation.install();
+			assert(false); // we shouldn't get to this point
+		} catch (err) {
+			assert.strictEqual(err.code, 'ENOTFOUND');
+		}
+	});
 });
