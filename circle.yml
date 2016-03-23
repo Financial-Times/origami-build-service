@@ -7,10 +7,8 @@ machine:
 
 test:
   override:
-    - npm run lint
-    - npm run test-old
-    - npm run test-unit
-    - npm run test-integration
+    - make lint
+    - make test
 
 deployment:
   production:
@@ -18,5 +16,4 @@ deployment:
     commands:
       - 'echo "machine api.heroku.com login rowan.manning@ft.com password ${HEROKU_AUTH_TOKEN}" >> ${HOME}/.netrc; chmod 0600 /home/ubuntu/.netrc;'
       - 'docker login --email=_ --username=_ --password=$(heroku auth:token) registry.heroku.com'
-      - 'npm run build'
-      - 'npm run deploy'
+      - 'make deploy'
