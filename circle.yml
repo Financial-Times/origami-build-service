@@ -5,9 +5,13 @@ machine:
   services:
     - docker
 
+dependencies:
+  override:
+    - make install
+
 test:
   override:
-    - make lint
+    - make verify
     - make test
 
 deployment:

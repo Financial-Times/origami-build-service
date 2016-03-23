@@ -1,20 +1,8 @@
-.PHONY: test
+include n.Makefile
 
 export PATH := ./node_modules/.bin:$(PATH)
 export DOCKER_REGISTRY_ENDPOINT_QA := registry.heroku.com/origami-buildservice-qa/web
 export DOCKER_REGISTRY_ENDPOINT_PROD := registry.heroku.com/origami-buildservice-eu/web
-
-install:
-	npm install
-
-clean:
-	git clean -fxd
-
-
-# Lint targets
-
-lint:
-	eslint .
 
 
 # Test targets

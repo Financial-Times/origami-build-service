@@ -107,7 +107,7 @@ make test-unit-coverage
 The code will also need to pass linting on CI, you can run the linter locally with:
 
 ```sh
-make lint
+make verify
 ```
 
 We run the tests and linter on CI, you can view [results on CircleCI](https://circleci.com/gh/Financial-Times/origami-build-service). Tests and linting must pass before a pull request will be merged.
