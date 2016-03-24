@@ -16,16 +16,7 @@
     "url": "https://github.com/Financial-Times/origami-build-service.git"
   },
   "scripts": {
-    "start": "node index.js",
-    "test": "npm run test-unit && npm run test-integration && npm run test-old",
-    "test-old": "NODE_ENV=test ./node_modules/.bin/mocha ./test",
-    "test-unit": "NODE_ENV=test ./node_modules/.bin/mocha ./test/unit --recursive",
-    "test-integration": "NODE_ENV=test ./node_modules/.bin/mocha ./test/integration",
-    "test-instrument": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- ./test/unit --recursive",
-    "test-coverage": "npm run test-instrument && ./node_modules/.bin/istanbul check-coverage --statement 90 --branch 90 --function 90",
-    "lint": "./node_modules/.bin/eslint .",
-    "build": "docker build -t registry.heroku.com/origami-buildservice-qa/web .",
-    "deploy": "docker push registry.heroku.com/origami-buildservice-qa/web"
+    "start": "node index.js"
   },
   "dependencies": {
     "blocked": "^1.1.0",
@@ -60,6 +51,7 @@
     "chai": "^3.5.0",
     "eslint": "^2.2.0",
     "istanbul": "^0.4.2",
+    "lintspaces-cli": "^0.1.1",
     "mocha": "^2.4.5",
     "mockery": "^1.4.0",
     "sinon": "^1.17.3",

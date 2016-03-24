@@ -34,11 +34,10 @@ Find out the IP address of the machine:
 docker-machine ip
 ```
 
-In the build service's working directory, use `docker-compose` to build and start a container:
+In the build service's working directory, use `docker-compose` (via our Make tasks) to build and start a container:
 
 ```sh
-docker-compose build
-docker-compose up
+make build-dev run-dev
 ```
 
 Now you can access the app at the IP address discovered earlier, over HTTP on port 8080:
@@ -47,10 +46,10 @@ Now you can access the app at the IP address discovered earlier, over HTTP on po
 open "http://$(docker-machine ip):8080/"
 ```
 
-To SSH into the web container run:
+To attach a bash process (for debugging, etc) to the running Docker image:
 
 ```sh
-docker-compose run web sh
+make attach-dev
 ```
 
 
@@ -61,9 +60,7 @@ You need to be authenticated with [Heroku](https://heroku.com) (this app is `ori
 :warning: Currently we're having to manually deploy to production while we wait for Heroku Docker/pipeline support. Deploy the last QA image by running the following, avoiding having to build locally:
 
 ```sh
-docker pull registry.heroku.com/origami-buildservice-qa/web
-docker tag registry.heroku.com/origami-buildservice-qa/web registry.heroku.com/origami-buildservice-eu/web
-docker push registry.heroku.com/origami-buildservice-eu/web
+make promote
 ```
 
 
@@ -91,25 +88,25 @@ In dev, this is configured in `docker-compose.yml`. In production, it's `heroku 
 
 ## Testing
 
-The tests are split into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. To run tests on your machine you'll need to install [Node.js](https://nodejs.org/) and run `npm install`. Then you can run the following commands:
+The tests are split into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. To run tests on your machine you'll need to install [Node.js](https://nodejs.org/) and run `make install`. Then you can run the following commands:
 
 ```sh
-npm test                  # run all of the tests
-npm run test-unit         # run the unit tests
-npm run test-integration  # run the integration tests
-npm run test-old          # run the old suite of tests
+make test              # run all of the tests
+make test-unit         # run the unit tests
+make test-integration  # run the integration tests
+make test-old          # run the old suite of tests
 ```
 
-You can run the _unit_ tests with coverage reporting, which we've configured to expect >= 90% coverage:
+You can run the unit tests with coverage reporting, which we've configured to expect `>= 90%` coverage:
 
 ```sh
-npm run test-coverage
+make test-unit-coverage verify-coverage
 ```
 
 The code will also need to pass linting on CI, you can run the linter locally with:
 
 ```sh
-npm run lint
+make verify
 ```
 
 We run the tests and linter on CI, you can view [results on CircleCI](https://circleci.com/gh/Financial-Times/origami-build-service). Tests and linting must pass before a pull request will be merged.

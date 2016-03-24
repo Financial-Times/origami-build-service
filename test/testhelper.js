@@ -37,10 +37,10 @@ function suiteWithPackages(name, packages, callback) {
 		before(function(done) {
 			pfs.makeTree(tempdir)
 			.then(function() {
-                // Make some symbolic links to the test modules in this
-                // repository in the temporary directory.  When the cache
-                // tries to reclaim from disk it will pick up the modules
-                // we've created symlinks to here
+				// Make some symbolic links to the test modules in this
+				// repository in the temporary directory.  When the cache
+				// tries to reclaim from disk it will pick up the modules
+				// we've created symlinks to here
 				return Promise.all(packages.map(function(name){
 					const src = path.join(__dirname, '/testmodules/', name);
 					const dst = path.join(tempdir, '/', name.replace(/^.*\//,''));
