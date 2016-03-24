@@ -132,6 +132,16 @@ The [production][heroku-production] and [QA][heroku-qa] applications run on [Her
 make promote
 ```
 
+We use [Semantic Versioning][semver] to tag releases. Only tagged releases should make it to production, so that the `__about` endpoint is informative. To tag a new release, use one of the following (this is the only time we allow a commit directly to `master`):
+
+```sh
+npm version major
+npm version minor
+npm version patch
+```
+
+Now you can push to GitHub (`git push && git push --tags`) which will trigger a QA deployment. Once QA has been deployed to with the newly tagged version, you can promote it to production.
+
 
 Monitoring
 ----------
@@ -257,4 +267,5 @@ This software is published by the Financial Times under the [MIT license][licens
 [pingdom]: https://my.pingdom.com/reports/uptime#check=1299983
 [promises]: http://www.html5rocks.com/en/tutorials/es6/promises/
 [q]: https://github.com/kriskowal/q
+[semver]: http://semver.org/
 [virtualbox]: https://www.virtualbox.org/
