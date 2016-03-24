@@ -37,3 +37,9 @@ promote:
 	docker pull ${DOCKER_REGISTRY_ENDPOINT_QA}
 	docker tag ${DOCKER_REGISTRY_ENDPOINT_QA} ${DOCKER_REGISTRY_ENDPOINT_PROD}
 	docker push ${DOCKER_REGISTRY_ENDPOINT_PROD}
+
+
+# Run targets
+
+run:
+	docker run -t ${DOCKER_REGISTRY_ENDPOINT_QA}
