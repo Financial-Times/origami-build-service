@@ -1,45 +1,68 @@
 include n.Makefile
 
+
+# Environment variables
+# ---------------------
+
+EXPECTED_COVERAGE = 90
+
 export PATH := ./node_modules/.bin:$(PATH)
+
 export DOCKER_REGISTRY_ENDPOINT_QA := registry.heroku.com/origami-buildservice-qa/web
 export DOCKER_REGISTRY_ENDPOINT_PROD := registry.heroku.com/origami-buildservice-eu/web
 
 
-# Test targets
+# Verify tasks
+# ------------
 
-test: test-unit-coverage test-integration test-old
+verify-coverage:
+	@istanbul check-coverage --statement $(EXPECTED_COVERAGE) --branch $(EXPECTED_COVERAGE) --function $(EXPECTED_COVERAGE)
+	@$(DONE)
+
+
+# Test tasks
+# ----------
+
+test: test-unit-coverage verify-coverage test-integration test-old
+	@$(DONE)
 
 test-unit:
-	NODE_ENV=test mocha test/unit --recursive
+	@NODE_ENV=test mocha test/unit --recursive
+	@$(DONE)
 
-test-unit-coverage: test-unit-instrument
-	istanbul check-coverage --statement 90 --branch 90 --function 90
-
-test-unit-instrument:
-	NODE_ENV=test istanbul cover node_modules/.bin/_mocha -- test/unit --recursive
+test-unit-coverage:
+	@NODE_ENV=test istanbul cover node_modules/.bin/_mocha -- test/unit --recursive
+	@$(DONE)
 
 test-integration:
-	NODE_ENV=test mocha test/integration
+	@NODE_ENV=test mocha test/integration
+	@$(DONE)
 
 test-old:
-	NODE_ENV=test mocha test
+	@NODE_ENV=test mocha test
+	@$(DONE)
 
 
-# Deploy targets
+# Deploy tasks
+# ------------
 
 deploy: build
-	docker push ${DOCKER_REGISTRY_ENDPOINT_QA}
+	@docker push ${DOCKER_REGISTRY_ENDPOINT_QA}
+	@$(DONE)
 
 build:
-	docker build -t ${DOCKER_REGISTRY_ENDPOINT_QA} .
+	@docker build -t ${DOCKER_REGISTRY_ENDPOINT_QA} .
+	@$(DONE)
 
 promote:
-	docker pull ${DOCKER_REGISTRY_ENDPOINT_QA}
-	docker tag ${DOCKER_REGISTRY_ENDPOINT_QA} ${DOCKER_REGISTRY_ENDPOINT_PROD}
-	docker push ${DOCKER_REGISTRY_ENDPOINT_PROD}
+	@docker pull ${DOCKER_REGISTRY_ENDPOINT_QA}
+	@docker tag ${DOCKER_REGISTRY_ENDPOINT_QA} ${DOCKER_REGISTRY_ENDPOINT_PROD}
+	@docker push ${DOCKER_REGISTRY_ENDPOINT_PROD}
+	@$(DONE)
 
 
-# Run targets
+# Run tasks
+# ---------
 
 run:
-	docker run -t ${DOCKER_REGISTRY_ENDPOINT_QA}
+	@docker run -t ${DOCKER_REGISTRY_ENDPOINT_QA}

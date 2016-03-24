@@ -101,7 +101,7 @@ make test-old          # run the old suite of tests
 You can run the unit tests with coverage reporting, which we've configured to expect `>= 90%` coverage:
 
 ```sh
-make test-unit-coverage
+make test-unit-coverage verify-coverage
 ```
 
 The code will also need to pass linting on CI, you can run the linter locally with:
