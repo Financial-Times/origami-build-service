@@ -6,14 +6,15 @@ include n.Makefile
 
 EXPECTED_COVERAGE = 90
 
-export PATH := ./node_modules/.bin:$(PATH)
-
-export DOCKER_REGISTRY_ENDPOINT_QA := registry.heroku.com/origami-buildservice-qa/web
-export DOCKER_REGISTRY_ENDPOINT_PROD := registry.heroku.com/origami-buildservice-eu/web
+DOCKER_REGISTRY_ENDPOINT_QA = registry.heroku.com/origami-buildservice-qa/web
+DOCKER_REGISTRY_ENDPOINT_PROD = registry.heroku.com/origami-buildservice-eu/web
 
 
 # Verify tasks
 # ------------
+
+hello:
+	@echo $(DOCKER_REGISTRY_ENDPOINT_QA)
 
 verify-coverage:
 	@istanbul check-coverage --statement $(EXPECTED_COVERAGE) --branch $(EXPECTED_COVERAGE) --function $(EXPECTED_COVERAGE)
@@ -47,20 +48,20 @@ test-old:
 # ------------
 
 deploy: build
-	@docker push ${DOCKER_REGISTRY_ENDPOINT_QA}
+	@docker push $(DOCKER_REGISTRY_ENDPOINT_QA)
 	@$(DONE)
 
 build:
-	@docker build -t ${DOCKER_REGISTRY_ENDPOINT_QA} .
+	@docker build -t $(DOCKER_REGISTRY_ENDPOINT_QA) .
 	@$(DONE)
 
 build-dev:
 	@docker-compose build
 
 promote:
-	@docker pull ${DOCKER_REGISTRY_ENDPOINT_QA}
-	@docker tag ${DOCKER_REGISTRY_ENDPOINT_QA} ${DOCKER_REGISTRY_ENDPOINT_PROD}
-	@docker push ${DOCKER_REGISTRY_ENDPOINT_PROD}
+	@docker pull $(DOCKER_REGISTRY_ENDPOINT_QA)
+	@docker tag $(DOCKER_REGISTRY_ENDPOINT_QA) $(DOCKER_REGISTRY_ENDPOINT_PROD)
+	@docker push $(DOCKER_REGISTRY_ENDPOINT_PROD)
 	@$(DONE)
 
 
@@ -68,7 +69,7 @@ promote:
 # ---------
 
 run:
-	@docker run -t ${DOCKER_REGISTRY_ENDPOINT_QA}
+	@docker run -t $(DOCKER_REGISTRY_ENDPOINT_QA)
 
 run-dev:
 	@docker-compose up
