@@ -33,7 +33,7 @@ Running Origami Build Service requires a few tools:
   * [Docker]: For building Docker images
   * [Docker Compose][docker-compose]: For building and running a development image
   * [Docker Machine][docker-machine]: For installing and running a Docker engine **(_Mac Only_)**
-  * [Node.js] (4.x) and [npm]: For running tests locally (we don't run them on the Docker images)
+  * [Node.js] 4.x and [npm]: For running tests locally (we don't run them on the Docker images)
 
 ### Mac Guide
 
