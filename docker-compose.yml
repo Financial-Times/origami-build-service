@@ -1,6 +1,7 @@
 # This is only used for development purposes. You can not use Docker Compose on Heroku.
 web:
   build: .
+  container_name: origami-buildservice-dev
   volumes:
     - "./lib:/app/lib"
     - "./deprecated:/app/deprecated"

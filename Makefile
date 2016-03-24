@@ -54,6 +54,9 @@ build:
 	@docker build -t ${DOCKER_REGISTRY_ENDPOINT_QA} .
 	@$(DONE)
 
+build-dev:
+	@docker-compose build
+
 promote:
 	@docker pull ${DOCKER_REGISTRY_ENDPOINT_QA}
 	@docker tag ${DOCKER_REGISTRY_ENDPOINT_QA} ${DOCKER_REGISTRY_ENDPOINT_PROD}
@@ -66,3 +69,9 @@ promote:
 
 run:
 	@docker run -t ${DOCKER_REGISTRY_ENDPOINT_QA}
+
+run-dev:
+	@docker-compose up
+
+attach-dev:
+	@docker exec -it origami-buildservice-dev sh
