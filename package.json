@@ -1,7 +1,7 @@
 {
   "name": "buildservice",
   "description": "Origami build service",
-  "version": "3.0.5",
+  "version": "3.1.0",
   "homepage": "http://build.origami.ft.com/",
   "keywords": [
     "origami"
