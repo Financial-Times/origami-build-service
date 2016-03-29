@@ -92,6 +92,7 @@ Origami Build Service is configured using environment variables. In development,
   * `LOG_LEVEL`: Syslog-compatible level at which to emit log events to stdout (`trace`, `debug`, `info`, `warn`, `error`, or `crit`).
   * `GITHUB_USERNAME`: A GitHub username which has access to any private repositories that bower needs to see.
   * `GITHUB_PASSWORD`: The GitHub password corresponding to `GITHUB_USERNAME`.
+  * `METRICS_ENV`: Which environment to store metrics under. This defaults to `NODE_ENV`, which allows us to measure QA/production metrics separately.
 
 
 Testing
