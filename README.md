@@ -83,7 +83,7 @@ make attach-dev
 Configuration
 -------------
 
-Origami Build Service is configured using environment variables. In development, configurations are set in `docker-compose.yml`. In production, these are set through Heroku config.
+We configure Origami Build Service using environment variables. In development, configurations are set in `docker-compose.yml`. In production, these are set through Heroku config.
 
   * `PORT`: The port to run the application on.
   * `NODE_ENV`: Which environment the application should run in, `production`, `development` (default), or `test` (for use in automated tests).
@@ -98,7 +98,7 @@ Origami Build Service is configured using environment variables. In development,
 Testing
 -------
 
-The tests are split into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. To run tests on your machine you'll need to install [Node.js] and run `make install`. Then you can run the following commands:
+We split the tests into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. To run tests on your machine you'll need to install [Node.js] and run `make install`. Then you can run the following commands:
 
 ```sh
 make test              # run all of the tests
@@ -119,7 +119,7 @@ The code will also need to pass linting on CI, you can run the linter locally wi
 make verify
 ```
 
-We run the tests and linter on CI, you can view [results on CircleCI][ci]. `make test` and `make lint` must pass before a pull request will be merged.
+We run the tests and linter on CI, you can view [results on CircleCI][ci]. `make test` and `make lint` must pass before we merge a pull request.
 
 
 Deployment
@@ -147,7 +147,7 @@ npm version minor
 npm version patch
 ```
 
-Now you can push to GitHub (`git push && git push --tags`) which will trigger a QA deployment. Once QA has been deployed to with the newly tagged version, you can promote it to production.
+Now you can push to GitHub (`git push && git push --tags`) which will trigger a QA deployment. Once QA is deployed with the newly tagged version, you can promote it to production.
 
 
 Monitoring
@@ -182,7 +182,7 @@ This is most likely due to the heavy caching we employ.
 
 First, change the hostname in your request to `origami-buildservice-eu.herokuapp.com`. If your updated component appears now, then the reason it wasn't appearing before is because Akamai has cached the bundle. You'll need to wait for a while, or clear the Akamai cache for your URL.
 
-If your component still doesn't appear, it means that an older version has been cached on the local file system in Heroku. You can clear this by restarting the Heroku dynos:
+If your component still doesn't appear, it means that we've cached an older version on the local file system in Heroku. You can clear this by restarting the Heroku dynos:
 
 ```sh
 heroku restart --app origami-buildservice-eu
@@ -194,10 +194,10 @@ Project Structure
 
 ### Orchestration files
 
-The following files are used in build, test and deploy automation:
+We use the following files in build, test and deploy automation:
 
   * `.dockerignore`: Used to ignore things when adding files to the Docker image.
-  * `Dockerfile`: Instructions to build the web container. This is used as-is by `docker-compose` locally, and on CI as part of deployment.
+  * `Dockerfile`: Instructions to build the web container. CI uses this as part of deployment.
   * `docker-compose.yml`: Additional instructions required for building a development Docker container.
 
 ### ES6/Promises patterns
@@ -244,13 +244,13 @@ Q.async(function*(){
 });
 ```
 
-`Q.async` returns a promise as well, so it can be chained with other promises.
+`Q.async` returns a promise as well, so we can chain it with other promises.
 
 
 License
 -------
 
-This software is published by the Financial Times under the [MIT license][license].
+The Financial Times has published this software under the [MIT license][license].
 
 
 
