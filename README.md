@@ -168,7 +168,7 @@ We also use [Pingdom] to track uptime. You should get notifications if you're a 
 Trouble-Shooting
 ----------------
 
-We've outlined some common issues that can occur when running the build service:
+We've outlined some common issues that can occur when running the Build Service:
 
 ### What do I do if memory usage is high?
 
