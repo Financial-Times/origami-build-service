@@ -127,7 +127,13 @@ Deployment
 
 The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], You should never really deploy to QA manually. ~~We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production~~.
 
-:warning: Currently we're having to manually deploy to production while we wait for Heroku Docker/pipeline support. Deploy the last QA image by running the following, avoiding having to build locally:
+:warning: Currently we're having to manually deploy to production while we wait for Heroku Docker/pipeline support. You'll need access to the Heroku Docker private beta, and to have logged into the registry:
+
+```sh
+docker login --email=_ --username=_ --password=$(heroku auth:token) registry.heroku.com
+```
+
+Now deploy the last QA image by running the following, avoiding having to build locally:
 
 ```sh
 make promote
