@@ -102,7 +102,7 @@ We configure Origami Build Service using environment variables. In development, 
 Testing
 -------
 
-We split the tests into unit tests, integration tests, and an old suite of tests that we're migrating. To run tests on your machine you'll need to install [Node.js] and run `make install`. Then you can run the following commands:
+The tests are split into unit tests, integration tests, and an old suite of tests that we're migrating. To run tests on your machine you'll need to install [Node.js] and run `make install`. Then you can run the following commands:
 
 ```sh
 make test              # run all the tests
@@ -129,7 +129,7 @@ We run the tests and linter on CI, you can view [results on CircleCI][ci]. `make
 Deployment
 ----------
 
-The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], You should never really deploy to QA manually. ~~We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production~~.
+The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], you should never need to deploy to QA manually. ~~We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production~~.
 
 :warning: We have to deploy to production manually while we wait for Heroku Docker/pipeline support. You'll need access to the Heroku Docker private beta, and to have logged into the registry:
 
@@ -237,7 +237,7 @@ doPromise1(arg1)
 .done();
 ```
 
-Instead of nesting callbacks you chain `.then()` calls. Callback in `then` may return (promise of) result for the next `then` callback.
+Instead of nesting callbacks, you chain `.then()` calls. Callbacks in `then` may return (a promise of) the result for the next `then` callback.
 
 You can simplify further with `Q.async()`. This enables waiting for promises with the `yield` operator:
 
