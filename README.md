@@ -98,10 +98,10 @@ We configure Origami Build Service using environment variables. In development, 
 Testing
 -------
 
-We split the tests into unit tests, integration tests, and an older suite of tests that we're in the process of migrating. To run tests on your machine you'll need to install [Node.js] and run `make install`. Then you can run the following commands:
+We split the tests into unit tests, integration tests, and an older suite of tests that we're migrating. To run tests on your machine you'll need to install [Node.js] and run `make install`. Then you can run the following commands:
 
 ```sh
-make test              # run all of the tests
+make test              # run all the tests
 make test-unit         # run the unit tests
 make test-integration  # run the integration tests
 make test-old          # run the old suite of tests
@@ -147,7 +147,7 @@ npm version minor
 npm version patch
 ```
 
-Now you can push to GitHub (`git push && git push --tags`) which will trigger a QA deployment. Once QA is deployed with the newly tagged version, you can promote it to production.
+Now you can push to GitHub (`git push && git push --tags`) which will trigger a QA deployment. Once QA has deployed with the newly tagged version, you can promote it to production.
 
 
 Monitoring
@@ -155,7 +155,7 @@ Monitoring
 
 We use Graphite and [Grafana] to keep track of application metrics. You can view requests, bundle build duration, cache hit ratios, and memory usage. It's important after a deploy to make sure you haven't unexpectedly had an impact on these.
 
-We also use [Pingdom] to monitor uptime. You should get notifications if you're a member of the Origami team. The Pingdom checks are:
+We also use [Pingdom] to track uptime. You should get notifications if you're a member of the Origami team. The Pingdom checks are:
 
   * `Origami Build Service EU Origin (HTTPS)` checks that the Heroku App is responding to HTTPS requests.
   * `Origami Build Service EU Origin (HTTP)` checks that the Heroku App is responding to HTTP requests.
@@ -178,7 +178,7 @@ You can use [Node Inspector][node-inspector] to debug memory issues locally if y
 
 ### What do I do if my updated component is not appearing in bundles?
 
-This is most likely due to the heavy caching we employ.
+This is most likely due to the heavy caching we use.
 
 First, change the hostname in your request to `origami-buildservice-eu.herokuapp.com`. If your updated component appears now, then the reason it wasn't appearing before is because Akamai has cached the bundle. You'll need to wait for a while, or clear the Akamai cache for your URL.
 
