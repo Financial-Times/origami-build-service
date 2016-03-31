@@ -2,7 +2,11 @@
 Origami Build Service
 =====================
 
-Creates bundles of JavaScript and CSS from building Origami and Origami-compatible modules, and provides a proxy for static file serving from Origami repos. See [the production service][build-service] for API information.
+  * Creates bundles of JavaScript and CSS from Origami (and Origami-compatible modules)
+  * Provides a proxy for static file serving from Origami repos
+  * Compiles Origami component demos
+
+See [the production service][build-service] for API information.
 
 [![Build status](https://img.shields.io/circleci/project/Financial-Times/origami-build-service.svg)][ci]
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)][license]
@@ -45,7 +49,7 @@ brew install brew-cask
 brew cask install dockertoolbox docker-compose
 ```
 
-Create a virtual machine to run the application's containers, and put that machine's config into your environment. The default size didn't appear to be large enough so this will create one with an increased disk size:
+The following command creates a virtual machine in which to run the application's containers. The default size didn't appear to be large enough so this will create one with an increased disk size:
 
 ```sh
 docker-machine create --driver virtualbox --virtualbox-disk-size "50000"
@@ -61,7 +65,7 @@ eval $(docker-machine env)
 Running Locally
 ---------------
 
-In the Origami Build Service working directory, use `docker-compose` (via our Make tasks) to build and start a container:
+In the working directory, use `docker-compose` to build and start a container. We have some Make tasks which simplify this:
 
 ```sh
 make build-dev run-dev
@@ -86,19 +90,19 @@ Configuration
 We configure Origami Build Service using environment variables. In development, configurations are set in `docker-compose.yml`. In production, these are set through Heroku config.
 
   * `PORT`: The port to run the application on.
-  * `NODE_ENV`: Which environment the application should run in, `production`, `development` (default), or `test` (for use in automated tests).
-  * `SENTRY_DSN`: URL of the Sentry project to use to collect runtime errors, exceptions and log messages.
-  * `GRAPHITE_HOST`: The hostname of the Graphite server used to gather metrics.
-  * `LOG_LEVEL`: Syslog-compatible level at which to emit log events to stdout (`trace`, `debug`, `info`, `warn`, `error`, or `crit`).
-  * `GITHUB_USERNAME`: A GitHub username which has access to any private repositories that bower needs to see.
+  * `NODE_ENV`: The environment to run the application in. One of `production`, `development` (default), or `test` (for use in automated tests).
+  * `SENTRY_DSN`: The URL of a [Sentry] project to collect exception information with.
+  * `GRAPHITE_HOST`: The hostname of a Graphite server to gather metrics with.
+  * `LOG_LEVEL`: A Syslog-compatible level at which to emit log events to stdout. One of `trace`, `debug`, `info`, `warn`, `error`, or `crit`.
+  * `GITHUB_USERNAME`: A GitHub username with permission to view required private repositories.
   * `GITHUB_PASSWORD`: The GitHub password corresponding to `GITHUB_USERNAME`.
-  * `METRICS_ENV`: Which environment to store metrics under. This defaults to `NODE_ENV`, which allows us to measure QA/production metrics separately.
+  * `METRICS_ENV`: The environment to store metrics under. This defaults to `NODE_ENV`, which allows us to measure QA/production metrics separately.
 
 
 Testing
 -------
 
-We split the tests into unit tests, integration tests, and an older suite of tests that we're migrating. To run tests on your machine you'll need to install [Node.js] and run `make install`. Then you can run the following commands:
+We split the tests into unit tests, integration tests, and an old suite of tests that we're migrating. To run tests on your machine you'll need to install [Node.js] and run `make install`. Then you can run the following commands:
 
 ```sh
 make test              # run all the tests
@@ -107,7 +111,7 @@ make test-integration  # run the integration tests
 make test-old          # run the old suite of tests
 ```
 
-You can run the unit tests with coverage reporting, which we've configured to expect `>= 90%` coverage:
+You can run the unit tests with coverage reporting, which expects 90% coverage or more:
 
 ```sh
 make test-unit-coverage verify-coverage
@@ -127,7 +131,7 @@ Deployment
 
 The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], You should never really deploy to QA manually. ~~We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production~~.
 
-:warning: Currently we're having to manually deploy to production while we wait for Heroku Docker/pipeline support. You'll need access to the Heroku Docker private beta, and to have logged into the registry:
+:warning: We have to deploy to production manually while we wait for Heroku Docker/pipeline support. You'll need access to the Heroku Docker private beta, and to have logged into the registry:
 
 ```sh
 docker login --email=_ --username=_ --password=$(heroku auth:token) registry.heroku.com
@@ -139,7 +143,7 @@ Now deploy the last QA image by running the following, avoiding having to build 
 make promote
 ```
 
-We use [Semantic Versioning][semver] to tag releases. Only tagged releases should make it to production, so that the `__about` endpoint is informative. To tag a new release, use one of the following (this is the only time we allow a commit directly to `master`):
+We use [Semantic Versioning][semver] to tag releases. Only tagged releases should hit production, this ensures that the `__about` endpoint is informative. To tag a new release, use one of the following (this is the only time we allow a commit directly to `master`):
 
 ```sh
 npm version major
@@ -157,16 +161,16 @@ We use Graphite and [Grafana] to keep track of application metrics. You can view
 
 We also use [Pingdom] to track uptime. You should get notifications if you're a member of the Origami team. The Pingdom checks are:
 
-  * `Origami Build Service EU Origin (HTTPS)` checks that the Heroku App is responding to HTTPS requests.
-  * `Origami Build Service EU Origin (HTTP)` checks that the Heroku App is responding to HTTP requests.
+  * `Origami Build Service EU Origin (HTTPS)`: checks that the application is responding on HTTPS.
+  * `Origami Build Service EU Origin (HTTP)`: checks that the application is responding on HTTP.
 
 
 Trouble-Shooting
 ----------------
 
-We've tried to outline some common issues that can occur in the running of the build service, as well as possible solutions:
+We've outlined some common issues that can occur when running the build service:
 
-### What do I do if memory usage is really high?
+### What do I do if memory usage is high?
 
 For now, restart the Heroku dynos:
 
@@ -174,15 +178,15 @@ For now, restart the Heroku dynos:
 heroku restart --app origami-buildservice-eu
 ```
 
-You can use [Node Inspector][node-inspector] to debug memory issues locally if you think there's a genuine problem. We're working on building this into the development process, but for now [speak to Rowan Manning][email-rowan] if you want info on how to set up Node Inspector.
+You can use [Node Inspector][node-inspector] to debug local memory issues if you think there's a genuine problem. We're working on building this into the development process. For now, [speak to Rowan Manning][email-rowan] if you want info on how to set up Node Inspector.
 
 ### What do I do if my updated component is not appearing in bundles?
 
 This is most likely due to the heavy caching we use.
 
-First, change the hostname in your request to `origami-buildservice-eu.herokuapp.com`. If your updated component appears now, then the reason it wasn't appearing before is because Akamai has cached the bundle. You'll need to wait for a while, or clear the Akamai cache for your URL.
+First, change the hostname in your request to `origami-buildservice-eu.herokuapp.com`. If your update appears now, then Akamai had cached the bundle. You'll need to wait for a while, or clear the Akamai cache for your URL.
 
-If your component still doesn't appear, it means that we've cached an older version on the local file system in Heroku. You can clear this by restarting the Heroku dynos:
+If your component still doesn't appear, then we've cached an older version on the file system. You can clear this by restarting the Heroku dynos:
 
 ```sh
 heroku restart --app origami-buildservice-eu
@@ -198,11 +202,11 @@ We use the following files in build, test and deploy automation:
 
   * `.dockerignore`: Used to ignore things when adding files to the Docker image.
   * `Dockerfile`: Instructions to build the web container. CI uses this as part of deployment.
-  * `docker-compose.yml`: Additional instructions required for building a development Docker container.
+  * `docker-compose.yml`: Extra instructions required for building a development Docker container.
 
 ### ES6/Promises patterns
 
-To understand the code you must understand [promises] (the [Q promise][q] implementation) and their use of the `yield` operator.
+You'll need to understand [promises] ([Q implementation][q]) and how they use the `yield` operator.
 
   * Asynchronous programming changes `use(func(arg))` into `func(arg, use)`.
   * Promises change `func(arg, use)` into `func(arg).then(use)`.
@@ -221,7 +225,7 @@ doAsync1(arg1, function(err, result1){
 });
 ```
 
-is roughly equivalent to:
+is roughly equal to:
 
 ```js
 doPromise1(arg1)
@@ -235,7 +239,7 @@ doPromise1(arg1)
 
 Instead of nesting callbacks you chain `.then()` calls. Callback in `then` may return (promise of) result for the next `then` callback.
 
-This is further simplified with `Q.async()` which enables waiting for promises with the `yield` operator:
+You can simplify further with `Q.async()`. This enables waiting for promises with the `yield` operator:
 
 ```js
 Q.async(function*(){
@@ -275,4 +279,5 @@ The Financial Times has published this software under the [MIT license][license]
 [promises]: http://www.html5rocks.com/en/tutorials/es6/promises/
 [q]: https://github.com/kriskowal/q
 [semver]: http://semver.org/
+[sentry]: https://getsentry.com/
 [virtualbox]: https://www.virtualbox.org/
