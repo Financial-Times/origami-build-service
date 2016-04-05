@@ -6,8 +6,14 @@ machine:
     - docker
 
 dependencies:
+  cache_directories:
+    - ~/docker
   override:
     - make install
+    # Note: we have to repeat the deployment branch here. It's not great,
+    # but there's currently no way around it – to cache the docker image
+    # it has to be built during the "dependencies" step
+    - 'if [ "${CIRCLE_BRANCH}" == "master" ]; then make ci-docker-cache-load build ci-docker-cache-save; fi'
 
 test:
   override:

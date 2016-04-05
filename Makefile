@@ -57,11 +57,20 @@ build:
 
 build-dev:
 	@docker-compose build
+	@$(DONE)
 
 promote:
 	@docker pull $(DOCKER_REGISTRY_ENDPOINT_QA)
 	@docker tag $(DOCKER_REGISTRY_ENDPOINT_QA) $(DOCKER_REGISTRY_ENDPOINT_PROD)
 	@docker push $(DOCKER_REGISTRY_ENDPOINT_PROD)
+	@$(DONE)
+
+ci-docker-cache-load:
+	@if [ -e ~/docker/obs-qa.tar ]; then docker load -i ~/docker/obs-qa.tar; fi
+	@$(DONE)
+
+ci-docker-cache-save:
+	@mkdir -p ~/docker; docker save $(DOCKER_REGISTRY_ENDPOINT_QA) > ~/docker/obs-qa.tar
 	@$(DONE)
 
 
