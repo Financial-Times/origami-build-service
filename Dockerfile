@@ -5,16 +5,14 @@ WORKDIR /app
 
 # Install additional dependencies required to build modules
 # We need these to build native dependencies (mostly node-sass)
-RUN apk add --no-cache --update g++ gcc git make python
+RUN apk add --no-cache --update g++ gcc git make python && rm -rf /var/cache/apk/*
 
 # Configure git to use HTTPS instead of SSH
 RUN echo '[url "https://"]\n    insteadOf = git://' > /app/.gitconfig
 
 # Install Node.js dependencies
 COPY package.json /app/
-RUN npm install -g nodemon
-RUN npm install --production
-RUN npm cache clean
+RUN npm install -g nodemon && npm install --production && npm cache clean
 
 # Copy across the application
 COPY . /app/
