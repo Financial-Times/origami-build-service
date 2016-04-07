@@ -63,6 +63,15 @@ promote:
 	@docker pull $(DOCKER_REGISTRY_ENDPOINT_QA)
 	@docker tag $(DOCKER_REGISTRY_ENDPOINT_QA) $(DOCKER_REGISTRY_ENDPOINT_PROD)
 	@docker push $(DOCKER_REGISTRY_ENDPOINT_PROD)
+	@make change-request-prod
+	@$(DONE)
+
+change-request-qa:
+	@./tools/change-request.js --environment Test --gateway konstructor || true
+	@$(DONE)
+
+change-request-prod:
+	@./tools/change-request.js --environment Production --gateway internal || true
 	@$(DONE)
 
 ci-docker-cache-load:

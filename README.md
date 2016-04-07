@@ -137,10 +137,10 @@ The [production][heroku-production] and [QA][heroku-qa] applications run on [Her
 docker login --email=_ --username=_ --password=$(heroku auth:token) registry.heroku.com
 ```
 
-Now deploy the last QA image by running the following, avoiding having to build locally:
+You'll need to provide your GitHub username for change request logging, ensure you've been [added to this spreadsheet][developer-spreadsheet]. Now deploy the last QA image by running the following, avoiding having to build locally:
 
 ```sh
-make promote
+GITHUB_USERNAME=yourgithubusername make promote
 ```
 
 We use [Semantic Versioning][semver] to tag releases. Only tagged releases should hit production, this ensures that the `__about` endpoint is informative. To tag a new release, use one of the following (this is the only time we allow a commit directly to `master`):
@@ -260,6 +260,7 @@ The Financial Times has published this software under the [MIT license][license]
 
 [build-service]: https://build.origami.ft.com/
 [ci]: https://circleci.com/gh/Financial-Times/origami-build-service
+[developer-spreadsheet]: https://docs.google.com/spreadsheets/d/1mbJQYJOgXAH2KfgKUM1Vgxq8FUIrahumb39wzsgStu0/edit#gid=0
 [docker-compose]: https://docs.docker.com/compose/
 [docker-mac]: http://docs.docker.com/mac/step_one/
 [docker-machine]: https://docs.docker.com/machine/
