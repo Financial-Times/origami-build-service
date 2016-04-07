@@ -65,6 +65,12 @@ eval $(docker-machine env)
 Running Locally
 ---------------
 
+Before we can run the application, we'll need to create a `.env` file. You can copy the sample file, and consult the documentation for [available options](#configuration):
+
+```sh
+cp sample.env .env
+```
+
 In the working directory, use `docker-compose` to build and start a container. We have some Make tasks which simplify this:
 
 ```sh

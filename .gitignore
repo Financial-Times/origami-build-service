@@ -1,4 +1,5 @@
 .editorconfig
+.env
 .sass-cache
 coverage
 docs/public
