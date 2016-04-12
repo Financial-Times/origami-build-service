@@ -52,13 +52,13 @@ brew cask install dockertoolbox docker-compose
 The following command creates a virtual machine in which to run the application's containers. The default size didn't appear to be large enough so this will create one with an increased disk size:
 
 ```sh
-docker-machine create --driver virtualbox --virtualbox-disk-size "50000"
+docker-machine create --driver virtualbox --virtualbox-disk-size "50000" default
 ```
 
 Add the machine's config to your current environment by running the following. You can also add this line to your `.bash_profile` so that it's present in all further environments.
 
 ```sh
-eval $(docker-machine env)
+eval $(docker-machine env default)
 ```
 
 
@@ -80,7 +80,7 @@ make build-dev run-dev
 Now you can access the app over HTTP on port `8080`. If you're on a Mac, you'll need to use the IP of your Docker Machine:
 
 ```sh
-open "http://$(docker-machine ip):8080/"
+open "http://$(docker-machine ip default):8080/"
 ```
 
 To attach a bash process (for debugging, etc) to the running Docker image:
