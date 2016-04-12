@@ -55,11 +55,19 @@ The following command creates a virtual machine in which to run the application'
 docker-machine create --driver virtualbox --virtualbox-disk-size "50000" default
 ```
 
-Add the machine's config to your current environment by running the following. You can also add this line to your `.bash_profile` so that it's present in all further environments.
+Add the machine's config to your current environment by running the following:
 
 ```sh
 eval $(docker-machine env default)
 ```
+
+In future Terminal sessions, you'll need to run the following in order to start the docker machine:
+
+```sh
+docker-machine start default
+```
+
+You'll also need to add the machine's config to your environment again using the `eval` command outlined above. Alternatively, you can add this command to your `.bash_profile` file to automatically do this.
 
 
 Running Locally
