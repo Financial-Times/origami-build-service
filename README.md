@@ -52,14 +52,22 @@ brew cask install dockertoolbox docker-compose
 The following command creates a virtual machine in which to run the application's containers. The default size didn't appear to be large enough so this will create one with an increased disk size:
 
 ```sh
-docker-machine create --driver virtualbox --virtualbox-disk-size "50000"
+docker-machine create --driver virtualbox --virtualbox-disk-size "50000" default
 ```
 
-Add the machine's config to your current environment by running the following. You can also add this line to your `.bash_profile` so that it's present in all further environments.
+Add the machine's config to your current environment by running the following:
 
 ```sh
-eval $(docker-machine env)
+eval $(docker-machine env default)
 ```
+
+In future Terminal sessions, you'll need to run the following in order to start the docker machine:
+
+```sh
+docker-machine start default
+```
+
+You'll also need to add the machine's config to your environment again using the `eval` command outlined above. Alternatively, you can add this command to your `.bash_profile` file to automatically do this.
 
 
 Running Locally
@@ -80,7 +88,7 @@ make build-dev run-dev
 Now you can access the app over HTTP on port `8080`. If you're on a Mac, you'll need to use the IP of your Docker Machine:
 
 ```sh
-open "http://$(docker-machine ip):8080/"
+open "http://$(docker-machine ip default):8080/"
 ```
 
 To attach a bash process (for debugging, etc) to the running Docker image:
@@ -137,7 +145,9 @@ Deployment
 
 The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], you should never need to deploy to QA manually. ~~We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production~~.
 
-:warning: We have to deploy to production manually while we wait for Heroku Docker/pipeline support. You'll need access to the Heroku Docker private beta, and to have logged into the registry:
+:warning: We have to deploy to production manually while we wait for Heroku Docker/pipeline support. You'll need access to the Heroku Docker private beta, and to have logged into the registry.
+
+Run the following command exactly, don't replace the underscores in username and password:
 
 ```sh
 docker login --email=_ --username=_ --password=$(heroku auth:token) registry.heroku.com
