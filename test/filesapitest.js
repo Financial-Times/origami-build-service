@@ -6,6 +6,7 @@ const fs = require('fs');
 const querystring = require('querystring');
 const supertest = require('supertest');
 const testhelper = require('./testhelper');
+const hostnames = require('../lib/utils/hostnames');
 
 const log = testhelper.log;
 const Q = testhelper.Q;
@@ -92,7 +93,7 @@ suiteWithPackages('files-api', ['files'], function(installdir){
 
 	test('files-replaces-versions', function(){
 		const fileProxy = new FileProxy();
-		const parsed = fileProxy.versionLockBuildserviceUrls(''+fs.readFileSync(__dirname + '/testmodules/html/demo.html'), 'html', '9.99', 'https://build.origami.ft.com/files/html/9.99/demo.html');
+		const parsed = fileProxy.versionLockBuildserviceUrls(''+fs.readFileSync(__dirname + '/testmodules/html/demo.html'), 'html', '9.99', 'https://' + hostnames.preferred + '/files/html/9.99/demo.html');
 
 		assert.include(parsed, 'html@0.1/no-change');
 		assert.include(parsed, 'files/html/css.css', 'Rewrite not supported, use relative URLs');
@@ -102,7 +103,7 @@ suiteWithPackages('files-api', ['files'], function(installdir){
 		assert.include(unescaped, 'modules=relative@1,html@9.99:/withfile,foo');
 		assert.include(unescaped, 'modules=nope@1,html,foo@*');
 		assert.include(unescaped, 'modules=bar-html,html@*,nochange@*');
-		assert.include(unescaped, '//build.origami.ft.com/v2/bundles/js?modules=html2@v1.0,html@9.99,foo', '2');
+		assert.include(unescaped, '//' + hostnames.preferred + '/v2/bundles/js?modules=html2@v1.0,html@9.99,foo', '2');
 		assert.include(unescaped, 'differenthost,html,foo@*');
 		assert.include(unescaped, 'otherargs=zzz&amp;modules=singlequotes,html@9.99');
 	});
@@ -111,8 +112,10 @@ suiteWithPackages('files-api', ['files'], function(installdir){
 		const buildSystem = new BuildSystem({tempdir:'/tmp/', log:log, whitelist:'*', registry: new Registry()});
 		const srv = createApp({ buildSystem: buildSystem });
 		const agent = supertest(srv);
+		const hostnameEscaped = hostnames.preferred.replace('.', '\\\.');
+		const regexp = new RegExp('/' + hostnameEscaped + '/bundles/css\\?modules=o-gallery%401\\.1\\.0%3A%2Fdemos%2Fsrc%2Fdemo\\.scss"');
 		agent.get('/files/o-gallery@1.1.0/demos/declarative.html')
 			.expect(200)
-			.expect(/\/\/build\.origami\.ft\.com\/bundles\/css\?modules=o-gallery%401\.1\.0%3A%2Fdemos%2Fsrc%2Fdemo\.scss"/, done);
+			.expect(regexp, done);
 	});
 });
