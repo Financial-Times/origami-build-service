@@ -274,7 +274,7 @@ The Financial Times has published this software under the [MIT license][license]
 
 
 
-[build-service]: https://build.origami.ft.com/
+[build-service]: https://origami-build.ft.com/
 [ci]: https://circleci.com/gh/Financial-Times/origami-build-service
 [developer-spreadsheet]: https://docs.google.com/spreadsheets/d/1mbJQYJOgXAH2KfgKUM1Vgxq8FUIrahumb39wzsgStu0/edit#gid=0
 [docker-compose]: https://docs.docker.com/compose/
