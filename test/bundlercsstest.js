@@ -3,6 +3,7 @@
 const assert = require('chai').assert;
 const testhelper = require('./testhelper');
 const CssBundler = testhelper.CssBundler;
+const hostnames = require('../lib/utils/hostnames');
 
 const log = testhelper.log;
 const ModuleInstallation = testhelper.ModuleInstallation;
@@ -19,7 +20,7 @@ suiteWithPackages('installation-css has_external_dependency', ['invalidcss', 'te
 		const css = yield testhelper.bufferStream(yield (new CssBundler({log:log})).getContent(installation, moduleset,{minify:true}));
 
 		const cssWithoutShrink = css.replace(/\/\*.*Shrinkwrap[\s\S]+?\*\/\s*/,'');
-		assert.equal(cssWithoutShrink, '#test1{hello:world;silent-var:false;url:url(//build.origami.ft.com/files/test-package1@*/README)}');
+		assert.equal(cssWithoutShrink, '#test1{hello:world;silent-var:false;url:url(//' + hostnames.preferred + '/files/test-package1@*/README)}');
 	});
 
 	spawnTest('invalid-sass', function*(){

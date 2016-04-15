@@ -3,6 +3,7 @@
 const assert = require('chai').assert;
 const testhelper = require('./testhelper');
 const JsBundler = testhelper.JsBundler;
+const hostnames = require('../lib/utils/hostnames');
 
 const log = testhelper.log;
 const ModuleInstallation = testhelper.ModuleInstallation;
@@ -33,7 +34,7 @@ suite('assets', function(){
 
 		assert.include(js, 'o-assets');
 		assert.include(js, 'setGlobalPathPrefix');
-		assert.include(js, '//build.origami.ft.com/files/');
+		assert.include(js, '//' + hostnames.preferred + '/files/');
 	});
 
 });
