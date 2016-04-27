@@ -1,7 +1,7 @@
 'use strict';
 
-const hostnames = require('../utils/hostnames');
-const redirectWithBody = require('../express/redirect-with-body');
+const hostnames = require('../lib/utils/hostnames');
+const redirectWithBody = require('../lib/express/redirect-with-body');
 const URL = require('url');
 
 module.exports = function(req, res) {
