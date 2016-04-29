@@ -179,4 +179,20 @@ describe('GET /v2/bundles/js', function() {
 
 	});
 
+	describe('when the bundle type is invalid', function() {
+		const moduleName = 'mock-modules/test-ok';
+
+		beforeEach(function() {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/javascript?modules=${moduleName}&newerthan=${now}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 404 status', function(done) {
+			this.request.expect(404).end(done);
+		});
+
+	});
+
 });
