@@ -112,6 +112,26 @@ describe('GET /v2/bundles/css', function() {
 
 	});
 
+	describe('when a module name cannot be parsed', function() {
+		const moduleName = 'http://1.2.3.4/';
+
+		beforeEach(function() {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(400).end(done);
+		});
+
+		it('should respond with an error message in a CSS comment', function(done) {
+			this.request.expect(/unable to parse module name/i).end(done);
+		});
+
+	});
+
 	describe('when the bundle type is invalid', function() {
 		const moduleName = 'mock-modules/test-ok';
 
