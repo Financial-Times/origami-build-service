@@ -333,8 +333,8 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 
 				<p>
 					All Build Service endpoints are versioned, and the current version is <code>v2</code>.
-					When deprecating old versions of the API, we give plenty of notice, and will strive
-					to notify all Build Service users.
+					When deprecating old versions of the API we give at least three months notice,
+					and will strive to notify all Build Service users.
 				</p>
 
 				<p>
@@ -387,8 +387,8 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 
 				<p>
 					The only potential breaking change in the <code>v2</code> API is that we moved
-					CSS compilation from Ruby Sass to LibSass. The only endpoint affected by this is
-					<code>/v2/bundles/css</code>.
+					Sass compilation from Ruby Sass to LibSass. The only endpoint affected by this
+					is <code>/v2/bundles/css</code>.
 				</p>
 
 				<p>
@@ -523,7 +523,7 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 
 				<p>
 					We strongly recommend that you update all references to these deprecated hostnames
-					to avoid redirects in your bundle and file requests. You will also get see the
+					to avoid redirects in your bundle and file requests. You will also get the
 					benefit of the <code>stale-while-revalidate</code> and <code>stale-on-error</code>
 					cache extensions, which increase the resilience of the Build Service.
 				</p>
