@@ -137,7 +137,7 @@ o-typography:
 
 				<h3 id="file-proxy-files-">File proxy (/files)</h3>
 				<p>The build service also offers the ability to request, over HTTP or HTTPS, any single file from any known module component.  This is useful to make use of modules that provide static resources such as images, fonts, audio, video or other media, without having to install them.</p>
-				<p>The file proxy is also used by the build service itself when creating bundles of JS or CSS that load external resources on demand.  This allows CSS loaded through the build service <code>/v1/bundles</code> endpoint to still load any included backgrounds, and JavaScript modules may make AJAX requests to load static resources from their repos.</p>
+				<p>The file proxy is also used by the build service itself when creating bundles of JS or CSS that load external resources on demand.  This allows CSS loaded through the build service <code>/v2/bundles</code> endpoint to still load any included backgrounds, and JavaScript modules may make AJAX requests to load static resources from their repos.</p>
 
 				<h3 id="caching-and-rebuilding">Caching and rebuilding</h3>
 				<p>Requested bundles and files are generated on demand and then cached by the build service node that generated it (and also by the CDN).  TTLs are set heuristically based on the mutability of the bundle content (ie if you use a fully shrinkwrapped URL, the TTL will be far longer).  Build times can be significant (occasionally over a minute).</p>
