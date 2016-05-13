@@ -326,6 +326,124 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 				</tr>
 				</table>
 
+
+				<h2 id="deprecation">Deprecation</h2>
+
+				<h3 id="deprecation-api-versions">API versions</h3>
+
+				<p>
+					All Build Service endpoints are versioned, and the current version is <code>v2</code>.
+					When deprecating old versions of the API, we give plenty of notice, and will strive
+					to notify all Build Service users.
+				</p>
+
+				<p>
+					Normally deprecated versions will be removed, and endpoints will start to respond with
+					a <code>410 Gone</code> status. We sometimes make an exception and redirect old
+					versions to their newer counterparts when the API is compatible.
+				</p>
+
+				<table class="o-techdocs-table">
+					<thead>
+						<tr>
+							<th>Version</th>
+							<th>Status</th>
+							<th>End Date</th>
+							<th>Notes</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>v2</code></td>
+							<td>Current</td>
+							<td>N/A</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><code>v1</code></td>
+							<td>Deprecated</td>
+							<td><time datetime="2016-08-15"><b>2016‑08‑15</b></time></td>
+							<td>
+								Requests to <code>v1</code> endpoints will be redirected to
+								<code>v2</code> with a <code>301</code> status, rather than being
+								removed. You're still encouraged to migrate to avoid the overhead
+								of redirects.
+							</td>
+						</tr>
+						<tr>
+							<td><code>-</code></td>
+							<td>Deprecated</td>
+							<td><time datetime="2016-08-15"><b>2016‑08‑15</b></time></td>
+							<td>
+								Requests to unversioned endpoints will be redirected to <code>v2</code>
+								with a <code>301</code> status, rather than being removed. You're
+								still encouraged to migrate to avoid the overhead of redirects.
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h4 id="v1-to-v2-migration">Migrating from <code>v1</code> to <code>v2</code></h4>
+
+				<p>
+					The only potential breaking change in the <code>v2</code> API is that we moved
+					CSS compilation from Ruby Sass to LibSass. The only endpoint affected by this is
+					<code>/v2/bundles/css</code>.
+				</p>
+
+				<p>
+					Try replacing <code>v1</code> with <code>v2</code> in your requests. If you're
+					using very old versions of some modules, some of your styles may break. In this
+					case you'll need to update to newer versions of these modules.
+				</p>
+
+				<table class="o-techdocs-table">
+					<thead>
+						<tr>
+							<th>Before</th>
+							<th>After</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>/v1/bundles/css?modules=&hellip;</code></td>
+							<td><code>/v2/bundles/css?modules=&hellip;</code></td>
+						</tr>
+						<tr>
+							<td><code>/v1/files/&hellip;</code></td>
+							<td><code>/v2/files/&hellip;</code></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h4 id="unversioned-to-v2-migration">Migrating from unversioned to <code>v2</code></h4>
+
+				<p>
+					Unversioned endpoints behave in exactly the same way as <code>v1</code>. See the
+					<a href="#v1-to-v2-migration"><code>v1</code> to <code>v2</code> migration docs</a>
+					for information about breaking changes. To migrate, add <code>v2</code> into the
+					path before the endpoint:
+				</p>
+
+				<table class="o-techdocs-table">
+					<thead>
+						<tr>
+							<th>Before</th>
+							<th>After</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>/bundles/css?modules=&hellip;</code></td>
+							<td><code>/v2/bundles/css?modules=&hellip;</code></td>
+						</tr>
+						<tr>
+							<td><code>/files/&hellip;</code></td>
+							<td><code>/v2/files/&hellip;</code></td>
+						</tr>
+					</tbody>
+				</table>
+
 			</div>
 
 		</div>
