@@ -137,7 +137,7 @@ o-typography:
 
 				<h3 id="file-proxy-files-">File proxy (/files)</h3>
 				<p>The build service also offers the ability to request, over HTTP or HTTPS, any single file from any known module component.  This is useful to make use of modules that provide static resources such as images, fonts, audio, video or other media, without having to install them.</p>
-				<p>The file proxy is also used by the build service itself when creating bundles of JS or CSS that load external resources on demand.  This allows CSS loaded through the build service <code>/v1/bundles</code> endpoint to still load any included backgrounds, and JavaScript modules may make AJAX requests to load static resources from their repos.</p>
+				<p>The file proxy is also used by the build service itself when creating bundles of JS or CSS that load external resources on demand.  This allows CSS loaded through the build service <code>/v2/bundles</code> endpoint to still load any included backgrounds, and JavaScript modules may make AJAX requests to load static resources from their repos.</p>
 
 				<h3 id="caching-and-rebuilding">Caching and rebuilding</h3>
 				<p>Requested bundles and files are generated on demand and then cached by the build service node that generated it (and also by the CDN).  TTLs are set heuristically based on the mutability of the bundle content (ie if you use a fully shrinkwrapped URL, the TTL will be far longer).  Build times can be significant (occasionally over a minute).</p>
@@ -325,6 +325,215 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 					<td>JS compilation error message, if any.</td>
 				</tr>
 				</table>
+
+
+				<h2 id="deprecation">Deprecation</h2>
+
+				<h3 id="deprecation-api-versions">API versions</h3>
+
+				<p>
+					All Build Service endpoints are versioned, and the current version is <code>v2</code>.
+					When deprecating old versions of the API
+					<a href="http://origami.ft.com/docs/component-spec/web-services/#web-services-should">we give at least three months notice</a>,
+					and will strive to notify all Build Service users.
+				</p>
+
+				<p>
+					Normally deprecated versions will be removed, and endpoints will start to respond with
+					a <code>410 Gone</code> status. We sometimes make an exception and redirect old
+					versions to their newer counterparts when the API is compatible.
+				</p>
+
+				<table class="o-techdocs-table">
+					<thead>
+						<tr>
+							<th>Version</th>
+							<th>Status</th>
+							<th>End Date</th>
+							<th>Notes</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>v2</code></td>
+							<td>Current</td>
+							<td>N/A</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><code>v1</code></td>
+							<td>Deprecated</td>
+							<td><time datetime="2016-08-15"><b>2016‑08‑15</b></time></td>
+							<td>
+								Requests to <code>v1</code> endpoints will be redirected to
+								<code>v2</code> with a <code>301</code> status, rather than being
+								removed. You're still encouraged to migrate to avoid the overhead
+								of redirects.
+							</td>
+						</tr>
+						<tr>
+							<td><code>-</code></td>
+							<td>Deprecated</td>
+							<td><time datetime="2016-08-15"><b>2016‑08‑15</b></time></td>
+							<td>
+								Requests to unversioned endpoints will be redirected to <code>v2</code>
+								with a <code>301</code> status, rather than being removed. You're
+								still encouraged to migrate to avoid the overhead of redirects.
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h4 id="v1-to-v2-migration">Migrating from <code>v1</code> to <code>v2</code></h4>
+
+				<p>
+					The only potential breaking change in the <code>v2</code> API is that we moved
+					Sass compilation from Ruby Sass to LibSass. The only endpoint affected by this
+					is <code>/v2/bundles/css</code>.
+				</p>
+
+				<p>
+					Try replacing <code>v1</code> with <code>v2</code> in your requests. If you're
+					using very old versions of some modules, some of your styles may break. In this
+					case you'll need to update to newer versions of these modules.
+				</p>
+
+				<table class="o-techdocs-table">
+					<thead>
+						<tr>
+							<th>Before</th>
+							<th>After</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>/v1/bundles/css?modules=&hellip;</code></td>
+							<td><code>/v2/bundles/css?modules=&hellip;</code></td>
+						</tr>
+						<tr>
+							<td><code>/v1/files/&hellip;</code></td>
+							<td><code>/v2/files/&hellip;</code></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h4 id="unversioned-to-v2-migration">Migrating from unversioned to <code>v2</code></h4>
+
+				<p>
+					Unversioned endpoints behave in exactly the same way as <code>v1</code>. See the
+					<a href="#v1-to-v2-migration"><code>v1</code> to <code>v2</code> migration docs</a>
+					for information about breaking changes. To migrate, add <code>v2</code> into the
+					path before the endpoint:
+				</p>
+
+				<table class="o-techdocs-table">
+					<thead>
+						<tr>
+							<th>Before</th>
+							<th>After</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>/bundles/css?modules=&hellip;</code></td>
+							<td><code>/v2/bundles/css?modules=&hellip;</code></td>
+						</tr>
+						<tr>
+							<td><code>/files/&hellip;</code></td>
+							<td><code>/v2/files/&hellip;</code></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h3 id="hostnames-and-cdns">Hostnames and CDNs</h3>
+
+				<p>
+					The Build Service is accessible using multiple different hostnames. We only
+					recommend using <code>origami-build.ft.com</code>.
+				</p>
+
+				<table class="o-techdocs-table">
+					<thead>
+						<tr>
+							<th>Hostname</th>
+							<th>Status</th>
+							<th>Notes</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>origami-build.ft.com</code></td>
+							<td>Current</td>
+							<td>
+								The hostname you should be accessing the Build Service through.
+								Responses are cached with Fastly, and we use the
+								<code>stale-while-revalidate</code> and <code>stale-on-error</code>
+								cache extensions.
+							</td>
+						</tr>
+						<tr>
+							<td><code>origami.build.ft.com</code></td>
+							<td>Deprecated</td>
+							<td>
+								Responses are cached with Akamai. This will start redirecting to
+								<code>origami-build.ft.com</code> on
+								<time datetime="2016-08-15"><b>2016‑08‑15</b></time>.
+							</td>
+						</tr>
+						<tr>
+							<td><code>buildservice.ft.com</code></td>
+							<td>Deprecated</td>
+							<td>
+								Responses are cached with Akamai. This will start redirecting to
+								<code>origami-build.ft.com</code> on
+								<time datetime="2016-08-15"><b>2016‑08‑15</b></time>.
+							</td>
+						</tr>
+						<tr>
+							<td><code>origami-buildservice-eu.herokuapp.com</code></td>
+							<td>Development</td>
+							<td>
+								Responses are not cached. This hostname should <b>never</b> be used
+								in production.
+							</td>
+						</tr>
+						<tr>
+							<td><code>origami-buildservice-qa.herokuapp.com</code></td>
+							<td>Development</td>
+							<td>
+								This hostname points to a QA instance of the Build Service which has
+								far fewer resources than production. Responses are not cached. This
+								hostname should <b>never</b> be used in production.
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h3 id="fastly-migration">Fastly Migration</h4>
+
+				<p>
+					The Build Service is migrating from Akamai to Fastly, and is doing so by changing
+					the hostname. On <time datetime="2016-08-15"><b>2016‑08‑15</b></time> we will start
+					redirecting traffic from the following hostnames to <code>origami-build.ft.com</code>:
+				</p>
+
+				<ul>
+					<li><code>origami.build.ft.com</code></li>
+					<li><code>buildservice.ft.com</code></li>
+				</ul>
+
+				<p>
+					We strongly recommend that you update all references to these deprecated hostnames
+					to avoid redirects in your bundle and file requests. You will also get the
+					benefit of the <code>stale-while-revalidate</code> and <code>stale-on-error</code>
+					cache extensions, which increase the resilience of the Build Service.
+				</p>
+
+				<p>
+					The redirects may have unexpected results if you access the Build Service
+					through a proxy, and you may see multiple redirects if you're using both a
+					deprecated hostname <em>and</em> <a href="#deprecation-api-versions">API version</a>.
+				</p>
 
 			</div>
 
