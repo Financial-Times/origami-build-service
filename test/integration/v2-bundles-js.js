@@ -121,6 +121,48 @@ describe('GET /v2/bundles/js', function() {
 
 	});
 
+	describe('when a valid module is requested (with the `polyfills` parameter set to `none`)', function() {
+		const moduleName = 'mock-modules/test-ok';
+
+		beforeEach(function() {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&polyfills=none&minify=none`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function(done) {
+			this.request.expect(200).end(done);
+		});
+
+		it('should respond with the bundled JavaScript with no polyfills', function(done) {
+			this.request.expect(function(response) {
+				assert.notMatch(response.text, /Array\.isArray/);
+			}).end(done);
+		});
+
+	});
+
+	describe('when a valid module is requested (with the `polyfills` parameter set to `true`)', function() {
+		const moduleName = 'mock-modules/test-ok';
+
+		beforeEach(function() {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&polyfills=true&minify=none`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function(done) {
+			this.request.expect(200).end(done);
+		});
+
+		it('should respond with the bundled JavaScript containing polyfills', function(done) {
+			this.request.expect(/Array\.isArray/).end(done);
+		});
+
+	});
+
 	describe('when an invalid module is requested (nonexistent)', function() {
 		const moduleName = 'mock-modules/test-404';
 

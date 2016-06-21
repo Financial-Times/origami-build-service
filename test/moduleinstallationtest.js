@@ -96,8 +96,8 @@ suite('installation-remote', function() {
 
 		const css = yield testhelper.bufferStream(cssStream);
 
-		assert.notInclude(css, 'o-ft-icons/build/ft-icons');
-		assert.include(css, 'o-ft-icons@', 'Subresource needs to be versioned');
+		assert.notInclude(css, 'o-icons/build/ft-icons');
+		assert.include(css, 'o-icons%40', 'Subresource needs to be versioned');
 	});
 
 	spawnTestWithTempdir('install-external nonexistant-module', function*(tmpdir) {

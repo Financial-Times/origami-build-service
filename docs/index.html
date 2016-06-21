@@ -171,6 +171,10 @@ o-typography:
 						<td>Querystring</td>
 						<td><em>(Optional)</em> If present and set to 'none', suppresses minification.  Otherwise output will be minified automatically.</td>
 					</tr><tr>
+						<td><code>polyfills</code></td>
+						<td>Querystring</td>
+						<td><em>(Optional)</em> If present and set to 'none', does not add polyfills to the output. Use this if your bundle is conflicting with other polyfills (e.g. through the <a href="https://cdn.polyfill.io/">Polyfill Service</a>).</td>
+					</tr><tr>
 						<td><code>export</code></td>
 						<td>Querystring</td>
 						<td><em>(Optional)</em> If present, generates a <a href="https://github.com/umdjs/umd">UMD</a> bundle for the supplied export name. UMD works with other module systems and if no module system is found sets the specified name as a window global.  If absent, the default export name <code>Origami</code> will be used.  To export nothing, pass an empty string.</td>
