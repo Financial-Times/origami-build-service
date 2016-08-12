@@ -31,77 +31,31 @@ Table Of Contents
 Requirements
 ------------
 
-Running Origami Build Service requires a few tools:
-
-  * [VirtualBox]: For running your Docker machine **(_Mac Only_)**
-  * [Docker]: For building Docker images
-  * [Docker Compose][docker-compose]: For building and running a development image
-  * [Docker Machine][docker-machine]: For installing and running a Docker engine **(_Mac Only_)**
-  * [Node.js] 4.x and [npm]: For running tests locally (we don't run them on the Docker images)
-
-### Mac Guide
-
-You can simplify some of the set up on a Mac by using the [Docker Mac set up guide][docker-mac] or [homebrew]:
-
-```sh
-brew tap caskroom/homebrew-cask
-brew install brew-cask
-brew cask install dockertoolbox docker-compose
-```
-
-The following command creates a virtual machine in which to run the application's containers. The default size didn't appear to be large enough so this will create one with an increased disk size:
-
-```sh
-docker-machine create --driver virtualbox --virtualbox-disk-size "50000" default
-```
-
-Add the machine's config to your current environment by running the following:
-
-```sh
-eval $(docker-machine env default)
-```
-
-In future Terminal sessions, you'll need to run the following in order to start the docker machine:
-
-```sh
-docker-machine start default
-```
-
-You'll also need to add the machine's config to your environment again using the `eval` command outlined above. Alternatively, you can add this command to your `.bash_profile` file to automatically do this.
+Running Origami Build Service requires [Node.js] 4.x and [npm].
 
 
 Running Locally
 ---------------
 
-Before we can run the application, we'll need to create a `.env` file. You can copy the sample file, and consult the documentation for [available options](#configuration):
+Before we can run the application, we'll need to install dependencies:
 
 ```sh
-cp sample.env .env
+make install
 ```
 
-In the working directory, use `docker-compose` to build and start a container. We have some Make tasks which simplify this:
+Run the application in development mode with
 
 ```sh
-make build-dev run-dev
+make run-dev
 ```
 
-Now you can access the app over HTTP on port `8080`. If you're on a Mac, you'll need to use the IP of your Docker Machine:
-
-```sh
-open "http://$(docker-machine ip default):8080/"
-```
-
-To attach a bash process (for debugging, etc) to the running Docker image:
-
-```sh
-make attach-dev
-```
+Now you can access the app over HTTP on port `9000`: [http://localhost:9000/](http://localhost:9000/)
 
 
 Configuration
 -------------
 
-We configure Origami Build Service using environment variables. In development, configurations are set in `docker-compose.yml`. In production, these are set through Heroku config.
+We configure Origami Build Service using environment variables. In development, you'll need to set these before running the application. In production, these are set through Heroku config.
 
   * `PORT`: The port to run the application on.
   * `NODE_ENV`: The environment to run the application in. One of `production`, `development` (default), or `test` (for use in automated tests).
@@ -144,17 +98,9 @@ We run the tests and linter on CI, you can view [results on CircleCI][ci]. `make
 Deployment
 ----------
 
-The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], you should never need to deploy to QA manually. ~~We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production~~.
+The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], you should never need to deploy to QA manually. We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production, this can be done with:
 
-:warning: We have to deploy to production manually while we wait for Heroku Docker/pipeline support. You'll need access to the Heroku Docker private beta, and to have logged into the registry.
-
-Run the following command exactly, don't replace the underscores in username and password:
-
-```sh
-docker login --email=_ --username=_ --password=$(heroku auth:token) registry.heroku.com
-```
-
-You'll need to provide your GitHub username for change request logging, ensure you've been [added to this spreadsheet][developer-spreadsheet]. Now deploy the last QA image by running the following, avoiding having to build locally:
+You'll need to provide your GitHub username for change request logging, ensure you've been [added to this spreadsheet][developer-spreadsheet]. Now deploy the last QA image by running the following:
 
 ```sh
 GITHUB_USERNAME=yourgithubusername make promote
@@ -209,17 +155,19 @@ If your component still doesn't appear, then we've cached an older version on th
 heroku restart --app origami-buildservice-eu
 ```
 
+### What if I need to deploy manually?
+
+If you _really_ need to deploy manually, you should only do so to QA. Production deploys should always be a promotion from QA.
+
+You'll need to provide your GitHub username for change request logging, ensure you've been [added to this spreadsheet][developer-spreadsheet]. Now deploy to QA using the following:
+
+```sh
+GITHUB_USERNAME=yourgithubusername make deploy
+```
+
 
 Project Structure
 -----------------
-
-### Orchestration files
-
-We use the following files in build, test and deploy automation:
-
-  * `.dockerignore`: Used to ignore things when adding files to the Docker image.
-  * `Dockerfile`: Instructions to build the web container. CI uses this as part of deployment.
-  * `docker-compose.yml`: Extra instructions required for building a development Docker container.
 
 ### ES6/Promises patterns
 
@@ -278,17 +226,13 @@ The Financial Times has published this software under the [MIT license][license]
 [build-service]: https://origami-build.ft.com/
 [ci]: https://circleci.com/gh/Financial-Times/origami-build-service
 [developer-spreadsheet]: https://docs.google.com/spreadsheets/d/1mbJQYJOgXAH2KfgKUM1Vgxq8FUIrahumb39wzsgStu0/edit#gid=0
-[docker-compose]: https://docs.docker.com/compose/
-[docker-mac]: http://docs.docker.com/mac/step_one/
-[docker-machine]: https://docs.docker.com/machine/
-[docker]: https://www.docker.com/
 [email-rowan]: mailto:rowan.manning@ft.com
 [grafana]: http://grafana.ft.com/dashboard/db/origami-build-service
+[heroku-cli]: https://devcenter.heroku.com/articles/heroku-command
 [heroku-pipeline]: https://dashboard.heroku.com/pipelines/9cd9033e-fa9d-42af-bfe9-b9d0aa6f4a50
 [heroku-production]: https://dashboard.heroku.com/apps/origami-buildservice-eu
 [heroku-qa]: https://dashboard.heroku.com/apps/origami-buildservice-qa
 [heroku]: https://heroku.com/
-[homebrew]: http://brew.sh/
 [license]: http://opensource.org/licenses/MIT
 [node-inspector]: https://github.com/node-inspector/node-inspector
 [node.js]: https://nodejs.org/
@@ -298,4 +242,3 @@ The Financial Times has published this software under the [MIT license][license]
 [q]: https://github.com/kriskowal/q
 [semver]: http://semver.org/
 [sentry]: https://getsentry.com/
-[virtualbox]: https://www.virtualbox.org/
