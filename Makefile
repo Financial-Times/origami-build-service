@@ -41,8 +41,13 @@ test-old:
 # Deploy tasks
 # ------------
 
-deploy: build
+deploy:
 	@git push https://git.heroku.com/origami-buildservice-qa.git
+	@make change-request-qa
+	@$(DONE)
+
+deploy-ci:
+	@git push git@heroku.com:origami-buildservice-qa.git
 	@make change-request-qa
 	@$(DONE)
 
