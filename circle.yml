@@ -12,4 +12,4 @@ deployment:
   staging:
     branch: master
     commands:
-      - make deploy
+      - make deploy-ci
