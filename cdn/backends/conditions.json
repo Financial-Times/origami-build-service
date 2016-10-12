@@ -1,0 +1,8 @@
+[
+  {
+    "name": "disable_gui_logs",
+    "priority": 10,
+    "statement": "!req.url",
+    "type": "RESPONSE"
+  }
+]

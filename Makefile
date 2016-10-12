@@ -6,6 +6,7 @@ include n.Makefile
 
 EXPECTED_COVERAGE = 90
 
+LOAD_ENV_FLAG = $(if $(wildcard .env),-e,)
 
 # Verify tasks
 # ------------
@@ -53,6 +54,7 @@ deploy-ci:
 
 promote:
 	@heroku pipelines:promote --app origami-buildservice-qa
+	fastly deploy $(call LOAD_ENV_FLAG) --service 4kUyjWYbCqkUHQZ7mBwMzl --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 	@make change-request-prod
 	@$(DONE)
 
