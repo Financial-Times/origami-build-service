@@ -112,6 +112,24 @@ describe('GET /v2/bundles/css', function() {
 
 	});
 
+	describe('when the modules parameter is not a string', function() {
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v2/bundles/css?modules[]=foo&modules[]=bar`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(400).end(done);
+		});
+
+		it('should respond with an error message in a CSS comment', function(done) {
+			this.request.expect('/*\n\nThe \'modules\' query argument must be a comma-separated list of modules\n\n*/\n').end(done);
+		});
+
+	});
+
 	describe('when a module name cannot be parsed', function() {
 		const moduleName = 'http://1.2.3.4/';
 
