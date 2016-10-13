@@ -42,7 +42,7 @@ test-old:
 
 deploy:
 	@git push https://git.heroku.com/origami-buildservice-qa.git
-  fastly deploy -e --service OdsPyPDTqDc8mVdDKln8y --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
+	fastly deploy -e --service OdsPyPDTqDc8mVdDKln8y --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 	@make change-request-qa
 	@$(DONE)
 
@@ -54,7 +54,7 @@ deploy-ci:
 
 promote:
 	@heroku pipelines:promote --app origami-buildservice-qa
-  fastly deploy -e --service 4kUyjWYbCqkUHQZ7mBwMzl --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
+	fastly deploy -e --service 4kUyjWYbCqkUHQZ7mBwMzl --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 	@make change-request-prod
 	@$(DONE)
 
