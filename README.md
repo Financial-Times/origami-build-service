@@ -100,11 +100,6 @@ Deployment
 
 The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], you should never need to deploy to QA manually. We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production, this can be done with:
 
-You'll need to provide your GitHub username for change request logging, ensure you've been [added to this spreadsheet][developer-spreadsheet]. Now deploy the last QA image by running the following:
-
-```sh
-GITHUB_USERNAME=yourgithubusername make promote
-```
 
 We use [Semantic Versioning][semver] to tag releases. Only tagged releases should hit production, this ensures that the `__about` endpoint is informative. To tag a new release, use one of the following (this is the only time we allow a commit directly to `master`):
 
@@ -116,6 +111,13 @@ npm version patch
 
 Now you can push to GitHub (`git push && git push --tags`) which will trigger a QA deployment. Once QA has deployed with the newly tagged version, you can promote it to production.
 
+To promote to production you will need to create a file in the root of this project named `.env` and fill it with a few environment variables, the contents of this file is stored in the [Origami LastPass][lastpass] under the name `[dev] Origami build service`. You'll need to also provide your GitHub username for change request logging, ensure you've been [added to this spreadsheet][developer-spreadsheet].
+
+To promote the last QA image into production, running the following:
+
+```sh
+GITHUB_USERNAME=yourgithubusername make promote
+```
 
 Monitoring
 ----------
@@ -241,6 +243,7 @@ The Financial Times has published this software under the [MIT license][license]
 [heroku-production]: https://dashboard.heroku.com/apps/origami-buildservice-eu
 [heroku-qa]: https://dashboard.heroku.com/apps/origami-buildservice-qa
 [heroku]: https://heroku.com/
+[lastpass]: https://lastpass.com
 [license]: http://opensource.org/licenses/MIT
 [node-inspector]: https://github.com/node-inspector/node-inspector
 [node.js]: https://nodejs.org/
