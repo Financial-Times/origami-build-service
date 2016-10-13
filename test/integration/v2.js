@@ -10,7 +10,7 @@ describe('GET /v2', function() {
 
 	beforeEach(function() {
 		this.request = request(this.app)
-			.get(`/v2`)
+			.get('/v2')
 			.set('Connection', 'close');
 	});
 
