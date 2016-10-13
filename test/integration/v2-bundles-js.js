@@ -207,7 +207,7 @@ describe('GET /v2/bundles/js', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v2/bundles/js`)
+				.get('/v2/bundles/js')
 				.set('Connection', 'close');
 		});
 
@@ -225,7 +225,7 @@ describe('GET /v2/bundles/js', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v2/bundles/js?modules[]=foo&modules[]=bar`)
+				.get('/v2/bundles/js?modules[]=foo&modules[]=bar')
 				.set('Connection', 'close');
 		});
 
