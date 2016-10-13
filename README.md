@@ -127,6 +127,14 @@ We also use [Pingdom] to track uptime. You should get notifications if you're a 
   * `Origami Build Service EU Origin (HTTPS)`: checks that the application is responding on HTTPS.
   * `Origami Build Service EU Origin (HTTP)`: checks that the application is responding on HTTP.
 
+Logging
+----------
+
+We use [Splunk] to store and query our application and CDN log files. Using Splunk we can answer many questions, such as: which product is using our services the most; which components are not being requested (good candidates to deprecate).
+
+[Here is an example query](https://financialtimes.splunkcloud.com/en-US/app/search/search?q=search%20%22host%3Dorigami-build.ft.com%22%20path%3D%22*o-big-number*%22%20path!%3D%22*demos*%22&display.page.search.mode=fast&dispatch.sample_ratio=1&earliest=-90d%40d&latest=now&display.page.search.tab=events&display.general.type=events&sid=1476358263.37098) which was used to find out if our `o-big-number` component was being requested.
+
+[Here is an example query](https://financialtimes.splunkcloud.com/en-US/app/search/search?q=search%20sourcetype%3D%22fastly%22%20%20serviceid%3D4kUyjWYbCqkUHQZ7mBwMzl&display.page.search.mode=fast&dispatch.sample_ratio=1&earliest=-1h&latest=now&display.page.search.tab=events&display.general.type=events&sid=1476358197.36513) which shows the last hour of logs from our CDN.
 
 Trouble-Shooting
 ----------------
@@ -242,3 +250,4 @@ The Financial Times has published this software under the [MIT license][license]
 [q]: https://github.com/kriskowal/q
 [semver]: http://semver.org/
 [sentry]: https://getsentry.com/
+[splunk]: https://financialtimes.splunkcloud.com/
