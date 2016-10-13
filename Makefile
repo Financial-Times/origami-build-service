@@ -6,8 +6,6 @@ include n.Makefile
 
 EXPECTED_COVERAGE = 90
 
-LOAD_ENV_FLAG = $(if $(wildcard .env),-e,)
-
 # Verify tasks
 # ------------
 
@@ -44,17 +42,19 @@ test-old:
 
 deploy:
 	@git push https://git.heroku.com/origami-buildservice-qa.git
+  fastly deploy -e --service OdsPyPDTqDc8mVdDKln8y --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 	@make change-request-qa
 	@$(DONE)
 
 deploy-ci:
 	@git push git@heroku.com:origami-buildservice-qa.git
+	fastly deploy --service OdsPyPDTqDc8mVdDKln8y --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 	@make change-request-qa
 	@$(DONE)
 
 promote:
 	@heroku pipelines:promote --app origami-buildservice-qa
-	fastly deploy $(call LOAD_ENV_FLAG) --service 4kUyjWYbCqkUHQZ7mBwMzl --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
+  fastly deploy -e --service 4kUyjWYbCqkUHQZ7mBwMzl --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 	@make change-request-prod
 	@$(DONE)
 
