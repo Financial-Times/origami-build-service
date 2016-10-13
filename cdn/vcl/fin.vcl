@@ -19,7 +19,7 @@ sub vcl_fetch {
 	}
 
 	if (req.restarts > 0 ) {
-    set beresp.http.Fastly-Restarts = req.restarts;
+		set beresp.http.Fastly-Restarts = req.restarts;
 	}
 
 	if (beresp.http.Set-Cookie) {
@@ -40,13 +40,13 @@ sub vcl_fetch {
 	}
 
 	if (beresp.http.Expires || beresp.http.Surrogate-Control ~ "max-age" || beresp.http.Cache-Control ~ "(s-maxage|max-age)") {
-    # keep the ttl here
-  } else {
-    # apply the default ttl
-    set beresp.ttl = 3600s;
-  }
+		# keep the ttl here
+	} else {
+		# apply the default ttl
+		set beresp.ttl = 3600s;
+	}
 
-  return(deliver);
+	return(deliver);
 }
 
 sub vcl_hit {
