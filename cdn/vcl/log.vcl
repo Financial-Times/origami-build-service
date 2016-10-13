@@ -23,7 +23,7 @@ sub vcl_deliver {
   # that we can look at the logs for our requests
   if (req.http.FT-Debug) {
 		set resp.http.request-id = req.http.request-id;
-	};
+	}
 }
 
 sub vcl_error {
