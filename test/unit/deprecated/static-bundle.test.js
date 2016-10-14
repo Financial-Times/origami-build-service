@@ -36,8 +36,8 @@ describe('deprecated/static-bundle', function() {
 	describe('.getStaticBundleStream(url, staticBundlesDirectory)', function() {
 		let returnedPromise;
 		let fileStats;
-		let staticBundlesDirectory = '/test-static-bundles';
-		let url = 'http://example.com/foo/bar?a=b';
+		const staticBundlesDirectory = '/test-static-bundles';
+		const url = 'http://example.com/foo/bar?a=b';
 
 		beforeEach(function() {
 			fileStats = {
@@ -121,7 +121,7 @@ describe('deprecated/static-bundle', function() {
 
 	describe('.getStaticBundleFilePath(url, staticBundlesDirectory)', function() {
 		let returnValue;
-		let staticBundlesDirectory = '/test-static-bundles';
+		const staticBundlesDirectory = '/test-static-bundles';
 		let url = 'http://example.com/foo/bar?a=b';
 
 		beforeEach(function() {
