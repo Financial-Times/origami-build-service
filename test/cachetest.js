@@ -243,7 +243,7 @@ suite('promisecache', function(){
 		const e = new PromiseCache();
 		let count=0;
 		function inc() {
-			let nthcall = ++count;
+			const nthcall = ++count;
 			return Q.delay(20).then(function(){
 				return {result:nthcall};
 			});
