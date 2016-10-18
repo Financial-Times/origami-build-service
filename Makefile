@@ -52,7 +52,7 @@ deploy-ci:
 	@$(DONE)
 
 promote:
-ifeq ($(CR_API_KEY),)
+ifndef CR_API_KEY
 	$(error CR_API_KEY is not set, change requests cannot be created. You can find the key in LastPass)
 endif
 	@heroku pipelines:promote --app origami-buildservice-qa
@@ -70,7 +70,7 @@ CR_SERVICE_ID=origami-buildservice ServiceModule
 CR_NOTIFY_CHANNEL=origami-internal
 
 change-request-qa:
-ifeq ($(CR_API_KEY),)
+ifndef CR_API_KEY
 	$(error CR_API_KEY is not set, change requests cannot be created. You can find the key in LastPass)
 endif
 	@change-request \
@@ -84,7 +84,7 @@ endif
 	@$(DONE)
 
 change-request-prod:
-ifeq ($(CR_API_KEY),)
+ifndef CR_API_KEY
 	$(error CR_API_KEY is not set, change requests cannot be created. You can find the key in LastPass)
 endif
 	@change-request \
