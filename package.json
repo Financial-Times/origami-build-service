@@ -48,7 +48,7 @@
     "uuid": "^1.4.1"
   },
   "devDependencies": {
-    "@financial-times/change-request": "^0.3.0",
+    "@financial-times/change-request": "^1.0.0",
     "chai": "^3.5.0",
     "eslint": "^2.2.0",
     "istanbul": "^0.4.2",
