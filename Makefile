@@ -67,7 +67,7 @@ CR_EMAIL=rowan.manning@ft.com
 CR_APPNAME=Origami Build Service
 CR_DESCRIPTION=Release triggered by CI
 CR_SERVICE_ID=origami-buildservice ServiceModule
-CR_NOTIFY_CHANNEL=origami-internal
+CR_NOTIFY_CHANNEL=origami-deploys
 
 change-request-qa:
 ifndef CR_API_KEY
@@ -80,6 +80,7 @@ endif
 		--description "$(CR_DESCRIPTION)" \
 		--owner-email "$(CR_EMAIL)" \
 		--service "$(CR_SERVICE_ID)" \
+		--notify-channel "$(CR_NOTIFY_CHANNEL)" \
 		|| true
 	@$(DONE)
 
@@ -94,6 +95,7 @@ endif
 		--description "$(CR_DESCRIPTION)" \
 		--owner-email "$(CR_EMAIL)" \
 		--service "$(CR_SERVICE_ID)" \
+		--notify-channel "$(CR_NOTIFY_CHANNEL)" \
 		|| true
 	@$(DONE)
 
