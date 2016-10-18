@@ -100,10 +100,10 @@ Deployment
 
 The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], you should never need to deploy to QA manually. We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production, this can be done with:
 
-You'll need to provide your GitHub username for change request logging, ensure you've been [added to this spreadsheet][developer-spreadsheet]. Now deploy the last QA image by running the following:
+You'll need to provide an API key for change request logging. You can get this from the Origami LastPass folder in the note named `Change Request API Keys`. Now deploy the last QA image by running the following:
 
 ```sh
-GITHUB_USERNAME=yourgithubusername make promote
+CR_API_KEY=<API-KEY> make promote
 ```
 
 We use [Semantic Versioning][semver] to tag releases. Only tagged releases should hit production, this ensures that the `__about` endpoint is informative. To tag a new release, use one of the following (this is the only time we allow a commit directly to `master`):
@@ -159,10 +159,10 @@ heroku restart --app origami-buildservice-eu
 
 If you _really_ need to deploy manually, you should only do so to QA. Production deploys should always be a promotion from QA.
 
-You'll need to provide your GitHub username for change request logging, ensure you've been [added to this spreadsheet][developer-spreadsheet]. Now deploy to QA using the following:
+You'll need to provide an API key for change request logging. You can get this from the Origami LastPass folder in the note named `Change Request API Keys`. Now deploy to QA using the following:
 
 ```sh
-GITHUB_USERNAME=yourgithubusername make deploy
+CR_API_KEY=<API-KEY> make deploy
 ```
 
 
@@ -225,7 +225,6 @@ The Financial Times has published this software under the [MIT license][license]
 
 [build-service]: https://origami-build.ft.com/
 [ci]: https://circleci.com/gh/Financial-Times/origami-build-service
-[developer-spreadsheet]: https://docs.google.com/spreadsheets/d/1mbJQYJOgXAH2KfgKUM1Vgxq8FUIrahumb39wzsgStu0/edit#gid=0
 [email-rowan]: mailto:rowan.manning@ft.com
 [grafana]: http://grafana.ft.com/dashboard/db/origami-build-service
 [heroku-cli]: https://devcenter.heroku.com/articles/heroku-command
