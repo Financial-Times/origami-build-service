@@ -37,13 +37,13 @@ test-old:
 	@$(DONE)
 
 test-vcl-ci:
-  mocha test-vcl/ -t 30000 -s 500 --ci
+	mocha test-vcl/ -t 30000 -s 500 --ci
 
 test-vcl-qa:
-  mocha test-vcl/ -t 30000 -s 500 --qa
+	mocha test-vcl/ -t 30000 -s 500 --qa
 
 test-vcl-prod:
-  mocha test-vcl/ -t 30000 -s 500 --prod
+	mocha test-vcl/ -t 30000 -s 500 --prod
 
 # Deploy tasks
 # ------------
@@ -51,8 +51,8 @@ test-vcl-prod:
 deploy:
 	@git push https://git.heroku.com/origami-buildservice-qa.git
 	@fastly deploy -e --service OdsPyPDTqDc8mVdDKln8y --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
-  @sleep 30
-  @make test-vcl-qa
+	@sleep 30
+	@make test-vcl-qa
 	@make change-request-qa
 	@$(DONE)
 
@@ -62,13 +62,13 @@ deploy-ci:
 deploy-qa:
 	@git push git@heroku.com:origami-buildservice-qa.git
 	@fastly deploy --service OdsPyPDTqDc8mVdDKln8y --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
-  @sleep 30
-  @make test-vcl-qa
+	@sleep 30
+	@make test-vcl-qa
 	@make change-request-qa
 	@$(DONE)
 
 deploy-vcl-then-test-ci:
-  make deploy-ci && sleep 30 && make test-vcl-ci
+	make deploy-ci && sleep 30 && make test-vcl-ci
 
 promote:
 ifndef CR_API_KEY
