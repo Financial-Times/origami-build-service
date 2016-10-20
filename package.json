@@ -51,6 +51,7 @@
     "@financial-times/change-request": "^1.0.0",
     "@financial-times/fastly-tools": "^1.4.1",
     "chai": "^3.5.0",
+    "dotenv": "^2.0.0",
     "eslint": "^2.2.0",
     "istanbul": "^0.4.2",
     "lintspaces-cli": "^0.1.1",
@@ -59,7 +60,8 @@
     "nodemon": "^1.10.0",
     "sinon": "^1.17.3",
     "sinon-as-promised": "^4.0.0",
-    "supertest": "^0.13.0"
+    "supertest": "^2.0.1",
+    "supertest-as-promised": "^4.0.0"
   },
   "engines": {
     "node": "^4.0.0"
