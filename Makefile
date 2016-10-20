@@ -53,17 +53,52 @@ deploy-ci:
 	@$(DONE)
 
 promote:
+ifndef CR_API_KEY
+	$(error CR_API_KEY is not set, change requests cannot be created. You can find the key in LastPass)
+endif
 	@heroku pipelines:promote --app origami-buildservice-qa
 	fastly deploy -e --service 4kUyjWYbCqkUHQZ7mBwMzl --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 	@make change-request-prod
 	@$(DONE)
 
+
+# Change Request tasks
+# --------------------
+
+CR_EMAIL=rowan.manning@ft.com
+CR_APPNAME=Origami Build Service
+CR_DESCRIPTION=Release triggered by CI
+CR_SERVICE_ID=origami-buildservice ServiceModule
+CR_NOTIFY_CHANNEL=origami-deploys
+
 change-request-qa:
-	@./tools/change-request.js --environment Test --gateway konstructor || true
+ifndef CR_API_KEY
+	$(error CR_API_KEY is not set, change requests cannot be created. You can find the key in LastPass)
+endif
+	@change-request \
+		--environment "Test" \
+		--api-key "$(CR_API_KEY)" \
+		--summary "Releasing $(CR_APPNAME) to QA" \
+		--description "$(CR_DESCRIPTION)" \
+		--owner-email "$(CR_EMAIL)" \
+		--service "$(CR_SERVICE_ID)" \
+		--notify-channel "$(CR_NOTIFY_CHANNEL)" \
+		|| true
 	@$(DONE)
 
 change-request-prod:
-	@./tools/change-request.js --environment Production --gateway internal || true
+ifndef CR_API_KEY
+	$(error CR_API_KEY is not set, change requests cannot be created. You can find the key in LastPass)
+endif
+	@change-request \
+		--environment "Production" \
+		--api-key "$(CR_API_KEY)" \
+		--summary "Releasing $(CR_APPNAME) to production" \
+		--description "$(CR_DESCRIPTION)" \
+		--owner-email "$(CR_EMAIL)" \
+		--service "$(CR_SERVICE_ID)" \
+		--notify-channel "$(CR_NOTIFY_CHANNEL)" \
+		|| true
 	@$(DONE)
 
 
