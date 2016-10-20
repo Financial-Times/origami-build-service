@@ -57,7 +57,7 @@ deploy:
 	@$(DONE)
 
 deploy-ci:
-	@fastly deploy --service 4e0DPmadS4hEMNbGauJk7K --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
+	@fastly deploy --service 3RKFss27d33H2h36qIEMSM --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 
 deploy-qa:
 	@git push git@heroku.com:origami-buildservice-qa.git
