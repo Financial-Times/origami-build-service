@@ -91,13 +91,13 @@ describe('deprecated/static-bundle', function() {
 
 			beforeEach(function() {
 				fileStats.isFile.returns(false);
-				returnedPromise = staticBundle.getStaticBundleStream(url, staticBundlesDirectory);
 			});
 
 			describe('.catch()', function() {
 				let caughtError;
 
 				beforeEach(function(done) {
+          returnedPromise = staticBundle.getStaticBundleStream(url, staticBundlesDirectory);
 					returnedPromise.catch(function(error) {
 						caughtError = error;
 						done();
