@@ -97,7 +97,7 @@ describe('deprecated/static-bundle', function() {
 				let caughtError;
 
 				beforeEach(function(done) {
-          returnedPromise = staticBundle.getStaticBundleStream(url, staticBundlesDirectory);
+					returnedPromise = staticBundle.getStaticBundleStream(url, staticBundlesDirectory);
 					returnedPromise.catch(function(error) {
 						caughtError = error;
 						done();
