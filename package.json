@@ -58,7 +58,7 @@
     "nodemon": "^1.10.0",
     "sinon": "^1.17.3",
     "sinon-as-promised": "^4.0.0",
-    "supertest": "^0.13.0"
+    "supertest": "^2.0.1"
   },
   "engines": {
     "node": "^4.0.0"
