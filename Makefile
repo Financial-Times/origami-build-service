@@ -6,12 +6,12 @@ include n.Makefile
 
 EXPECTED_COVERAGE = 90
 
-
 # Verify tasks
 # ------------
 
 verify-coverage:
-	@istanbul check-coverage --statement $(EXPECTED_COVERAGE) --branch $(EXPECTED_COVERAGE) --function $(EXPECTED_COVERAGE)
+# this doesn't seem to listen to line 6 of n.Makefile
+	@node_modules/.bin/istanbul check-coverage --statement $(EXPECTED_COVERAGE) --branch $(EXPECTED_COVERAGE) --function $(EXPECTED_COVERAGE)
 	@$(DONE)
 
 
@@ -26,7 +26,7 @@ test-unit:
 	@$(DONE)
 
 test-unit-coverage:
-	@NODE_ENV=test istanbul cover node_modules/.bin/_mocha -- test/unit --recursive
+	@NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- test/unit --recursive
 	@$(DONE)
 
 test-integration:
