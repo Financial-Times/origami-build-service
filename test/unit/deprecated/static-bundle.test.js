@@ -91,7 +91,6 @@ describe('deprecated/static-bundle', function() {
 
 			beforeEach(function() {
 				fileStats.isFile.returns(false);
-				returnedPromise = staticBundle.getStaticBundleStream(url, staticBundlesDirectory);
 			});
 
 			describe('.catch()', function() {

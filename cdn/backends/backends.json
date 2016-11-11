@@ -1,0 +1,13 @@
+[
+	{
+		"name": "Heroku EU",
+		"connect_timeout": 3000,
+		"port": 443,
+		"hostname": "origami-buildservice-eu.herokuapp.com",
+		"first_byte_timeout": 15000,
+		"max_conn": 200,
+		"between_bytes_timeout": 10000,
+		"healthcheck": "Heroku GTG",
+		"shield": "london_city-uk"
+	}
+]
