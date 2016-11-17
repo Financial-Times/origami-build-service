@@ -13,4 +13,5 @@ deployment:
   staging:
     branch: master
     commands:
+      - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
       - make deploy-qa
