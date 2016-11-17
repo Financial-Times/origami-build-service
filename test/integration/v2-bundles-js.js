@@ -22,7 +22,7 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should respond with the bundled JavaScript', function(done) {
-			this.request.expect(/^\/\*\* Shrinkwrap URL:\n \*      \/v2\/bundles\/js\?modules=mock-modules%2Ftest-ok%2Co-autoinit%401.2.0&shrinkwrap=mock-modules%2Ftest-dependency\n \*\//i).end(done);
+			this.request.expect(/^\/\*\* Shrinkwrap URL:\n \*      \/v2\/bundles\/js\?modules=mock-modules%2Ftest-ok%2Co-autoinit%401\.2\.1&shrinkwrap=mock-modules%2Ftest-dependency\n \*\//i).end(done);
 		});
 
 		it('should minify the bundle', function(done) {
