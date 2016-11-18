@@ -104,6 +104,8 @@ const buildSystem = new BuildSystem({
 			'`.  If successful, the output of the command should include something similar to: `Connection to ' + to + ' port ' + port + ' [tcp/*] succeeded!`.';
 	}
 
+	const businessImpact = 'As problem persists, more and more Origami components in use on live sites may appear broken, unstyled or absent. This may not start to happen for several hours because the service retains saved copies of existing files for some time.';
+
 	healthMonitor.addSystemLoadCheck({
 		name: 'System load',
 		checkPeriod: 10, // five minutes
@@ -116,6 +118,7 @@ const buildSystem = new BuildSystem({
 		name: 'Availability of Github (TCP/IP connectivity to github.com on port 80)',
 		severity: 2,
 		technicalSummary: 'This will prevent new modules from installing and being built where the module is stored on github.com.  If this continues to fail for large periods of time, expect end user reports from critical sites if left unfixed.',
+		businessImpact: businessImpact,
 		panicGuide: tcpCheckInstruction('github.com', 80) + ' If this fails, check whether `github.com` loads in a web browser and `https://status.github.com/` for reported downtime, if either of these steps are successful, however the check using `ssh` and `nc` above fails, escalate to the networks team.',
 		checkPeriod: 30
 	}, 'github.com', 80);
@@ -124,6 +127,7 @@ const buildSystem = new BuildSystem({
 		name: 'Availability of Github (TCP/IP connectivity to github.com on port 443)',
 		severity: 2,
 		technicalSummary: 'This will prevent new modules from installing and being built where the module is stored on github.com.  If this continues to fail for large periods of time, expect end user reports from critical sites if left unfixed.',
+		businessImpact: businessImpact,
 		panicGuide: tcpCheckInstruction('github.com', 443) + ' If this fails, check whether `github.com` loads in a web browser and `https://status.github.com/` for reported downtime, if either of these steps are successful, however the check using `ssh` and `nc` above fails, escalate to the networks team.',
 		checkPeriod: 30
 	}, 'github.com', 443);
@@ -133,7 +137,8 @@ const buildSystem = new BuildSystem({
 		name: 'Availability of registry.origami.ft.com (TCP/IP connectivity to registry.origami.ft.com on port 80)',
 		severity: 2,
 		technicalSummary: 'This will prevent any new modules from installing and being built.  If this continues to fail for large periods of time, expect end user reports from critical sites if left unfixed.',
-		panicGuide: tcpCheckInstruction('registry.origami.ft.com', 80) + ' If this fails, check whether `registry.origami.ft.com` loads in a web browser, if this is unsuccessful refer to registry.origami.ft.com/__health. This may coincide with issues on FT Labs\' `prod01` infrastructure, if there are no known issues on `prod01`, yet this issue persists, escalate to the networks team.',
+		panicGuide: tcpCheckInstruction('registry.origami.ft.com', 80) + ' If this fails, check whether `registry.origami.ft.com` loads in a web browser, if this is unsuccessful refer to registry.origami.ft.com/__health.',
+		businessImpact: businessImpact,
 		checkPeriod: 30
 	}, 'registry.origami.ft.com', 80);
 
@@ -141,6 +146,7 @@ const buildSystem = new BuildSystem({
 		severity: 1,
 		checkPeriod: 120,
 		technicalSummary: 'Process has run out of available memory',
+		businessImpact: 'Application will not be able to serve styles and interaction functionality to critical sites. Expect end users reports.',
 		panicGuide: 'Restart the service using the `heroku` command line tool: `heroku restart --app origami-buildservice-eu`.'
 	});
 
@@ -150,7 +156,7 @@ const buildSystem = new BuildSystem({
 			checkPeriod: 120,
 			technicalSummary: '/tmp directory is full, new modules will not be installable.',
 			panicGuide: 'Restart the service using the `heroku` command line tool: `heroku restart --app origami-buildservice-eu`.',
-			businessImpact: 'New modules will not be able to install and existing modules will not refresh.  As problem persists expect end user reports from critical sites regarding styling and broken functionality.'
+			businessImpact: 'New modules will not be able to install and existing modules will not refresh. As problem persists expect end user reports from critical sites regarding styling and broken functionality.'
 		}, tempdir);
 	});
 
