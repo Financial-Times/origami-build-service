@@ -6,7 +6,7 @@ Origami Build Service
   * Provides a proxy for static file serving from Origami repos
   * Compiles Origami component demos
 
-See [the production service][build-service] for API information.
+See [the production service][production-url] for API information.
 
 [![Build status](https://img.shields.io/circleci/project/Financial-Times/origami-build-service.svg)][ci]
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)][license]
@@ -98,7 +98,7 @@ We run the tests and linter on CI, you can view [results on CircleCI][ci]. `make
 Deployment
 ----------
 
-The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], you should never need to deploy to QA manually. We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production, this can be done with:
+The [production][heroku-production-eu] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], you should never need to deploy to QA manually. We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production, this can be done with:
 
 You'll need to provide an API key for change request logging. You can get this from the Origami LastPass folder in the note named `Change Request API Keys`. Now deploy the last QA image by running the following:
 
@@ -126,21 +126,22 @@ CR_API_KEY=<API-KEY> make promote
 Monitoring
 ----------
 
-We use Graphite and [Grafana] to keep track of application metrics. You can view requests, bundle build duration, cache hit ratios, and memory usage. It's important after a deploy to make sure you haven't unexpectedly had an impact on these.
+  * [Grafana dashboard][grafana]: graph memory, load, and number of requests
+  * [Pingdom check (Production EU)][pingdom-eu]: checks that the EU production app is responding
+  * [Sentry dashboard (Production)][sentry-production]: records application errors in the production app
+  * [Sentry dashboard (QA)][sentry-qa]: records application errors in the QA app
+  * [Splunk (Production)][splunk]: query application logs (see below)
 
-We also use [Pingdom] to track uptime. You should get notifications if you're a member of the Origami team. The Pingdom checks are:
-
-  * `Origami Build Service EU Origin (HTTPS)`: checks that the application is responding on HTTPS.
-  * `Origami Build Service EU Origin (HTTP)`: checks that the application is responding on HTTP.
 
 Logging
-----------
+-------
 
 We use [Splunk] to store and query our application and CDN log files. Using Splunk we can answer many questions, such as: which product is using our services the most; which components are not being requested (good candidates to deprecate).
 
 [Here is an example query](https://financialtimes.splunkcloud.com/en-US/app/search/search?q=search%20%22host%3Dorigami-build.ft.com%22%20path%3D%22*o-big-number*%22%20path!%3D%22*demos*%22&display.page.search.mode=fast&dispatch.sample_ratio=1&earliest=-90d%40d&latest=now&display.page.search.tab=events&display.general.type=events&sid=1476358263.37098) which was used to find out if our `o-big-number` component was being requested.
 
 [Here is an example query](https://financialtimes.splunkcloud.com/en-US/app/search/search?q=search%20sourcetype%3D%22fastly%22%20%20serviceid%3D4kUyjWYbCqkUHQZ7mBwMzl&display.page.search.mode=fast&dispatch.sample_ratio=1&earliest=-1h&latest=now&display.page.search.tab=events&display.general.type=events&sid=1476358197.36513) which shows the last hour of logs from our CDN.
+
 
 Trouble-Shooting
 ----------------
@@ -237,23 +238,22 @@ The Financial Times has published this software under the [MIT license][license]
 
 
 
-[build-service]: https://origami-build.ft.com/
-[ci]: https://circleci.com/gh/Financial-Times/origami-build-service
 [email-rowan]: mailto:rowan.manning@ft.com
+[ci]: https://circleci.com/gh/Financial-Times/origami-build-service
 [grafana]: http://grafana.ft.com/dashboard/db/origami-build-service
-[heroku-cli]: https://devcenter.heroku.com/articles/heroku-command
 [heroku-pipeline]: https://dashboard.heroku.com/pipelines/9cd9033e-fa9d-42af-bfe9-b9d0aa6f4a50
-[heroku-production]: https://dashboard.heroku.com/apps/origami-buildservice-eu
+[heroku-production-eu]: https://dashboard.heroku.com/apps/origami-buildservice-eu
 [heroku-qa]: https://dashboard.heroku.com/apps/origami-buildservice-qa
 [heroku]: https://heroku.com/
-[lastpass]: https://lastpass.com
 [license]: http://opensource.org/licenses/MIT
 [node-inspector]: https://github.com/node-inspector/node-inspector
 [node.js]: https://nodejs.org/
 [npm]: https://www.npmjs.com/
-[pingdom]: https://my.pingdom.com/reports/uptime#check=1299983
+[pingdom-eu]: https://my.pingdom.com/newchecks/checks#check=1791038
+[production-url]: https://origami-build.ft.com/
 [promises]: http://www.html5rocks.com/en/tutorials/es6/promises/
 [q]: https://github.com/kriskowal/q
 [semver]: http://semver.org/
-[sentry]: https://getsentry.com/
+[sentry-production]: https://sentry.io/nextftcom/build-service-prod/
+[sentry-qa]: https://sentry.io/nextftcom/build-service-dev/
 [splunk]: https://financialtimes.splunkcloud.com/
