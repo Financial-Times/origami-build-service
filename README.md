@@ -55,13 +55,13 @@ Now you can access the app over HTTP on port `9000`: [http://localhost:9000/](ht
 Configuration
 -------------
 
-We configure Origami Build Service using environment variables. In development, you'll need to set these before running the application. In production, these are set through Heroku config.
+We configure Origami Build Service using environment variables. In development, configurations are set in a `.env` file. In production, these are set through Heroku config.
 
   * `PORT`: The port to run the application on.
   * `NODE_ENV`: The environment to run the application in. One of `production`, `development` (default), or `test` (for use in automated tests).
+  * `LOG_LEVEL`: A Syslog-compatible level at which to emit log events to stdout. One of `trace`, `debug`, `info`, `warn`, `error`, or `crit`.
   * `SENTRY_DSN`: The URL of a [Sentry] project to collect exception information with.
   * `GRAPHITE_HOST`: The hostname of a Graphite server to gather metrics with.
-  * `LOG_LEVEL`: A Syslog-compatible level at which to emit log events to stdout. One of `trace`, `debug`, `info`, `warn`, `error`, or `crit`.
   * `GITHUB_USERNAME`: A GitHub username with permission to view required private repositories.
   * `GITHUB_PASSWORD`: The GitHub password corresponding to `GITHUB_USERNAME`.
   * `METRICS_ENV`: The environment to store metrics under. This defaults to `NODE_ENV`, which allows us to measure QA/production metrics separately.

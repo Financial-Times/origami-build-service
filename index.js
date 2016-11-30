@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 'use strict';
 
+require('dotenv').load({
+	silent: true
+});
+
 const createApp = require('./lib/index');
 const log = require('./lib/utils/log');
 const BuildSystem = require('./lib/buildsystem');
