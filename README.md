@@ -156,7 +156,17 @@ For now, restart the Heroku dynos:
 heroku restart --app origami-buildservice-eu
 ```
 
-You can use [Node Inspector][node-inspector] to debug local memory issues if you think there's a genuine problem. We're working on building this into the development process. For now, [speak to Rowan Manning][email-rowan] if you want info on how to set up Node Inspector.
+If this doesn't help, then a temporary measure could be to add more dynos to the production applications, or switch the existing ones to higher performance dynos.
+
+### What if I need to deploy manually?
+
+If you _really_ need to deploy manually, you should only do so to QA. Production deploys should always be a promotion from QA.
+
+You'll need to provide an API key for change request logging. You can get this from the Origami LastPass folder in the note named `Change Request API Keys`. Now deploy to QA using the following:
+
+```sh
+CR_API_KEY=<API-KEY> make deploy
+```
 
 ### What do I do if my updated component is not appearing in bundles?
 
@@ -168,16 +178,6 @@ If your component still doesn't appear, then we've cached an older version on th
 
 ```sh
 heroku restart --app origami-buildservice-eu
-```
-
-### What if I need to deploy manually?
-
-If you _really_ need to deploy manually, you should only do so to QA. Production deploys should always be a promotion from QA.
-
-You'll need to provide an API key for change request logging. You can get this from the Origami LastPass folder in the note named `Change Request API Keys`. Now deploy to QA using the following:
-
-```sh
-CR_API_KEY=<API-KEY> make deploy
 ```
 
 
@@ -238,7 +238,6 @@ The Financial Times has published this software under the [MIT license][license]
 
 
 
-[email-rowan]: mailto:rowan.manning@ft.com
 [ci]: https://circleci.com/gh/Financial-Times/origami-build-service
 [grafana]: http://grafana.ft.com/dashboard/db/origami-build-service
 [heroku-pipeline]: https://dashboard.heroku.com/pipelines/9cd9033e-fa9d-42af-bfe9-b9d0aa6f4a50
@@ -246,7 +245,6 @@ The Financial Times has published this software under the [MIT license][license]
 [heroku-qa]: https://dashboard.heroku.com/apps/origami-buildservice-qa
 [heroku]: https://heroku.com/
 [license]: http://opensource.org/licenses/MIT
-[node-inspector]: https://github.com/node-inspector/node-inspector
 [node.js]: https://nodejs.org/
 [npm]: https://www.npmjs.com/
 [pingdom-eu]: https://my.pingdom.com/newchecks/checks#check=1791038
