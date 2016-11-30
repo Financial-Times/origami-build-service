@@ -6,7 +6,7 @@ Origami Build Service
   * Provides a proxy for static file serving from Origami repos
   * Compiles Origami component demos
 
-See [the production service][build-service] for API information.
+See [the production service][production-url] for API information.
 
 [![Build status](https://img.shields.io/circleci/project/Financial-Times/origami-build-service.svg)][ci]
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)][license]
@@ -55,13 +55,13 @@ Now you can access the app over HTTP on port `9000`: [http://localhost:9000/](ht
 Configuration
 -------------
 
-We configure Origami Build Service using environment variables. In development, you'll need to set these before running the application. In production, these are set through Heroku config.
+We configure Origami Build Service using environment variables. In development, configurations are set in a `.env` file. In production, these are set through Heroku config.
 
   * `PORT`: The port to run the application on.
   * `NODE_ENV`: The environment to run the application in. One of `production`, `development` (default), or `test` (for use in automated tests).
+  * `LOG_LEVEL`: A Syslog-compatible level at which to emit log events to stdout. One of `trace`, `debug`, `info`, `warn`, `error`, or `crit`.
   * `SENTRY_DSN`: The URL of a [Sentry] project to collect exception information with.
   * `GRAPHITE_HOST`: The hostname of a Graphite server to gather metrics with.
-  * `LOG_LEVEL`: A Syslog-compatible level at which to emit log events to stdout. One of `trace`, `debug`, `info`, `warn`, `error`, or `crit`.
   * `GITHUB_USERNAME`: A GitHub username with permission to view required private repositories.
   * `GITHUB_PASSWORD`: The GitHub password corresponding to `GITHUB_USERNAME`.
   * `METRICS_ENV`: The environment to store metrics under. This defaults to `NODE_ENV`, which allows us to measure QA/production metrics separately.
@@ -98,7 +98,7 @@ We run the tests and linter on CI, you can view [results on CircleCI][ci]. `make
 Deployment
 ----------
 
-The [production][heroku-production] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], you should never need to deploy to QA manually. We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production, this can be done with:
+The [production][heroku-production-eu] and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CircleCI][ci], you should never need to deploy to QA manually. We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production, this can be done with:
 
 You'll need to provide an API key for change request logging. You can get this from the Origami LastPass folder in the note named `Change Request API Keys`. Now deploy the last QA image by running the following:
 
@@ -116,32 +116,32 @@ npm version patch
 
 Now you can push to GitHub (`git push && git push --tags`) which will trigger a QA deployment. Once QA has deployed with the newly tagged version, you can promote it to production.
 
-To promote to production you will need to create a file in the root of this project named `.env` and fill it with a few environment variables, the contents of this file is stored in the [Origami LastPass][lastpass] under the name `[dev] Origami build service`. You'll need to also provide your GitHub username for change request logging, ensure you've been [added to this spreadsheet][developer-spreadsheet].
-
-To promote the last QA image into production, running the following:
+You'll need to provide an API key for change request logging. You can get this from the Origami LastPass folder in the note named `Change Request API Keys`. Now deploy the last QA image by running the following:
 
 ```sh
-GITHUB_USERNAME=yourgithubusername make promote
+CR_API_KEY=<API-KEY> make promote
 ```
+
 
 Monitoring
 ----------
 
-We use Graphite and [Grafana] to keep track of application metrics. You can view requests, bundle build duration, cache hit ratios, and memory usage. It's important after a deploy to make sure you haven't unexpectedly had an impact on these.
+  * [Grafana dashboard][grafana]: graph memory, load, and number of requests
+  * [Pingdom check (Production EU)][pingdom-eu]: checks that the EU production app is responding
+  * [Sentry dashboard (Production)][sentry-production]: records application errors in the production app
+  * [Sentry dashboard (QA)][sentry-qa]: records application errors in the QA app
+  * [Splunk (Production)][splunk]: query application logs (see below)
 
-We also use [Pingdom] to track uptime. You should get notifications if you're a member of the Origami team. The Pingdom checks are:
-
-  * `Origami Build Service EU Origin (HTTPS)`: checks that the application is responding on HTTPS.
-  * `Origami Build Service EU Origin (HTTP)`: checks that the application is responding on HTTP.
 
 Logging
-----------
+-------
 
 We use [Splunk] to store and query our application and CDN log files. Using Splunk we can answer many questions, such as: which product is using our services the most; which components are not being requested (good candidates to deprecate).
 
 [Here is an example query](https://financialtimes.splunkcloud.com/en-US/app/search/search?q=search%20%22host%3Dorigami-build.ft.com%22%20path%3D%22*o-big-number*%22%20path!%3D%22*demos*%22&display.page.search.mode=fast&dispatch.sample_ratio=1&earliest=-90d%40d&latest=now&display.page.search.tab=events&display.general.type=events&sid=1476358263.37098) which was used to find out if our `o-big-number` component was being requested.
 
 [Here is an example query](https://financialtimes.splunkcloud.com/en-US/app/search/search?q=search%20sourcetype%3D%22fastly%22%20%20serviceid%3D4kUyjWYbCqkUHQZ7mBwMzl&display.page.search.mode=fast&dispatch.sample_ratio=1&earliest=-1h&latest=now&display.page.search.tab=events&display.general.type=events&sid=1476358197.36513) which shows the last hour of logs from our CDN.
+
 
 Trouble-Shooting
 ----------------
@@ -156,7 +156,17 @@ For now, restart the Heroku dynos:
 heroku restart --app origami-buildservice-eu
 ```
 
-You can use [Node Inspector][node-inspector] to debug local memory issues if you think there's a genuine problem. We're working on building this into the development process. For now, [speak to Rowan Manning][email-rowan] if you want info on how to set up Node Inspector.
+If this doesn't help, then a temporary measure could be to add more dynos to the production applications, or switch the existing ones to higher performance dynos.
+
+### What if I need to deploy manually?
+
+If you _really_ need to deploy manually, you should only do so to QA. Production deploys should always be a promotion from QA.
+
+You'll need to provide an API key for change request logging. You can get this from the Origami LastPass folder in the note named `Change Request API Keys`. Now deploy to QA using the following:
+
+```sh
+CR_API_KEY=<API-KEY> make deploy
+```
 
 ### What do I do if my updated component is not appearing in bundles?
 
@@ -168,16 +178,6 @@ If your component still doesn't appear, then we've cached an older version on th
 
 ```sh
 heroku restart --app origami-buildservice-eu
-```
-
-### What if I need to deploy manually?
-
-If you _really_ need to deploy manually, you should only do so to QA. Production deploys should always be a promotion from QA.
-
-You'll need to provide an API key for change request logging. You can get this from the Origami LastPass folder in the note named `Change Request API Keys`. Now deploy to QA using the following:
-
-```sh
-CR_API_KEY=<API-KEY> make deploy
 ```
 
 
@@ -238,23 +238,20 @@ The Financial Times has published this software under the [MIT license][license]
 
 
 
-[build-service]: https://origami-build.ft.com/
 [ci]: https://circleci.com/gh/Financial-Times/origami-build-service
-[email-rowan]: mailto:rowan.manning@ft.com
 [grafana]: http://grafana.ft.com/dashboard/db/origami-build-service
-[heroku-cli]: https://devcenter.heroku.com/articles/heroku-command
 [heroku-pipeline]: https://dashboard.heroku.com/pipelines/9cd9033e-fa9d-42af-bfe9-b9d0aa6f4a50
-[heroku-production]: https://dashboard.heroku.com/apps/origami-buildservice-eu
+[heroku-production-eu]: https://dashboard.heroku.com/apps/origami-buildservice-eu
 [heroku-qa]: https://dashboard.heroku.com/apps/origami-buildservice-qa
 [heroku]: https://heroku.com/
-[lastpass]: https://lastpass.com
 [license]: http://opensource.org/licenses/MIT
-[node-inspector]: https://github.com/node-inspector/node-inspector
 [node.js]: https://nodejs.org/
 [npm]: https://www.npmjs.com/
-[pingdom]: https://my.pingdom.com/reports/uptime#check=1299983
+[pingdom-eu]: https://my.pingdom.com/newchecks/checks#check=1791038
+[production-url]: https://origami-build.ft.com/
 [promises]: http://www.html5rocks.com/en/tutorials/es6/promises/
 [q]: https://github.com/kriskowal/q
 [semver]: http://semver.org/
-[sentry]: https://getsentry.com/
+[sentry-production]: https://sentry.io/nextftcom/build-service-prod/
+[sentry-qa]: https://sentry.io/nextftcom/build-service-dev/
 [splunk]: https://financialtimes.splunkcloud.com/

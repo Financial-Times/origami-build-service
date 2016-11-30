@@ -27,6 +27,7 @@
     "commander": "^2.3.0",
     "cors": "^2.8.1",
     "diskspace": "git+http://github.com/Financial-Times/diskspace.js.git",
+    "dotenv": "^2.0.0",
     "express": "^4.12.3",
     "express-ftwebservice": "^2.0.2",
     "glob": "^4.0.5",
