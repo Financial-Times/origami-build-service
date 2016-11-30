@@ -116,13 +116,12 @@ npm version patch
 
 Now you can push to GitHub (`git push && git push --tags`) which will trigger a QA deployment. Once QA has deployed with the newly tagged version, you can promote it to production.
 
-To promote to production you will need to create a file in the root of this project named `.env` and fill it with a few environment variables, the contents of this file is stored in the [Origami LastPass][lastpass] under the name `[dev] Origami build service`. You'll need to also provide your GitHub username for change request logging, ensure you've been [added to this spreadsheet][developer-spreadsheet].
-
-To promote the last QA image into production, running the following:
+You'll need to provide an API key for change request logging. You can get this from the Origami LastPass folder in the note named `Change Request API Keys`. Now deploy the last QA image by running the following:
 
 ```sh
-GITHUB_USERNAME=yourgithubusername make promote
+CR_API_KEY=<API-KEY> make promote
 ```
+
 
 Monitoring
 ----------
