@@ -2,10 +2,12 @@
 
 const assert = require('chai').assert;
 const mockery = require('mockery');
+const sinon = require('sinon');
 
 describe('lib/index', function() {
 	let errorResponse;
 	let express;
+	let getBasePath;
 	let index;
 	let log;
 	let morgan;
@@ -19,6 +21,9 @@ describe('lib/index', function() {
 
 		express = require('../mock/express.mock');
 		mockery.registerMock('express', express);
+
+		getBasePath = sinon.spy();
+		mockery.registerMock('./express/get-base-path', getBasePath);
 
 		routes = require('../mock/routes.mock');
 		mockery.registerMock('./routes', routes);
@@ -71,6 +76,10 @@ describe('lib/index', function() {
 
 		it('should not create a morgan logger', function() {
 			assert.notCalled(morgan);
+		});
+
+		it('should register the get-base-path middleware', function() {
+			assert.calledWithExactly(expressApp.use, getBasePath);
 		});
 
 		it('should register the bundles route', function() {
