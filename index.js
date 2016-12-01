@@ -151,7 +151,7 @@ const buildSystem = new BuildSystem({
 		checkPeriod: 120,
 		technicalSummary: 'Process has run out of available memory',
 		businessImpact: 'Application will not be able to serve styles and interaction functionality to critical sites. Expect end users reports.',
-		panicGuide: 'Restart the service using the `heroku` command line tool: `heroku restart --app origami-buildservice-eu`.'
+		panicGuide: 'Restart the service using the `heroku` command line tool: `heroku restart --app origami-build-service-eu`.'
 	});
 
 	dirInitialised.then(function() {
@@ -159,7 +159,7 @@ const buildSystem = new BuildSystem({
 			severity: 1,
 			checkPeriod: 120,
 			technicalSummary: '/tmp directory is full, new modules will not be installable.',
-			panicGuide: 'Restart the service using the `heroku` command line tool: `heroku restart --app origami-buildservice-eu`.',
+			panicGuide: 'Restart the service using the `heroku` command line tool: `heroku restart --app origami-build-service-eu`.',
 			businessImpact: 'New modules will not be able to install and existing modules will not refresh. As problem persists expect end user reports from critical sites regarding styling and broken functionality.'
 		}, tempdir);
 	});
