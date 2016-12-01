@@ -67,6 +67,10 @@ We configure Origami Build Service using environment variables. In development, 
   * `METRICS_ENV`: The environment to store metrics under. This defaults to `NODE_ENV`, which allows us to measure QA/production metrics separately.
   * `PREFERRED_HOSTNAME`: The hostname to use in documentation and as a base URL in bundle requests. This defaults to `origami-build.ft.com`.
 
+The service can also be configured by sending HTTP headers, these would normally be set in your CDN config:
+
+  * `FT-Origami-Service-Base-Path`: The base path for the service, this gets prepended to all paths in the HTML and ensures that redirects work when the CDN rewrites URLs.
+
 
 Testing
 -------
