@@ -7,13 +7,18 @@ module.exports = sinon.stub().returns({
 	use: sinon.spy()
 });
 
-module.exports.createMockResponse = function() {
-	const response = {
-		location: sinon.stub(),
-		send: sinon.stub(),
-		status: sinon.stub()
-	};
-	response.location.returns(response);
-	response.status.returns(response);
-	return response;
+module.exports.mockRequest = {
+	headers: {},
+	query: {},
+	params: {}
+};
+
+module.exports.mockResponse = {
+	locals: {},
+	location: sinon.stub(),
+	redirect: sinon.stub().returnsThis(),
+	render: sinon.stub().returnsThis(),
+	send: sinon.stub().returnsThis(),
+	set: sinon.stub().returnsThis(),
+	status: sinon.stub().returnsThis()
 };

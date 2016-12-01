@@ -16,32 +16,30 @@ describe('lib/express/redirect-with-body', function() {
 	});
 
 	describe('redirectWithBody(response, status, location, body)', function() {
-		let response;
 		let status;
 		let location;
 		let body;
 
 		beforeEach(function() {
-			response = express.createMockResponse();
 			status = 301;
 			location = 'foo';
 			body = 'bar';
-			redirectWithBody(response, status, location, body);
+			redirectWithBody(express.mockResponse, status, location, body);
 		});
 
 		it('should set the response status', function() {
-			assert.calledOnce(response.status);
-			assert.calledWithExactly(response.status, status);
+			assert.calledOnce(express.mockResponse.status);
+			assert.calledWithExactly(express.mockResponse.status, status);
 		});
 
 		it('should set the response location', function() {
-			assert.calledOnce(response.location);
-			assert.calledWithExactly(response.location, location);
+			assert.calledOnce(express.mockResponse.location);
+			assert.calledWithExactly(express.mockResponse.location, location);
 		});
 
 		it('should send the response body', function() {
-			assert.calledOnce(response.send);
-			assert.calledWithExactly(response.send, body);
+			assert.calledOnce(express.mockResponse.send);
+			assert.calledWithExactly(express.mockResponse.send, body);
 		});
 
 	});
