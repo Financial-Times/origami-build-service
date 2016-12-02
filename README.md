@@ -157,7 +157,7 @@ We've outlined some common issues that can occur when running the Build Service:
 For now, restart the Heroku dynos:
 
 ```sh
-heroku restart --app origami-buildservice-eu
+heroku restart --app origami-build-service-eu
 ```
 
 If this doesn't help, then a temporary measure could be to add more dynos to the production applications, or switch the existing ones to higher performance dynos.
@@ -176,12 +176,12 @@ CR_API_KEY=<API-KEY> make deploy
 
 This is most likely due to the heavy caching we use.
 
-First, change the hostname in your request to `origami-buildservice-eu.herokuapp.com`. If your update appears now, then Akamai had cached the bundle. You'll need to wait for a while, or clear the Akamai cache for your URL.
+First, change the hostname in your request to `origami-build-service-eu.herokuapp.com`. If your update appears now, then Akamai had cached the bundle. You'll need to wait for a while, or clear the Akamai cache for your URL.
 
 If your component still doesn't appear, then we've cached an older version on the file system. You can clear this by restarting the Heroku dynos:
 
 ```sh
-heroku restart --app origami-buildservice-eu
+heroku restart --app origami-build-service-eu
 ```
 
 
@@ -245,8 +245,8 @@ The Financial Times has published this software under the [MIT license][license]
 [ci]: https://circleci.com/gh/Financial-Times/origami-build-service
 [grafana]: http://grafana.ft.com/dashboard/db/origami-build-service
 [heroku-pipeline]: https://dashboard.heroku.com/pipelines/9cd9033e-fa9d-42af-bfe9-b9d0aa6f4a50
-[heroku-production-eu]: https://dashboard.heroku.com/apps/origami-buildservice-eu
-[heroku-qa]: https://dashboard.heroku.com/apps/origami-buildservice-qa
+[heroku-production-eu]: https://dashboard.heroku.com/apps/origami-build-service-eu
+[heroku-qa]: https://dashboard.heroku.com/apps/origami-build-service-qa
 [heroku]: https://heroku.com/
 [license]: http://opensource.org/licenses/MIT
 [node.js]: https://nodejs.org/

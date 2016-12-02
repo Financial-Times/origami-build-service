@@ -4,7 +4,7 @@
 		"method": "HEAD",
 		"path": "/__gtg",
 		"http_version": "1.1",
-		"host": "origami-buildservice-eu.herokuapp.com",
+		"host": "origami-build-service-eu.herokuapp.com",
 		"threshold": 1,
 		"window": 2,
 		"timeout": 5000,

@@ -18,8 +18,8 @@
 	"links": [
 		{"url": "https://github.com/Financial-Times/origami-build-service/issues", "category": "issues"},
 		{"url": "https://github.com/Financial-Times/origami-build-service", "category": "repo"},
-		{"url": "https://dashboard.heroku.com/apps/origami-buildservice-eu", "category": "deployment", "description": "Production Heroku app control panel"},
-		{"url": "https://dashboard.heroku.com/apps/origami-buildservice-qa", "category": "deployment", "description": "QA Heroku app control panel"},
+		{"url": "https://dashboard.heroku.com/apps/origami-build-service-eu", "category": "deployment", "description": "Production Heroku app control panel"},
+		{"url": "https://dashboard.heroku.com/apps/origami-build-service-qa", "category": "deployment", "description": "QA Heroku app control panel"},
 		{"url": "http://grafana.ft.com/dashboard/db/origami-build-service", "category": "monitoring", "description": "Grafana dashboard"},
 		{"url": "https://control.akamai.com/platformtoolkit/web/main/app?accountId=F-AC-1813198&gid=59378&tab=HOME&pid=buildservice.ft.com&aid=6288829&redirected=1449135292518&cs=app#", "category": "deployment", "description": "Akamai CDN control panel"},
 		{"url": "https://my.pingdom.com/reports/uptime#check=1299983", "category": "monitoring", "description": "Pingdom check"},
