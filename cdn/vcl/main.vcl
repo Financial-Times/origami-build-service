@@ -3,6 +3,7 @@
 
 sub vcl_recv {
 #FASTLY recv
+	set req.http.Host = "origami-build-service-eu.herokuapp.com";
 }
 
 sub vcl_fetch {
