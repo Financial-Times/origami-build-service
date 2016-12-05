@@ -65,7 +65,7 @@ We configure Origami Build Service using environment variables. In development, 
   * `GITHUB_USERNAME`: A GitHub username with permission to view required private repositories.
   * `GITHUB_PASSWORD`: The GitHub password corresponding to `GITHUB_USERNAME`.
   * `METRICS_ENV`: The environment to store metrics under. This defaults to `NODE_ENV`, which allows us to measure QA/production metrics separately.
-  * `PREFERRED_HOSTNAME`: The hostname to use in documentation and as a base URL in bundle requests. This defaults to `origami-build.ft.com`.
+  * `PREFERRED_HOSTNAME`: The hostname to use in documentation and as a base URL in bundle requests. This defaults to `www.ft.com/__origami/service/build`.
 
 The service can also be configured by sending HTTP headers, these would normally be set in your CDN config:
 
