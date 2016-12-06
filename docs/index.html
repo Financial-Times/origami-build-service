@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf8" />
 <title>Origami Build Service</title>
+<base href="{{basePath}}"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<link rel="stylesheet" href="https://{{build-service-hostname}}/v2/bundles/css?modules=o-techdocs@^5.0.0,o-fonts@^1.4.0,o-grid@^4.0.0,o-ft-icons@^3.2.0" />
+<link rel="stylesheet" href="v2/bundles/css?modules=o-techdocs@^5.0.0,o-fonts@^1.4.0,o-grid@^4.0.0,o-ft-icons@^3.2.0" />
 
 <style>
 	html {
@@ -39,7 +40,7 @@
 	}
 </style>
 <script src="//polyfill.webservices.ft.com/v2/polyfill.min.js"></script>
-<script async src="https://{{build-service-hostname}}/v2/bundles/js?modules=o-techdocs@^5.0.0,o-fonts@^1.4.0,o-grid@^4.0.0,o-ft-icons@^3.2.0"></script>
+<script async src="v2/bundles/js?modules=o-techdocs@^5.0.0,o-fonts@^1.4.0,o-grid@^4.0.0,o-ft-icons@^3.2.0"></script>
 </head>
 <body class="o-techdocs">
 	<header data-o-component="o-header" class="o-header">
@@ -76,8 +77,8 @@
 					<strong>1. Add this snippet in your document to import the <a href="https://git.io/o-grid">grid system</a> and load the FT webfonts:</strong>
 				</p>
 <pre><code>&lt;link rel=&quot;stylesheet&quot;
-	href=&quot;//{{build-service-hostname}}/v2/bundles/css?modules=o-grid@^4.0.0,o-fonts@^1.4.0&quot; /&gt;
-&lt;script src=&quot;//{{build-service-hostname}}/v2/bundles/js?modules=o-grid@^4.0.0,o-fonts@^1.4.0&quot; async /&gt;</code></pre>
+	href=&quot;https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-grid@^4.0.0,o-fonts@^1.4.0&quot; /&gt;
+&lt;script src=&quot;https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-grid@^4.0.0,o-fonts@^1.4.0&quot; async /&gt;</code></pre>
 				<p>This is all you need for prototyping with the Build Service. To use the Build Service in production you should also include a <a href="http://origami.ft.com/docs/developer-guide/using-modules/#core-vs-enhanced-experience">cuts the mustard test</a>.
 				<p>
 					<strong>2. Load more modules by adding them to the list:</strong>
@@ -94,12 +95,12 @@
 /v2/bundles/js?modules=o-ads@1.2,o-tracking@3,o-cookiewarn@3.3.1
 /v2/bundles/css?modules=o-signinstatus@1.7.3,o-fonts,o-grid@3</code></pre>
 				<p>You should most likely request all the JS modules you want in a single bundle request, and likewise for CSS, and then write them into the <code>&lt;head&gt;</code> or end of the <code>&lt;body&gt;</code> of your HTML document:</p>
-				<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;//{{build-service-hostname}}/v2/bundles/css?modules=o-ft-nav@2.3,o-share@2,colors&quot; /&gt;
-&lt;script src=&quot;//{{build-service-hostname}}/v2/bundles/js?modules=o-ft-nav@2.3,o-share@2,o-tracking@3.5,o-ads@1.2&quot; /&gt;</code></pre>
+				<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-ft-nav@2.3,o-share@2,colors&quot; /&gt;
+&lt;script src=&quot;https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-ft-nav@2.3,o-share@2,o-tracking@3.5,o-ads@1.2&quot; /&gt;</code></pre>
 
 				<aside>
 					<h4>Avoiding problems with Content security policy</h4>
-					<p>Although in most cases, <code>link</code> and <code>script</code> tags referencing the build service will be supported by default, in packaged app containers such as Google Chrome extensions, or in web pages served with <a href="http://www.html5rocks.com/en/tutorials/security/content-security-policy/">Content Security Policy</a> headers, you may need to explicitly allow <code>{{build-service-hostname}}</code> as a source origin from which the app can load resources (see also <a href="https://github.com/Financial-Times/ft-origami/issues/237">issue 237</a>).</p>
+					<p>Although in most cases, <code>link</code> and <code>script</code> tags referencing the build service will be supported by default, in packaged app containers such as Google Chrome extensions, or in web pages served with <a href="http://www.html5rocks.com/en/tutorials/security/content-security-policy/">Content Security Policy</a> headers, you may need to explicitly allow <code>www.ft.com</code> as a source origin from which the app can load resources (see also <a href="https://github.com/Financial-Times/ft-origami/issues/237">issue 237</a>).</p>
 					<ul>
 						<li>Chrome extensions: <a href="https://developer.chrome.com/extensions/contentSecurityPolicy">Update your manifest.json file</a></li>
 					</ul>
@@ -452,8 +453,8 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 				<h3 id="hostnames-and-cdns">Hostnames and CDNs</h3>
 
 				<p>
-					The Build Service is accessible using multiple different hostnames. We only
-					recommend using <code>origami-build.ft.com</code>.
+					The Build Service is accessible using multiple different hostnames/paths. We only
+					recommend using <code>www.ft.com/__origami/service/build</code>.
 				</p>
 
 				<table class="o-techdocs-table">
@@ -466,13 +467,22 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 					</thead>
 					<tbody>
 						<tr>
-							<td><code>origami-build.ft.com</code></td>
+							<td><code>www.ft.com/__origami/service/build</code></td>
 							<td>Current</td>
 							<td>
-								The hostname you should be accessing the Build Service through.
+								The hostname/path you should be accessing the Build Service through.
 								Responses are cached with Fastly, and we use the
 								<code>stale-while-revalidate</code> and <code>stale-on-error</code>
-								cache extensions.
+								cache extensions. This hostname/path is also multi-region with failover.
+							</td>
+						</tr>
+						<tr>
+							<td><code>origami-build.ft.com</code></td>
+							<td>Deprecated</td>
+							<td>
+								Responses are cached with Fastly. This will start redirecting to
+								<code>www.ft.com/__origami/service/build</code> on
+								<time datetime="2017-06-01"><b>2017‑06‑01</b></time>.
 							</td>
 						</tr>
 						<tr>
@@ -480,8 +490,8 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 							<td>Deprecated</td>
 							<td>
 								Responses are cached with Akamai. This will start redirecting to
-								<code>origami-build.ft.com</code> on
-								<time datetime="2016-08-15"><b>2016‑08‑15</b></time>.
+								<code>www.ft.com/__origami/service/build</code> on
+								<time datetime="2017-06-01"><b>2017‑06‑01</b></time>.
 							</td>
 						</tr>
 						<tr>
@@ -489,12 +499,20 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 							<td>Deprecated</td>
 							<td>
 								Responses are cached with Akamai. This will start redirecting to
-								<code>origami-build.ft.com</code> on
-								<time datetime="2016-08-15"><b>2016‑08‑15</b></time>.
+								<code>www.ft.com/__origami/service/build</code> on
+								<time datetime="2017-06-01"><b>2017‑06‑01</b></time>.
 							</td>
 						</tr>
 						<tr>
 							<td><code>origami-build-service-eu.herokuapp.com</code></td>
+							<td>Development</td>
+							<td>
+								Responses are not cached. This hostname should <b>never</b> be used
+								in production.
+							</td>
+						</tr>
+						<tr>
+							<td><code>origami-build-service-us.herokuapp.com</code></td>
 							<td>Development</td>
 							<td>
 								Responses are not cached. This hostname should <b>never</b> be used
@@ -530,12 +548,14 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 				<h3 id="fastly-migration">Fastly Migration</h4>
 
 				<p>
-					The Build Service is migrating from Akamai to Fastly, and is doing so by changing
-					the hostname. On <time datetime="2016-08-15"><b>2016‑08‑15</b></time> we will start
-					redirecting traffic from the following hostnames to <code>origami-build.ft.com</code>:
+					The Build Service is migrating from Akamai to Fastly and also to a path on the
+					ft.com domain. On <time datetime="2017-06-01"><b>2017-06-01</b></time> we will
+					start redirecting traffic from the following hostnames to
+					<code>www.ft.com/__origami/service/build</code>:
 				</p>
 
 				<ul>
+					<li><code>origami-build.ft.com</code></li>
 					<li><code>build.origami.ft.com</code></li>
 					<li><code>buildservice.ft.com</code></li>
 				</ul>
@@ -544,7 +564,8 @@ X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:1
 					We strongly recommend that you update all references to these deprecated hostnames
 					to avoid redirects in your bundle and file requests. You will also get the
 					benefit of the <code>stale-while-revalidate</code> and <code>stale-on-error</code>
-					cache extensions, which increase the resilience of the Build Service.
+					cache extensions, as well as multi-region support with failover. These all
+					increase the resilience of the Build Service.
 				</p>
 
 				<p>
