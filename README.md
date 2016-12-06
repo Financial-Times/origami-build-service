@@ -252,7 +252,7 @@ The Financial Times has published this software under the [MIT license][license]
 [node.js]: https://nodejs.org/
 [npm]: https://www.npmjs.com/
 [pingdom-eu]: https://my.pingdom.com/newchecks/checks#check=1791038
-[production-url]: https://origami-build.ft.com/
+[production-url]: https://www.ft.com/__origami/service/build/
 [promises]: http://www.html5rocks.com/en/tutorials/es6/promises/
 [q]: https://github.com/kriskowal/q
 [semver]: http://semver.org/

@@ -4,7 +4,7 @@
 	"systemCode": "build-service",
 	"purpose": "Front end build process as a service.  Fetches specified Origami components from git, runs Origami build process, and returns the resulting CSS or JS bundle over HTTP.",
 	"audience": "public",
-	"primaryUrl": "https://origami-build.ft.com/",
+	"primaryUrl": "https://www.ft.com/__origami/service/build/",
 	"serviceTier": "gold",
 	"apiVersion": 2,
 	"apiVersions": [

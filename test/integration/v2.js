@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const request = require('supertest');
-const hostnames = require('../../lib/utils/hostnames');
 
 describe('GET /v2', function() {
 	this.timeout(20000);
@@ -24,7 +23,7 @@ describe('GET /v2', function() {
 
 	it('should respond with the build service documentation', function(done) {
 		fs.readFile(`${__dirname}/../../docs/index.html`, 'utf-8', (error, content) => {
-			content = content.replace(/\{\{build-service-hostname\}\}/g, hostnames.preferred);
+			content = content.replace(/\{\{basePath\}\}/g, '/');
 			this.request.expect(content).end(done);
 		});
 	});

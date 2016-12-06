@@ -34,7 +34,7 @@ suite('assets', function(){
 
 		assert.include(js, 'o-assets');
 		assert.include(js, 'setGlobalPathPrefix');
-		assert.include(js, '//' + hostnames.preferred + '/files/');
+		assert.include(js, 'https://' + hostnames.preferred + '/v2/files/');
 	});
 
 });

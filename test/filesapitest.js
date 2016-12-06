@@ -112,8 +112,7 @@ suiteWithPackages('files-api', ['files'], function(installdir){
 		const buildSystem = new BuildSystem({tempdir:'/tmp/', log:log, whitelist:'*', registry: new Registry()});
 		const srv = createApp({ buildSystem: buildSystem });
 		const agent = supertest(srv);
-		const hostnameEscaped = hostnames.preferred.replace('.', '\\\.');
-		const regexp = new RegExp('/' + hostnameEscaped + '/bundles/css\\?modules=o-gallery%401\\.1\\.0%3A%2Fdemos%2Fsrc%2Fdemo\\.scss"');
+		const regexp = new RegExp('/bundles/css\\?modules=o-gallery%401\\.1\\.0%3A%2Fdemos%2Fsrc%2Fdemo\\.scss"');
 		agent.get('/v2/files/o-gallery@1.1.0/demos/declarative.html')
 			.expect(200)
 			.expect(regexp, done);
