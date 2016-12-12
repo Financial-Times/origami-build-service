@@ -27,6 +27,7 @@ describe('lib/express/log-hostname', () => {
 
 		beforeEach(() => {
 			next = sinon.spy();
+			express.mockRequest.url = '/foo/bar';
 			logHostname(express.mockRequest, express.mockResponse, next);
 		});
 
@@ -45,6 +46,7 @@ describe('lib/express/log-hostname', () => {
 			beforeEach(() => {
 				log.info.reset();
 				next.reset();
+				express.mockRequest.url = '/foo/bar';
 				express.mockRequest.headers['ft-original-url'] = 'https://build.service/foo/bar';
 				logHostname(express.mockRequest, express.mockResponse, next);
 			});
@@ -52,6 +54,27 @@ describe('lib/express/log-hostname', () => {
 			it('logs the hostname as the hostname in the header value', () => {
 				assert.calledOnce(log.info);
 				assert.calledWithExactly(log.info, 'BUILD-SERVICE-HOSTNAME: hostname=build.service');
+			});
+
+			it('calls `next` with no error', () => {
+				assert.calledOnce(next);
+				assert.calledWithExactly(next);
+			});
+
+		});
+
+		describe('when the request URL begins with a double underscore', () => {
+
+			beforeEach(() => {
+				log.info.reset();
+				next.reset();
+				express.mockRequest.url = '/__about';
+				express.mockRequest.headers['ft-original-url'] = 'https://build.service/__about';
+				logHostname(express.mockRequest, express.mockResponse, next);
+			});
+
+			it('logs nothing', () => {
+				assert.strictEqual(log.info.callCount, 0);
 			});
 
 			it('calls `next` with no error', () => {
