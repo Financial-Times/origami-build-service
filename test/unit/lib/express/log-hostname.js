@@ -41,13 +41,13 @@ describe('lib/express/log-hostname', () => {
 			assert.calledWithExactly(next);
 		});
 
-		describe('when the request has an `FT-Original-Url` header', () => {
+		describe('when the request has an `X-Original-Host` header', () => {
 
 			beforeEach(() => {
 				log.info.reset();
 				next.reset();
 				express.mockRequest.url = '/foo/bar';
-				express.mockRequest.headers['ft-original-url'] = 'https://build.service/foo/bar';
+				express.mockRequest.headers['x-original-host'] = 'build.service';
 				logHostname(express.mockRequest, express.mockResponse, next);
 			});
 
@@ -69,7 +69,7 @@ describe('lib/express/log-hostname', () => {
 				log.info.reset();
 				next.reset();
 				express.mockRequest.url = '/__about';
-				express.mockRequest.headers['ft-original-url'] = 'https://build.service/__about';
+				express.mockRequest.headers['x-original-host'] = 'build.service';
 				logHostname(express.mockRequest, express.mockResponse, next);
 			});
 
