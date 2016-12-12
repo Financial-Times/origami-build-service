@@ -3,7 +3,7 @@
 
 sub vcl_recv {
 #FASTLY recv
-	set req.http.X-Original-Host = req.http.Host;
+	set req.http.X-Original-Host = "origami-build.ft.com";
 	set req.http.Host = "origami-build-service-eu.herokuapp.com";
 }
 
