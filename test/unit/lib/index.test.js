@@ -10,6 +10,7 @@ describe('lib/index', function() {
 	let getBasePath;
 	let index;
 	let log;
+	let logHostname;
 	let morgan;
 	let raven;
 	let routes;
@@ -30,6 +31,9 @@ describe('lib/index', function() {
 
 		log = require('../mock/log.mock');
 		mockery.registerMock('./utils/log', log);
+
+		logHostname = sinon.spy();
+		mockery.registerMock('./express/log-hostname', logHostname);
 
 		morgan = require('../mock/morgan.mock');
 		mockery.registerMock('morgan', morgan);
@@ -80,6 +84,10 @@ describe('lib/index', function() {
 
 		it('should register the get-base-path middleware', function() {
 			assert.calledWithExactly(expressApp.use, getBasePath);
+		});
+
+		it('should register the log-hostname middleware', function() {
+			assert.calledWithExactly(expressApp.use, logHostname);
 		});
 
 		it('should register the bundles route', function() {
