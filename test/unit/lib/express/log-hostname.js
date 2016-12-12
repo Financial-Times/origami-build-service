@@ -33,7 +33,7 @@ describe('lib/express/log-hostname', () => {
 
 		it('logs the hostname as "unknown/direct"', () => {
 			assert.calledOnce(log.info);
-			assert.calledWithExactly(log.info, 'BUILD-SERVICE-HOSTNAME: hostname=unknown/direct');
+			assert.calledWithExactly(log.info, 'BUILD-SERVICE-HOSTNAME: hostname=unknown/direct path=/foo/bar referer=null');
 		});
 
 		it('calls `next` with no error', () => {
@@ -53,7 +53,30 @@ describe('lib/express/log-hostname', () => {
 
 			it('logs the hostname as the hostname in the header value', () => {
 				assert.calledOnce(log.info);
-				assert.calledWithExactly(log.info, 'BUILD-SERVICE-HOSTNAME: hostname=build.service');
+				assert.calledWithExactly(log.info, 'BUILD-SERVICE-HOSTNAME: hostname=build.service path=/foo/bar referer=null');
+			});
+
+			it('calls `next` with no error', () => {
+				assert.calledOnce(next);
+				assert.calledWithExactly(next);
+			});
+
+		});
+
+		describe('when the request URL has a `Referer` header', () => {
+
+			beforeEach(() => {
+				log.info.reset();
+				next.reset();
+				express.mockRequest.url = '/foo/bar';
+				express.mockRequest.headers['referer'] = 'http://referer/';
+				express.mockRequest.headers['x-original-host'] = 'build.service';
+				logHostname(express.mockRequest, express.mockResponse, next);
+			});
+
+			it('logs the referer as well as the hostname', () => {
+				assert.calledOnce(log.info);
+				assert.calledWithExactly(log.info, 'BUILD-SERVICE-HOSTNAME: hostname=build.service path=/foo/bar referer=http://referer/');
 			});
 
 			it('calls `next` with no error', () => {
