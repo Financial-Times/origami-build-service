@@ -8,8 +8,6 @@ require('dotenv').load({
 const createApp = require('./lib/index');
 const log = require('./lib/utils/log');
 const BuildSystem = require('./lib/buildsystem');
-const program = require('commander');
-const package_json = require('./package.json');
 const HealthMonitor = require('./lib/monitoring/healthmonitor');
 const Registry = require('./lib/registry');
 const diskCacheCleaner = require('./tools/diskcacheclean');
@@ -18,17 +16,6 @@ const URL = require('url');
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
-const uidNumber = require('uid-number');
-
-const myParseInt = function(val){return parseInt(val, 10);};
-
-program
-	.version(package_json.version)
-	.option('-p, --port <num>', 'Port number to listen on', myParseInt, process.env.PORT || 9000)
-	.option('--export <name>', 'Default bundle export name', 'Origami')
-	.option('--uid <num>', 'User ID to run as')
-	.option('--gid <num>', 'Group ID to run as')
-	.parse(process.argv);
 
 const tempdir = '/tmp/buildservice-' + process.pid + '/';
 process.env.HOME = tempdir; // Workaround: Bower ends up using $HOME/.local/share/bower/empty despite config overriding this
@@ -57,40 +44,17 @@ const dirInitialised = (function initialiseCacheDirectory(tempDirectory) {
 				}
 			});
 		});
-	})).then(function() {
-		return new Promise(function(resolve, reject) {
-			if (!program.uid) {
-				resolve();
-				return;
-			}
-
-			uidNumber(program.uid, program.gid, function(er, uid, gid) {
-				if (er) {
-					reject(er);
-					return;
-				}
-				fs.chown(tempDirectory, uid, gid, function(e) {
-					if (e) {
-						reject(e);
-					} else {
-						resolve();
-					}
-				});
-			});
-		});
-	});
+	}));
 }(tempdir));
 
 const registry = new Registry();
 const healthMonitor = new HealthMonitor({log:log});
 const buildSystem = new BuildSystem({
 	log: log,
-	port: program.port,
-	export: program.export,
+	port: process.env.PORT || 9000,
+	export: process.env.export || 'Origami',
 	tempdir: tempdir,
 	registry: registry,
-	uid: program.uid,
-	gid: program.gid,
 
 	installationTtl: 24*3600*1000,
 	installationTtlExact: 3*24*3600*1000,
@@ -221,27 +185,7 @@ const app = createApp({
 	writeAccessLog: true
 });
 
-app.listen(program.port, function() {
-	log.info({port: program.port, env:process.env.NODE_ENV}, 'Started server');
-	dirInitialised.then(function() {
-		dropPrivileges({ uid: program.uid, gid: program.gid });
-	});
+app.listen(process.env.PORT || 9000, function() {
+	log.info({port: process.env.PORT || 9000, env:process.env.NODE_ENV}, 'Started server');
 	diskCacheCleaner();
 });
-
-
-function dropPrivileges(options) {
-	if (options.uid || options.gid) {
-		process.setgroups([]);
-		process.setgid(options.gid || options.uid);
-
-		if (options.uid) {
-			process.setuid(options.uid);
-			process.env.USER = options.uid; // Bower assumes process.env.USER matches privileges of current user
-		}
-	}
-
-	log.info({uid:process.getuid(), gid:process.getgid()}, 'Set process owner');
-
-	process.umask(parseInt('0022',8)); // u+rwx, go+rx
-}
