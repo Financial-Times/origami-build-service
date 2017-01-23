@@ -24,7 +24,6 @@
     "bower-endpoint-parser": "^0.2.2",
     "bunyan": "^1.5.1",
     "cheerio": "^0.17.0",
-    "commander": "^2.3.0",
     "cors": "^2.8.1",
     "diskspace": "git+http://github.com/Financial-Times/diskspace.js.git",
     "dotenv": "^2.0.0",
@@ -46,7 +45,6 @@
     "semver": "^4.3.1",
     "streamcat": "^2.0.0",
     "tryall": "^1.0.1",
-    "uid-number": "0.0.6",
     "uuid": "^1.4.1"
   },
   "devDependencies": {
