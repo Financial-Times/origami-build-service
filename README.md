@@ -23,7 +23,6 @@ Table Of Contents
   * [Monitoring](#monitoring)
   * [Trouble-Shooting](#trouble-shooting)
   * [Project Structure](#project-structure)
-    * [Orchestration Files](#orchestration-files)
     * [ES6/Promises patterns](#es6promises-patterns)
   * [License](#license)
 
