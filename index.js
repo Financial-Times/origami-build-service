@@ -10,7 +10,6 @@ const log = require('./lib/utils/log');
 const BuildSystem = require('./lib/buildsystem');
 const HealthMonitor = require('./lib/monitoring/healthmonitor');
 const Registry = require('./lib/registry');
-const diskCacheCleaner = require('./tools/diskcacheclean');
 const os = require('os');
 const URL = require('url');
 const fs = require('fs');
@@ -187,5 +186,4 @@ const app = createApp({
 
 app.listen(process.env.PORT || 9000, function() {
 	log.info({port: process.env.PORT || 9000, env:process.env.NODE_ENV}, 'Started server');
-	diskCacheCleaner();
 });
