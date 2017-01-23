@@ -34,7 +34,7 @@ suiteWithPackages('InstallationManager#createInstallation(moduleset, options)', 
 		assert((yield pfs.isDirectory(installationADirectory)) === false);
 	});
 
-	spawnTest('it should c reate a ModuleInstallation for the requested ModuleSet', function*() {
+	spawnTest('it should create a ModuleInstallation for the requested ModuleSet', function*() {
 		const installer = new InstallationManager({
 			log: log,
 			temporaryDirectory: installdir,
