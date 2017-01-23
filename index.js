@@ -15,37 +15,19 @@ const os = require('os');
 const URL = require('url');
 const fs = require('fs');
 const path = require('path');
-const mkdirp = require('mkdirp');
-
+const denodeify = require('denodeify');
+const mkdirp = denodeify(require('mkdirp'));
 const tempdir = '/tmp/buildservice-' + process.pid + '/';
+const writeFile = denodeify(fs.writeFile);
 process.env.HOME = tempdir; // Workaround: Bower ends up using $HOME/.local/share/bower/empty despite config overriding this
 
-const dirInitialised = (function initialiseCacheDirectory(tempDirectory) {
+const dirInitialised = mkdirp(tempdir).then(function() {
 
-	function mkdirpp(dir) {
-		return new Promise(function(resolve, reject) {
-			mkdirp(dir, function(e) {
-				if (e) { reject(e); } else { resolve(); }
-			});
-		});
-	}
+	const filePath = path.join(tempdir, '/.netrc');
+	const netrc = 'machine github.com\nlogin ' + process.env.GITHUB_USERNAME + '\npassword ' + process.env.GITHUB_PASSWORD;
 
-	return mkdirpp(tempDirectory).then(new Promise(function() {
-
-		const filePath = path.join(tempDirectory, '/.netrc');
-		const netrc = 'machine github.com\nlogin ' + process.env.GITHUB_USERNAME + '\npassword ' + process.env.GITHUB_PASSWORD;
-
-		return new Promise(function(resolve, reject) {
-			fs.writeFile(filePath, netrc, function(e) {
-				if (e) {
-					reject(e);
-				} else {
-					resolve();
-				}
-			});
-		});
-	}));
-}(tempdir));
+	return writeFile(filePath, netrc);
+});
 
 const registry = new Registry();
 const healthMonitor = new HealthMonitor({log:log});
