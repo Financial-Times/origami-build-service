@@ -176,7 +176,7 @@ CR_API_KEY=<API-KEY> make deploy
 
 This is most likely due to the heavy caching we use.
 
-First, change the hostname in your request to `origami-build-service-eu.herokuapp.com`. If your update appears now, then Akamai had cached the bundle. You'll need to wait for a while, or clear the Akamai cache for your URL.
+First, change the hostname in your request to `origami-build-service-eu.herokuapp.com`. If your update appears now, then the CDN had cached the bundle. You'll need to wait for a while, or clear the CDN cache for your URL.
 
 If your component still doesn't appear, then we've cached an older version on the file system. You can clear this by restarting the Heroku dynos:
 
