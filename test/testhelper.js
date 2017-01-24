@@ -1,32 +1,30 @@
 'use strict';
 
-const libdir = process.env.COVER ? '../lib-cov' : '../lib';
-
 const uuid = require('uuid');
 const rmrf = require('rimraf');
 
-const log = require(libdir+'/utils/log');
+const log = require('../lib/utils/log');
 
 const pfs = require('q-io/fs');
 const fs = require('fs');
 const path = require('path');
-const Q = require(libdir+'/utils/q');
-const Output = require(libdir+'/output');
-const ModuleSet = require(libdir+'/moduleset');
-const PromiseCache = require(libdir+'/utils/promisecache');
-const ModuleInstallation = require(libdir+'/moduleinstallation');
-const InstallationManager = require(libdir+'/installationmanager');
-const Bundler = require(libdir+'/bundler');
-const JsBundler = require(libdir+'/jsbundler');
-const CssBundler = require(libdir+'/cssbundler');
-const DemoCompiler = require(libdir+'/democompiler');
-const BuildSystem = require(libdir+'/buildsystem');
-const HealthMonitor = require(libdir+'/monitoring/healthmonitor');
-const Registry = require(libdir+'/registry.js');
-const ModuleMetadata = require(libdir+'/modulemetadata');
-const FileProxy = require(libdir+'/fileproxy');
+const Q = require('../lib/utils/q');
+const Output = require('../lib/output');
+const ModuleSet = require('../lib/moduleset');
+const PromiseCache = require('../lib/utils/promisecache');
+const ModuleInstallation = require('../lib/moduleinstallation');
+const InstallationManager = require('../lib/installationmanager');
+const Bundler = require('../lib/bundler');
+const JsBundler = require('../lib/jsbundler');
+const CssBundler = require('../lib/cssbundler');
+const DemoCompiler = require('../lib/democompiler');
+const BuildSystem = require('../lib/buildsystem');
+const HealthMonitor = require('../lib/monitoring/healthmonitor');
+const Registry = require('../lib/registry.js');
+const ModuleMetadata = require('../lib/modulemetadata');
+const FileProxy = require('../lib/fileproxy');
 
-const createApp = require(libdir + '/index');
+const createApp = require('../lib/index');
 
 Q.longStackSupport = true;
 
