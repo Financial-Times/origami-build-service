@@ -14,6 +14,8 @@ describe('lib/index', function() {
 	let morgan;
 	let raven;
 	let routes;
+	let BuildSystem;
+	let Registry;
 
 	beforeEach(function() {
 
@@ -40,6 +42,12 @@ describe('lib/index', function() {
 
 		raven = require('../mock/raven.mock');
 		mockery.registerMock('raven', raven);
+
+		Registry = require('../mock/registry.mock');
+		mockery.registerMock('./registry', Registry);
+
+		BuildSystem = require('../mock/buildsystem.mock');
+		mockery.registerMock('./buildsystem', BuildSystem);
 
 		index = require('../../../lib');
 	});
