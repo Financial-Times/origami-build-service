@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 'use strict';
 
 require('dotenv').load({
@@ -40,6 +41,9 @@ const config = {
 
 const app = createApp(config);
 
-app.listen(config.port, function() {
-	log.info({port: config.port,env: process.env.NODE_ENV}, 'Started server');
+app.listen(config.port, function () {
+	log.info({
+		port: config.port,
+		env: process.env.NODE_ENV
+	}, 'Started server');
 });
