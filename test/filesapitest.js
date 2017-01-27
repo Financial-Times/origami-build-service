@@ -9,15 +9,20 @@ const testhelper = require('./testhelper');
 const hostnames = require('../lib/utils/hostnames');
 
 const log = testhelper.log;
-const Q = testhelper.Q;
-const FileProxy = testhelper.FileProxy;
-const Registry = testhelper.Registry;
 const InstallationManager = testhelper.InstallationManager;
 const createApp = testhelper.createApp;
 const BuildSystem = testhelper.BuildSystem;
 
 suiteWithPackages('files-api', ['files'], function(installdir){
 	this.timeout(60*1000);
+
+	let FileProxy;
+	let Registry;
+
+	beforeEach(() => {
+		FileProxy = require('../lib/fileproxy');
+		Registry = require('./unit/mock/registry.mock');
+	});
 
 	spawnTest('files-json', function*(){
 		const installationManager = new InstallationManager({temporaryDirectory:installdir, whitelist:'*'});
@@ -33,9 +38,9 @@ suiteWithPackages('files-api', ['files'], function(installdir){
 
 	spawnTest('files-registry-ok', function*(){
 		const fakeregistry = new Registry();
-		fakeregistry._packageListPromise = Q.Promise.resolve([
-			{url: installdir + '/files'},
-		]);
+		fakeregistry.packageListByURL.resolves({
+			[installdir + '/files']: {url: installdir + '/files'}
+		});
 		const installationManager = new InstallationManager({temporaryDirectory:installdir, whitelist:'*'});
 		const fileProxy = new FileProxy({
 			registry: fakeregistry,
@@ -46,9 +51,9 @@ suiteWithPackages('files-api', ['files'], function(installdir){
 
 	spawnTest('files-registry-reject', function*(){
 		const fakeregistry = new Registry();
-		fakeregistry._packageListPromise = Q.Promise.resolve([
-			{url: installdir + '/files-not'},
-		]);
+		fakeregistry.packageListByURL.resolves({
+			[installdir + '/files-not']: {url: installdir + '/files-not'}
+		});
 		const installationManager = new InstallationManager({temporaryDirectory:installdir, whitelist:'*'});
 		const fileProxy = new FileProxy({
 			registry: fakeregistry,
@@ -109,7 +114,7 @@ suiteWithPackages('files-api', ['files'], function(installdir){
 	});
 
 	test('gallery-lock has_external_dependency', function(done){
-		const buildSystem = new BuildSystem({tempdir:'/tmp/', log:log, whitelist:'*', registry: new Registry()});
+		const buildSystem = new BuildSystem({tempdir:'/tmp/', log:log, whitelist:'*', registry: new testhelper.Registry()});
 		const srv = createApp({ buildSystem: buildSystem });
 		const agent = supertest(srv);
 		const regexp = new RegExp('/bundles/css\\?modules=o-gallery%401\\.1\\.0%3A%2Fdemos%2Fsrc%2Fdemo\\.scss"');
