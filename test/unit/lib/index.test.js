@@ -117,10 +117,7 @@ describe('lib/index', function() {
 
 		it('should register the health route', function() {
 			assert.calledOnce(routes.health);
-			assert.calledWith(routes.health, expressApp);
-			assert.deepEqual(routes.health.firstCall.args[1], {
-				healthMonitor: false
-			});
+			assert.calledWithExactly(routes.health, expressApp, config);
 		});
 
 		it('should register the robots route', function() {
@@ -139,25 +136,6 @@ describe('lib/index', function() {
 
 		it('should register the raven error handler', function() {
 			assert.calledWithExactly(expressApp.use, raven.middleware.express.errorHandler.firstCall.returnValue);
-			});
-
-		describe('when `config.healthMonitor` is truthy', function() {
-
-			beforeEach(function() {
-				routes.health.reset();
-				config = {
-					healthMonitor: true
-				};
-				expressApp = index(config);
-			});
-
-			it('should register the health route with the expected config', function() {
-				assert.calledWith(routes.health, expressApp);
-				assert.deepEqual(routes.health.firstCall.args[1], {
-					healthMonitor: true
-				});
-			});
-
 		});
 
 		describe('when `config.writeAccessLog` is `true`', function() {
