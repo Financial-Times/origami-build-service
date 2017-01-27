@@ -5,6 +5,7 @@ require('dotenv').load({
 	silent: true
 });
 
+const process = require('process');
 const createApp = require('./lib/index');
 const log = require('./lib/utils/log');
 const BuildSystem = require('./lib/buildsystem');
