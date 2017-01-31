@@ -11,7 +11,7 @@ EXPECTED_COVERAGE = 90
 
 verify-coverage:
 # this doesn't seem to listen to line 6 of n.Makefile
-	@node_modules/.bin/istanbul check-coverage --statement $(EXPECTED_COVERAGE) --branch $(EXPECTED_COVERAGE) --function $(EXPECTED_COVERAGE)
+	@istanbul check-coverage --statement $(EXPECTED_COVERAGE) --branch $(EXPECTED_COVERAGE) --function $(EXPECTED_COVERAGE)
 	@$(DONE)
 
 
@@ -26,7 +26,7 @@ test-unit:
 	@$(DONE)
 
 test-unit-coverage:
-	@NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- test/unit --recursive
+	@NODE_ENV=test istanbul cover node_modules/.bin/_mocha -- test/unit --recursive
 	@$(DONE)
 
 test-integration:
@@ -128,4 +128,4 @@ run:
 	@npm start
 
 run-dev:
-	@nodemon index.js | ./node_modules/.bin/bunyan -o short
+	@nodemon index.js | bunyan -o short
