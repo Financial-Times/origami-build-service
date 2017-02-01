@@ -8,7 +8,6 @@ const supertest = require('supertest');
 const testhelper = require('./testhelper');
 const hostnames = require('../lib/utils/hostnames');
 
-const log = testhelper.log;
 const InstallationManager = testhelper.InstallationManager;
 const createApp = testhelper.createApp;
 const BuildSystem = testhelper.BuildSystem;
