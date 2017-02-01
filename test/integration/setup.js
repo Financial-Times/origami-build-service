@@ -19,8 +19,7 @@ before(function() {
 	mkdirp.sync(this.temporaryDirectory);
 	this.buildSystem = new BuildSystem({
 		log: log,
-		tempdir: this.temporaryDirectory,
-		whitelist: '*'
+		tempdir: this.temporaryDirectory
 	});
 	this.app = createApp({
 		buildSystem: this.buildSystem,

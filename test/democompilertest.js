@@ -8,12 +8,12 @@ const log = testhelper.log;
 const ModuleInstallation = testhelper.ModuleInstallation;
 const ModuleSet = testhelper.ModuleSet;
 
-suiteWithPackages('demo-compilation', ['demo-valid', 'demo-invalid', 'html'], function(installdir){
+suiteWithPackages('demo-compilation', [], function(installdir){
 	this.timeout(60*1000);
 
 	spawnTest('race', function*(){
-		const moduleset = new ModuleSet(['./demo-valid']);
-		const installation = new ModuleInstallation(moduleset, {dir: installdir, log:log, whitelist:'*'});
+		const moduleset = new ModuleSet(['o-test-component@1.0.9']);
+		const installation = new ModuleInstallation(moduleset, {dir: installdir, log:log});
 		yield installation.install();
 
 		const result = yield testhelper.bufferStream(yield (new DemoCompiler({log:log})).getContent(installation, moduleset, {}));
@@ -21,8 +21,8 @@ suiteWithPackages('demo-compilation', ['demo-valid', 'demo-invalid', 'html'], fu
 	});
 
 	spawnTest('invalid-config', function*(){
-		const moduleset = new ModuleSet(['./html']);
-		const installation = new ModuleInstallation(moduleset, {dir: installdir, log:log, whitelist:'*'});
+		const moduleset = new ModuleSet(['o-test-component@1.0.0']);
+		const installation = new ModuleInstallation(moduleset, {dir: installdir, log:log});
 		yield installation.install();
 
 		try {
@@ -36,8 +36,8 @@ suiteWithPackages('demo-compilation', ['demo-valid', 'demo-invalid', 'html'], fu
 
 
 	spawnTest('invalid-syntax', function*(){
-		const moduleset = new ModuleSet(['./demo-invalid']);
-		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log, whitelist:'*'});
+		const moduleset = new ModuleSet(['o-test-component@1.0.8']);
+		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log});
 		yield installation.install();
 
 		try {

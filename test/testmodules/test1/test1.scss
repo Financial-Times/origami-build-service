@@ -1,7 +1,0 @@
-/*unminified*/
-@import "o-assets/main";
-#test1 {
-	hello:world;
-	silent-var:$test-package1-is-silent;
-	url: url(oAssetsResolve('README', test-package1));
-}
