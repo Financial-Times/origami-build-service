@@ -10,7 +10,6 @@ const hostnames = require('../lib/utils/hostnames');
 
 const InstallationManager = testhelper.InstallationManager;
 const createApp = testhelper.createApp;
-const BuildSystem = testhelper.BuildSystem;
 
 suiteWithPackages('files-api', [], function(temporaryDirectory){
 	this.timeout(60*1000);
@@ -90,9 +89,8 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	test('gallery-lock has_external_dependency', function(done){
-		const buildSystem = new BuildSystem({tempdir: temporaryDirectory});
-		const srv = createApp({ buildSystem: buildSystem });
-		const agent = supertest(srv);
+		const app = createApp({tempdir: temporaryDirectory});
+		const agent = supertest(app);
 		const regexp = new RegExp('/bundles/css\\?modules=o-gallery%401\\.1\\.0%3A%2Fdemos%2Fsrc%2Fdemo\\.scss"');
 		agent.get('/v2/files/o-gallery@1.1.0/demos/declarative.html')
 			.expect(200)
