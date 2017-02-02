@@ -7,7 +7,7 @@ require('dotenv').load({
 });
 
 const process = require('process');
-const createApp = require('./lib/index');
+const buildService = require('./lib/index');
 const log = require('./lib/utils/log');
 const fs = require('fs');
 const path = require('path');
@@ -39,7 +39,7 @@ const config = {
 	tempdir
 };
 
-const app = createApp(config);
+const app = buildService(config);
 
 app.listen(config.port, function () {
 	log.info({
