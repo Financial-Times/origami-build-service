@@ -8,7 +8,7 @@ describe('GET /v2/files', function() {
 
 	describe('when a valid module and file path are requested', function() {
 		const moduleName = 'o-test-component@1.0.13';
-		const pathName = 'README.md';
+		const pathName = 'readme.md';
 
 		beforeEach(function() {
 			this.request = request(this.app)
