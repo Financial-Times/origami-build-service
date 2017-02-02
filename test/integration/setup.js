@@ -1,11 +1,11 @@
 'use strict';
 
-const BuildSystem = require('../../lib/buildsystem');
-const createApp = require('../../lib');
-const log = require('../../lib/utils/log');
+const buildService = require('../../lib');
 const mkdirp = require('mkdirp');
 const rmrf = require('rimraf');
 const uuid = require('uuid');
+
+const tempdir = `/tmp/buildservice/tests-${uuid()}`;
 
 before(function() {
 
@@ -15,18 +15,14 @@ before(function() {
 	// from GitHub or the registry.
 	process.env.bower_shorthand_resolver = `${__dirname}/{{shorthand}}`;
 
-	this.temporaryDirectory = `/tmp/buildservice/tests-${uuid()}`;
-	mkdirp.sync(this.temporaryDirectory);
-	this.buildSystem = new BuildSystem({
-		log: log,
-		tempdir: this.temporaryDirectory
-	});
-	this.app = createApp({
-		buildSystem: this.buildSystem,
+	mkdirp.sync(tempdir);
+
+	this.app = buildService({
+		tempdir,
 		staticBundlesDirectory: `${__dirname}/mock-static-bundles`
 	});
 });
 
 after(function() {
-	rmrf.sync(this.temporaryDirectory);
+	rmrf.sync(tempdir);
 });
