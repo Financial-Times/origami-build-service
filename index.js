@@ -35,8 +35,7 @@ const config = {
 	installationTtlExact: 3 * 24 * 3600 * 1000,
 	httpProxyTtl: 12 * 3600 * 1000,
 	writeAccessLog: true,
-	registryURL: process.env.REGISTRY_URL || 'http://registry.origami.ft.com',
-	tempdir
+	registryURL: process.env.REGISTRY_URL || 'http://registry.origami.ft.com'
 };
 
 const app = buildService(config);
