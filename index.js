@@ -27,10 +27,10 @@ fs.writeFileSync(filePath, netrc);
 process.env.HOME = tempdir; // Workaround: Bower ends up using $HOME/.local/share/bower/empty despite config overriding this
 
 const config = {
-	log: log,
+	log,
 	port: process.env.PORT || 9000,
 	export: process.env.export || 'Origami',
-	tempdir: tempdir,
+	tempdir,
 	installationTtl: 24 * 3600 * 1000,
 	installationTtlExact: 3 * 24 * 3600 * 1000,
 	httpProxyTtl: 12 * 3600 * 1000,
