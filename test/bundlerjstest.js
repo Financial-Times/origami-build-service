@@ -17,31 +17,30 @@ suiteWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
 		const bundler = new JsBundler({log:log});
 		const installer = new InstallationManager({
 			temporaryDirectory: installdir,
-			log:log,
-			whitelist: '*'
+			log:log
 		});
 
-		yield Q.all([1,2,3].map(Q.async(function*(num){
-			const moduleset = new ModuleSet(['../js:/' + num + '.js']);
+		yield Q.all(['main.scss','bower.json','main.js'].map(Q.async(function*(file){
+			const moduleset = new ModuleSet(['o-test-component@1.0.16:/' + file]);
 
 			// Must use caching here, that's how buildservice makes bower safe against race conditions
 			const installation = yield installer.createInstallation(moduleset);
 			assert.instanceOf(installation, ModuleInstallation);
 
 			const result = yield testhelper.bufferStream(yield bundler.getContent(installation, moduleset, { minify: false }));
-			assert(result.toString().indexOf(num + ';\n') >= 0, 'Source code of file ' + num + ' should be in the output');
+			assert.include(result.toString(), 'console.log("what is this?")', 'Source code of file ' + file + ' should be in the output');
 		})));
 	});
 
 	spawnTest('invalid-require', function*(){
-		const moduleset = new ModuleSet(['./invalidjs']);
-		const installation = new ModuleInstallation(moduleset, {dir: installdir, log:log, whitelist:'*'});
+		const moduleset = new ModuleSet(['o-test-component@1.0.6']);
+		const installation = new ModuleInstallation(moduleset, {dir: installdir, log:log});
 
 		yield installation.install();
 		try {
 			yield testhelper.bufferStream(yield (new JsBundler({log:log})).getContent(installation, moduleset, {minify:'none'}));
 		} catch(err) {
-			assert.include(err.message, 'missingmodule', 'Error from jsbundler should be included: ' + err.stack);
+			assert.include(err.message, 'ModuleNotFoundError: Module not found: Error: Cannot resolve module \'missingmodule\'', 'Error from jsbundler should be included: ' + err.stack);
 			assert.notInclude(err.message, installdir, 'Should hide full path');
 			return;
 		}
@@ -50,8 +49,8 @@ suiteWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
 
 
 	spawnTest('invalid-syntax', function*(){
-		const moduleset = new ModuleSet(['./invalidjs:/syntaxerr.js']);
-		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log, whitelist:'*'});
+		const moduleset = new ModuleSet(['o-test-component@1.0.5:/syntaxerr.js']);
+		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log});
 
 		yield installation.install();
 		try {

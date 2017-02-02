@@ -1,7 +1,0 @@
-{
-	"name": "test-package1",
-	"main": ["test1.scss"],
-	"dependencies": {
-		"o-assets": "~0.4.4"
-	}
-}

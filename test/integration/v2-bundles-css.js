@@ -8,7 +8,7 @@ describe('GET /v2/bundles/css', function() {
 	this.slow(5000);
 
 	describe('when a valid module is requested', function() {
-		const moduleName = 'mock-modules/test-ok';
+		const moduleName = 'o-test-component@1.0.4';
 
 		beforeEach(function() {
 			const now = (new Date()).toISOString();
@@ -22,7 +22,7 @@ describe('GET /v2/bundles/css', function() {
 		});
 
 		it('should respond with the bundled CSS', function(done) {
-			this.request.expect(`/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=mock-modules%2Ftest-ok%2Co-autoinit%401.2.1&shrinkwrap=mock-modules%2Ftest-dependency\n */\n#test-ok{hello:world}#test-dependency{dependency:true}`).end(done);
+			this.request.expect('/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=o-test-component%401.0.4%2Co-autoinit%401.2.1&shrinkwrap=\n */\n#test-compile-error{color:red}').end(done);
 		});
 
 		it('should minify the bundle', function(done) {
@@ -35,7 +35,7 @@ describe('GET /v2/bundles/css', function() {
 	});
 
 	describe('when a valid module is requested (with no minification)', function() {
-		const moduleName = 'mock-modules/test-ok';
+		const moduleName = 'o-test-component@1.0.4';
 
 		beforeEach(function() {
 			const now = (new Date()).toISOString();
@@ -49,13 +49,13 @@ describe('GET /v2/bundles/css', function() {
 		});
 
 		it('should respond with the bundled CSS unminified', function(done) {
-			this.request.expect(/\/\* unminified \*\//i).end(done);
+			this.request.expect('/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=o-test-component%401.0.4%2Co-autoinit%401.2.1&shrinkwrap=\n */\n#test-compile-error {\n  color: red; }\n\n/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJvd2VyX2NvbXBvbmVudHMvby10ZXN0LWNvbXBvbmVudC9tYWluLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0E7RUFDQyxXQUFXLEVBQ1giLCJmaWxlIjoibWFpbi07LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuI3Rlc3QtY29tcGlsZS1lcnJvciB7XG5cdGNvbG9yOiByZWQ7XG59XG4iXX0= */\n').end(done);
 		});
 
 	});
 
 	describe('when an invalid module is requested (nonexistent)', function() {
-		const moduleName = 'mock-modules/test-404';
+		const moduleName = 'test-404';
 
 		beforeEach(function() {
 			const now = (new Date()).toISOString();
@@ -75,7 +75,7 @@ describe('GET /v2/bundles/css', function() {
 	});
 
 	describe('when an invalid module is requested (Sass compilation error)', function() {
-		const moduleName = 'mock-modules/test-compile-error';
+		const moduleName = 'o-test-component@1.0.3';
 
 		beforeEach(function() {
 			const now = (new Date()).toISOString();
@@ -151,7 +151,7 @@ describe('GET /v2/bundles/css', function() {
 	});
 
 	describe('when the bundle type is invalid', function() {
-		const moduleName = 'mock-modules/test-ok';
+		const moduleName = 'o-test-component@1.0.11';
 
 		beforeEach(function() {
 			const now = (new Date()).toISOString();

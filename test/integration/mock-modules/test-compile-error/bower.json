@@ -1,8 +1,0 @@
-{
-	"name": "test-compile-error",
-	"main": [
-		"main.js",
-		"main.scss"
-	],
-	"dependencies": {}
-}

@@ -8,12 +8,11 @@ const supertest = require('supertest');
 const testhelper = require('./testhelper');
 const hostnames = require('../lib/utils/hostnames');
 
-const log = testhelper.log;
 const InstallationManager = testhelper.InstallationManager;
 const createApp = testhelper.createApp;
 const BuildSystem = testhelper.BuildSystem;
 
-suiteWithPackages('files-api', ['files'], function(installdir){
+suiteWithPackages('files-api', [], function(temporaryDirectory){
 	this.timeout(60*1000);
 
 	let FileProxy;
@@ -21,46 +20,37 @@ suiteWithPackages('files-api', ['files'], function(installdir){
 
 	beforeEach(() => {
 		FileProxy = require('../lib/fileproxy');
-		Registry = require('./unit/mock/registry.mock');
+		Registry = require('../lib/registry');
 	});
 
 	spawnTest('files-json', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory:installdir, whitelist:'*'});
+		const installationManager = new InstallationManager({temporaryDirectory});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});
-		const info = yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('../files') + '@*/test.json'));
-		assert.include(info.path, '/files/test.json');
+		const info = yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('o-test-component@1.0.8') + '/origami.json'));
+		assert.include(info.path, '/o-test-component/origami.json');
 		assert.equal(info.mimeType, 'application/json');
 		assert(info.mtime);
 		assert(info.mtime.toUTCString);
 	});
 
 	spawnTest('files-registry-ok', function*(){
-		const fakeregistry = new Registry();
-		fakeregistry.packageListByURL.resolves({
-			[installdir + '/files']: {url: installdir + '/files'}
-		});
-		const installationManager = new InstallationManager({temporaryDirectory:installdir, whitelist:'*'});
+		const installationManager = new InstallationManager({temporaryDirectory});
 		const fileProxy = new FileProxy({
-			registry: fakeregistry,
 			installationManager: installationManager
 		});
-		yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('../files') + '@*/test.json'));
+		yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('o-test-component@1.0.8') + '/main.js'));
 	});
 
 	spawnTest('files-registry-reject', function*(){
-		const fakeregistry = new Registry();
-		fakeregistry.packageListByURL.resolves({
-			[installdir + '/files-not']: {url: installdir + '/files-not'}
-		});
-		const installationManager = new InstallationManager({temporaryDirectory:installdir, whitelist:'*'});
+		const installationManager = new InstallationManager({temporaryDirectory});
 		const fileProxy = new FileProxy({
-			registry: fakeregistry,
-			installationManager: installationManager
+			installationManager: installationManager,
+			registry: new Registry()
 		});
 		try {
-			yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('../files') + '@*/test.json'));
+			yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('o-test-component@1.0.8') + '/main.js'));
 			assert.ok(false, 'Should throw');
 		} catch(e) {
 			assert.equal(e.statusCode, 403);
@@ -68,31 +58,17 @@ suiteWithPackages('files-api', ['files'], function(installdir){
 	});
 
 	spawnTest('files-missing', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory:installdir, whitelist:'*'});
+		const installationManager = new InstallationManager({temporaryDirectory});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});
 
 		try {
-			yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('../files') + '@*/sub/dir%2Ffail.404'));
-			assert(false);
+			yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('o-test-component@1.0.8') + '/..%2Ftest.json'));
+			assert.ok(false);
 		} catch(err) {
-			assert.include(err.message, 'sub/dir/fail.404', 'Should use decoded subpath');
-			assert.notInclude(err.message, installdir, 'Should not expose internals');
-		}
-	});
-
-
-	spawnTest('files-rejectunwhitelisted', function*() {
-		const installationManager = new InstallationManager({temporaryDirectory:installdir, whitelist:'*'});
-		const fileProxy = new FileProxy({
-			installationManager: installationManager
-		});
-		try {
-			yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('../files') + '@*/test.json'));
-			assert(false);
-		} catch(e) {
-			// expected error
+			assert.include(err.message, '/test.json', 'Should use decoded subpath');
+			assert.notInclude(err.message, temporaryDirectory, 'Should not expose internals');
 		}
 	});
 
@@ -114,7 +90,7 @@ suiteWithPackages('files-api', ['files'], function(installdir){
 	});
 
 	test('gallery-lock has_external_dependency', function(done){
-		const buildSystem = new BuildSystem({tempdir:'/tmp/', log:log, whitelist:'*', registry: new testhelper.Registry()});
+		const buildSystem = new BuildSystem({tempdir: temporaryDirectory});
 		const srv = createApp({ buildSystem: buildSystem });
 		const agent = supertest(srv);
 		const regexp = new RegExp('/bundles/css\\?modules=o-gallery%401\\.1\\.0%3A%2Fdemos%2Fsrc%2Fdemo\\.scss"');

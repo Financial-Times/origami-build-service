@@ -1,6 +1,0 @@
-{
-	"name":"missingdep",
-	"dependencies": {
-		"nothere": "./404-package-doesnt-exist/"
-	}
-}
