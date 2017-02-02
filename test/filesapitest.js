@@ -49,7 +49,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 			registry: new Registry()
 		});
 		try {
-			yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('o-test-component@1.0.8') + '/main.js'));
+			yield fileProxy.getFileInfo(URL.parse('/files/' + encodeURIComponent('lodash') + '/main.js'));
 			assert.ok(false, 'Should throw');
 		} catch(e) {
 			assert.equal(e.statusCode, 403);
