@@ -8,7 +8,7 @@ describe('GET /v2/modules', function() {
 	this.slow(5000);
 
 	describe('when a valid module is requested', function() {
-		const moduleName = 'o-test-component@1.0.16';
+		const moduleName = 'o-test-component%401.0.16';
 
 		beforeEach(function() {
 			this.request = request(this.app)
