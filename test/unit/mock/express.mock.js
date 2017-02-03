@@ -4,7 +4,9 @@ const sinon = require('sinon');
 
 module.exports = sinon.stub().returns({
 	disable: sinon.spy(),
-	use: sinon.spy()
+	use: sinon.spy(),
+	param: sinon.spy(),
+	get: sinon.spy()
 });
 
 module.exports.mockRequest = {

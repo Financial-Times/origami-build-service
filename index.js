@@ -7,7 +7,7 @@ require('dotenv').load({
 });
 
 const process = require('process');
-const createApp = require('./lib/index');
+const buildService = require('./lib/index');
 const log = require('./lib/utils/log');
 const fs = require('fs');
 const path = require('path');
@@ -27,19 +27,18 @@ fs.writeFileSync(filePath, netrc);
 process.env.HOME = tempdir; // Workaround: Bower ends up using $HOME/.local/share/bower/empty despite config overriding this
 
 const config = {
-	log: log,
+	log,
 	port: process.env.PORT || 9000,
 	export: process.env.export || 'Origami',
-	tempdir: tempdir,
+	tempdir,
 	installationTtl: 24 * 3600 * 1000,
 	installationTtlExact: 3 * 24 * 3600 * 1000,
 	httpProxyTtl: 12 * 3600 * 1000,
 	writeAccessLog: true,
-	registryURL: process.env.REGISTRY_URL || 'http://registry.origami.ft.com',
-	tempdir
+	registryURL: process.env.REGISTRY_URL || 'http://registry.origami.ft.com'
 };
 
-const app = createApp(config);
+const app = buildService(config);
 
 app.listen(config.port, function () {
 	log.info({
