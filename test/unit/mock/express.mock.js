@@ -12,7 +12,9 @@ module.exports = sinon.stub().returns({
 module.exports.mockRequest = {
 	headers: {},
 	query: {},
-	params: {}
+	params: {},
+	method: '',
+	originalUrl: ''
 };
 
 module.exports.mockResponse = {
@@ -22,5 +24,7 @@ module.exports.mockResponse = {
 	render: sinon.stub().returnsThis(),
 	send: sinon.stub().returnsThis(),
 	set: sinon.stub().returnsThis(),
-	status: sinon.stub().returnsThis()
+	status: sinon.stub().returnsThis(),
+	end: sinon.stub(),
+	writeHead: sinon.stub()
 };

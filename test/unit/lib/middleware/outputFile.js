@@ -53,38 +53,138 @@ describe('lib/middleware/outputFile', () => {
 
 		describe('middleware(request, response, next)', () => {
 			let next;
+			let response;
+			let request;
+
+			const fileinfo = {
+				mimeType: 'text/html',
+				mtime: new Date(),
+				expiryTime: Date.now() + 10000,
+				size: 500
+			};
 
 			beforeEach(() => {
+
 				next = sinon.spy();
+				response = require('../../mock/express.mock').mockResponse;
+				request = require('../../mock/express.mock').mockRequest;
+
+				cacheControlHeaderFromExpiry.returnsArg(0);
+
+				fileproxy.mockFileproxy.getFileInfo.resolves(fileinfo);
+
+				fileproxy.mockFileproxy.getContent.resolves({
+					length: fileinfo.size
+				});
+
+			});
+
+			it('uses files mimetype as the content-type of the response', () => {
+				return middleware(request, response, next)
+					.then(() => {
+						assert.equal(response.writeHead.firstCall.args[1]['Content-Type'], fileinfo.mimeType);
+					});
+			});
+
+			it('uses files mtime as the last-modified time of the response', () => {
+				return middleware(request, response, next)
+					.then(() => {
+						assert.equal(response.writeHead.firstCall.args[1]['Last-Modified'], fileinfo.mtime.toUTCString());
+					});
+			});
+
+			it('uses files expiry-time as the cache-control of the response', () => {
+				return middleware(request, response, next)
+					.then(() => {
+						assert.equal(response.writeHead.firstCall.args[1]['Cache-Control'], fileinfo.expiryTime);
+					});
+			});
+
+			it('sets access-control-allow-origin to allow all origins', () => {
+				return middleware(request, response, next)
+					.then(() => {
+						assert.equal(response.writeHead.firstCall.args[1]['Access-Control-Allow-Origin'], '*');
+					});
 			});
 
 			describe('when hit via a HEAD request', () => {
-				it('returns a 200 response with no body and all the headers');
-			});
 
-			describe('when request has an if-modified-since header', () => {
-				describe('which is the same as the files mtime', () => {
-					it('returns a 304 response with no body and all the headers');
+				it('returns a 200 response with no body and all the headers', () => {
+					request.method = 'HEAD';
+					return middleware(request, response, next)
+						.then(() => {
+							assert.calledOnce(response.writeHead);
+
+							assert.calledWithExactly(response.writeHead, 200, {
+								'Content-Type': fileinfo.mimeType,
+								'Last-Modified': fileinfo.mtime.toUTCString(),
+								'Cache-Control': fileinfo.expiryTime,
+								'Access-Control-Allow-Origin': '*',
+							});
+
+							assert.calledOnce(response.end);
+						});
 				});
 			});
 
-			it('uses files mimetype as the content-type of the response');
+			describe('when request has an if-modified-since header', () => {
 
-			it('uses files mtime as the last-modified time of the response');
+				describe('which is the same as the files mtime', () => {
 
-			it('uses files expiry-time as the cache-control of the response');
+					it('returns a 304 response with no body and all the headers', () => {
+						request.method = 'GET';
+						request.headers['if-modified-since'] = fileinfo.mtime.toUTCString();
+						return middleware(request, response, next)
+							.then(() => {
+								assert.calledOnce(response.writeHead);
 
-			it('sets access-control-allow-origin to allow all origins');
+								assert.calledWith(response.writeHead, 304);
 
-			describe('when file requested is text and less than 5000000', () => {
-				it('sets content-length to length of file');
+								assert.calledWithExactly(response.writeHead, 304, {
+									'Content-Type': fileinfo.mimeType,
+									'Last-Modified': fileinfo.mtime.toUTCString(),
+									'Cache-Control': fileinfo.expiryTime,
+									'Access-Control-Allow-Origin': '*',
+								});
+
+								assert.calledOnce(response.end);
+							});
+					});
+				});
+
+				describe('which is different to the files mtime', () => {
+
+					it('returns a 304 response with no body and all the headers', () => {
+						request.method = 'GET';
+						request.headers['if-modified-since'] = 11111;
+						return middleware(request, response, next)
+							.then(() => {
+								response.writeHead.firstCall.notCalledWith(304);
+							});
+					});
+				});
 			});
 
-			describe('when file requested is html and less than 5000000', () => {
-				it('sets content-length to length of file');
+
+			describe('when file requested is text/html and more than 5000000', () => {
+				it('sets content-length to length of file', () => {
+					fileinfo.size = 5000001;
+					return middleware(request, response, next)
+						.then(() => {
+							assert.calledOnce(response.writeHead);
+
+							assert.calledWithExactly(response.writeHead, 200, {
+								'Content-Type': fileinfo.mimeType,
+								'Last-Modified': fileinfo.mtime.toUTCString(),
+								'Cache-Control': fileinfo.expiryTime,
+								'Access-Control-Allow-Origin': '*',
+								'Content-Length': fileinfo.size
+							});
+						});
+				});
 			});
 
-			describe('when getFileInfo throws a generic error', () => {
+			describe('when fileproxy.getFileInfo throws a generic error', () => {
 				let getFileInfoError;
 
 				beforeEach(() => {
@@ -106,7 +206,7 @@ describe('lib/middleware/outputFile', () => {
 
 			});
 
-			describe('when getFileInfo throws an HTTP error', () => {
+			describe('when fileproxy.getFileInfo throws an HTTP error', () => {
 				let getFileInfoError;
 
 				beforeEach(() => {
