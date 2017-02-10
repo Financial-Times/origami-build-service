@@ -73,7 +73,7 @@ describe('lib/middleware/outputDemo', function() {
 				response = require('../../mock/express.mock').mockResponse;
 				request = require('../../mock/express.mock').mockRequest;
 
-											});
+			});
 
 			describe('errors', function () {
 				this.timeout(30 * 1000);
