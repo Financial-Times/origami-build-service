@@ -73,14 +73,6 @@ describe('lib/middleware/outputDemo', function() {
 				response = require('../../mock/express.mock').mockResponse;
 				request = require('../../mock/express.mock').mockRequest;
 
-				// cacheControlHeaderFromExpiry.returnsArg(0);
-
-				// fileproxy.mockFileproxy.getFileInfo.resolves(fileinfo);
-
-				// fileproxy.mockFileproxy.getContent.resolves({
-				// 	length: fileinfo.size
-				// });
-
 			});
 
 			describe('errors', function () {
