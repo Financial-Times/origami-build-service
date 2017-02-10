@@ -33,6 +33,7 @@
     "glob": "^4.0.5",
     "graphite": "0.0.6",
     "gulp": "^3.9.0",
+    "http-errors": "^1.5.1",
     "lru-cache": "^2.6.5",
     "measured": "^1.0.0",
     "mime": "^1.2.11",
