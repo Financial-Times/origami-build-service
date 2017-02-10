@@ -14,7 +14,9 @@ module.exports.mockRequest = {
 	query: {},
 	params: {},
 	method: '',
-	originalUrl: ''
+	originalUrl: '',
+	basePath: '/',
+	path: ''
 };
 
 module.exports.mockResponse = {
