@@ -4,7 +4,7 @@ const assert = require('chai').assert;
 const mockery = require('mockery');
 const sinon = require('sinon');
 
-describe.only('lib/middleware/requireModulesParameter', () => {
+describe('lib/middleware/requireModulesParameter', () => {
 	let express;
 	let httpError;
 	let requireModulesParameter;
