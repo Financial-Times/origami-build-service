@@ -39,6 +39,12 @@ describe('lib/output', function() {
 			Date.now.restore();
 		});
 
+		it('throws error if bufferedContent is undefined', () => {
+			assert.throws(() => {
+				new Output(mimeType, undefined, timeToLive);
+			}, `Output ${mimeType} created with no content`);
+		});
+
 		it('should have a `mimeType` property set to `mimeType`', function() {
 			assert.strictEqual(instance.mimeType, mimeType);
 		});
