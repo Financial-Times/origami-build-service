@@ -1,5 +1,3 @@
-// https://www.ft.com/__origami/service/build/v1/demos/o-buttons@4.5.0/standard
-
 'use strict';
 
 const request = require('supertest');
@@ -9,8 +7,8 @@ describe('GET /v1/demos', function() {
 	this.slow(5000);
 
 	describe('when a valid module and demo are requested', function() {
-		const moduleName = 'o-buttons';
-		const pathName = 'standard';
+		const moduleName = 'o-test-component';
+		const pathName = 'main';
 
 		beforeEach(function() {
 			this.request = request(this.app)
@@ -27,13 +25,13 @@ describe('GET /v1/demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect('Cannot GET /v1/demos/o-buttons/standard\n').end(done);
+			this.request.expect('Cannot GET /v1/demos/o-test-component/main\n').end(done);
 		});
 
 	});
 
 	describe('when a valid module and no demo is requested', function() {
-		const moduleName = 'o-buttons';
+		const moduleName = 'o-test-component';
 
 		beforeEach(function() {
 			this.request = request(this.app)
@@ -50,13 +48,13 @@ describe('GET /v1/demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect('Cannot GET /v1/demos/o-buttons/\n').end(done);
+			this.request.expect('Cannot GET /v1/demos/o-test-component/\n').end(done);
 		});
 
 	});
 
 	describe('when a valid module and no demo is requested, without ending /', function() {
-		const moduleName = 'o-buttons';
+		const moduleName = 'o-test-component';
 
 		beforeEach(function() {
 			this.request = request(this.app)
@@ -73,14 +71,14 @@ describe('GET /v1/demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect('Cannot GET /v1/demos/o-buttons\n').end(done);
+			this.request.expect('Cannot GET /v1/demos/o-test-component\n').end(done);
 		});
 
 	});
 
 	describe('when a valid module at specific version and demo are requested', function() {
-		const moduleName = 'o-buttons@4.5.0';
-		const pathName = 'standard';
+		const moduleName = 'o-test-component@1.0.19';
+		const pathName = 'main';
 
 		beforeEach(function() {
 			this.request = request(this.app)
@@ -97,13 +95,13 @@ describe('GET /v1/demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect('Cannot GET /v1/demos/o-buttons@4.5.0/standard\n').end(done);
+			this.request.expect('Cannot GET /v1/demos/o-test-component@1.0.19/main\n').end(done);
 		});
 
 	});
 
 	describe('when a valid module and non-existent demo are requested', function() {
-		const moduleName = 'o-buttons';
+		const moduleName = 'o-test-component';
 		const pathName = 'NOTADEMO';
 
 		beforeEach(function() {
@@ -117,13 +115,13 @@ describe('GET /v1/demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('Cannot GET /v1/demos/o-buttons/NOTADEMO\n').end(done);
+			this.request.expect('Cannot GET /v1/demos/o-test-component/NOTADEMO\n').end(done);
 		});
 
 	});
 
 	describe('when a valid module at specific version but non-existent demo are requested', function() {
-		const moduleName = 'o-buttons@4.5.0';
+		const moduleName = 'o-test-component@1.0.19';
 		const pathName = 'NOTADEMO';
 
 		beforeEach(function() {
@@ -137,7 +135,7 @@ describe('GET /v1/demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('Cannot GET /v1/demos/o-buttons@4.5.0/NOTADEMO\n').end(done);
+			this.request.expect('Cannot GET /v1/demos/o-test-component@1.0.19/NOTADEMO\n').end(done);
 		});
 
 	});
@@ -183,8 +181,8 @@ describe('GET /v1/demos', function() {
 	});
 
 	describe('when a valid module at non-existent version is requested', function() {
-		const moduleName = 'o-buttons@99.0.0';
-		const pathName = 'standard';
+		const moduleName = 'o-test-component@99.0.0';
+		const pathName = 'main';
 
 		beforeEach(function() {
 			this.request = request(this.app)
@@ -197,7 +195,7 @@ describe('GET /v1/demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('Cannot GET /v1/demos/o-buttons@99.0.0/standard\n').end(done);
+			this.request.expect('Cannot GET /v1/demos/o-test-component@99.0.0/main\n').end(done);
 		});
 
 	});
