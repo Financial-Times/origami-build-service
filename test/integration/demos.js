@@ -9,8 +9,8 @@ describe('GET /demos', function() {
 	this.slow(5000);
 
 	describe('when a valid module and demo are requested', function() {
-		const moduleName = 'o-buttons';
-		const pathName = 'standard';
+		const moduleName = 'o-test-component@1.0.19';
+		const pathName = 'main';
 
 		beforeEach(function() {
 			this.request = request(this.app)
