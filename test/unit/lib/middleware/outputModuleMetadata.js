@@ -123,6 +123,10 @@ describe('lib/middleware/outputModuleMetadata', function () {
 				});
 
 				it('uses utf-8 json as the content-type of the response', () => {
+					delete content.expiryTime;
+					ModuleMetadata.getContent.resolves(content);
+					delete content.createdTime;
+					ModuleMetadata.getContent.resolves(content);
 					return middleware(request, response, next)
 						.then(() => {
 							assert.equal(response.writeHead.firstCall.args[1]['Content-Type'], 'application/json;charset=UTF-8');
