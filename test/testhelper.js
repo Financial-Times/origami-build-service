@@ -18,7 +18,6 @@ const Bundler = require('../lib/bundler');
 const JsBundler = require('../lib/jsbundler');
 const CssBundler = require('../lib/cssbundler');
 const DemoCompiler = require('../lib/democompiler');
-const BuildSystem = require('../lib/buildsystem');
 const HealthMonitor = require('../lib/monitoring/healthmonitor');
 const Registry = require('../lib/registry.js');
 const ModuleMetadata = require('../lib/modulemetadata');
@@ -128,7 +127,6 @@ module.exports = {
 	InstallationManager: InstallationManager,
 	Output: Output,
 	ModuleSet: ModuleSet,
-	BuildSystem: BuildSystem,
 	Bundler: Bundler,
 	JsBundler: JsBundler,
 	CssBundler: CssBundler,
