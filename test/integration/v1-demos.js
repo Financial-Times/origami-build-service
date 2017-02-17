@@ -1,0 +1,203 @@
+'use strict';
+
+const request = require('supertest');
+
+describe('GET /v1/demos', function() {
+	this.timeout(40400);
+	this.slow(5000);
+
+	describe('when a valid module and demo are requested', function() {
+		const moduleName = 'o-test-component';
+		const pathName = 'main';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v1/demos/${moduleName}/${pathName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 404 status', function(done) {
+			this.request.expect(404).end(done);
+		});
+
+		it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+		});
+
+		it('should respond with the file contents', function(done) {
+			this.request.expect('Cannot GET /v1/demos/o-test-component/main\n').end(done);
+		});
+
+	});
+
+	describe('when a valid module and no demo is requested', function() {
+		const moduleName = 'o-test-component';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v1/demos/${moduleName}/`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 404 status', function(done) {
+			this.request.expect(404).end(done);
+		});
+
+		it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+		});
+
+		it('should respond with the file contents', function(done) {
+			this.request.expect('Cannot GET /v1/demos/o-test-component/\n').end(done);
+		});
+
+	});
+
+	describe('when a valid module and no demo is requested, without ending /', function() {
+		const moduleName = 'o-test-component';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v1/demos/${moduleName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 404 status', function(done) {
+			this.request.expect(404).end(done);
+		});
+
+		it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+		});
+
+		it('should respond with the file contents', function(done) {
+			this.request.expect('Cannot GET /v1/demos/o-test-component\n').end(done);
+		});
+
+	});
+
+	describe('when a valid module at specific version and demo are requested', function() {
+		const moduleName = 'o-test-component@1.0.19';
+		const pathName = 'main';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v1/demos/${moduleName}/${pathName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 404 status', function(done) {
+			this.request.expect(404).end(done);
+		});
+
+		it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+		});
+
+		it('should respond with the file contents', function(done) {
+			this.request.expect('Cannot GET /v1/demos/o-test-component@1.0.19/main\n').end(done);
+		});
+
+	});
+
+	describe('when a valid module and non-existent demo are requested', function() {
+		const moduleName = 'o-test-component';
+		const pathName = 'NOTADEMO';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v1/demos/${moduleName}/${pathName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 404 status', function(done) {
+			this.request.expect(404).end(done);
+		});
+
+		it('should respond with an error message in a comment', function(done) {
+			this.request.expect('Cannot GET /v1/demos/o-test-component/NOTADEMO\n').end(done);
+		});
+
+	});
+
+	describe('when a valid module at specific version but non-existent demo are requested', function() {
+		const moduleName = 'o-test-component@1.0.19';
+		const pathName = 'NOTADEMO';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v1/demos/${moduleName}/${pathName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 404 status', function(done) {
+			this.request.expect(404).end(done);
+		});
+
+		it('should respond with an error message in a comment', function(done) {
+			this.request.expect('Cannot GET /v1/demos/o-test-component@1.0.19/NOTADEMO\n').end(done);
+		});
+
+	});
+
+	describe('when an non-existent module is requested', function() {
+		const moduleName = 'non-existent-module';
+		const pathName = 'README.md';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v1/demos/${moduleName}/${pathName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 404 status', function(done) {
+			this.request.expect(404).end(done);
+		});
+
+		it('should respond with an error message in a comment', function(done) {
+			this.request.expect('Cannot GET /v1/demos/non-existent-module/README.md\n').end(done);
+		});
+
+	});
+
+	describe('when an invalid module (non-existent) at specific version is requested', function() {
+		const moduleName = 'non-existent-module@1.0.0';
+		const pathName = 'README.md';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v1/demos/${moduleName}/${pathName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 404 status', function(done) {
+			this.request.expect(404).end(done);
+		});
+
+		it('should respond with an error message in a comment', function(done) {
+			this.request.expect('Cannot GET /v1/demos/non-existent-module@1.0.0/README.md\n').end(done);
+		});
+
+	});
+
+	describe('when a valid module at non-existent version is requested', function() {
+		const moduleName = 'o-test-component@99.0.0';
+		const pathName = 'main';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v1/demos/${moduleName}/${pathName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 404 status', function(done) {
+			this.request.expect(404).end(done);
+		});
+
+		it('should respond with an error message in a comment', function(done) {
+			this.request.expect('Cannot GET /v1/demos/o-test-component@99.0.0/main\n').end(done);
+		});
+
+	});
+
+});

@@ -219,7 +219,7 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should respond with an error message in a JavaScript comment', function(done) {
-			this.request.expect('/*\n\nMissing \'modules\' query argument\n\n*/\n').end(done);
+			this.request.expect('/*\n\nThe modules parameter is required and must be a comma-separated list of modules\n\n*/\n').end(done);
 		});
 
 	});
@@ -237,7 +237,7 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should respond with an error message in a JavaScript comment', function(done) {
-			this.request.expect('/*\n\nThe \'modules\' query argument must be a comma-separated list of modules\n\n*/\n').end(done);
+			this.request.expect('/*\n\nThe modules parameter is required and must be a comma-separated list of modules\n\n*/\n').end(done);
 		});
 
 	});

@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 const request = require('supertest');
 
-describe('GET /v2/modules', function() {
+describe('GET /modules', function() {
 	this.timeout(20000);
 	this.slow(5000);
 
@@ -12,7 +12,7 @@ describe('GET /v2/modules', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v2/modules/${moduleName}`)
+				.get(`/modules/${moduleName}`)
 				.set('Connection', 'close');
 		});
 
@@ -44,7 +44,7 @@ describe('GET /v2/modules', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v2/modules/${moduleName}`)
+				.get(`/modules/${moduleName}`)
 				.set('Connection', 'close');
 		});
 
@@ -63,7 +63,7 @@ describe('GET /v2/modules', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v2/modules/${moduleName}`)
+				.get(`/modules/${moduleName}`)
 				.set('Connection', 'close');
 		});
 
