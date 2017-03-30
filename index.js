@@ -1,18 +1,28 @@
-#!/usr/bin/env node
-
 'use strict';
 
-require('dotenv').load({
+const buildService = require('./lib/build-service');
+const dotenv = require('dotenv');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const path = require('path');
+const throng = require('throng');
+
+dotenv.load({
 	silent: true
 });
-
-const process = require('process');
-const buildService = require('./lib/index');
-const log = require('./lib/utils/log');
-const fs = require('fs');
-const path = require('path');
-const mkdirp = require('mkdirp');
-const tempdir = '/tmp/buildservice-' + process.pid + '/';
+const options = {
+	defaultLayout: 'main',
+	httpProxyTtl: 12 * 3600 * 1000,
+	installationTtl: 24 * 3600 * 1000,
+	installationTtlExact: 3 * 24 * 3600 * 1000,
+	log: console,
+	metricsAppName: 'origami-build-service',
+	name: 'Origami Build Service',
+	registryURL: process.env.REGISTRY_URL || 'http://registry.origami.ft.com',
+	tempdir: `/tmp/buildservice-${process.pid}/`,
+	testHealthcheckFailure: process.env.TEST_HEALTHCHECK_FAILURE || false,
+	workers: process.env.WEB_CONCURRENCY || 1
+};
 
 /**
  * This can be sync as it happens during application start-up.
@@ -20,29 +30,20 @@ const tempdir = '/tmp/buildservice-' + process.pid + '/';
  * This file is needed to access our private Origami components. E.G. o-fonts-assets
  * This code should probably live in moduleinstallation.js
  */
-mkdirp.sync(tempdir);
-const filePath = path.join(tempdir, '/.netrc');
-const netrc = 'machine github.com\nlogin ' + process.env.GITHUB_USERNAME + '\npassword ' + process.env.GITHUB_PASSWORD;
-fs.writeFileSync(filePath, netrc);
-process.env.HOME = tempdir; // Workaround: Bower ends up using $HOME/.local/share/bower/empty despite config overriding this
+mkdirp.sync(options.tempdir);
+const netrcFilePath = path.join(options.tempdir, '/.netrc');
+const netrcContents = `machine github.com\nlogin ${process.env.GITHUB_USERNAME}\npassword ${process.env.GITHUB_PASSWORD}`;
+fs.writeFileSync(netrcFilePath, netrcContents);
+process.env.HOME = options.tempdir; // Workaround: Bower ends up using $HOME/.local/share/bower/empty despite config overriding this
 
-const config = {
-	log,
-	port: process.env.PORT || 9000,
-	export: process.env.export || 'Origami',
-	tempdir,
-	installationTtl: 24 * 3600 * 1000,
-	installationTtlExact: 3 * 24 * 3600 * 1000,
-	httpProxyTtl: 12 * 3600 * 1000,
-	writeAccessLog: true,
-	registryURL: process.env.REGISTRY_URL || 'http://registry.origami.ft.com'
-};
-
-const app = buildService(config);
-
-app.listen(config.port, function () {
-	log.info({
-		port: config.port,
-		env: process.env.NODE_ENV
-	}, 'Started server');
+throng({
+	workers: options.workers,
+	start: startWorker
 });
+
+function startWorker(id) {
+	console.log(`Started worker ${id}`);
+	buildService(options).listen().catch(() => {
+		process.exit(1);
+	});
+}

@@ -1,6 +1,5 @@
 'use strict';
 
-const fs = require('fs');
 const request = require('supertest');
 
 describe('GET /v2', function() {
@@ -22,10 +21,7 @@ describe('GET /v2', function() {
 	});
 
 	it('should respond with the build service documentation', function(done) {
-		fs.readFile(`${__dirname}/../../docs/index.html`, 'utf-8', (error, content) => {
-			content = content.replace(/\{\{basePath\}\}/g, '/');
-			this.request.expect(content).end(done);
-		});
+		this.request.expect(/origami build service/i).end(done);
 	});
 
 });
