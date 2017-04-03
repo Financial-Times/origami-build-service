@@ -23,7 +23,7 @@ const Registry = require('../lib/registry.js');
 const ModuleMetadata = require('../lib/modulemetadata');
 const FileProxy = require('../lib/fileproxy');
 
-const createApp = require('../lib/index');
+const createApp = require('../lib/build-service');
 
 Q.longStackSupport = true;
 
