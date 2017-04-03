@@ -47,8 +47,8 @@ describe('GET /v2/demos', function() {
 			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
 		});
 
-		it('should respond with the file contents', function(done) {
-			this.request.expect('Cannot GET /v2/demos/o-test-component/\n').end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/cannot get \/v2\/demos\/o-test-component/i).end(done);
 		});
 
 	});
@@ -70,8 +70,8 @@ describe('GET /v2/demos', function() {
 			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
 		});
 
-		it('should respond with the file contents', function(done) {
-			this.request.expect('Cannot GET /v2/demos/o-test-component\n').end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/cannot get \/v2\/demos\/o-test-component/i).end(done);
 		});
 
 	});
@@ -118,7 +118,7 @@ describe('GET /v2/demos', function() {
 			this.request.expect('Content-Type', 'text/plain;charset=UTF-8').end(done);
 		});
 
-		it('should respond with the file contents', function(done) {
+		it('should respond with an error message in a comment', function(done) {
 			this.request.expect('/*\n\nCannot complete build due to compilation error from build tools:\n\nUnclosed section "invalid-syntax}{{/invalid-syntax" at 817\n\n\n*/\n').end(done);
 		});
 
