@@ -7,7 +7,7 @@ const CssBundler = testhelper.CssBundler;
 const log = testhelper.log;
 const ModuleInstallation = testhelper.ModuleInstallation;
 const ModuleSet = testhelper.ModuleSet;
-const getFormattedError = require('../lib/express/errorresponse').getFormattedError;
+const formatErrorMessage = require('../lib/middleware/sanitize-errors').formatErrorMessage;
 
 suiteWithPackages('dependencies has_external_dependency', [], function(installdir){
 	this.timeout(20*1000);
@@ -45,7 +45,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 			assert.equal(err.code, 'ECONFLICT');
 			assert(err.picks);
 
-			const formatted = getFormattedError(err);
+			const formatted = formatErrorMessage(err);
 			assert.include(formatted, 'o-viewport');
 			assert.include(formatted, 'Required at version >=1.3.0 <3 by o-techdocs@6.1.3');
 			assert.include(formatted, 'Required at version ^3.0.1 by o-video@2.4.0');
@@ -62,7 +62,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 		} catch(err) {
 			assert(err instanceof Error);
 
-			const formatted = getFormattedError(err);
+			const formatted = formatErrorMessage(err);
 			assert.include(formatted, 'o-test-component');
 			assert.include(formatted, 'Module o-test-component (o-test-component) has been specified more than once');
 			assert.include(formatted, 'o-test-component#1.0.1');
