@@ -5,7 +5,7 @@ const mockery = require('mockery');
 const sinon = require('sinon');
 
 describe('lib/middleware/log-hostname', () => {
-	let express;
+	let origamiService;
 	let log;
 	let logHostname;
 
@@ -14,7 +14,7 @@ describe('lib/middleware/log-hostname', () => {
 		log = require('../../mock/log.mock');
 		mockery.registerMock('../utils/log', log);
 
-		express = require('../../mock/express.mock');
+		origamiService = require('../../mock/origami-service.mock');
 		logHostname = require('../../../../lib/middleware/log-hostname');
 	});
 
@@ -38,8 +38,8 @@ describe('lib/middleware/log-hostname', () => {
 
 			beforeEach(() => {
 				next = sinon.spy();
-				express.mockRequest.url = '/foo/bar';
-				middleware(express.mockRequest, express.mockResponse, next);
+				origamiService.mockRequest.url = '/foo/bar';
+				middleware(origamiService.mockRequest, origamiService.mockResponse, next);
 			});
 
 			it('logs the hostname as "unknown/direct"', () => {
@@ -57,9 +57,9 @@ describe('lib/middleware/log-hostname', () => {
 				beforeEach(() => {
 					log.info.reset();
 					next.reset();
-					express.mockRequest.url = '/foo/bar';
-					express.mockRequest.headers['x-original-host'] = 'build.service';
-					middleware(express.mockRequest, express.mockResponse, next);
+					origamiService.mockRequest.url = '/foo/bar';
+					origamiService.mockRequest.headers['x-original-host'] = 'build.service';
+					middleware(origamiService.mockRequest, origamiService.mockResponse, next);
 				});
 
 				it('logs the hostname as the hostname in the header value', () => {
@@ -79,10 +79,10 @@ describe('lib/middleware/log-hostname', () => {
 				beforeEach(() => {
 					log.info.reset();
 					next.reset();
-					express.mockRequest.url = '/foo/bar';
-					express.mockRequest.headers['referer'] = 'http://referer/';
-					express.mockRequest.headers['x-original-host'] = 'build.service';
-					middleware(express.mockRequest, express.mockResponse, next);
+					origamiService.mockRequest.url = '/foo/bar';
+					origamiService.mockRequest.headers['referer'] = 'http://referer/';
+					origamiService.mockRequest.headers['x-original-host'] = 'build.service';
+					middleware(origamiService.mockRequest, origamiService.mockResponse, next);
 				});
 
 				it('logs the referer as well as the hostname', () => {
@@ -102,9 +102,9 @@ describe('lib/middleware/log-hostname', () => {
 				beforeEach(() => {
 					log.info.reset();
 					next.reset();
-					express.mockRequest.url = '/__about';
-					express.mockRequest.headers['x-original-host'] = 'build.service';
-					middleware(express.mockRequest, express.mockResponse, next);
+					origamiService.mockRequest.url = '/__about';
+					origamiService.mockRequest.headers['x-original-host'] = 'build.service';
+					middleware(origamiService.mockRequest, origamiService.mockResponse, next);
 				});
 
 				it('logs nothing', () => {
