@@ -5,7 +5,6 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
-const throng = require('throng');
 
 dotenv.load({
 	silent: true
@@ -20,8 +19,7 @@ const options = {
 	name: 'Origami Build Service',
 	registryURL: process.env.REGISTRY_URL || 'http://registry.origami.ft.com',
 	tempdir: `/tmp/buildservice-${process.pid}/`,
-	testHealthcheckFailure: process.env.TEST_HEALTHCHECK_FAILURE || false,
-	workers: process.env.WEB_CONCURRENCY || 1
+	testHealthcheckFailure: process.env.TEST_HEALTHCHECK_FAILURE || false
 };
 
 /**
@@ -36,14 +34,6 @@ const netrcContents = `machine github.com\nlogin ${process.env.GITHUB_USERNAME}\
 fs.writeFileSync(netrcFilePath, netrcContents);
 process.env.HOME = options.tempdir; // Workaround: Bower ends up using $HOME/.local/share/bower/empty despite config overriding this
 
-throng({
-	workers: options.workers,
-	start: startWorker
+buildService(options).listen().catch(() => {
+	process.exit(1);
 });
-
-function startWorker(id) {
-	console.log(`Started worker ${id}`);
-	buildService(options).listen().catch(() => {
-		process.exit(1);
-	});
-}
