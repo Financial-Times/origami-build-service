@@ -1,0 +1,523 @@
+
+<div class="o-techdocs-container">
+	<div class="o-techdocs-layout">
+
+		<div class="o-techdocs-sidebar">
+			{{>navigation}}
+		</div>
+
+		<div class="o-techdocs-main o-techdocs-content">
+
+			<h1>
+				Origami modules built and delivered
+			</h1>
+			<p>
+				Before an Origami module can be used by a browser it must be built. <a href='https://github.com/Financial-Times/origami-build-tools'>Origami Build Tools</a> take care of this and can be integrated as part of your own build process. If you don't want to do this yourself, you can use the Build Service.
+				The Build Service takes Origami module identifiers and returns all of the minified compiled JavaScript and CSS required by browsers.
+			</p>
+			<h2>Quick start</h2>
+			<p>
+				<strong>1. Add this snippet in your document to import the <a href="https://git.io/o-grid">grid system</a> and load the FT webfonts:</strong>
+			</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot;
+href=&quot;https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-grid@^4.0.0,o-fonts@^1.4.0&quot; /&gt;
+&lt;script src=&quot;https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-grid@^4.0.0,o-fonts@^1.4.0&quot; async /&gt;</code></pre>
+			<p>This is all you need for prototyping with the Build Service. To use the Build Service in production you should also include a <a href="http://origami.ft.com/docs/developer-guide/using-modules/#core-vs-enhanced-experience">cuts the mustard test</a>.
+			<p>
+				<strong>2. Load more modules by adding them to the list:</strong>
+			</p>
+			<p>
+				<pre><code>?modules=o-grid@^4.0.0,o-fonts@^1.4.0,o-header@^4.0.0,o-buttons@^3.0.0</code></pre>
+			</p>
+
+			<h2 id="how-the-build-service-works">How the build service works</h2>
+
+			<p>The resource compiler operates on the endpoints starting with <code>/v2/bundles</code>. It packages the requested modules (including all their dependencies) using the standard <a href="//origami.ft.com/docs/developer-guide/building-modules">Origami build process</a>, bundles and minifies the result and returns it as an HTTP response. Individual sub-endpoints serve JS and CSS.</p>
+			<p>Examples of valid resource compilation requests:</p>
+			<pre><code>/v2/bundles/js?modules={module}@{version},{module}@{version}...
+/v2/bundles/js?modules=o-ads@1.2,o-tracking@3,o-cookiewarn@3.3.1
+/v2/bundles/css?modules=o-signinstatus@1.7.3,o-fonts,o-grid@3</code></pre>
+			<p>You should most likely request all the JS modules you want in a single bundle request, and likewise for CSS, and then write them into the <code>&lt;head&gt;</code> or end of the <code>&lt;body&gt;</code> of your HTML document:</p>
+			<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-ft-nav@2.3,o-share@2,colors&quot; /&gt;
+&lt;script src=&quot;https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-ft-nav@2.3,o-share@2,o-tracking@3.5,o-ads@1.2&quot; /&gt;</code></pre>
+
+			<aside>
+				<h4>Avoiding problems with Content security policy</h4>
+				<p>Although in most cases, <code>link</code> and <code>script</code> tags referencing the build service will be supported by default, in packaged app containers such as Google Chrome extensions, or in web pages served with <a href="http://www.html5rocks.com/en/tutorials/security/content-security-policy/">Content Security Policy</a> headers, you may need to explicitly allow <code>www.ft.com</code> as a source origin from which the app can load resources (see also <a href="https://github.com/Financial-Times/ft-origami/issues/237">issue 237</a>).</p>
+				<ul>
+					<li>Chrome extensions: <a href="https://developer.chrome.com/extensions/contentSecurityPolicy">Update your manifest.json file</a></li>
+				</ul>
+			</aside>
+
+			<h3 id="dependency-conflicts">Dependency conflicts</h3>
+			<p>Where a resource compiler request results in multiple versions of the same module being included, the build service will generate an error page instead of the requested output.  The error page includes information about which modules caused the dependency conflict, and which versions of the depended-upon module are in contention.  For example:</p>
+
+			<pre><code>Cannot complete build: conflicting dependencies exist.
+
+o-colors:
+- Required at version 1.7 by o-nav
+- Required at version 1.9 by o-cookiewarn
+
+o-typography:
+- Required at version 2.7.4 in the URL
+- Required at version ~3.2 by o-nav@1.2.3, o-header@3.2.0
+- Required at version 4.* by o-signinstatus@2.2.0
+			</code></pre>
+
+			<p>Note that some dependencies are required by the explicit module list sent to the build server (referred to above as URL) while others are dependencies of those modules.</p>
+			<p>Dependency conflicts must be resolved by either the product developer requesting a different version of the modules that contain the conflicting dependencies, or by the module developer updating the modules to allow a broader range of versions of the dependency.</p>
+
+			<h3 id="shinkwrapping">Shinkwrapping</h3>
+			<p>Bundle endpoints (beginning <code>/v2/bundles/</code>) support shrinkwrapping their output.  If the module list in your bundle request omits any version numbers, uses semver ranges, or does not include all the modules involved in the bundle (including all dependencies), then it&#39;s expected that the content of the bundle URL <em>will change over time</em>, because new versions of modules may be released that satisfy your request criteria.</p>
+			<p>If you are risk-averse and want to ensure that the content of the bundle URL is always the same, you can obtain a &#39;shrinkwrapped&#39; version by inspecting the comment at the top of any bundle response.  Eg:</p>
+			<pre><code>/v2/bundles/css?modules=o-grid,o-header</code></pre>
+			<p>At time of writing this produces content prefixed with:</p>
+			<pre><code>
+/** Shrinkwrap URL:
+*    /v2/bundles/css?modules=o-grid%402.4.1%2Co-header%402.5.16&shrinkwrap=ftdomdelegate%402.0.3%2Co-assets%401.0.0%2Co-colors%402.4.7%2Co-dom%400.4.1%2Co-fonts%401.6.4%2Co-ft-icons%402.3.4%2Co-hierarchical-nav%401.1.3%2Co-hoverable%400.2.0%2Co-layers%401.0.0%2Co-squishy-list%401.1.0%2Co-useragent%402.2.0%2Co-viewport%401.0.0
+*/
+			</code></pre>
+			<p>This locks down the precise versions of each constituent in the bundle to the version that currently best matches your request.  You can then swap your original URL for the shrinkwrapped one to ensure that the returned content always remains unchanged:</p>
+
+			<h3 id="file-proxy-files-">File proxy (/files)</h3>
+			<p>The build service also offers the ability to request, over HTTP or HTTPS, any single file from any known module component.  This is useful to make use of modules that provide static resources such as images, fonts, audio, video or other media, without having to install them.</p>
+			<p>The file proxy is also used by the build service itself when creating bundles of JS or CSS that load external resources on demand.  This allows CSS loaded through the build service <code>/v2/bundles</code> endpoint to still load any included backgrounds, and JavaScript modules may make AJAX requests to load static resources from their repos.</p>
+
+			<h3 id="caching-and-rebuilding">Caching and rebuilding</h3>
+			<p>Requested bundles and files are generated on demand and then cached by the build service node that generated it (and also by the CDN).  TTLs are set heuristically based on the mutability of the bundle content (ie if you use a fully shrinkwrapped URL, the TTL will be far longer).  Build times can be significant (occasionally over a minute).</p>
+			<p>All bundle responses come with <code>stale-while-revalidate</code> and <code>stale-on-error</code> headers, which instructs CDNs to continue caching stale bundles while they are regenerated, reducing the chance of a public web user being blocked on a synchronous rebuild of a bundle which has expired in cache.</p>
+			<p>If you are loading build service URLs from the server side, you <em>must</em> fully respect <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9">cache control</a> directives emitted by the build service.</p>
+
+			<h3 id="reliability">Reliability</h3>
+			<p>The build service is highly available, and shared-nothing, so each node is responsible individually for caching its own copy of the built bundles.</p>
+
+			<h3 id="concurrency">Concurrency</h3>
+			<p>The build service is capable of running more than one build at the same time, but will not concurrently run more than one identical build.  The second and subsequent requests for the same resource received while the first is building will not cause a second build to be started, but will simply receive a <code>202</code> response (if async) or block waiting for the original build to finish (if sync).</p>
+
+			<h2 id="api-reference">API reference</h2>
+			<p>The current version of the API is 2.  It has exactly the same API interface as v1, but uses <a href='https://github.com/Financial-Times/origami-build-tools'>Origami Build Tools</a> for the builds.  This uses libsass and is not 100% compatible with Ruby Sass, so we still make Ruby Sass builds available on the v1 endpoint.  JavaScript bundles are built with OBT on both v1 and v2 endpoints.</p>
+
+			<h3 id="get-v1-bundles-js">GET /v2/bundles/js</h3>
+			<p>Fetch a set of modules and build a JavaScript bundle.</p>
+
+			<table class="o-techdocs-table">
+				<tr>
+					<th>Param</th>
+					<th>Where?</th>
+					<th>Description</th>
+				</tr><tr>
+					<td><code>modules</code></td>
+					<td>Querystring</td>
+					<td>A comma separated list of modules in the form <code>modulename@version</code>.  Modulename may be a full URL (URL-encoded), or just the name of the repository.  Where it is not a URL, the build service will try to find it as a repository from known Git sources.  <code>version</code> is optional - if not present the build service will build the most recent version of the module, if it is present, it will be interpreted using Semver rules and the best matching version will be built.  Using specific commit sha1s or branch names is not currently supported.
+				</td>
+				</tr><tr>
+					<td><code>minify</code></td>
+					<td>Querystring</td>
+					<td><em>(Optional)</em> If present and set to 'none', suppresses minification.  Otherwise output will be minified automatically.</td>
+				</tr><tr>
+					<td><code>polyfills</code></td>
+					<td>Querystring</td>
+					<td><em>(Optional)</em> If present and set to 'none', does not add polyfills to the output. Use this if your bundle is conflicting with other polyfills (e.g. through the <a href="https://cdn.polyfill.io/">Polyfill Service</a>).</td>
+				</tr><tr>
+					<td><code>export</code></td>
+					<td>Querystring</td>
+					<td><em>(Optional)</em> If present, generates a <a href="https://github.com/umdjs/umd">UMD</a> bundle for the supplied export name. UMD works with other module systems and if no module system is found sets the specified name as a window global.  If absent, the default export name <code>Origami</code> will be used.  To export nothing, pass an empty string.</td>
+				</tr><tr>
+					<td><code>newerthan</code></td>
+					<td>Querystring</td>
+					<td><em>(Optional)</em> If present and set to a valid <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> date in the past, the build service will not consider any cached copies of the build which are older than the date given, and if necessary will therefore begin a new build as if there were no build cached.</td>
+				</tr><tr>
+					<td><code>autoinit</code></td>
+					<td>Querystring</td>
+					<td><em>(Optional)</em> If absent, or present and set to a truthy value, the bundle will include code to dispatch the <code>o.DOMContentLoaded</code> and <code>o.load</code> events when their browser-native counterparts occur.  If set to <code>0</code>, no auto-initialisation code will be included.</td>
+				</tr>
+			</table>
+
+			<p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+			<p>All complete bundle responses will include an <code>X-FT-Build-Info</code> response header, giving the bundle identifier, the date the build started in <a href="http://www.ietf.org/rfc/rfc1123.txt">RFC1123</a> format, and the hostname of the build server:</p>
+			<pre><code>
+X-FT-Build-Info: {build_hash}; {build_start_date}; {build_server};
+X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:12:31 GMT; prod04-build02-uk1;
+			</code></pre>
+
+			<p>The following HTTP errors can be returned:</p>
+
+			<ul>
+				<li><code>400 Bad Request</code>: The request was invalid</li>
+				<li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
+				<li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
+				<li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+			</ul>
+
+			<h3 id="get-v1-bundles-css">GET /v2/bundles/css</h3>
+
+			<p>Fetch a set of modules and build a CSS bundle.</p>
+
+			<table class="o-techdocs-table">
+				<tr>
+					<th>Param</th>
+					<th>Where</th>
+					<th>Description</th>
+				</tr><tr>
+					<td><code>modules</code></td>
+					<td>Querystring</td>
+					<td>A comma separated list of modules in the form <code>modulename@version</code>.  Modulename may be a full URL (URL-encoded), or just the name of the repository.  Where it is not a URL, the build service will try to find it as a repository from known Git sources.  <code>version</code> is optional - if not present the build service will build the most recent version of the module, if it is present, it will be interpreted using Semver rules and the best matching version will be built.  Using specific commit sha1s or branch names is not currently supported.</td>
+				</tr><tr>
+					<td><code>minify</code></td>
+					<td>Querystring</td>
+					<td><em>(Optional)</em> If present and set to 'none', suppresses minification.  Otherwise output will be minified automatically.</td>
+				</tr><tr>
+					<td><code>newerthan</code></td>
+					<td>Querystring</td>
+					<td><em>(Optional)</em> If present and set to a valid <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> date in the past, the build service will not consider any cached copies of the build which are older than the date given, and if necessary will therefore begin a new build as if there were no build cached.</td>
+				</tr>
+			</table>
+
+			<p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+			<p>All complete bundle responses will include an <code>X-FT-Build-Info</code> response header, giving the bundle identifier, the date the build started in <a href="http://www.ietf.org/rfc/rfc1123.txt">RFC1123</a> format, and the hostname of the build server:</p>
+			<pre><code>
+X-FT-Build-Info: {build_hash}; {build_start_date}; {build_server};
+X-FT-Build-Info: 1b1ab000a9b5642f6b8726039f1e79477b57c103; Tue, 15 Nov 2012 08:12:31 GMT; prod04-build02-uk1;
+			</code></pre>
+
+			<p>The following HTTP errors can be returned:</p>
+
+			<ul>
+				<li><code>400 Bad Request</code>: The request was invalid</li>
+				<li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
+				<li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
+				<li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+			</ul>
+
+			<h3 id="get-v1-files-module-version-path-">GET /v2/files/<code>module</code>@<code>version</code>/<code>path</code></h3>
+
+			<p>Loads and returns a file from a module component&#39;s repo.</p>
+			<table class="o-techdocs-table">
+			<tr>
+				<th>Param</th>
+				<th>Where</th>
+				<th>Description</th>
+			</tr><tr>
+				<td><code>module</code></td>
+				<td>URL</td>
+				<td>Name of a git repo containing a the file to return.</td>
+			</tr><tr>
+				<td><code>version</code></td>
+				<td>URL</td>
+				<td>Semver compliant version number reference.</td>
+			</tr><tr>
+				<td><code>path</code></td>
+				<td>URL</td>
+				<td>Path to the file within the repo.</td>
+			</tr>
+			</table>
+
+			<p>The most recent tagged version of the file that matches the specified Semver version number will be returned.</p>
+
+			<h3 id="get-v1-modules-module-version-">GET /v2/modules/<code>module</code>@<code>version</code></h3>
+
+			<p>Returns information in JSON format describing the module.</p>
+
+			<table class="o-techdocs-table">
+			<tr>
+				<th>Property</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr><tr>
+				<td><code>bowerEndpoint</code></td>
+				<td>String</td>
+				<td>Name or URL of the package with an optional version number. It&#39;s in a format accepted by the <code>bower install</code> command.</td>
+			</tr><tr>
+				<td><code>bowerManifest</code></td>
+				<td>Object</td>
+				<td>Content of the <a href="https://github.com/bower/bower#defining-a-package"><code>.bower.json</code></a> file that&#39;s created by the <code>bower install</code> command. It contains the exact version of the package and its dependencies.</td>
+			</tr><tr>
+				<td><code>origamiManifest</code></td>
+				<td>Object</td>
+				<td>Content of the <a href="/ft-origami/docs/syntax/origamijson/"><code>origami.json</code></a> file if it was found in the package.</td>
+			</tr><tr>
+				<td><code>build</code></td>
+				<td>Object</td>
+				<td>Results of build tasks performed on the package. All properties in this object are optional. Each property in this object contains an object with a <code>valid</code> and an optional <code>error</code> properties.</td>
+			</tr><tr>
+				<td><code>build.bundler.valid</code></td>
+				<td>Boolean</td>
+				<td><code>true</code> if the package could be fetched and installed by the build service.</td>
+			</tr><tr>
+				<td><code>build.bundler.error</code></td>
+				<td>String</td>
+				<td>Message describing installation failure, if any.</td>
+			</tr><tr>
+				<td><code>build.origami.valid</code></td>
+				<td>Boolean</td>
+				<td><code>true</code> if this is an Origami module and no conformance errors were found.</td>
+			</tr><tr>
+				<td><code>build.origami.error</code></td>
+				<td>String</td>
+				<td>Message describing the conformance error, if any.</td>
+			</tr><tr>
+				<td><code>build.css.valid</code></td>
+				<td>Boolean</td>
+				<td><code>true</code> if CSS and Sass files in the package compiled successfully.</td>
+			</tr><tr>
+				<td><code>build.css.error</code></td>
+				<td>String</td>
+				<td>Sass compilation error message, if any.</td>
+			</tr><tr>
+				<td><code>build.js.valid</code></td>
+				<td>Boolean</td>
+				<td><code>true</code> if JS was concatenated and minified without problems.</td>
+			</tr><tr>
+				<td><code>build.js.error</code></td>
+				<td>String</td>
+				<td>JS compilation error message, if any.</td>
+			</tr>
+			</table>
+
+
+			<h2 id="deprecation">Deprecation</h2>
+
+			<h3 id="deprecation-api-versions">API versions</h3>
+
+			<p>
+				All Build Service endpoints are versioned, and the current version is <code>v2</code>.
+				When deprecating old versions of the API
+				<a href="http://origami.ft.com/docs/component-spec/web-services/#web-services-should">we give at least three months notice</a>,
+				and will strive to notify all Build Service users.
+			</p>
+
+			<p>
+				Normally deprecated versions will be removed, and endpoints will start to respond with
+				a <code>410 Gone</code> status. We sometimes make an exception and redirect old
+				versions to their newer counterparts when the API is compatible.
+			</p>
+
+			<table class="o-techdocs-table">
+				<thead>
+					<tr>
+						<th>Version</th>
+						<th>Status</th>
+						<th>End Date</th>
+						<th>Notes</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>v2</code></td>
+						<td>Current</td>
+						<td>N/A</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><code>v1</code></td>
+						<td>Deprecated</td>
+						<td><time datetime="2016-08-15"><b>2016‑08‑15</b></time></td>
+						<td>
+							Requests to <code>v1</code> endpoints will be redirected to
+							<code>v2</code> with a <code>301</code> status, rather than being
+							removed. You're still encouraged to migrate to avoid the overhead
+							of redirects.
+						</td>
+					</tr>
+					<tr>
+						<td><code>-</code></td>
+						<td>Deprecated</td>
+						<td><time datetime="2016-08-15"><b>2016‑08‑15</b></time></td>
+						<td>
+							Requests to unversioned endpoints will be redirected to <code>v2</code>
+							with a <code>301</code> status, rather than being removed. You're
+							still encouraged to migrate to avoid the overhead of redirects.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h4 id="v1-to-v2-migration">Migrating from <code>v1</code> to <code>v2</code></h4>
+
+			<p>
+				The only potential breaking change in the <code>v2</code> API is that we moved
+				Sass compilation from Ruby Sass to LibSass. The only endpoint affected by this
+				is <code>/v2/bundles/css</code>.
+			</p>
+
+			<p>
+				Try replacing <code>v1</code> with <code>v2</code> in your requests. If you're
+				using very old versions of some modules, some of your styles may break. In this
+				case you'll need to update to newer versions of these modules.
+			</p>
+
+			<table class="o-techdocs-table">
+				<thead>
+					<tr>
+						<th>Before</th>
+						<th>After</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>/v1/bundles/css?modules=&hellip;</code></td>
+						<td><code>/v2/bundles/css?modules=&hellip;</code></td>
+					</tr>
+					<tr>
+						<td><code>/v1/files/&hellip;</code></td>
+						<td><code>/v2/files/&hellip;</code></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h4 id="unversioned-to-v2-migration">Migrating from unversioned to <code>v2</code></h4>
+
+			<p>
+				Unversioned endpoints behave in exactly the same way as <code>v1</code>. See the
+				<a href="#v1-to-v2-migration"><code>v1</code> to <code>v2</code> migration docs</a>
+				for information about breaking changes. To migrate, add <code>v2</code> into the
+				path before the endpoint:
+			</p>
+
+			<table class="o-techdocs-table">
+				<thead>
+					<tr>
+						<th>Before</th>
+						<th>After</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>/bundles/css?modules=&hellip;</code></td>
+						<td><code>/v2/bundles/css?modules=&hellip;</code></td>
+					</tr>
+					<tr>
+						<td><code>/files/&hellip;</code></td>
+						<td><code>/v2/files/&hellip;</code></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h3 id="hostnames-and-cdns">Hostnames and CDNs</h3>
+
+			<p>
+				The Build Service is accessible using multiple different hostnames/paths. We only
+				recommend using <code>www.ft.com/__origami/service/build</code>.
+			</p>
+
+			<table class="o-techdocs-table">
+				<thead>
+					<tr>
+						<th>Hostname</th>
+						<th>Status</th>
+						<th>Notes</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>www.ft.com/__origami/service/build</code></td>
+						<td>Current</td>
+						<td>
+							The hostname/path you should be accessing the Build Service through.
+							Responses are cached with Fastly, and we use the
+							<code>stale-while-revalidate</code> and <code>stale-on-error</code>
+							cache extensions. This hostname/path is also multi-region with failover.
+						</td>
+					</tr>
+					<tr>
+						<td><code>origami-build.ft.com</code></td>
+						<td>Deprecated</td>
+						<td>
+							Responses are cached with Fastly. This will start redirecting to
+							<code>www.ft.com/__origami/service/build</code> on
+							<time datetime="2017-06-01"><b>2017‑06‑01</b></time>.
+						</td>
+					</tr>
+					<tr>
+						<td><code>build.origami.ft.com</code></td>
+						<td>Deprecated</td>
+						<td>
+							Responses are cached with Akamai. This will start redirecting to
+							<code>www.ft.com/__origami/service/build</code> on
+							<time datetime="2017-06-01"><b>2017‑06‑01</b></time>.
+						</td>
+					</tr>
+					<tr>
+						<td><code>buildservice.ft.com</code></td>
+						<td>Deprecated</td>
+						<td>
+							Responses are cached with Akamai. This will start redirecting to
+							<code>www.ft.com/__origami/service/build</code> on
+							<time datetime="2017-06-01"><b>2017‑06‑01</b></time>.
+						</td>
+					</tr>
+					<tr>
+						<td><code>origami-build-service-eu.herokuapp.com</code></td>
+						<td>Development</td>
+						<td>
+							Responses are not cached. This hostname should <b>never</b> be used
+							in production.
+						</td>
+					</tr>
+					<tr>
+						<td><code>origami-build-service-us.herokuapp.com</code></td>
+						<td>Development</td>
+						<td>
+							Responses are not cached. This hostname should <b>never</b> be used
+							in production.
+						</td>
+					</tr>
+					<tr>
+						<td><code>origami-build-service-qa.herokuapp.com</code></td>
+						<td>Development</td>
+						<td>
+							This hostname points to a QA instance of the Build Service which has
+							far fewer resources than production. Responses are not cached. This
+							hostname should <b>never</b> be used in production.
+						</td>
+					</tr>
+					<tr>
+						<td><code>origami-buildservice-eu.herokuapp.com</code></td>
+						<td>Deprecated</td>
+						<td>
+							This URL no longer points to the Build Service.
+						</td>
+					</tr>
+					<tr>
+						<td><code>origami-buildservice-qa.herokuapp.com</code></td>
+						<td>Deprecated</td>
+						<td>
+							This URL no longer points to the Build Service.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h3 id="fastly-migration">Fastly Migration</h4>
+
+			<p>
+				The Build Service is migrating from Akamai to Fastly and also to a path on the
+				ft.com domain. On <time datetime="2017-06-01"><b>2017-06-01</b></time> we will
+				start redirecting traffic from the following hostnames to
+				<code>www.ft.com/__origami/service/build</code>:
+			</p>
+
+			<ul>
+				<li><code>origami-build.ft.com</code></li>
+				<li><code>build.origami.ft.com</code></li>
+				<li><code>buildservice.ft.com</code></li>
+			</ul>
+
+			<p>
+				We strongly recommend that you update all references to these deprecated hostnames
+				to avoid redirects in your bundle and file requests. You will also get the
+				benefit of the <code>stale-while-revalidate</code> and <code>stale-on-error</code>
+				cache extensions, as well as multi-region support with failover. These all
+				increase the resilience of the Build Service.
+			</p>
+
+			<p>
+				The redirects may have unexpected results if you access the Build Service
+				through a proxy, and you may see multiple redirects if you're using both a
+				deprecated hostname <em>and</em> <a href="#deprecation-api-versions">API version</a>.
+			</p>
+
+		</div>
+
+	</div>
+</div>

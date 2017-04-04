@@ -1,5 +1,11 @@
 'use strict';
 
+// TODO remove this dirty hack once we move away from n.Makefile
+delete process.env.TLS_CA_CERT;
+require('dotenv').load({
+	silent: true
+});
+
 module.exports = {
 	backends: require('./backends.json'),
 	healthchecks: require('./healthchecks.json'),

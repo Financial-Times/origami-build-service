@@ -128,4 +128,4 @@ run:
 	@npm start
 
 run-dev:
-	@nodemon index.js | bunyan -o short
+	@nodemon index.js
