@@ -21,6 +21,7 @@ before(function() {
 		log: mockLog,
 		port: null,
 		requestLogFormat: null,
+		graphiteApiKey: 'xxx',
 		staticBundlesDirectory: `${__dirname}/mock-static-bundles`,
 		tempdir
 	})

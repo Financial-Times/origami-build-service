@@ -60,30 +60,30 @@ describe('lib/middleware/outputBundle', function() {
 			let request;
 
 			beforeEach(() => {
-
+				bundler.getBundle.resolves();
 				next = sinon.spy();
 				response = require('../../mock/express.mock').mockResponse;
 				request = require('../../mock/express.mock').mockRequest;
 				request.query.modules = 'test';
 			});
 
-			describe('errors', function () {
-				this.timeout(30 * 1000);
+			describe('errors', () => {
 
 				beforeEach(() => {
-					bundler.getBundle.resolves(new Promise(resolve =>
-						setTimeout(resolve, 22 * 1000)
-					));
+					sinon.stub(global, 'setTimeout');
+					global.setTimeout.callsArgWithAsync(0, 'timeout');
+				});
+
+				afterEach(() => {
+					global.setTimeout.restore();
 				});
 
 				describe('when bundle takes more than 20 seconds', () => {
 					it('returns a 307, redirecting to itself', () => {
-						bundler.getBundle.resolves(new Promise(resolve =>
-							setTimeout(resolve, 22 * 1000)
-						));
-
 						return middleware(request, response, next)
 						.then(() => {
+							assert.calledOnce(global.setTimeout);
+							assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
 							assert.calledOnce(response.redirect);
 							assert.equal(request.query.redirects, 1);
 							assert.calledWithExactly(response.redirect, 307, '/?modules=test&redirects=1');
@@ -97,6 +97,8 @@ describe('lib/middleware/outputBundle', function() {
 
 						return middleware(request, response, next)
 						.then(() => {
+							assert.calledOnce(global.setTimeout);
+							assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
 							assert.calledOnce(response.redirect);
 							assert.equal(request.query.redirects, 2);
 							assert.calledWithExactly(response.redirect, 307, '/?modules=test&redirects=2');
@@ -110,6 +112,8 @@ describe('lib/middleware/outputBundle', function() {
 
 						return middleware(request, response, next)
 						.then(() => {
+							assert.calledOnce(global.setTimeout);
+							assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
 							assert.calledOnce(response.redirect);
 							assert.equal(request.query.redirects, 3);
 							assert.calledWithExactly(response.redirect, 307, '/?modules=test&redirects=3');
@@ -122,6 +126,8 @@ describe('lib/middleware/outputBundle', function() {
 						request.query.redirects = 3;
 						return middleware(request, response, next)
 						.then(() => {
+							assert.calledOnce(global.setTimeout);
+							assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
 							assert.calledOnce(next);
 							assert.calledWithExactly(next, CompileError.mockInstance);
 						});
@@ -132,13 +138,17 @@ describe('lib/middleware/outputBundle', function() {
 					let error;
 
 					beforeEach(() => {
+						global.setTimeout.restore();
+						sinon.stub(global, 'setTimeout');
 						error = new Error();
-						bundler.getBundle.rejects(error);
+						bundler.getBundle.reset().rejects(error);
 					});
 
 					it('passes the error into `next`', () => {
 						return middleware(request, response, next)
 						.then(() => {
+							assert.calledOnce(global.setTimeout);
+							assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
 							assert.calledOnce(next);
 							assert.calledWithExactly(next, error);
 						});

@@ -9,19 +9,16 @@ describe('lib/build-service', () => {
 	let about;
 	let basePath;
 	let buildService;
-	let errorResponse;
 	let logHostname;
 	let origamiService;
 	let requireAll;
+	let sanitizeErrors;
 
 	beforeEach(() => {
 		basePath = path.resolve(`${__dirname}/../../..`);
 
 		about = {mockAboutInfo: true};
 		mockery.registerMock('../about.json', about);
-
-		errorResponse = require('../mock/errorresponse.mock');
-		mockery.registerMock('./express/errorresponse', errorResponse);
 
 		logHostname = require('../mock/log-hostname.mock');
 		mockery.registerMock('./middleware/log-hostname', logHostname);
@@ -31,6 +28,9 @@ describe('lib/build-service', () => {
 
 		requireAll = require('../mock/require-all.mock');
 		mockery.registerMock('require-all', requireAll);
+
+		sanitizeErrors = require('../mock/sanitize-errors.mock');
+		mockery.registerMock('./middleware/sanitize-errors', sanitizeErrors);
 
 		buildService = require(basePath);
 	});
@@ -95,8 +95,16 @@ describe('lib/build-service', () => {
 			assert.calledWithExactly(route, origamiService.mockApp);
 		});
 
-		it('mounts custom error response middleware', () => {
-			assert.calledWith(origamiService.mockApp.use, errorResponse);
+		it('creates and mounts not found middleware', () => {
+			assert.called(origamiService.middleware.notFound);
+			assert.calledWithExactly(origamiService.middleware.notFound);
+			assert.calledWith(origamiService.mockApp.use, origamiService.middleware.notFound.firstCall.returnValue);
+		});
+
+		it('creates and mounts error sanitization middleware', () => {
+			assert.called(sanitizeErrors);
+			assert.calledWithExactly(sanitizeErrors);
+			assert.calledWith(origamiService.mockApp.use, sanitizeErrors.firstCall.returnValue);
 		});
 
 		it('creates and mounts error handling middleware', () => {
