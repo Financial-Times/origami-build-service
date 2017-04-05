@@ -48,7 +48,7 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect(/cannot get \/v2\/demos\/o-test-component/i).end(done);
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});
@@ -71,7 +71,7 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect(/cannot get \/v2\/demos\/o-test-component/i).end(done);
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});
@@ -115,11 +115,11 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain;charset=UTF-8').end(done);
+			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
 		});
 
-		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('/*\n\nCannot complete build due to compilation error from build tools:\n\nUnclosed section "invalid-syntax}{{/invalid-syntax" at 817\n\n\n*/\n').end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/cannot complete build due to compilation error from build tools:/i).end(done);
 		});
 
 	});
@@ -138,8 +138,8 @@ describe('GET /v2/demos', function() {
 			this.request.expect(560).end(done);
 		});
 
-		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('/*\n\nCannot complete build due to compilation error from build tools:\n\nNo demos were found for NOTADEMO.\n\n\n*/\n').end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/no demos were found for notademo/i).end(done);
 		});
 
 	});
@@ -158,8 +158,8 @@ describe('GET /v2/demos', function() {
 			this.request.expect(560).end(done);
 		});
 
-		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('/*\n\nCannot complete build due to compilation error from build tools:\n\nNo demos were found for NOTADEMO.\n\n\n*/\n').end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/no demos were found for notademo/i).end(done);
 		});
 
 	});
@@ -178,8 +178,8 @@ describe('GET /v2/demos', function() {
 			this.request.expect(404).end(done);
 		});
 
-		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('/*\n\nPackage non-existent-module not found\n\n{\n  "endpoint": {\n    "name": "non-existent-module",\n    "source": "non-existent-module",\n    "target": "*"\n  }\n}\n\n*/\n').end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/package non-existent-module not found/i).end(done);
 		});
 
 	});
@@ -198,8 +198,8 @@ describe('GET /v2/demos', function() {
 			this.request.expect(404).end(done);
 		});
 
-		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('/*\n\nPackage non-existent-module not found\n\n{\n  "endpoint": {\n    "name": "non-existent-module",\n    "source": "non-existent-module",\n    "target": "1.0.0"\n  }\n}\n\n*/\n').end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/package non-existent-module not found/i).end(done);
 		});
 
 	});
@@ -218,8 +218,8 @@ describe('GET /v2/demos', function() {
 			this.request.expect(404).end(done);
 		});
 
-		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('/*\n\nNo tag found that was able to satisfy 99.0.0\nAvailable versions: 1.0.19, 1.0.18, 1.0.17, 1.0.16, 1.0.15, 1.0.14, 1.0.13, 1.0.12, 1.0.11, 1.0.10, 1.0.9, 1.0.8, 1.0.7, 1.0.6, 1.0.5, 1.0.4, 1.0.3, 1.0.2, 1.0.1, 1.0.0\n\n{\n  "endpoint": {\n    "name": "o-test-component",\n    "source": "o-test-component",\n    "target": "99.0.0"\n  },\n  "resolver": {\n    "name": "o-test-component",\n    "source": "https://github.com/Financial-Times/o-test-component.git",\n    "target": "99.0.0"\n  }\n}\n\n*/\n').end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/no tag found that was able to satisfy 99.0.0/i).end(done);
 		});
 
 	});

@@ -68,8 +68,8 @@ describe('GET /v2/bundles/css', function() {
 			this.request.expect(404).end(done);
 		});
 
-		it('should respond with an error message in a CSS comment', function(done) {
-			this.request.expect(/^\/\*\n\nPackage .* not found/i).end(done);
+		it('should respond with an error message ', function(done) {
+			this.request.expect(/package .* not found/i).end(done);
 		});
 
 	});
@@ -88,8 +88,8 @@ describe('GET /v2/bundles/css', function() {
 			this.request.expect(560).end(done);
 		});
 
-		it('should respond with an error message in a CSS comment', function(done) {
-			this.request.expect(/^\/\*\n\ncannot complete build due to compilation error from build tools:/i).end(done);
+		it('should respond with an error message ', function(done) {
+			this.request.expect(/cannot complete build due to compilation error from build tools:/i).end(done);
 		});
 
 	});
@@ -106,8 +106,8 @@ describe('GET /v2/bundles/css', function() {
 			this.request.expect(400).end(done);
 		});
 
-		it('should respond with an error message in a CSS comment', function(done) {
-			this.request.expect('/*\n\nThe modules parameter is required and must be a comma-separated list of modules\n\n*/\n').end(done);
+		it('should respond with an error message ', function(done) {
+			this.request.expect(/the modules parameter is required and must be a comma-separated list of modules/i).end(done);
 		});
 
 	});
@@ -124,8 +124,8 @@ describe('GET /v2/bundles/css', function() {
 			this.request.expect(400).end(done);
 		});
 
-		it('should respond with an error message in a CSS comment', function(done) {
-			this.request.expect('/*\n\nThe modules parameter is required and must be a comma-separated list of modules\n\n*/\n').end(done);
+		it('should respond with an error message ', function(done) {
+			this.request.expect(/the modules parameter is required and must be a comma-separated list of modules/i).end(done);
 		});
 
 	});
@@ -144,7 +144,7 @@ describe('GET /v2/bundles/css', function() {
 			this.request.expect(400).end(done);
 		});
 
-		it('should respond with an error message in a CSS comment', function(done) {
+		it('should respond with an error message ', function(done) {
 			this.request.expect(/unable to parse module name/i).end(done);
 		});
 

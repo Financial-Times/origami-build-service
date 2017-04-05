@@ -44,8 +44,8 @@ describe('GET /files', function() {
 			this.request.expect(404).end(done);
 		});
 
-		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('/*\n\nThe path NOTAFILE does not exist in the repo\n\n*/\n').end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/the path notafile does not exist in the repo/i).end(done);
 		});
 
 	});
@@ -64,8 +64,8 @@ describe('GET /files', function() {
 			this.request.expect(410).end(done);
 		});
 
-		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('/*\n\nThe path NOTAFILE does not exist in the repo\n\n*/\n').end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/the path notafile does not exist in the repo/i).end(done);
 		});
 
 	});
@@ -84,7 +84,8 @@ describe('GET /files', function() {
 			this.request.expect(404).end(done);
 		});
 
-		it('should respond with an error message in a comment', function(done) {
+		it('should respond with an error message', function(done) {
+			// this.request.expect(console.log).end(done);
 			this.request.expect(/package .* not found/i).end(done);
 		});
 
