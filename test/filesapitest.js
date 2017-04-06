@@ -7,6 +7,7 @@ const querystring = require('querystring');
 const supertest = require('supertest');
 const testhelper = require('./testhelper');
 const hostnames = require('../lib/utils/hostnames');
+const log = require('./unit/mock/log.mock');
 
 const InstallationManager = testhelper.InstallationManager;
 const createApp = testhelper.createApp;
@@ -23,7 +24,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-json', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
+		const installationManager = new InstallationManager({temporaryDirectory, log});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});
@@ -35,7 +36,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-registry-ok', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
+		const installationManager = new InstallationManager({temporaryDirectory, log});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});
@@ -43,7 +44,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-registry-reject', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
+		const installationManager = new InstallationManager({temporaryDirectory, log});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager,
 			registry: new Registry()
@@ -57,7 +58,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-missing', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
+		const installationManager = new InstallationManager({temporaryDirectory, log});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});
@@ -92,7 +93,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 		const app = createApp({
 			defaultLayout: 'main',
 			environment: 'test',
-			log: require('./unit/mock/log.mock'),
+			log: log,
 			port: null,
 			requestLogFormat: null,
 			staticBundlesDirectory: `${__dirname}/mock-static-bundles`,

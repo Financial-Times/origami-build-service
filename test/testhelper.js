@@ -3,7 +3,7 @@
 const uuid = require('uuid');
 const rmrf = require('rimraf');
 
-const log = require('../lib/utils/log');
+const log = require('./unit/mock/log.mock');
 
 const pfs = require('q-io/fs');
 const fs = require('fs');
