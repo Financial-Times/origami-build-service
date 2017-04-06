@@ -2,6 +2,7 @@
 
 const assert = require('chai').assert;
 const testhelper = require('./testhelper');
+const log = require('./unit/mock/log.mock');
 
 const InstallationManager = testhelper.InstallationManager;
 const Bundler = testhelper.Bundler;
@@ -11,9 +12,10 @@ suiteWithPackages('metadata-api', [], function(temporaryDirectory){
 	this.timeout(60*1000);
 
 	spawnTest('metadata-ok has_external_dependency', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
-		const bundler = new Bundler();
+		const installationManager = new InstallationManager({temporaryDirectory, log});
+		const bundler = new Bundler({log});
 		const moduleMetadata = new ModuleMetadata({
+			log: log,
 			bundler: bundler,
 			installationManager: installationManager
 		});
@@ -31,9 +33,10 @@ suiteWithPackages('metadata-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('metadata-origami', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
-		const bundler = new Bundler();
+		const installationManager = new InstallationManager({temporaryDirectory, log});
+		const bundler = new Bundler({log});
 		const moduleMetadata = new ModuleMetadata({
+			log: log,
 			bundler: bundler,
 			installationManager: installationManager
 		});
@@ -46,9 +49,10 @@ suiteWithPackages('metadata-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('metadata-fail', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
-		const bundler = new Bundler();
+		const installationManager = new InstallationManager({temporaryDirectory, log});
+		const bundler = new Bundler({log});
 		const moduleMetadata = new ModuleMetadata({
+			log: log,
 			bundler: bundler,
 			installationManager: installationManager
 		});
@@ -59,9 +63,10 @@ suiteWithPackages('metadata-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('metadata-missingpackage', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
-		const bundler = new Bundler();
+		const installationManager = new InstallationManager({temporaryDirectory, log});
+		const bundler = new Bundler({log});
 		const moduleMetadata = new ModuleMetadata({
+			log: log,
 			bundler: bundler,
 			installationManager: installationManager
 		});
@@ -75,9 +80,10 @@ suiteWithPackages('metadata-api', [], function(temporaryDirectory){
 
 
 	spawnTest('metadata-missingsubpackage', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
-		const bundler = new Bundler();
+		const installationManager = new InstallationManager({temporaryDirectory, log});
+		const bundler = new Bundler({log});
 		const moduleMetadata = new ModuleMetadata({
+			log: log,
 			bundler: bundler,
 			installationManager: installationManager
 		});
@@ -86,9 +92,10 @@ suiteWithPackages('metadata-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('unusable-if-forbidden has_external_dependency', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
-		const bundler = new Bundler();
+		const installationManager = new InstallationManager({temporaryDirectory, log});
+		const bundler = new Bundler({log});
 		const moduleMetadata = new ModuleMetadata({
+			log: log,
 			bundler: bundler,
 			installationManager: installationManager
 		});

@@ -1,7 +1,6 @@
 'use strict';
 
 const assert = require('chai').assert;
-const mockery = require('mockery');
 const sinon = require('sinon');
 
 describe('lib/middleware/log-hostname', () => {
@@ -12,7 +11,6 @@ describe('lib/middleware/log-hostname', () => {
 	beforeEach(() => {
 
 		log = require('../../mock/log.mock');
-		mockery.registerMock('../utils/log', log);
 
 		origamiService = require('../../mock/origami-service.mock');
 		logHostname = require('../../../../lib/middleware/log-hostname');
