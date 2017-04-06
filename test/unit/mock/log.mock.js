@@ -3,7 +3,6 @@
 const sinon = require('sinon');
 
 module.exports = {
-	debug: sinon.spy(),
 	error: sinon.spy(),
 	fatal: sinon.spy(),
 	info: sinon.spy(),
