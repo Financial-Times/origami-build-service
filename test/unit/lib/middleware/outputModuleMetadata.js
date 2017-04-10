@@ -8,8 +8,8 @@ describe('lib/middleware/outputModuleMetadata', function () {
 	let bundler;
 	let cacheControlHeaderFromExpiry;
 	let installationmanager;
-	let metrics;
 	let ModuleMetadata;
+	let origamiService;
 	let outputModuleMetadata;
 
 	beforeEach(() => {
@@ -22,11 +22,10 @@ describe('lib/middleware/outputModuleMetadata', function () {
 		installationmanager = require('../../mock/installationmanager.mock');
 		mockery.registerMock('../installationmanager', installationmanager);
 
-		metrics = require('../../mock/metrics.mock');
-		mockery.registerMock('../monitoring/metrics', metrics);
-
 		ModuleMetadata = require('../../mock/ModuleMetadata.mock');
 		mockery.registerMock('../modulemetadata', ModuleMetadata);
+
+		origamiService = require('../../mock/origami-service.mock');
 
 		outputModuleMetadata = require('../../../../lib/middleware/outputModuleMetadata');
 	});
@@ -35,17 +34,14 @@ describe('lib/middleware/outputModuleMetadata', function () {
 		assert.isFunction(outputModuleMetadata);
 	});
 
-	describe('outputModuleMetadata(config)', () => {
-		let config;
+	describe('outputModuleMetadata(app)', () => {
 		let middleware;
 
 		beforeEach(() => {
-			config = {
-				params: {
-					module: 'test'
-				}
+			origamiService.mockApp.params = {
+				module: 'test'
 			};
-			middleware = outputModuleMetadata(config);
+			middleware = outputModuleMetadata(origamiService.mockApp);
 		});
 
 		it('returns a middleware function', () => {
@@ -60,8 +56,8 @@ describe('lib/middleware/outputModuleMetadata', function () {
 			beforeEach(() => {
 
 				next = sinon.spy();
-				response = require('../../mock/express.mock').mockResponse;
-				request = require('../../mock/express.mock').mockRequest;
+				response = origamiService.mockResponse;
+				request = origamiService.mockRequest;
 
 			});
 

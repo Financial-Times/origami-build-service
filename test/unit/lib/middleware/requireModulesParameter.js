@@ -5,12 +5,12 @@ const mockery = require('mockery');
 const sinon = require('sinon');
 
 describe('lib/middleware/requireModulesParameter', () => {
-	let express;
 	let httpError;
+	let origamiService;
 	let requireModulesParameter;
 
 	beforeEach(() => {
-		express = require('../../mock/express.mock');
+		origamiService = require('../../mock/origami-service.mock');
 
 		httpError = require('../../mock/http-errors.mock');
 		mockery.registerMock('http-errors', httpError);
@@ -38,8 +38,8 @@ describe('lib/middleware/requireModulesParameter', () => {
 
 			beforeEach(() => {
 				next = sinon.spy();
-				express.mockRequest.query.modules = 'test';
-				middleware(express.mockRequest, express.mockResponse, next);
+				origamiService.mockRequest.query.modules = 'test';
+				middleware(origamiService.mockRequest, origamiService.mockResponse, next);
 			});
 
 			it('calls `next` with no error', () => {
@@ -52,8 +52,8 @@ describe('lib/middleware/requireModulesParameter', () => {
 				beforeEach(() => {
 					next.reset();
 					httpError.reset();
-					delete express.mockRequest.query.modules;
-					middleware(express.mockRequest, express.mockResponse, next);
+					delete origamiService.mockRequest.query.modules;
+					middleware(origamiService.mockRequest, origamiService.mockResponse, next);
 				});
 
 				it('creates a 400 HTTP error with a descriptive message', () => {
@@ -73,8 +73,8 @@ describe('lib/middleware/requireModulesParameter', () => {
 				beforeEach(() => {
 					next.reset();
 					httpError.reset();
-					express.mockRequest.query.modules = '';
-					middleware(express.mockRequest, express.mockResponse, next);
+					origamiService.mockRequest.query.modules = '';
+					middleware(origamiService.mockRequest, origamiService.mockResponse, next);
 				});
 
 				it('creates a 400 HTTP error with a descriptive message', () => {
