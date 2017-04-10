@@ -11,8 +11,8 @@ describe('lib/middleware/outputDemo', function() {
 	let fileproxy;
 	let HttpError;
 	let installationmanager;
-	let metrics;
 	let ModuleSet;
+	let origamiService;
 	let outputDemo;
 
 	beforeEach(() => {
@@ -34,11 +34,10 @@ describe('lib/middleware/outputDemo', function() {
 		installationmanager = require('../../mock/installationmanager.mock');
 		mockery.registerMock('../installationmanager', installationmanager);
 
-		metrics = require('../../mock/metrics.mock');
-		mockery.registerMock('../monitoring/metrics', metrics);
-
 		ModuleSet = require('../../mock/moduleset.mock');
 		mockery.registerMock('../moduleset', ModuleSet);
+
+		origamiService = require('../../mock/origami-service.mock');
 
 		outputDemo = require('../../../../lib/middleware/outputDemo');
 	});
@@ -47,15 +46,12 @@ describe('lib/middleware/outputDemo', function() {
 		assert.isFunction(outputDemo);
 	});
 
-	describe('outputDemo(config)', () => {
-		let config;
+	describe('outputDemo(app)', () => {
 		let middleware;
 
 		beforeEach(() => {
-			config = {
-				tempdir: '/tmp'
-			};
-			middleware = outputDemo(config);
+			origamiService.mockApp.origami.options.tempdir = '/tmp';
+			middleware = outputDemo(origamiService.mockApp);
 		});
 
 		it('returns a middleware function', () => {
@@ -70,8 +66,8 @@ describe('lib/middleware/outputDemo', function() {
 			beforeEach(() => {
 				bundler.getBundle.resolves();
 				next = sinon.spy();
-				response = require('../../mock/express.mock').mockResponse;
-				request = require('../../mock/express.mock').mockRequest;
+				response = origamiService.mockResponse;
+				request = origamiService.mockRequest;
 			});
 
 			describe('errors', () => {

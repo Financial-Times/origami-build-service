@@ -3,6 +3,7 @@ const assert = require('assert');
 const testhelper = require('./testhelper');
 
 const log = testhelper.log;
+const metrics = require('./unit/mock/origami-service.mock').mockApp.origami.metrics;
 const InstallationManager = testhelper.InstallationManager;
 const ModuleSet = testhelper.ModuleSet;
 const pfs = require('q-io/fs');
@@ -12,6 +13,7 @@ suiteWithPackages('InstallationManager#createInstallation(moduleset, options)', 
 
 	spawnTest('it should delete any cached modules on disk when an object is evicted from the cache', function*() {
 		const installer = new InstallationManager({
+			metrics: metrics,
 			log: log,
 			temporaryDirectory: installdir,
 			capacity: 1
@@ -35,6 +37,7 @@ suiteWithPackages('InstallationManager#createInstallation(moduleset, options)', 
 
 	spawnTest('it should create a ModuleInstallation for the requested ModuleSet', function*() {
 		const installer = new InstallationManager({
+			metrics: metrics,
 			log: log,
 			temporaryDirectory: installdir
 		});
@@ -52,6 +55,7 @@ suiteWithPackages('InstallationManager#createInstallation(moduleset, options)', 
 
 	spawnTest('it should refuse to install modules that are not hosted on whitelisted domains if they don\'t have an origami.json', function*() {
 		const installer = new InstallationManager({
+			metrics: metrics,
 			log: log, temporaryDirectory: installdir
 		});
 

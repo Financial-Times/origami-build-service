@@ -8,6 +8,7 @@ const supertest = require('supertest');
 const testhelper = require('./testhelper');
 const hostnames = require('../lib/utils/hostnames');
 const log = require('./unit/mock/log.mock');
+const metrics = require('./unit/mock/origami-service.mock').mockApp.origami.metrics;
 
 const InstallationManager = testhelper.InstallationManager;
 const createApp = testhelper.createApp;
@@ -24,7 +25,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-json', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory, log});
+		const installationManager = new InstallationManager({temporaryDirectory, log, metrics});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});
@@ -36,7 +37,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-registry-ok', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory, log});
+		const installationManager = new InstallationManager({temporaryDirectory, log, metrics});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});
@@ -44,7 +45,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-registry-reject', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory, log});
+		const installationManager = new InstallationManager({temporaryDirectory, log, metrics});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager,
 			registry: new Registry()
@@ -58,7 +59,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-missing', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory, log});
+		const installationManager = new InstallationManager({temporaryDirectory, log, metrics});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});

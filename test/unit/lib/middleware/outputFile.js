@@ -9,7 +9,7 @@ describe('lib/middleware/outputFile', () => {
 	let fileproxy;
 	let HttpError;
 	let installationmanager;
-	let metrics;
+	let origamiService;
 	let outputFile;
 
 	beforeEach(() => {
@@ -25,8 +25,7 @@ describe('lib/middleware/outputFile', () => {
 		installationmanager = require('../../mock/installationmanager.mock');
 		mockery.registerMock('../installationmanager', installationmanager);
 
-		metrics = require('../../mock/metrics.mock');
-		mockery.registerMock('../monitoring/metrics', metrics);
+		origamiService = require('../../mock/origami-service.mock');
 
 		outputFile = require('../../../../lib/middleware/outputFile');
 	});
@@ -35,16 +34,13 @@ describe('lib/middleware/outputFile', () => {
 		assert.isFunction(outputFile);
 	});
 
-	describe('outputFile(config)', () => {
-		let config;
+	describe('outputFile(app)', () => {
 		let middleware;
 
 		beforeEach(() => {
-			config = {
-				tempdir: '/tmp',
-				registry: {}
-			};
-			middleware = outputFile(config);
+			origamiService.mockApp.origami.options.tempdir = '/tmp';
+			origamiService.mockApp.origami.options.registry = {};
+			middleware = outputFile(origamiService.mockApp);
 		});
 
 		it('returns a middleware function', () => {
@@ -66,8 +62,8 @@ describe('lib/middleware/outputFile', () => {
 			beforeEach(() => {
 
 				next = sinon.spy();
-				response = require('../../mock/express.mock').mockResponse;
-				request = require('../../mock/express.mock').mockRequest;
+				response = origamiService.mockResponse;
+				request = origamiService.mockRequest;
 
 				cacheControlHeaderFromExpiry.returnsArg(0);
 
@@ -192,9 +188,8 @@ describe('lib/middleware/outputFile', () => {
 					getFileInfoError = new Error('Generic error.');
 					getFileInfoError.code = 123;
 					fileproxy.mockFileproxy.getFileInfo.rejects(getFileInfoError);
-					return middleware({
-						originalUrl: ''
-					}, {}, next);
+					request.originalUrl = '';
+					return middleware(request, response, next);
 				});
 
 				it('wraps the error calls `next` with the wrapped error', () => {
@@ -214,9 +209,8 @@ describe('lib/middleware/outputFile', () => {
 					getFileInfoError = new HttpError('Generic error.');
 					getFileInfoError.code = 123;
 					fileproxy.mockFileproxy.getFileInfo.rejects(getFileInfoError);
-					return middleware({
-						originalUrl: ''
-					}, {}, next);
+					request.originalUrl = '';
+					return middleware(request, response, next);
 				});
 
 				it('wraps the error calls `next` with the wrapped error', () => {

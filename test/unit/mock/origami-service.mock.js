@@ -36,20 +36,27 @@ origamiService.middleware = {
 
 module.exports.mockRequest = {
 	app: mockApp,
+	basePath: '/',
 	get: sinon.stub(),
 	headers: {},
+	method: '',
+	originalUrl: '',
+	path: '',
 	query: {},
 	params: {}
 };
 
 module.exports.mockResponse = {
 	app: mockApp,
+	end: sinon.stub().returnsThis(),
 	locals: {},
+	location: sinon.stub().returnsThis(),
 	redirect: sinon.stub().returnsThis(),
 	render: sinon.stub().returnsThis(),
 	send: sinon.stub().returnsThis(),
 	set: sinon.stub().returnsThis(),
-	status: sinon.stub().returnsThis()
+	status: sinon.stub().returnsThis(),
+	writeHead: sinon.stub().returnsThis()
 };
 
 module.exports.mockNext = sinon.stub();
