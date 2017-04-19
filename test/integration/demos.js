@@ -25,7 +25,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect(/Cannot GET \/demos\/o-test-component\/main\n/).end(done);
+			this.request.expect(/Cannot GET \/demos\/o-test-component\/main/).end(done);
 		});
 
 	});
@@ -48,7 +48,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect(/Cannot GET \/demos\/o-test-component\//).end(done);
+			this.request.expect(/Cannot GET \/demos\/o-test-component/).end(done);
 		});
 
 	});

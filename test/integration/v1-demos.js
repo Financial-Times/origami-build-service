@@ -48,7 +48,7 @@ describe('GET /v1/demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect(/Cannot GET \/v1\/demos\/o-test-component\//).end(done);
+			this.request.expect(/Cannot GET \/v1\/demos\/o-test-component/).end(done);
 		});
 
 	});
@@ -71,7 +71,7 @@ describe('GET /v1/demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect(/Cannot GET \/v1\/demos\/o-test-component\//).end(done);
+			this.request.expect(/Cannot GET \/v1\/demos\/o-test-component/).end(done);
 		});
 
 	});
