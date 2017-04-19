@@ -25,7 +25,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect('Cannot GET /demos/o-test-component/main\n').end(done);
+			this.request.expect(/Cannot GET \/demos\/o-test-component\/main/).end(done);
 		});
 
 	});
@@ -48,7 +48,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect('Cannot GET /demos/o-test-component/\n').end(done);
+			this.request.expect(/Cannot GET \/demos\/o-test-component/).end(done);
 		});
 
 	});
@@ -71,7 +71,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect('Cannot GET /demos/o-test-component\n').end(done);
+			this.request.expect(/Cannot GET \/demos\/o-test-component/).end(done);
 		});
 
 	});
@@ -95,7 +95,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with the file contents', function(done) {
-			this.request.expect('Cannot GET /demos/o-test-component@1.0.19/main\n').end(done);
+			this.request.expect(/Cannot GET \/demos\/o-test-component\@1\.0\.19/).end(done);
 		});
 
 	});
@@ -115,7 +115,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('Cannot GET /demos/o-test-component/NOTADEMO\n').end(done);
+			this.request.expect(/Cannot GET \/demos\/o-test-component\/NOTADEMO/).end(done);
 		});
 
 	});
@@ -135,7 +135,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('Cannot GET /demos/o-test-component@1.0.19/NOTADEMO\n').end(done);
+			this.request.expect(/Cannot GET \/demos\/o-test-component\@1\.0\.19\/NOTADEMO/).end(done);
 		});
 
 	});
@@ -155,7 +155,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('Cannot GET /demos/non-existent-module/README.md\n').end(done);
+			this.request.expect(/Cannot GET \/demos\/non-existent-module\/README\.md/).end(done);
 		});
 
 	});
@@ -175,7 +175,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('Cannot GET /demos/non-existent-module@1.0.0/README.md\n').end(done);
+			this.request.expect(/Cannot GET \/demos\/non-existent-module\@1\.0\.0\/README\.md/).end(done);
 		});
 
 	});
@@ -195,7 +195,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect('Cannot GET /demos/o-test-component@99.0.0/main\n').end(done);
+			this.request.expect(/Cannot GET \/demos\/o-test-component\@99\.0\.0\/main/).end(done);
 		});
 
 	});
