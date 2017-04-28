@@ -18,7 +18,6 @@ const Bundler = require('../lib/bundler');
 const JsBundler = require('../lib/jsbundler');
 const CssBundler = require('../lib/cssbundler');
 const DemoCompiler = require('../lib/democompiler');
-const HealthMonitor = require('../lib/monitoring/healthmonitor');
 const Registry = require('../lib/registry.js');
 const ModuleMetadata = require('../lib/modulemetadata');
 const FileProxy = require('../lib/fileproxy');
@@ -131,7 +130,6 @@ module.exports = {
 	JsBundler: JsBundler,
 	CssBundler: CssBundler,
 	DemoCompiler: DemoCompiler,
-	HealthMonitor: HealthMonitor,
 	PromiseCache: PromiseCache,
 	Registry: Registry,
 	FileProxy: FileProxy,

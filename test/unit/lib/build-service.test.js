@@ -9,6 +9,7 @@ describe('lib/build-service', () => {
 	let about;
 	let basePath;
 	let buildService;
+	let healthChecks;
 	let logHostname;
 	let origamiService;
 	let requireAll;
@@ -19,6 +20,9 @@ describe('lib/build-service', () => {
 
 		about = {mockAboutInfo: true};
 		mockery.registerMock('../about.json', about);
+
+		healthChecks = require('../mock/health-checks.mock');
+		mockery.registerMock('./health-checks', healthChecks);
 
 		logHostname = require('../mock/log-hostname.mock');
 		mockery.registerMock('./middleware/log-hostname', logHostname);
@@ -63,6 +67,21 @@ describe('lib/build-service', () => {
 
 		it('creates an Origami Service application', () => {
 			assert.calledOnce(origamiService);
+		});
+
+		it('creates a healthChecks object', () => {
+			assert.calledOnce(healthChecks);
+			assert.calledWithExactly(healthChecks, options);
+		});
+
+		it('sets `options.healthCheck` to the created health check function', () => {
+			assert.calledOnce(healthChecks.mockHealthChecks.checks);
+			assert.strictEqual(options.healthCheck, healthChecks.mockChecksFunction);
+		});
+
+		it('sets `options.goodToGoTest` to the created health check gtg function', () => {
+			assert.calledOnce(healthChecks.mockHealthChecks.gtg);
+			assert.strictEqual(options.goodToGoTest, healthChecks.mockGtgFunction);
 		});
 
 		it('sets `options.about` to the contents of about.json', () => {
