@@ -3,7 +3,7 @@
 const uuid = require('uuid');
 const rmrf = require('rimraf');
 
-const log = require('../lib/utils/log');
+const log = require('./unit/mock/log.mock');
 
 const pfs = require('q-io/fs');
 const fs = require('fs');
@@ -18,12 +18,11 @@ const Bundler = require('../lib/bundler');
 const JsBundler = require('../lib/jsbundler');
 const CssBundler = require('../lib/cssbundler');
 const DemoCompiler = require('../lib/democompiler');
-const HealthMonitor = require('../lib/monitoring/healthmonitor');
 const Registry = require('../lib/registry.js');
 const ModuleMetadata = require('../lib/modulemetadata');
 const FileProxy = require('../lib/fileproxy');
 
-const createApp = require('../lib/index');
+const createApp = require('../lib/build-service');
 
 Q.longStackSupport = true;
 
@@ -131,7 +130,6 @@ module.exports = {
 	JsBundler: JsBundler,
 	CssBundler: CssBundler,
 	DemoCompiler: DemoCompiler,
-	HealthMonitor: HealthMonitor,
 	PromiseCache: PromiseCache,
 	Registry: Registry,
 	FileProxy: FileProxy,

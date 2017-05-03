@@ -26,7 +26,7 @@ describe('GET /__health', function () {
 			proclaim.equal(res.body.schemaVersion, 1);
 			proclaim.equal(res.body.name, 'build-service');
 			proclaim.equal(res.body.systemCode, 'build-service');
-			proclaim.equal(res.body.description, 'Front end build process as a service.  Fetches specified Origami components from git, runs Origami build process, and returns the resulting CSS or JS bundle over HTTP.');
+			proclaim.equal(res.body.description, 'Front end build process as a service. Fetches specified Origami components from git, runs Origami build process, and returns the resulting CSS or JS bundle over HTTP.');
 			proclaim.lessThanOrEqual(res.body.checks.length, 11);
 		}).end(done);
 	});

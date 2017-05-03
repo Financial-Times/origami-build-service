@@ -24,8 +24,8 @@ describe('GET /demos', function() {
 			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
 		});
 
-		it('should respond with the file contents', function(done) {
-			this.request.expect(/Cannot GET \/demos\/o-test-component\/main/).end(done);
+		it('should respond with a 404 error message', function(done) {
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});
@@ -47,8 +47,8 @@ describe('GET /demos', function() {
 			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
 		});
 
-		it('should respond with the file contents', function(done) {
-			this.request.expect(/Cannot GET \/demos\/o-test-component/).end(done);
+		it('should respond with a 404 error message', function(done) {
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});
@@ -70,8 +70,8 @@ describe('GET /demos', function() {
 			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
 		});
 
-		it('should respond with the file contents', function(done) {
-			this.request.expect(/Cannot GET \/demos\/o-test-component/).end(done);
+		it('should respond with a 404 error message', function(done) {
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});
@@ -94,8 +94,8 @@ describe('GET /demos', function() {
 			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
 		});
 
-		it('should respond with the file contents', function(done) {
-			this.request.expect(/Cannot GET \/demos\/o-test-component\@1\.0\.19/).end(done);
+		it('should respond with a 404 error message', function(done) {
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});
@@ -115,7 +115,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect(/Cannot GET \/demos\/o-test-component\/NOTADEMO/).end(done);
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});
@@ -135,7 +135,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect(/Cannot GET \/demos\/o-test-component\@1\.0\.19\/NOTADEMO/).end(done);
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});
@@ -155,7 +155,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect(/Cannot GET \/demos\/non-existent-module\/README\.md/).end(done);
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});
@@ -175,7 +175,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect(/Cannot GET \/demos\/non-existent-module\@1\.0\.0\/README\.md/).end(done);
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});
@@ -195,7 +195,7 @@ describe('GET /demos', function() {
 		});
 
 		it('should respond with an error message in a comment', function(done) {
-			this.request.expect(/Cannot GET \/demos\/o-test-component\@99\.0\.0\/main/).end(done);
+			this.request.expect(/not found/i).end(done);
 		});
 
 	});

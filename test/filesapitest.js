@@ -7,6 +7,8 @@ const querystring = require('querystring');
 const supertest = require('supertest');
 const testhelper = require('./testhelper');
 const hostnames = require('../lib/utils/hostnames');
+const log = require('./unit/mock/log.mock');
+const metrics = require('./unit/mock/origami-service.mock').mockApp.origami.metrics;
 
 const InstallationManager = testhelper.InstallationManager;
 const createApp = testhelper.createApp;
@@ -23,7 +25,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-json', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
+		const installationManager = new InstallationManager({temporaryDirectory, log, metrics});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});
@@ -35,7 +37,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-registry-ok', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
+		const installationManager = new InstallationManager({temporaryDirectory, log, metrics});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});
@@ -43,7 +45,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-registry-reject', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
+		const installationManager = new InstallationManager({temporaryDirectory, log, metrics});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager,
 			registry: new Registry()
@@ -57,7 +59,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	spawnTest('files-missing', function*(){
-		const installationManager = new InstallationManager({temporaryDirectory});
+		const installationManager = new InstallationManager({temporaryDirectory, log, metrics});
 		const fileProxy = new FileProxy({
 			installationManager: installationManager
 		});
@@ -89,11 +91,21 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 	});
 
 	test('gallery-lock has_external_dependency', function(done){
-		const app = createApp({tempdir: temporaryDirectory});
-		const agent = supertest(app);
-		const regexp = new RegExp('/bundles/css\\?modules=o-gallery%401\\.1\\.0%3A%2Fdemos%2Fsrc%2Fdemo\\.scss"');
-		agent.get('/v2/files/o-gallery@1.1.0/demos/declarative.html')
-			.expect(200)
-			.expect(regexp, done);
+		const app = createApp({
+			defaultLayout: 'main',
+			environment: 'test',
+			log: log,
+			port: null,
+			requestLogFormat: null,
+			staticBundlesDirectory: `${__dirname}/mock-static-bundles`,
+			tempdir: temporaryDirectory
+		});
+		app.listen().then(app => {
+			const regexp = new RegExp('/bundles/css\\?modules=o-gallery%401\\.1\\.0%3A%2Fdemos%2Fsrc%2Fdemo\\.scss"');
+			supertest(app)
+				.get('/v2/files/o-gallery@1.1.0/demos/declarative.html')
+				.expect(200)
+				.expect(regexp, done);
+		});
 	});
 });

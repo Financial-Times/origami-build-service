@@ -52,8 +52,8 @@ describe('GET /v2/modules', function() {
 			this.request.expect(404).end(done);
 		});
 
-		it('should respond with an error message in a comment', function(done) {
-			this.request.expect(/^\/\*\n\npackage .* not found/i).end(done);
+		it('should respond with an error message', function(done) {
+			this.request.expect(/package .* not found/i).end(done);
 		});
 
 	});
