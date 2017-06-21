@@ -29,7 +29,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 		const css = yield testhelper.bufferStream(cssStream);
 		const cssWithoutComment = css.replace(/\/\*.*Shrinkwrap[\s\S]+?\*\/\s*/,'');
 		assert.equal(cssWithoutComment, '#test-compile-error{color:red}', 'Expected minified output from test-package2');
-		assert.equal(css, '/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=o-test-component%401.0.24&shrinkwrap=\n */\n#test-compile-error{color:red}');
+		assert.equal(css, '/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=o-test-component%401.0.26&shrinkwrap=\n */\n#test-compile-error{color:red}');
 	});
 
 	spawnTest('conflict has_external_dependency', function*(){
