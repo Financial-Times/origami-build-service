@@ -6,7 +6,7 @@ const URL = require('url');
 
 module.exports = function(req, res) {
 	const requestPath = URL.parse(req.url).path;
-	const redirectUrl = requestPath.replace(new RegExp('^/'), req.basePath + 'v2/');
+	const redirectUrl = requestPath.replace(new RegExp('^/(v1/)?'), req.basePath + 'v2/');
 	const redirectBody = 'This endpoint has been removed. You are being redirected to ' + redirectUrl + '\nSee https://' + hostnames.preferred + '/v2/#api-reference for more information.\n';
 	res.type('txt');
 	res.header('Access-Control-Allow-Origin', '*');
