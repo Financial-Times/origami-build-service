@@ -7,7 +7,6 @@ test:
   override:
     - make verify
     - make test
-    - make deploy-vcl-then-test-ci
 
 deployment:
   staging:
