@@ -37,46 +37,27 @@ test-old:
 	@NODE_ENV=test mocha test
 	@$(DONE)
 
-test-vcl-ci:
-	@mocha test-vcl/ -t 30000 -s 500 --ci
-
-test-vcl-qa:
-	@mocha test-vcl/ -t 30000 -s 500 --qa
-
-test-vcl-prod:
-	@mocha test-vcl/ -t 30000 -s 500 --prod
 
 # Deploy tasks
 # ------------
 
 deploy:
 	@git push https://git.heroku.com/origami-build-service-qa.git
-	@fastly deploy -e --service OdsPyPDTqDc8mVdDKln8y --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 	@sleep 30
-	@make test-vcl-qa
 	@make change-request-qa
 	@$(DONE)
-
-deploy-ci:
-	@fastly deploy --service 3RKFss27d33H2h36qIEMSM --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 
 deploy-qa:
 	@git push git@heroku.com:origami-build-service-qa.git
-	@fastly deploy --service OdsPyPDTqDc8mVdDKln8y --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 	@sleep 30
-	@make test-vcl-qa
 	@make change-request-qa
 	@$(DONE)
-
-deploy-vcl-then-test-ci:
-	@make deploy-ci && sleep 30 && make test-vcl-ci
 
 promote:
 ifndef CR_API_KEY
 	$(error CR_API_KEY is not set, change requests cannot be created. You can find the key in LastPass)
 endif
 	@heroku pipelines:promote --app origami-build-service-qa
-	@fastly deploy -e --service 4kUyjWYbCqkUHQZ7mBwMzl --vars SERVICEID --main main.vcl --backends ./cdn/backends/production.js ./cdn/vcl/
 	@make change-request-prod
 	@$(DONE)
 
