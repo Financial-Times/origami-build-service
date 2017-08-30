@@ -17,7 +17,7 @@ const options = {
 	log: console,
 	metricsAppName: 'origami-build-service',
 	name: 'Origami Build Service',
-	registryURL: process.env.REGISTRY_URL || 'http://registry.origami.ft.com',
+	registryURL: process.env.REGISTRY_URL || 'http://origami-bower-registry.ft.com',
 	tempdir: `/tmp/buildservice-${process.pid}/`,
 	testHealthcheckFailure: process.env.TEST_HEALTHCHECK_FAILURE || false
 };
