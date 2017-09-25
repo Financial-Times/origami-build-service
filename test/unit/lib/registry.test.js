@@ -22,9 +22,9 @@ describe('lib/registry', () => {
 
 	describe('Registry(options)', () => {
 
-		it('defaults the registryURL to http://registry.origami.ft.com', () => {
+		it('defaults the registryURL to http://origami-bower-registry.ft.com', () => {
 			const registry = new Registry();
-			assert.equal(registry.registryURL, 'http://registry.origami.ft.com');
+			assert.equal(registry.registryURL, 'http://origami-bower-registry.ft.com');
 		});
 
 		it('can specify the registryURL', () => {
