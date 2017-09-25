@@ -21,7 +21,7 @@ describe('GET /v2/files', function() {
 		});
 
 		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/x-markdown').end(done);
+			this.request.expect('Content-Type', 'text/markdown').end(done);
 		});
 
 		it('should respond with the file contents', function(done) {
