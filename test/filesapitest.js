@@ -95,7 +95,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 			defaultLayout: 'main',
 			environment: 'test',
 			log: log,
-			port: null,
+			port: 0,
 			requestLogFormat: null,
 			staticBundlesDirectory: `${__dirname}/mock-static-bundles`,
 			tempdir: temporaryDirectory

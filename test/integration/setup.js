@@ -14,7 +14,7 @@ before(function() {
 		defaultLayout: 'main',
 		environment: 'test',
 		log: log,
-		port: null,
+		port: 0,
 		requestLogFormat: null,
 		graphiteApiKey: 'xxx',
 		staticBundlesDirectory: `${__dirname}/mock-static-bundles`,
