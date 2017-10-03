@@ -40,7 +40,7 @@ describe('GET /v1/bundles/js', function() {
 		});
 
 		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'application/javascript').end(done);
+			this.request.expect('Content-Type', 'application/javascript; charset=utf-8').end(done);
 		});
 
 		it('should respond with the contents of the static bundle', function(done) {
