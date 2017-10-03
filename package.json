@@ -52,7 +52,6 @@
     "uuid": "^1.4.1"
   },
   "devDependencies": {
-    "@financial-times/release-log": "^1.1.2",
     "chai": "^3.5.0",
     "dotenv": "^2.0.0",
     "eslint": "^4.8.0",
