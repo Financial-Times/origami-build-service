@@ -42,15 +42,6 @@ describe('lib/middleware/cleanModulesParameter', () => {
 				middleware(origamiService.mockRequest, origamiService.mockResponse, next);
 			});
 
-			// it('calls `next` with error', () => {
-			// 	assert.calledOnce(next);
-			// 	assert.calledWithExactly(next);
-			// });
-
-			// it('removes invalid modules from request.query.modules', () => {
-			// 	assert.strictEqual(origamiService.mockRequest.query.modules, 'valid1,Valid2@^3.0.1,valid3@~2.x');
-			// });
-
 			it('creates a 400 HTTP error with a descriptive message', () => {
 				assert.calledOnce(httpError);
 				assert.calledWithExactly(httpError, 400, 'The modules parameter contains module names which are not valid: -invalid1, invalid2., ../../../../test');
