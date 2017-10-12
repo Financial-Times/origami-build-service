@@ -257,7 +257,7 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect(/unable to parse module name/i).end(done);
+			this.request.expect(/The modules parameter contains module names which are not valid: http:\/\/1.2.3.4\//i).end(done);
 		});
 
 	});
@@ -277,5 +277,25 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 	});
+
+});
+
+describe('when a module name is a relative directory', function() {
+		const moduleName = '../../../example';
+
+		beforeEach(function() {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(400).end(done);
+		});
+
+		it('should respond with an error message ', function(done) {
+			this.request.expect(/The modules parameter contains module names which are not valid: \.\.\/\.\.\/\.\.\/example/i).end(done);
+		});
 
 });
