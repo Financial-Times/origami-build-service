@@ -32,7 +32,7 @@
     "diskspace": "git+http://github.com/Financial-Times/diskspace.js.git",
     "dotenv": "^2.0.0",
     "express-ftwebservice": "^2.0.2",
-    "glob": "^4.0.5",
+    "glob": "^7.1.2",
     "gulp": "^3.9.0",
     "http-errors": "^1.5.1",
     "lru-cache": "^2.6.5",
