@@ -22,7 +22,7 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should respond with the bundled JavaScript', function(done) {
-			this.request.expect('/** Shrinkwrap URL:\n *      /v2/bundles/js?modules=o-test-component%401.0.2%2Co-autoinit%401.2.2&shrinkwrap=\n */\n!function(t){function e(o){if(n[o])return n[o].exports;var d=n[o]={exports:{},id:o,loaded:!1};return t[o].call(d.exports,d,d.exports,e),d.loaded=!0,d.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){"use strict";n(1),window.Origami={"o-test-component":n(2),"o-autoinit":n(4)}},function(t,e){t.exports={name:"__MAIN__",dependencies:{"o-test-component":"o-test-component#1.0.2","o-autoinit":"o-autoinit#^1.0.0"}}},function(t,e,n){t.exports=n(3)},function(t,e){"use strict";console.log("what is this?")},function(t,e,n){t.exports=n(5)},function(t,e){"use strict";function n(t){t in o||(o[t]=!0,document.dispatchEvent(new CustomEvent("o."+t)))}var o={};window.addEventListener("load",n.bind(null,"load")),window.addEventListener("load",n.bind(null,"DOMContentLoaded")),document.addEventListener("DOMContentLoaded",n.bind(null,"DOMContentLoaded")),document.onreadystatechange=function(){"complete"===document.readyState?(n("DOMContentLoaded"),n("load")):"interactive"!==document.readyState||document.attachEvent||n("DOMContentLoaded")},"complete"===document.readyState?(n("DOMContentLoaded"),n("load")):"interactive"!==document.readyState||document.attachEvent||n("DOMContentLoaded"),document.attachEvent&&!function(){var t=!1,e=50;try{t=null===window.frameElement&&document.documentElement}catch(t){}t&&t.doScroll&&!function d(){if(!("DOMContentLoaded"in o)){try{t.doScroll("left")}catch(t){return e<5e3?setTimeout(d,e*=1.2):void 0}n("DOMContentLoaded")}}()}()}]);').end(done);
+			this.request.expect('/** Shrinkwrap URL:\n *      /v2/bundles/js?modules=o-test-component%401.0.2%2Co-autoinit%401.3.2&shrinkwrap=\n */\n!function(t){function e(o){if(n[o])return n[o].exports;var d=n[o]={exports:{},id:o,loaded:!1};return t[o].call(d.exports,d,d.exports,e),d.loaded=!0,d.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){"use strict";n(1);var o={"o-test-component":n(2),"o-autoinit":n(4)};window.Origami=o},function(t,e){t.exports={name:"__MAIN__",dependencies:{"o-test-component":"o-test-component#1.0.2","o-autoinit":"o-autoinit#^1.0.0"}}},function(t,e,n){t.exports=n(3)},function(t,e){"use strict";console.log("what is this?")},function(t,e,n){t.exports=n(5)},function(t,e){"use strict";function n(t){t in o||(o[t]=!0,document.dispatchEvent(new CustomEvent("o."+t)))}var o={};window.addEventListener("load",n.bind(null,"load")),window.addEventListener("load",n.bind(null,"DOMContentLoaded")),document.addEventListener("DOMContentLoaded",n.bind(null,"DOMContentLoaded")),document.onreadystatechange=function(){"complete"===document.readyState?(n("DOMContentLoaded"),n("load")):"interactive"!==document.readyState||document.attachEvent||n("DOMContentLoaded")},"complete"===document.readyState?(n("DOMContentLoaded"),n("load")):"interactive"!==document.readyState||document.attachEvent||n("DOMContentLoaded"),document.attachEvent&&!function(){var t=!1,e=50;try{t=null===window.frameElement&&document.documentElement}catch(t){}t&&t.doScroll&&!function d(){if(!("DOMContentLoaded"in o)){try{t.doScroll("left")}catch(t){return e<5e3?setTimeout(d,e*=1.2):void 0}n("DOMContentLoaded")}}()}()}]);').end(done);
 		});
 
 		it('should minify the bundle', function(done) {
@@ -73,7 +73,7 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should respond with the bundled JavaScript without the o-autoinit module', function(done) {
-			this.request.expect('/** Shrinkwrap URL:\n *      /v2/bundles/js?modules=o-test-component%401.0.2&shrinkwrap=\n */\n!function(t){function o(n){if(e[n])return e[n].exports;var r=e[n]={exports:{},id:n,loaded:!1};return t[n].call(r.exports,r,r.exports,o),r.loaded=!0,r.exports}var e={};return o.m=t,o.c=e,o.p="",o(0)}([function(t,o,e){"use strict";e(1),window.Origami={"o-test-component":e(2)}},function(t,o){t.exports={name:"__MAIN__",dependencies:{"o-test-component":"o-test-component#1.0.2"}}},function(t,o,e){t.exports=e(3)},function(t,o){"use strict";console.log("what is this?")}]);').end(done);
+			this.request.expect('/** Shrinkwrap URL:\n *      /v2/bundles/js?modules=o-test-component%401.0.2&shrinkwrap=\n */\n!function(t){function o(n){if(e[n])return e[n].exports;var r=e[n]={exports:{},id:n,loaded:!1};return t[n].call(r.exports,r,r.exports,o),r.loaded=!0,r.exports}var e={};return o.m=t,o.c=e,o.p="",o(0)}([function(t,o,e){"use strict";e(1);var n={"o-test-component":e(2)};window.Origami=n},function(t,o){t.exports={name:"__MAIN__",dependencies:{"o-test-component":"o-test-component#1.0.2"}}},function(t,o,e){t.exports=e(3)},function(t,o){"use strict";console.log("what is this?")}]);').end(done);
 		});
 
 	});
@@ -120,6 +120,42 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 	});
+
+	describe('when a valid module is requested (with the `callback` parameter set to a non-empty string)', function() {
+		const moduleName = 'o-test-component@1.0.2';
+		const givenCallback = 'page.load.deep';
+
+		const makeRequest = function(callback) {
+			const now = new Date().toISOString();
+			return request(this.app)
+                .get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&callback=${callback}`)
+                .set('Connection', 'close');
+		};
+
+        it('should respond with a 200 status', function(done) {
+            makeRequest.call(this, givenCallback)
+                .expect(200)
+                .end(done);
+		});
+
+		it('should include the given callback parameter, executed with the bundle context', function(done) {
+			makeRequest.call(this, givenCallback)
+				.expect(response => {
+					assert.include(response.text, `;"function"==typeof ${givenCallback}&&${givenCallback}(o)`);
+				})
+				.end(done);
+		});
+
+		[';my.Function', 'my.function;other'].forEach((callback) => {
+			it(`should not include the callback if it is '${callback}' and does not match the pattern ^[\\w\\.]+$`, function(done) {
+				makeRequest.call(this, callback)
+                    .expect(response => {
+                        assert.notInclude(response.text, `;${givenCallback}(modules)`);
+                    })
+                    .end(done);
+			});
+		});
+    });
 
 	describe('when a valid module is requested (with the `polyfills` parameter set to `none`)', function() {
 		const moduleName = 'o-test-component@1.0.2';
