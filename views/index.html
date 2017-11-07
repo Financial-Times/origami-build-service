@@ -123,6 +123,11 @@ o-typography:
 					<td>Querystring</td>
 					<td><em>(Optional)</em> If present, generates a <a href="https://github.com/umdjs/umd">UMD</a> bundle for the supplied export name. UMD works with other module systems and if no module system is found sets the specified name as a window global.  If absent, the default export name <code>Origami</code> will be used.  To export nothing, pass an empty string.</td>
 				</tr><tr>
+				</tr><tr>
+					<td><code>callback</code></td>
+					<td>Querystring</td>
+					<td><em>(Optional)</em> If present, calls the named javascript function on the window object once the bundle is loaded, with the modules object as the first argument. The function name must match the PCRE expression <code>^[\w\.]+$</code> or it will be ignored.</td>
+				</tr><tr>
 					<td><code>newerthan</code></td>
 					<td>Querystring</td>
 					<td><em>(Optional)</em> If present and set to a valid <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> date in the past, the build service will not consider any cached copies of the build which are older than the date given, and if necessary will therefore begin a new build as if there were no build cached.</td>

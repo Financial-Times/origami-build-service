@@ -102,7 +102,7 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('makes the error `message` property more human-readable', () => {
-					assert.strictEqual(error.message, `Cannot complete build due to compilation error from build tools:\n\nmock compile error\n`);
+					assert.strictEqual(error.message, 'Cannot complete build due to compilation error from build tools:\n\nmock compile error\n');
 				});
 
 				it('calls `next` with the passed in error', () => {
