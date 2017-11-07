@@ -7,17 +7,24 @@ const sinon = require('sinon');
 
 const { JSDOM } = jsdom;
 
-const createWindow = () =>
-    new JSDOM(``, {
-        runScripts: 'dangerously',
-    }).window;
+const createWindow = () => new JSDOM(``, {
+	runScripts: 'dangerously'
+}).window;
 
 const executeScript = (script, givenWindow) => {
+	let internalWindowError;
     const window = typeof givenWindow !== 'undefined' ? givenWindow : createWindow();
 
     const scriptEl = window.document.createElement('script');
     scriptEl.textContent = script;
+	window.onerror = error => {
+		internalWindowError = error;
+		throw error;
+    }
 	window.document.body.appendChild(scriptEl);
+	if (internalWindowError) {
+		throw internalWindowError;
+	}
 	return window;
 }
 
@@ -164,7 +171,7 @@ describe('GET /v2/bundles/js', function() {
 
 		it('should not export the bundle onto `window`', function(done) {
 			let givenWindow = createWindow()
-			Object.defineProperty(givenWindow, 'origami', { set() {
+			Object.defineProperty(givenWindow, 'Origami', { set() {
 				throw new Error('Attempted to set Origami property on window')
 			} });
 			this.request
