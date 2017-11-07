@@ -2,6 +2,24 @@
 
 const assert = require('chai').assert;
 const request = require('supertest');
+const jsdom = require('jsdom');
+const sinon = require('sinon');
+
+const { JSDOM } = jsdom;
+
+const createWindow = () =>
+    new JSDOM(``, {
+        runScripts: 'dangerously',
+    }).window;
+
+const executeScript = (script, givenWindow) => {
+    const window = typeof givenWindow !== 'undefined' ? givenWindow : createWindow();
+
+    const scriptEl = window.document.createElement('script');
+    scriptEl.textContent = script;
+	window.document.body.appendChild(scriptEl);
+	return window;
+}
 
 describe('GET /v2/bundles/js', function() {
 	this.timeout(20000);
@@ -22,7 +40,12 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should respond with the bundled JavaScript', function(done) {
-			this.request.expect('/** Shrinkwrap URL:\n *      /v2/bundles/js?modules=o-test-component%401.0.2%2Co-autoinit%401.3.2&shrinkwrap=\n */\n!function(t){function e(o){if(n[o])return n[o].exports;var d=n[o]={exports:{},id:o,loaded:!1};return t[o].call(d.exports,d,d.exports,e),d.loaded=!0,d.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){"use strict";n(1);var o={"o-test-component":n(2),"o-autoinit":n(4)};window.Origami=o},function(t,e){t.exports={name:"__MAIN__",dependencies:{"o-test-component":"o-test-component#1.0.2","o-autoinit":"o-autoinit#^1.0.0"}}},function(t,e,n){t.exports=n(3)},function(t,e){"use strict";console.log("what is this?")},function(t,e,n){t.exports=n(5)},function(t,e){"use strict";function n(t){t in o||(o[t]=!0,document.dispatchEvent(new CustomEvent("o."+t)))}var o={};window.addEventListener("load",n.bind(null,"load")),window.addEventListener("load",n.bind(null,"DOMContentLoaded")),document.addEventListener("DOMContentLoaded",n.bind(null,"DOMContentLoaded")),document.onreadystatechange=function(){"complete"===document.readyState?(n("DOMContentLoaded"),n("load")):"interactive"!==document.readyState||document.attachEvent||n("DOMContentLoaded")},"complete"===document.readyState?(n("DOMContentLoaded"),n("load")):"interactive"!==document.readyState||document.attachEvent||n("DOMContentLoaded"),document.attachEvent&&!function(){var t=!1,e=50;try{t=null===window.frameElement&&document.documentElement}catch(t){}t&&t.doScroll&&!function d(){if(!("DOMContentLoaded"in o)){try{t.doScroll("left")}catch(t){return e<5e3?setTimeout(d,e*=1.2):void 0}n("DOMContentLoaded")}}()}()}]);').end(done);
+			this.request
+                .expect(/^\/\*\* Shrinkwrap URL:\n \*/)
+                .expect(({ text }) => {
+                    assert.doesNotThrow(() => executeScript(text));
+                })
+                .end(done);
 		});
 
 		it('should minify the bundle', function(done) {
@@ -33,7 +56,16 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should export the bundle under `window.Origami`', function(done) {
-			this.request.expect(/window\.Origami/).end(done);
+			this.request
+				.expect(({text}) => {
+					let resultWindow;
+					assert.doesNotThrow(() => {
+						resultWindow = executeScript(text);
+					});
+					assert.property(resultWindow, 'Origami');
+					assert.property(resultWindow.Origami, moduleName.split('@')[0]);
+				})
+				.end(done);
 		});
 
 	});
@@ -73,7 +105,16 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should respond with the bundled JavaScript without the o-autoinit module', function(done) {
-			this.request.expect('/** Shrinkwrap URL:\n *      /v2/bundles/js?modules=o-test-component%401.0.2&shrinkwrap=\n */\n!function(t){function o(n){if(e[n])return e[n].exports;var r=e[n]={exports:{},id:n,loaded:!1};return t[n].call(r.exports,r,r.exports,o),r.loaded=!0,r.exports}var e={};return o.m=t,o.c=e,o.p="",o(0)}([function(t,o,e){"use strict";e(1);var n={"o-test-component":e(2)};window.Origami=n},function(t,o){t.exports={name:"__MAIN__",dependencies:{"o-test-component":"o-test-component#1.0.2"}}},function(t,o,e){t.exports=e(3)},function(t,o){"use strict";console.log("what is this?")}]);').end(done);
+			this.request
+				.expect(({ text }) => {
+					let resultWindow;
+					assert.doesNotThrow(() => {
+						resultWindow = executeScript(text);
+					});
+					assert.property(resultWindow, 'Origami');
+					assert.notProperty(resultWindow.Origami, 'o-autoinit')
+				})
+				.end(done);
 		});
 
 	});
@@ -93,7 +134,16 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should export the bundle under `window.foo`', function(done) {
-			this.request.expect(/window\.foo/).end(done);
+			this.request
+				.expect(({ text }) => {
+					let resultWindow;
+					assert.doesNotThrow(() => {
+						resultWindow = executeScript(text);
+					});
+					assert.property(resultWindow, 'foo');
+					assert.property(resultWindow.foo, moduleName.split('@')[0]);
+				})
+				.end(done);
 		});
 
 	});
@@ -113,10 +163,16 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should not export the bundle onto `window`', function(done) {
-			this.request.end((error, response) => {
-				assert.notInclude(response.text, 'window.Origami');
-				done(error);
-			});
+			let givenWindow = createWindow()
+			Object.defineProperty(givenWindow, 'origami', { set() {
+				throw new Error('Attempted to set Origami property on window')
+			} });
+			this.request
+				.expect(({ text }) => {
+					assert.doesNotThrow(() => executeScript(text, givenWindow))
+					assert.notProperty(givenWindow, 'Origimi');
+				})
+				.end(done);
 		});
 
 	});
@@ -139,18 +195,32 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should include the given callback parameter, executed with the bundle context', function(done) {
+			let givenWindow = createWindow()
+			givenWindow.page = {
+				load: {
+					deep: sinon.stub()
+				}
+			}
 			makeRequest.call(this, givenCallback)
-				.expect(response => {
-					assert.include(response.text, `;"function"==typeof ${givenCallback}&&${givenCallback}(o)`);
+				.expect(({text}) => {
+					assert.doesNotThrow(() => executeScript(text, givenWindow))
+					assert.property(givenWindow.page.load.deep.getCall(0).args[0], moduleName.split('@')[0])
 				})
 				.end(done);
 		});
 
 		[';my.Function', 'my.function;other'].forEach((callback) => {
-			it(`should not include the callback if it is '${callback}' and does not match the pattern ^[\\w\\.]+$`, function(done) {
+			it(`should call the callback if it is '${callback}' and does not match the pattern ^[\\w\\.]+$`, function(done) {
+				let givenWindow = createWindow()
+				givenWindow.page = {
+					load: {
+						deep: sinon.stub()
+					}
+				}
 				makeRequest.call(this, callback)
-                    .expect(response => {
-                        assert.notInclude(response.text, `;${givenCallback}(modules)`);
+                    .expect(({text}) => {
+						assert.doesNotThrow(() => executeScript(text, givenWindow))
+						assert.isTrue(givenWindow.page.load.deep.notCalled, 'Callback was called unexpectedly')
                     })
                     .end(done);
 			});
@@ -172,9 +242,12 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should respond with the bundled JavaScript with no polyfills', function(done) {
-			this.request.expect(function(response) {
-				assert.notMatch(response.text, /Array\.isArray/);
-			}).end(done);
+			this.request
+				.expect(({ text }) => {
+					assert.doesNotThrow(() => executeScript(text))
+					assert.notMatch(text, /Array\.from/) // Fragile check which depends on core-js source code
+				})
+				.end(done);
 		});
 
 	});
@@ -197,7 +270,12 @@ describe('GET /v2/bundles/js', function() {
 		});
 
 		it('should respond with the bundled JavaScript containing polyfills', function(done) {
-			this.request.expect(/var _Array\$from/).end(done); // Fragile check which depends on core-js source code
+			this.request
+				.expect(({ text }) => {
+					assert.doesNotThrow(() => executeScript(text))
+					assert.notMatch(text, /Array\.isArray/) // Fragile check which depends on core-js source code
+				})
+				.end(done);
 		});
 
 	});
