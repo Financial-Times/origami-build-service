@@ -33,37 +33,58 @@ describe('lib/middleware/cleanModulesParameter', () => {
 			assert.isFunction(middleware);
 		});
 
-		describe('middleware(request, response, next)', () => {
-			let next;
+		describe('middleware(request, response, spyNext)', () => {
+			const spyNext = sinon.spy();
 
-			beforeEach(() => {
-				next = sinon.spy();
-				origamiService.mockRequest.query.modules = 'valid1,Valid2@^3.0.1,-invalid1,valid3@~2.x,invalid2.@*,../../../../test';
-				middleware(origamiService.mockRequest, origamiService.mockResponse, next);
+			afterEach(() => {
+				spyNext.reset();
+				httpError.reset();
 			});
 
-			it('creates a 400 HTTP error with a descriptive message', () => {
-				assert.calledOnce(httpError);
-				assert.calledWithExactly(httpError, 400, 'The modules parameter contains module names which are not valid: -invalid1, invalid2., ../../../../test');
-			});
+			[
+				'-invalid1',
+				'invalid2.@*',
+				'invalid3..@*',
+				'invalid4---@*',
+				'.-invalid5@*',
+				'inv-.alid6@*',
+				'../../../../test',
+				'-invalid1,invalid2.@*',
+				'a'.repeat(51)
+			].forEach((value) => {
+				describe(`when the \'modules\' query string is invalid, containing the value '${value}'`, () => {
 
-			it('calls `next` with the created error', () => {
-				assert.calledOnce(next);
-				assert.calledWithExactly(next, httpError.mockError);
+					beforeEach(() => {
+						origamiService.mockRequest.query.modules = `valid1,Valid2@^3.0.1,${value},valid3@~2.x,${'l'.repeat(50)}`;
+						middleware(origamiService.mockRequest, origamiService.mockResponse, spyNext);
+					});
+
+					it('creates a 400 HTTP error with a descriptive message', () => {
+						assert.calledOnce(httpError);
+						const expectedModuleString = value
+							.split(',')
+							.map((value) => value.split('@')[0])
+                            .join(', ');
+						assert.calledWithExactly(httpError, 400, `The modules parameter contains module names which are not valid: ${expectedModuleString}`);
+					});
+
+					it('calls `next` with the created error', () => {
+						assert.calledOnce(spyNext);
+						assert.calledWithExactly(spyNext, httpError.mockError);
+					});
+				});
 			});
 
 			describe('when the `modules` query parameter is missing', () => {
 
 				beforeEach(() => {
-					next.reset();
-					httpError.reset();
 					delete origamiService.mockRequest.query.modules;
-					middleware(origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(origamiService.mockRequest, origamiService.mockResponse, spyNext);
 				});
 
 				it('calls `next`', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next);
+					assert.calledOnce(spyNext);
+					assert.calledWithExactly(spyNext);
 				});
 
 				it('does not modify request.query.modules', () => {
@@ -74,15 +95,13 @@ describe('lib/middleware/cleanModulesParameter', () => {
 			describe('when the `modules` query parameter is an empty string', () => {
 
 				beforeEach(() => {
-					next.reset();
-					httpError.reset();
 					origamiService.mockRequest.query.modules = '';
-					middleware(origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(origamiService.mockRequest, origamiService.mockResponse, spyNext);
 				});
 
 				it('calls `next`', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next);
+					assert.calledOnce(spyNext);
+					assert.calledWithExactly(spyNext);
 				});
 
 				it('does not modify request.query.modules', () => {
