@@ -181,50 +181,6 @@ describe('GET /v2/demos', function() {
 
 	});
 
-	describe('when an non-existent module is requested', function() {
-		const moduleName = 'non-existent-module';
-		const pathName = 'README.md';
-
-		beforeEach(function() {
-			this.request = request(this.app)
-				.get(`/v2/demos/${moduleName}/${pathName}`)
-				.set('Connection', 'close');
-		});
-
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
-		});
-
-		it('should respond with an error message', function(done) {
-			this.request.expect(({text}) => {
-				assert.match(getErrorMessage(text), /package non-existent-module not found/i);
-			}).end(done);
-		});
-
-	});
-
-	describe('when an invalid module (non-existent) at specific version is requested', function() {
-		const moduleName = 'non-existent-module@1.0.0';
-		const pathName = 'README.md';
-
-		beforeEach(function() {
-			this.request = request(this.app)
-				.get(`/v2/demos/${moduleName}/${pathName}`)
-				.set('Connection', 'close');
-		});
-
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
-		});
-
-		it('should respond with an error message', function(done) {
-			this.request.expect(({text}) => {
-				assert.match(getErrorMessage(text), /package non-existent-module not found/i);
-			}).end(done);
-		});
-
-	});
-
 	describe('when a valid module at non-existent version is requested', function() {
 		const moduleName = 'o-test-component@99.0.0';
 		const pathName = 'main';
