@@ -117,7 +117,10 @@ o-typography:
 				</tr><tr>
 					<td><code>polyfills</code></td>
 					<td>Querystring</td>
-					<td><em>(Optional)</em> If present and set to 'none', does not add polyfills to the output. Use this if your bundle is conflicting with other polyfills (e.g. through the <a href="https://cdn.polyfill.io/">Polyfill Service</a>).</td>
+					<td>
+						<p><em>(Optional)</em> If present and set to 'none', does not add polyfills to the output. Use this if your bundle is conflicting with other polyfills (e.g. through the <a href="https://cdn.polyfill.io/">Polyfill Service</a>).</p>
+						<p>The polyfill mechanism is adding <a href="https://github.com/babel/babel/tree/c440f045f548ab60d15880a60b34511a7ffec931/packages/babel-runtime">babel-runtime</a> to the bundle if required. This is not a complete polyfill as it does not modify existing built-ins (<a href="https://babeljs.io/docs/plugins/transform-runtime">reference</a>) and as such doesn't work on instance methods, e.g. <code>'foo'.repeat(1)</code></p>
+					</td>
 				</tr><tr>
 					<td><code>export</code></td>
 					<td>Querystring</td>
