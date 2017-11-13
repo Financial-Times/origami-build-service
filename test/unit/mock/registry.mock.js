@@ -5,8 +5,8 @@ require('sinon-as-promised');
 
 module.exports = function() {
 	return {
-		refreshPackageList: sinon.stub().resolves(),
-		packageListByURL: sinon.stub().resolves(),
+		getPackageList: sinon.stub().resolves([]),
+		packageListByURL: sinon.stub().resolves({}),
 		registryURL: ''
 	};
 };

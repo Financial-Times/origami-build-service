@@ -25,12 +25,13 @@ describe('lib/request-promise', () => {
 
 		beforeEach(() => {
 			options = {
-				uri: 'foo'
+				uri: 'foo',
+				method: 'POST'
 			};
 			response = {
 				statusCode: 200
 			};
-			request.withArgs(options).yieldsAsync(null, response);
+			request.yieldsAsync(null, response);
 			return requestPromise(options).then(value => {
 				resolvedValue = value;
 			});
@@ -38,7 +39,12 @@ describe('lib/request-promise', () => {
 
 		it('requests the given URL', () => {
 			assert.calledOnce(request);
-			assert.calledWith(request, options);
+			assert.calledWithMatch(request, options);
+		});
+
+		it('uses the options, with forever defaulted to true so http Keep-Alive is used', () => {
+			assert.calledOnce(request);
+			assert.calledWithMatch(request, Object.assign({forever: true}, options));
 		});
 
 		it('resolves with the response object', () => {
@@ -51,7 +57,7 @@ describe('lib/request-promise', () => {
 
 			beforeEach(() => {
 				requestError = new Error('mock error');
-				request.withArgs(options).yieldsAsync(requestError);
+				request.yieldsAsync(requestError);
 				return requestPromise(options).catch(error => {
 					rejectedError = error;
 				});
