@@ -11,7 +11,9 @@ describe('lib/middleware/outputDemo', function() {
 	let fileproxy;
 	let HttpError;
 	let installationmanager;
+	let moduleInstallation;
 	let ModuleSet;
+	let Registry;
 	let origamiService;
 	let outputDemo;
 
@@ -34,8 +36,13 @@ describe('lib/middleware/outputDemo', function() {
 		installationmanager = require('../../mock/installationmanager.mock');
 		mockery.registerMock('../installationmanager', installationmanager);
 
+		moduleInstallation = require('../../mock/moduleinstallation.mock')();
+
 		ModuleSet = require('../../mock/moduleset.mock');
 		mockery.registerMock('../moduleset', ModuleSet);
+
+		Registry = require('../../mock/registry.mock');
+		mockery.registerMock('../registry', Registry);
 
 		origamiService = require('../../mock/origami-service.mock');
 
@@ -52,6 +59,9 @@ describe('lib/middleware/outputDemo', function() {
 		beforeEach(() => {
 			origamiService.mockApp.origami.options.tempdir = '/tmp';
 			middleware = outputDemo(origamiService.mockApp);
+
+			installationmanager.createInstallation.resolves(moduleInstallation);
+			moduleInstallation.listDirectNoneOrigamiComponents.resolves({});
 		});
 
 		it('returns a middleware function', () => {
@@ -73,6 +83,8 @@ describe('lib/middleware/outputDemo', function() {
 			describe('errors', () => {
 
 				beforeEach(() => {
+					// return a promise which never resolves so timeout always resolves first
+					bundler.getBundle.returns(new Promise(() => {}));
 					sinon.stub(global, 'setTimeout');
 					global.setTimeout.callsArgWithAsync(0, 'timeout');
 				});
