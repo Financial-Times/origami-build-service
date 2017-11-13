@@ -16,6 +16,12 @@ describe('GET /v1', function() {
 		this.request.expect(301).end(done);
 	});
 
+	it('should response with a year long surrogate cache control header', function(done) {
+		this.request
+			.expect('Surrogate-Control', 'public, max-age=31536000, stale-while-revalidate=31536000, stale-if-error=31536000')
+			.end(done);
+	});
+
 	it('should respond with HTML', function(done) {
 		this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
 	});

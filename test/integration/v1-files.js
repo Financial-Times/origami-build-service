@@ -20,6 +20,12 @@ describe('GET /v1/files', function() {
 			this.request.expect(301).end(done);
 		});
 
+		it('should response with a year long surrogate cache control header', function(done) {
+			this.request
+				.expect('Surrogate-Control', 'public, max-age=31536000, stale-while-revalidate=31536000, stale-if-error=31536000')
+				.end(done);
+		});
+
 		it('should respond with a v2 `Location` header', function(done) {
 			this.request.expect('Location', `/v2/files/${moduleName}/${pathName}`).end(done);
 		});
