@@ -1,6 +1,13 @@
 'use strict';
 
 const request = require('supertest');
+const {assert} = require('chai');
+const cheerio = require('cheerio');
+
+const getErrorMessage = (text) => {
+	const $ = cheerio.load(text);
+	return $('[data-test-id="error-message"]').text();
+};
 
 describe('GET /v2/demos', function() {
 	this.timeout(20000);
@@ -48,7 +55,9 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+			this.request.expect((response) => {
+				assert.match(getErrorMessage(response.text), /not found/i);
+			}).end(done);
 		});
 
 	});
@@ -71,7 +80,9 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+			this.request.expect(({text}) => {
+				assert.match(getErrorMessage(text), /not found/i);
+			}).end(done);
 		});
 
 	});
@@ -119,7 +130,9 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect(/cannot complete build due to compilation error from build tools:/i).end(done);
+			this.request.expect(({text}) => {
+				assert.match(getErrorMessage(text), /cannot complete build due to compilation error from build tools:/i);
+			}).end(done);
 		});
 
 	});
@@ -139,7 +152,9 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect(/no demos were found for notademo/i).end(done);
+			this.request.expect(({text}) => {
+				assert.match(getErrorMessage(text), /no demos were found for notademo/i);
+			}).end(done);
 		});
 
 	});
@@ -159,47 +174,9 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect(/no demos were found for notademo/i).end(done);
-		});
-
-	});
-
-	describe('when an non-existent module is requested', function() {
-		const moduleName = 'non-existent-module';
-		const pathName = 'README.md';
-
-		beforeEach(function() {
-			this.request = request(this.app)
-				.get(`/v2/demos/${moduleName}/${pathName}`)
-				.set('Connection', 'close');
-		});
-
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
-		});
-
-		it('should respond with an error message', function(done) {
-			this.request.expect(/package non-existent-module not found/i).end(done);
-		});
-
-	});
-
-	describe('when an invalid module (non-existent) at specific version is requested', function() {
-		const moduleName = 'non-existent-module@1.0.0';
-		const pathName = 'README.md';
-
-		beforeEach(function() {
-			this.request = request(this.app)
-				.get(`/v2/demos/${moduleName}/${pathName}`)
-				.set('Connection', 'close');
-		});
-
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
-		});
-
-		it('should respond with an error message', function(done) {
-			this.request.expect(/package non-existent-module not found/i).end(done);
+			this.request.expect(({text}) => {
+				assert.match(getErrorMessage(text), /no demos were found for notademo/i);
+			}).end(done);
 		});
 
 	});
@@ -219,9 +196,57 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect(/no tag found that was able to satisfy 99.0.0/i).end(done);
+			this.request.expect(({text}) => {
+				assert.match(getErrorMessage(text), /no tag found that was able to satisfy 99.0.0/i);
+			}).end(done);
 		});
 
+	});
+
+	describe('when a valid module on the main bower registry is requested', function() {
+		const moduleName = 'jquery@3.0.0';
+		const pathName = 'main';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(400).end(done);
+		});
+
+		it('should respond with an error message', function(done) {
+			this.request
+				.expect(({text}) => {
+					assert.equal(getErrorMessage(text), 'The modules parameter contains module names which are not on the FT bower registry: \n\t- jquery');
+				})
+				.end(done);
+		});
+	});
+
+	describe('when a valid module which does not have an origami manifest is requested', function() {
+		const moduleName = 'origami-bower-test';
+		const pathName = 'main';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(400).end(done);
+		});
+
+		it('should respond with an error message', function(done) {
+			this.request
+				.expect(({text}) => {
+					assert.equal(getErrorMessage(text), 'The modules parameter contains module names which are not origami modules: \n\t- origami-bower-test');
+				})
+				.end(done);
+		});
 	});
 
 });

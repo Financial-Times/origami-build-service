@@ -12,6 +12,9 @@ describe('lib/registry', () => {
 
 		requestPromise = require('../mock/request-promise.mock');
 		mockery.registerMock('./utils/request-promise', requestPromise);
+		requestPromise.resolves({
+			body: []
+		});
 
 		Registry = require('../../../lib/registry');
 	});
@@ -34,22 +37,22 @@ describe('lib/registry', () => {
 			assert.equal(registry.registryURL, 'http://example.com');
 		});
 
-		describe('Registry.refreshPackageList()', () => {
+		describe('Registry.getPackageList()', () => {
 			it('is a function', () => {
 				const registry = new Registry();
-				assert.isFunction(registry.refreshPackageList);
+				assert.isFunction(registry.getPackageList);
 			});
 
 			it('returns a Promise', () => {
 				const registry = new Registry();
-				assert.instanceOf(registry.refreshPackageList(), Promise);
+				assert.instanceOf(registry.getPackageList(), Promise);
 			});
 
 			it('requests /packages from registryURL', () => {
 				const registry = new Registry({
 					registryURL: 'http://example.com'
 				});
-				registry.refreshPackageList();
+				registry.getPackageList();
 				assert.ok(requestPromise.calledWith({
 					url: 'http://example.com/packages',
 					json: true
@@ -66,7 +69,7 @@ describe('lib/registry', () => {
 					body: packageList
 				});
 				const registry = new Registry();
-				return registry.refreshPackageList().then(list => {
+				return registry.getPackageList().then(list => {
 					assert.deepEqual(list, packageList);
 				});
 			});
@@ -74,7 +77,7 @@ describe('lib/registry', () => {
 			it('adds Registry instance as context when erroring', () => {
 				requestPromise.rejects({});
 				const registry = new Registry();
-				return registry.refreshPackageList().catch(err => {
+				return registry.getPackageList().catch(err => {
 					assert.instanceOf(err.context, Registry);
 					assert.deepEqual(err.context, registry);
 				});
