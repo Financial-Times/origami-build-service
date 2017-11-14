@@ -5,6 +5,5 @@ machine:
 
 test:
   override:
-    - make verify
-    - make test
+    - make ci
     - make test-old
