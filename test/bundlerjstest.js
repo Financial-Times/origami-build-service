@@ -42,7 +42,7 @@ suiteWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
 		try {
 			yield testhelper.bufferStream(yield (new JsBundler({log:log})).getContent(installation, moduleset, {minify:'none'}));
 		} catch(err) {
-			assert.include(err.message, 'ModuleNotFoundError: Module not found: Error: Cannot resolve module \'missingmodule\'', 'Error from jsbundler should be included: ' + err.stack);
+			assert.include(err.message, 'Module not found: Error: Can\'t resolve \'missingmodule\'', 'Error from jsbundler should be included: ' + err.stack);
 			assert.notInclude(err.message, installdir, 'Should hide full path');
 			return;
 		}
