@@ -227,7 +227,7 @@ describe('GET /v2/demos', function() {
 	});
 
 	describe('when a valid module which does not have an origami manifest is requested', function() {
-		const moduleName = 'origami-bower-test';
+		const moduleName = 'o-test-component@1.0.0';
 		const pathName = 'main';
 
 		beforeEach(function() {
@@ -243,7 +243,7 @@ describe('GET /v2/demos', function() {
 		it('should respond with an error message', function(done) {
 			this.request
 				.expect(({text}) => {
-					assert.equal(getErrorMessage(text), 'The modules parameter contains module names which are not origami modules: \n\t- origami-bower-test');
+					assert.equal(getErrorMessage(text), 'The modules parameter contains module names which are not origami modules: \n\t- o-test-component');
 				})
 				.end(done);
 		});
