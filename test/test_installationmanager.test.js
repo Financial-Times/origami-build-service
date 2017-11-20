@@ -26,13 +26,13 @@ suiteWithPackages('InstallationManager#createInstallation(moduleset, options)', 
 		const installationADirectory = installationA.getDirectory();
 
 		// The directory for installation A should exist
-		assert(((yield pfs.stat(installationADirectory))).isDirectory() === true);
+		assert((yield pfs.pathExists(installationADirectory)) === true);
 
 		yield installer.createInstallation(modulesetB);
 
 		// The directory for installation A should now not exist because the
 		// capacity of the LRU cache is 1
-		assert(((yield pfs.stat(installationADirectory))).isDirectory() === false);
+		assert((yield pfs.pathExists(installationADirectory)) === false);
 	});
 
 	spawnTest('it should create a ModuleInstallation for the requested ModuleSet', function*() {
