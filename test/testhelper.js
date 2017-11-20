@@ -5,7 +5,7 @@ const rmrf = require('rimraf');
 
 const log = require('./unit/mock/log.mock');
 
-const pfs = require('q-io/fs');
+const pfs = require('fs-extra-p');
 const fs = require('fs');
 const path = require('path');
 const Q = require('../lib/utils/q');
@@ -31,7 +31,7 @@ function suiteWithPackages(name, packages, callback) {
 		const tempdir = fs.realpathSync('/tmp') + '/buildservice-test/' + uuid();
 
 		before(function(done) {
-			pfs.makeTree(tempdir)
+			pfs.ensureDir(tempdir)
 			.then(function() {
 				// Make some symbolic links to the test modules in this
 				// repository in the temporary directory.  When the cache
@@ -40,7 +40,11 @@ function suiteWithPackages(name, packages, callback) {
 				return Promise.all(packages.map(function(name){
 					const src = path.join(__dirname, '/testmodules/', name);
 					const dst = path.join(tempdir, '/', name.replace(/^.*\//,''));
-					return pfs.symbolicLink(dst, src, 'directory');
+					return pfs.symlink(dst, src, 'dir').catch(err => {
+						if (err.code !== 'EEXIST') {
+							throw err;
+						}
+					});
 				}));
 			})
 			.done(function() { done(); });

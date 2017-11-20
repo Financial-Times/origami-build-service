@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const pfs = require('q-io/fs');
+const pfs = require('fs-extra-p');
 const uniqueid = require('../lib/utils/uniqueid');
 const URL = require('url');
 

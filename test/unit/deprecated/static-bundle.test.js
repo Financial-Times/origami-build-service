@@ -19,8 +19,8 @@ describe('deprecated/static-bundle', function() {
 		fs = require('../mock/fs.mock');
 		mockery.registerMock('fs', fs);
 
-		pfs = require('../mock/q-io-fs.mock');
-		mockery.registerMock('q-io/fs', pfs);
+		pfs = require('../mock/fs-extra-p.mock');
+		mockery.registerMock('fs-extra-p', pfs);
 
 		staticBundle = require('../../../deprecated/static-bundle');
 	});
