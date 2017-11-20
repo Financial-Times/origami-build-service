@@ -40,7 +40,11 @@ function suiteWithPackages(name, packages, callback) {
 				return Promise.all(packages.map(function(name){
 					const src = path.join(__dirname, '/testmodules/', name);
 					const dst = path.join(tempdir, '/', name.replace(/^.*\//,''));
-					return pfs.symlink(dst, src, 'dir');
+					return pfs.symlink(dst, src, 'dir').catch(err => {
+						if (err.code !== 'EEXIST') {
+							throw err;
+						}
+					});
 				}));
 			})
 			.done(function() { done(); });
