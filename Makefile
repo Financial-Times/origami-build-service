@@ -23,6 +23,8 @@ HEROKU_APP_EU = origami-build-service-eu
 HEROKU_APP_US = origami-build-service-us
 GRAFANA_DASHBOARD = origami-build-service
 
+export GITHUB_RELEASE_REPO := Financial-Times/origami-build-service
+
 
 # Additional test tasks
 # ---------------------
