@@ -12,11 +12,12 @@ suiteWithPackages('installation-css has_external_dependency', ['invalidcss', 'te
 	this.timeout(15*1000);
 
 	spawnTest('ok-sass', function*(){
+		const brand = 'masterbrand';
 		const moduleset = new ModuleSet(['o-test-component@1.0.5']);
 		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log});
 
 		yield installation.install();
-		const css = yield testhelper.bufferStream(yield (new CssBundler({log:log})).getContent(installation, moduleset,{minify:true}));
+		const css = yield testhelper.bufferStream(yield (new CssBundler({log:log})).getContent(installation, moduleset, brand,{minify:true}));
 
 		const cssWithoutShrink = css.replace(/\/\*.*Shrinkwrap[\s\S]+?\*\/\s*/,'');
 		// assert.equal(cssWithoutShrink, '#test1{hello:world;silent-var:false;url:url(https://' + hostnames.preferred + '/v2/files/test-package1@*/README)}');
