@@ -14,6 +14,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 
 	spawnTest('install-with-deps', function*(){
 		const moduleset = new ModuleSet(['o-test-component']);
+		const brand = 'masterbrand';
 		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log});
 
 
@@ -25,7 +26,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 		assert(!('test1' in list), 'Dependencies should not be listed explicitly');
 		assert(!('test-package1' in list), 'Dependencies should not be listed explicitly');
 
-		const cssStream = yield (new CssBundler({log:log})).getContent(installation, moduleset, { minify: true });
+		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, brand, { minify: true });
 		const css = yield testhelper.bufferStream(cssStream);
 		const cssWithoutComment = css.replace(/\/\*.*Shrinkwrap[\s\S]+?\*\/\s*/,'');
 		assert.equal(cssWithoutComment, '.test-compile-error{color:red}', 'Expected minified output from test-package2');
