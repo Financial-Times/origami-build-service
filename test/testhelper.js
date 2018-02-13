@@ -60,10 +60,13 @@ function suiteWithPackages(name, packages, callback) {
 
 global.suiteWithPackages = suiteWithPackages;
 
-function spawnTest(name, generatorCallback, shouldSkip) {
+function spawnTest(name, generatorCallback, shouldSkip, only) {
 	let testFunc = test;
 	if (shouldSkip) {
 		testFunc = test.skip;
+	}
+	if (only) {
+		testFunc = test.only;
 	}
 	return testFunc(name, function(done) {
 		promiseTest.call(this, generatorCallback, done);
