@@ -202,7 +202,7 @@ describe('lib/middleware/outputDemo', function() {
 					it('uses files mimetype as the content-type of the response', () => {
 						return middleware(request, response, next)
 							.then(() => {
-								assert.equal(response.set.firstCall.args[0]['Content-Type'], bundle.mimeType);
+								assert.equal(response.set.secondCall.args[0]['Content-Type'], bundle.mimeType);
 							});
 					});
 
@@ -220,6 +220,130 @@ describe('lib/middleware/outputDemo', function() {
 							});
 					});
 				});
+			});
+
+		});
+
+	});
+
+	describe('outputDemo(app, {outputMinimalHtml: true})', () => {
+		let middleware;
+
+		beforeEach(() => {
+			origamiService.mockApp.origami.options.tempdir = '/tmp';
+			middleware = outputDemo(origamiService.mockApp, {
+				outputMinimalHtml: true
+			});
+
+			installationmanager.createInstallation.resolves(moduleInstallation);
+			moduleInstallation.listDirectNoneOrigamiComponents.resolves({});
+		});
+
+		it('returns a middleware function', () => {
+			assert.isFunction(middleware);
+		});
+
+		describe('middleware(request, response, next)', () => {
+			let bundle;
+			let next;
+			let response;
+			let request;
+
+			beforeEach(() => {
+				next = sinon.spy();
+				response = origamiService.mockResponse;
+				request = origamiService.mockRequest;
+				bundle = {
+					mimeType: 'text/html',
+					createdTime: new Date,
+					expiryTime: Date.now() + 10000,
+					toString: sinon.stub().returns(`
+						<!DOCTYPE html>
+						<html lang="en">
+							<head>
+								<meta charset="utf-8">
+								<title>mock demo</title>
+							</head>
+							<body>
+								<p>mock demo content</p>
+							</body>
+						</html>
+					`)
+				};
+				bundler.getBundle.resolves(bundle);
+				cacheControlHeaderFromExpiry.returnsArg(0);
+			});
+
+			it('uses text/plain as the content-type of the response', () => {
+				return middleware(request, response, next)
+					.then(() => {
+						assert.equal(response.set.secondCall.args[0]['Content-Type'], 'text/plain');
+					});
+			});
+
+			it('uses files createdTime as the last-modified time of the response', () => {
+				return middleware(request, response, next)
+					.then(() => {
+						assert.equal(response.set.firstCall.args[0]['Last-Modified'], bundle.createdTime.toUTCString());
+					});
+			});
+
+			it('uses files expiry-time as the cache-control of the response', () => {
+				return middleware(request, response, next)
+					.then(() => {
+						assert.equal(response.set.firstCall.args[0]['Cache-Control'], bundle.expiryTime);
+					});
+			});
+
+			it('sends the demo HTML body contents', () => {
+				return middleware(request, response, next)
+					.then(() => {
+						assert.strictEqual(response.send.firstCall.args[0], `
+							<p>mock demo content</p>
+						`.trim());
+					});
+			});
+
+			describe('when the demo body contains Origami/FT script and link elements', () => {
+
+				beforeEach(() => {
+					response.send.reset();
+					bundle.toString = sinon.stub().returns(`
+						<!DOCTYPE html>
+						<html lang="en">
+							<head>
+								<meta charset="utf-8">
+								<title>mock demo</title>
+							</head>
+							<body>
+
+								<p>mock demo content</p>
+
+								<link href="not-origami">
+								<link href="//www.ft.com/__origami/service/build/v2/bundle/css/...">
+								<link href="https://registry.origami.ft.com/...">
+
+								<script src="not-origami"></script>
+								<script type="text/template">mock template</script>
+								<script src="//www.ft.com/__origami/service/build/v2/bundle/js/..."></script>
+								<script src="https://registry.origami.ft.com/..."></script>
+
+							</body>
+						</html>
+					`);
+				});
+
+				it('strips them from the demo HTML', () => {
+					return middleware(request, response, next).then(() => {
+						assert.strictEqual(response.send.firstCall.args[0].replace(/\s+/g, ' ').trim(), `
+							<p>mock demo content</p>
+							<link href="not-origami">
+							<script src="not-origami"></script>
+							<script type="text/template">mock template</script>
+						`.replace(/\s+/g, ' ').trim());
+					});
+				});
+
 			});
 
 		});
