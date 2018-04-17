@@ -410,21 +410,44 @@ describe('GET /v2/bundles/js', function() {
 });
 
 describe('when a module name is a relative directory', function() {
-        const moduleName = '../../../example';
+    const moduleName = '../../../example';
 
-        beforeEach(function() {
-            const now = (new Date()).toISOString();
-            this.request = request(this.app)
-                .get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
-                .set('Connection', 'close');
-        });
+    beforeEach(function() {
+        const now = (new Date()).toISOString();
+        this.request = request(this.app)
+            .get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
+            .set('Connection', 'close');
+    });
 
-        it('should respond with a 400 status', function(done) {
-            this.request.expect(400).end(done);
-        });
+    it('should respond with a 400 status', function(done) {
+        this.request.expect(400).end(done);
+    });
 
-        it('should respond with an error message ', function(done) {
-            this.request.expect(/The modules parameter contains module names which are not valid: \.\.\/\.\.\/\.\.\/example/i).end(done);
-        });
+    it('should respond with an error message ', function(done) {
+        this.request.expect(/The modules parameter contains module names which are not valid: \.\.\/\.\.\/\.\.\/example/i).end(done);
+    });
+
+});
+
+describe('export parameter as xss attack vector', function() {
+    const moduleName = 'o-test-component@1.0.16';
+
+    beforeEach(function() {
+        this.request = request(this.app)
+            .get(`/v2/bundles/js?modules=${moduleName}&export='];alert('oops')//`)
+            .set('Connection', 'close');
+    });
+
+    it('should respond with a 400 status', function(done) {
+        this.request.expect(400).end(done);
+    });
+
+    it('should respond with an error message ', function(done) {
+        this.request.expect(/The export parameter can only contain underscore, period, and alphanumeric characters. The export parameter given was: &#x27;];alert\(&#x27;oops&#x27;\)\/\//).end(done);
+    });
+
+    it('should respond with HTML', function(done) {
+		this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+	});
 
 });
