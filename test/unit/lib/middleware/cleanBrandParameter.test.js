@@ -56,7 +56,7 @@ describe('lib/middleware/cleanBrandParameter', () => {
 
                     it('creates a 400 HTTP error', () => {
                         assert.calledOnce(httpError);
-                        assert.calledWithExactly(httpError, 400, 'The brand parameter must be one off: master, internal, whitelabel.');
+                        assert.calledWithExactly(httpError, 400, 'The brand parameter must be one of: master, internal, whitelabel.');
                     });
 
                     it('calls `next` with the created error', () => {
