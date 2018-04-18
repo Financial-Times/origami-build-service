@@ -42,6 +42,7 @@ describe('lib/middleware/cleanBrandParameter', () => {
             });
 
             [
+                'intttternal',
                 '-invalid1',
                 'inv@lid2',
                 'inva.lid3',
@@ -55,7 +56,7 @@ describe('lib/middleware/cleanBrandParameter', () => {
 
                     it('creates a 400 HTTP error', () => {
                         assert.calledOnce(httpError);
-                        assert.calledWithExactly(httpError, 400, `The brand parameter must be alphanumeric only: ${value}`);
+                        assert.calledWithExactly(httpError, 400, `The brand parameter "${value}" must be one off: master, internal, whitelabel.`);
                     });
 
                     it('calls `next` with the created error', () => {
@@ -82,9 +83,9 @@ describe('lib/middleware/cleanBrandParameter', () => {
                 });
             });
 
-            describe('when the `brand` query parameter is a valid alphanumeric string', () => {
+            describe('when the `brand` query parameter is a valid', () => {
 
-                const testBrandName = 'testbrand123';
+                const testBrandName = 'internal';
 
                 beforeEach(() => {
                     origamiService.mockRequest.query.brand = testBrandName;
