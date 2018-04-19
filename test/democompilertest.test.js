@@ -13,7 +13,7 @@ suiteWithPackages('demo-compilation', [], function(installdir){
 
 	spawnTest('race', function*(){
 		const moduleset = new ModuleSet(['o-test-component@1.0.9']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, {dir: installdir, log:log});
 		yield installation.install();
 
@@ -23,7 +23,7 @@ suiteWithPackages('demo-compilation', [], function(installdir){
 
 	spawnTest('invalid-config', function*(){
 		const moduleset = new ModuleSet(['o-test-component@1.0.0']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, {dir: installdir, log:log});
 		yield installation.install();
 
@@ -39,7 +39,7 @@ suiteWithPackages('demo-compilation', [], function(installdir){
 
 	spawnTest('invalid-syntax', function*(){
 		const moduleset = new ModuleSet(['o-test-component@1.0.8']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log});
 		yield installation.install();
 
