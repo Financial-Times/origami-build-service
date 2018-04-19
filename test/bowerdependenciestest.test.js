@@ -14,7 +14,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 
 	spawnTest('install-with-deps', function*(){
 		const moduleset = new ModuleSet(['o-test-component']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log});
 
 
