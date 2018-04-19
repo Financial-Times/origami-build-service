@@ -16,7 +16,7 @@ suite('installation-remote', function() {
 
 	spawnTestWithTempdir('install-external has_external_dependency', function*(tmpdir) {
 		const moduleset = new ModuleSet(['jquery@2.0.3','lodash']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 
 		let installed = yield installation.install();
