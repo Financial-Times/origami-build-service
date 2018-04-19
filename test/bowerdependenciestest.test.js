@@ -29,7 +29,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, brand, { minify: true });
 		const css = yield testhelper.bufferStream(cssStream);
 		const cssWithoutComment = css.replace(/\/\*.*Shrinkwrap[\s\S]+?\*\/\s*/,'');
-		assert.equal(cssWithoutComment, 'o-test-component-brand:after{content:"master"}', 'Expected minified output from test-package2');
+		assert.equal(cssWithoutComment, '.o-test-component-brand:after{content:"master"}', 'Expected minified output from test-package2');
 		assert.match(css, /^\/\*\* Shrinkwrap URL:\n \*    \/v2\/bundles\/css\?modules=o-test-component%40\d+\.\d+\.\d+&shrinkwrap=\n \*\/\n.test-compile-error\{color:red\}$/);
 	});
 
