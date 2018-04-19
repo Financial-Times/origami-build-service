@@ -24,7 +24,7 @@ suiteWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
 
 		yield Q.all(['main.scss','bower.json','main.js'].map(Q.async(function*(file){
 			const moduleset = new ModuleSet(['o-test-component@1.0.16:/' + file]);
-			const brand = 'masterbrand';
+			const brand = 'master';
 
 			// Must use caching here, that's how buildservice makes bower safe against race conditions
 			const installation = yield installer.createInstallation(moduleset);
@@ -37,7 +37,7 @@ suiteWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
 
 	spawnTest('invalid-require', function*(){
 		const moduleset = new ModuleSet(['o-test-component@1.0.6']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, {dir: installdir, log:log});
 
 		yield installation.install();
