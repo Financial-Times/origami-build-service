@@ -54,7 +54,7 @@ suiteWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
 
 	spawnTest('invalid-syntax', function*(){
 		const moduleset = new ModuleSet(['o-test-component@1.0.5:/syntaxerr.js']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log});
 
 		yield installation.install();
