@@ -49,7 +49,7 @@ suite('installation-remote', function() {
 
 	spawnTestWithTempdir('export has_external_dependency', function*(tmpdir) {
 		const moduleset = new ModuleSet(['https://github.com/Financial-Times/o-assets.git']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 
 		yield installation.install();
@@ -61,7 +61,7 @@ suite('installation-remote', function() {
 
 	spawnTestWithTempdir('install-implied-main has_external_dependency', function*(tmpdir){
 		const moduleset = new ModuleSet(['Financial-Times/o-forms']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 
 		const installed = yield installation.install();
@@ -82,7 +82,7 @@ suite('installation-remote', function() {
 
 	spawnTestWithTempdir('css-no-minify has_external_dependency', function*(tmpdir) {
 		const moduleset = new ModuleSet(['o-gallery']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 
 		yield installation.install();
@@ -94,7 +94,7 @@ suite('installation-remote', function() {
 
 	spawnTestWithTempdir('version-of-subresource has_external_dependency', function*(tmpdir) {
 		const moduleset = new ModuleSet(['o-gallery']);
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 		yield installation.install();
 		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, brand, {minify:'none'});
