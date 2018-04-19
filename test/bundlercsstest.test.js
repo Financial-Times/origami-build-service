@@ -12,7 +12,7 @@ suiteWithPackages('installation-css has_external_dependency', ['invalidcss', 'te
 	this.timeout(15*1000);
 
 	spawnTest('ok-sass', function*(){
-		const brand = 'masterbrand';
+		const brand = 'master';
 		const moduleset = new ModuleSet(['o-test-component@1.0.5']);
 		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log});
 
