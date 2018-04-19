@@ -30,7 +30,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 		const css = yield testhelper.bufferStream(cssStream);
 		const cssWithoutComment = css.replace(/\/\*.*Shrinkwrap[\s\S]+?\*\/\s*/,'');
 		assert.equal(cssWithoutComment, '.o-test-component-brand:after{content:"master"}', 'Expected minified output from test-package2');
-		assert.match(css, /^\/\*\* Shrinkwrap URL:\n \*    \/v2\/bundles\/css\?modules=o-test-component%40\d+\.\d+\.\d+&shrinkwrap=\n \*\/\n.test-compile-error\{color:red\}$/);
+		assert.match(css, /^\/\*\* Shrinkwrap URL:\n \*    \/v2\/bundles\/css\?modules=o-test-component%40\d+\.\d+\.\d+&shrinkwrap=o\-brand%40\d+\.\d+\.\d+\n \*\/\n\.o\-test\-component\-brand\:after\{content:\"master\"\}$/);
 	});
 
 	spawnTest('conflict has_external_dependency', function*(){
