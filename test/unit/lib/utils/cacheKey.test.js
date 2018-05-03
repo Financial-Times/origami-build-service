@@ -8,7 +8,8 @@ const cachableParameters = ['exportName', 'callback'];
 describe('lib/utils/cacheKey', function() {
     const defaultParameters = {
         exportName: 'someName',
-        callback: 'applicationCallback'
+        callback: 'applicationCallback',
+        brand: 'master'
     };
     let uniqueid;
     let cacheKey;
