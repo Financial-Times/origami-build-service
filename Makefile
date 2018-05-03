@@ -32,3 +32,5 @@ export GITHUB_RELEASE_REPO := Financial-Times/origami-build-service
 test-old:
 	@NODE_ENV=test mocha test
 	@$(DONE)
+
+ci: verify test
