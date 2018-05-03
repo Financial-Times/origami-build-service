@@ -9,5 +9,6 @@ dependencies:
 
 test:
   override:
-    - make ci
+    - make verify
+    - make test
     - make test-old
