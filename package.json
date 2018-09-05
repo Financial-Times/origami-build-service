@@ -42,7 +42,7 @@
     "mime": "^1.2.11",
     "mkdirp": "^0.5.1",
     "morgan": "^1.6.1",
-    "origami-build-tools": "^5.8.0",
+    "origami-build-tools": "^6.0.0",
     "q": "^1.0.1",
     "request": "^2.79.0",
     "require-all": "^2.1.0",
@@ -51,7 +51,7 @@
     "streamcat": "^2.0.0",
     "tryall": "^1.0.1",
     "uuid": "^3.1.0",
-    "webpack": "^3.8.1"
+    "webpack": "^4.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
