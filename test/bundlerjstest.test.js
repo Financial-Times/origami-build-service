@@ -5,7 +5,7 @@ const testhelper = require('./testhelper');
 const JsBundler = testhelper.JsBundler;
 
 const log = testhelper.log;
-const metrics = require('./unit/mock/origami-service.mock').mockApp.origami.metrics;
+const metrics = require('./unit/mock/origami-service.mock').mockApp.ft.metrics;
 const Q = testhelper.Q;
 const ModuleInstallation = testhelper.ModuleInstallation;
 const InstallationManager = testhelper.InstallationManager;

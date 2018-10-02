@@ -8,7 +8,7 @@ const supertest = require('supertest');
 const testhelper = require('./testhelper');
 const hostnames = require('../lib/utils/hostnames');
 const log = require('./unit/mock/log.mock');
-const metrics = require('./unit/mock/origami-service.mock').mockApp.origami.metrics;
+const metrics = require('./unit/mock/origami-service.mock').mockApp.ft.metrics;
 
 const InstallationManager = testhelper.InstallationManager;
 const createApp = testhelper.createApp;

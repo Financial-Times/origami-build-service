@@ -14,7 +14,7 @@ describe('GET /v2/demos', function() {
 	this.slow(5000);
 
 	describe('when a valid module and demo are requested', function() {
-		const moduleName = 'o-test-component';
+		const moduleName = 'o-test-component@v1.0.30';
 		const pathName = 'main';
 
 		beforeEach(function() {
@@ -38,7 +38,7 @@ describe('GET /v2/demos', function() {
 	});
 
 	describe('when a valid module and no demo is requested', function() {
-		const moduleName = 'o-test-component';
+		const moduleName = 'o-test-component@v1.0.30';
 
 		beforeEach(function() {
 			this.request = request(this.app)
@@ -63,7 +63,7 @@ describe('GET /v2/demos', function() {
 	});
 
 	describe('when a valid module and no demo is requested, without ending /', function() {
-		const moduleName = 'o-test-component';
+		const moduleName = 'o-test-component@v1.0.30';
 
 		beforeEach(function() {
 			this.request = request(this.app)
@@ -162,7 +162,7 @@ describe('GET /v2/demos', function() {
 	});
 
 	describe('when a valid module and non-existent demo are requested', function() {
-		const moduleName = 'o-test-component';
+		const moduleName = 'o-test-component@v1.0.30';
 		const pathName = 'NOTADEMO';
 
 		beforeEach(function() {

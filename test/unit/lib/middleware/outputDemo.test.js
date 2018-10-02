@@ -57,7 +57,7 @@ describe('lib/middleware/outputDemo', function() {
 		let middleware;
 
 		beforeEach(() => {
-			origamiService.mockApp.origami.options.tempdir = '/tmp';
+			origamiService.mockApp.ft.options.tempdir = '/tmp';
 			middleware = outputDemo(origamiService.mockApp);
 
 			installationmanager.createInstallation.resolves(moduleInstallation);
@@ -230,7 +230,7 @@ describe('lib/middleware/outputDemo', function() {
 		let middleware;
 
 		beforeEach(() => {
-			origamiService.mockApp.origami.options.tempdir = '/tmp';
+			origamiService.mockApp.ft.options.tempdir = '/tmp';
 			middleware = outputDemo(origamiService.mockApp, {
 				outputMinimalHtml: true
 			});
