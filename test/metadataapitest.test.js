@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 const testhelper = require('./testhelper');
 const log = require('./unit/mock/log.mock');
-const metrics = require('./unit/mock/origami-service.mock').mockApp.origami.metrics;
+const metrics = require('./unit/mock/origami-service.mock').mockApp.ft.metrics;
 
 const InstallationManager = testhelper.InstallationManager;
 const Bundler = testhelper.Bundler;

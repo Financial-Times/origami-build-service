@@ -38,8 +38,8 @@ describe('lib/middleware/outputFile', () => {
 		let middleware;
 
 		beforeEach(() => {
-			origamiService.mockApp.origami.options.tempdir = '/tmp';
-			origamiService.mockApp.origami.options.registry = {};
+			origamiService.mockApp.ft.options.tempdir = '/tmp';
+			origamiService.mockApp.ft.options.registry = {};
 			middleware = outputFile(origamiService.mockApp);
 		});
 

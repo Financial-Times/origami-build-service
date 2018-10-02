@@ -3,7 +3,7 @@ const assert = require('assert');
 const testhelper = require('./testhelper');
 
 const log = testhelper.log;
-const metrics = require('./unit/mock/origami-service.mock').mockApp.origami.metrics;
+const metrics = require('./unit/mock/origami-service.mock').mockApp.ft.metrics;
 const InstallationManager = testhelper.InstallationManager;
 const ModuleSet = testhelper.ModuleSet;
 const pfs = require('fs-extra-p');

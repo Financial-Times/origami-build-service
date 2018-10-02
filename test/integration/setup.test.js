@@ -27,6 +27,6 @@ before(function() {
 });
 
 after(function() {
-	this.app.origami.server.close();
+	this.app.ft.server.close();
 	rmrf.sync(tempdir);
 });

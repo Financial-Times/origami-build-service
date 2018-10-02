@@ -30,7 +30,7 @@ describe('lib/middleware/sanitize-errors', () => {
 		mockery.registerMock('../utils/usererror', UserError);
 
 		origamiService = require('../../mock/origami-service.mock');
-		metrics = origamiService.mockApp.origami.metrics;
+		metrics = origamiService.mockApp.ft.metrics;
 
 		sanitizeErrors = require('../../../../lib/middleware/sanitize-errors');
 	});

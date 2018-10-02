@@ -13,7 +13,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 	this.timeout(20*1000);
 
 	spawnTest('install-with-deps', function*(){
-		const moduleset = new ModuleSet(['o-test-component']);
+		const moduleset = new ModuleSet(['o-test-component@1.0.30']);
 		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, {dir:installdir, log:log});
 

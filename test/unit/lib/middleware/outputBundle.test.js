@@ -42,7 +42,7 @@ describe('lib/middleware/outputBundle', function() {
 		let middleware;
 
 		beforeEach(() => {
-			origamiService.mockApp.origami.options.tempdir = '/tmp';
+			origamiService.mockApp.ft.options.tempdir = '/tmp';
 			middleware = outputBundle(origamiService.mockApp);
 		});
 
