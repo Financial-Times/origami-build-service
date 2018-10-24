@@ -18,7 +18,9 @@
   "main": "./lib/build-service.js",
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "make auto-version"
+    "heroku-postbuild": "make auto-version",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@financial-times/health-check": "^1.1.0",
@@ -35,14 +37,14 @@
     "express-ftwebservice": "^2.0.2",
     "fs-extra-p": "^4.4.4",
     "glob": "^7.1.2",
-    "gulp": "^3.9.0",
+    "gulp": "^4.0.0",
     "http-errors": "^1.5.1",
     "lru-cache": "^2.6.5",
     "measured": "^1.0.0",
     "mime": "^1.2.11",
     "mkdirp": "^0.5.1",
     "morgan": "^1.6.1",
-    "origami-build-tools": "^5.8.0",
+    "origami-build-tools": "^7.0.0",
     "q": "^1.0.1",
     "request": "^2.79.0",
     "require-all": "^2.1.0",
@@ -51,7 +53,8 @@
     "streamcat": "^2.0.0",
     "tryall": "^1.0.1",
     "uuid": "^3.1.0",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "snyk": "^1.104.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -72,5 +75,6 @@
     "node": "^8.6.0",
     "npm": "^5"
   },
-  "engineStrict": true
+  "engineStrict": true,
+  "snyk": true
 }
