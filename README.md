@@ -1,5 +1,5 @@
 
-Origami Build Service [![Build status](https://img.shields.io/circleci/project/Financial-Times/origami-build-service/master.svg)][ci] [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)][licence]
+Origami Build Service [![Build status](https://img.shields.io/circleci/project/Financial-Times/origami-build-service/master.svg)][ci] [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)][license]
 =====================
 
   * Creates bundles of JavaScript and CSS from Origami (and Origami-compatible modules)
