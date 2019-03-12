@@ -22,7 +22,7 @@ describe('GET /v2/bundles/css', function() {
 		});
 
 		it('should respond with the bundled CSS', function(done) {
-			this.request.expect('/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=o-test-component%401.0.4%2Co-autoinit%401.3.3&shrinkwrap=\n */\n#test-compile-error{color:red}').end(done);
+			this.request.expect('/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=o-test-component%401.0.4%2Co-autoinit%401.5.0&shrinkwrap=\n */\n#test-compile-error{color:red}').end(done);
 		});
 
 		it('should minify the bundle', function(done) {
@@ -49,7 +49,7 @@ describe('GET /v2/bundles/css', function() {
 		});
 
 		it('should respond with the bundled CSS unminified', function(done) {
-			this.request.expect('/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=o-test-component%401.0.4%2Co-autoinit%401.3.3&shrinkwrap=\n */\n#test-compile-error {\n  color: red; }\n\n/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJvd2VyX2NvbXBvbmVudHMvby10ZXN0LWNvbXBvbmVudC9tYWluLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0E7RUFDQyxXQUFVLEVBQ1YiLCJmaWxlIjoibWFpbi07LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuI3Rlc3QtY29tcGlsZS1lcnJvciB7XG5cdGNvbG9yOiByZWQ7XG59XG4iXX0= */\n').end(done);
+			this.request.expect('/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=o-test-component%401.0.4%2Co-autoinit%401.5.0&shrinkwrap=\n */\n#test-compile-error {\n  color: red; }\n\n/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJvd2VyX2NvbXBvbmVudHMvby10ZXN0LWNvbXBvbmVudC9tYWluLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0E7RUFDQyxXQUFVLEVBQ1YiLCJmaWxlIjoibWFpbi07LW1hc3Rlci5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbiN0ZXN0LWNvbXBpbGUtZXJyb3Ige1xuXHRjb2xvcjogcmVkO1xufVxuIl19 */\n').end(done);
 		});
 
 	});
