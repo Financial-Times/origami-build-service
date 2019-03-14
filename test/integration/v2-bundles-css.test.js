@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 const request = require('supertest');
 
-describe('GET /v2/bundles/css', function() {
+describe.only('GET /v2/bundles/css', function() {
 	this.timeout(20000);
 	this.slow(5000);
 
@@ -92,6 +92,43 @@ describe('GET /v2/bundles/css', function() {
 			this.request.expect(/cannot complete build due to compilation error from build tools:/i).end(done);
 		});
 
+	});
+
+	describe('when a branded module is requested for a brand it does not support', function() {
+		const moduleName = 'o-layout@3.0.0';
+		const brand = 'master';
+
+		beforeEach(function() {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}&brand=${brand}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 560 status', function(done) {
+			this.request.expect(560).end(done);
+		});
+
+		it('should respond with an error message ', function(done) {
+			this.request.expect(/o-layout does not support the master brand/i).end(done);
+		});
+
+	});
+
+	describe('when a branded module is requested for a supported brand', function() {
+		const moduleName = 'o-layout@3.0.0';
+		const brand = 'internal';
+
+		beforeEach(function() {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}&brand=${brand}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function(done) {
+			this.request.expect(200).end(done);
+		});
 	});
 
 	describe('when the modules parameter is missing', function() {
