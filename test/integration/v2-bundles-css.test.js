@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 const request = require('supertest');
 
-describe.only('GET /v2/bundles/css', function() {
+describe('GET /v2/bundles/css', function() {
 	this.timeout(20000);
 	this.slow(5000);
 
