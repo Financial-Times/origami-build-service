@@ -77,7 +77,7 @@ suite('installation-remote', function() {
 
 		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, brand);
 		const css = yield testhelper.bufferStream(cssStream);
-		assert.include(css, '.o-forms__label');
+		assert.include(css, '.o-forms');
 	});
 
 	spawnTestWithTempdir('css-no-minify has_external_dependency', function*(tmpdir) {
