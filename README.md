@@ -65,8 +65,8 @@ We configure Origami Build Service using environment variables. In development, 
   * `GRAPHITE_HOST`: The hostname of a Graphite server to gather metrics with.
   * `PREFERRED_HOSTNAME`: The hostname to use in documentation and as a base URL in bundle requests. This defaults to `www.ft.com/__origami/service/build`.
   * `REGION`: The region the application is running in. One of `QA`, `EU`, or `US`
-  * `RELEASE_LOG_API_KEY`: The change request API key to use when creating and closing release logs
-  * `RELEASE_LOG_ENVIRONMENT`: The Salesforce environment to include in release logs. One of `Test` or `Production`
+  * `CHANGE_API_KEY`: The change-log API key to use when creating and closing change-logs.
+  * `RELEASE_ENV`: The Salesforce environment to include in change-logs. One of `Test` or `Production`
   * `SENTRY_DSN`: The Sentry URL to send error information to
 
 ### Headers
