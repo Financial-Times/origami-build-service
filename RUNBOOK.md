@@ -80,7 +80,7 @@ Manual
 
 ## Architecture Diagram
 
-<a href='https://docs.google.com/a/ft.com/drawings/d/1khB3K5pwVPRMW5DcLB0o3bMkh__-896mS4hcVQS72f4/edit'>Build Service architecture diagram on Google Drive</a>
+[Build Service architecture diagram on Google Drive](https://docs.google.com/a/ft.com/drawings/d/1khB3K5pwVPRMW5DcLB0o3bMkh__-896mS4hcVQS72f4/edit)
                                                                                 
                                                                                 
                                                                                 
