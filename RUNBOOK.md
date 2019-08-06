@@ -82,12 +82,6 @@ Manual
 
 [Build Service architecture diagram on Google Drive](https://docs.google.com/a/ft.com/drawings/d/1khB3K5pwVPRMW5DcLB0o3bMkh__-896mS4hcVQS72f4/edit)
                                                                                 
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-
 ## Architecture
 
 This is mostly a Node.js application, but it relies on GitHub and the Origami Bower Registry.
