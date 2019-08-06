@@ -2,10 +2,6 @@
 
 Performs all the build steps in the Installing modules manually on a central build server and then serves your requested bundles directly to your user’s browser.
 
-## Code
-
-build-service
-
 ## Service Tier
 
 Gold
