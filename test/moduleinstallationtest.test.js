@@ -75,7 +75,7 @@ suite('installation-remote', function() {
 		assert.include(path, 'bower_components/o-forms/main.scss');
 		assert.notInclude(path, '..');
 
-		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, brand);
+		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, { brand });
 		const css = yield testhelper.bufferStream(cssStream);
 		assert.include(css, '.o-forms');
 	});
