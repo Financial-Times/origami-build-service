@@ -122,6 +122,16 @@ o-typography:
 						<p>The polyfill mechanism is adding <a href="https://github.com/babel/babel/tree/c440f045f548ab60d15880a60b34511a7ffec931/packages/babel-runtime">babel-runtime</a> to the bundle if required. This is not a complete polyfill as it does not modify existing built-ins (<a href="https://babeljs.io/docs/plugins/transform-runtime">reference</a>) and as such doesn't work on instance methods, e.g. <code>'foo'.repeat(1)</code></p>
 					</td>
 				</tr><tr>
+					<td><code>brand</code></td>
+					<td>Querystring</td>
+					<td><em>(Optional)</em> The brand to build requested modules for. One of "master", "internal", or "whitelabel"</td>
+				</tr><tr>
+				</tr><tr>
+					<td><code>source</code></td>
+					<td>Querystring</td>
+					<td><em>(Optional)</em> The [bizops system code](https://biz-ops.in.ft.com/list/Systems) for the system which is making the build service request.</td>
+				</tr><tr>
+				</tr><tr>
 					<td><code>export</code></td>
 					<td>Querystring</td>
 					<td><em>(Optional)</em> If present, generates a <a href="https://github.com/umdjs/umd">UMD</a> bundle for the supplied export name. UMD works with other module systems and if no module system is found sets the specified name as a window global.  If absent, the default export name <code>Origami</code> will be used.  To export nothing, pass an empty string.</td>
