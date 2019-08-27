@@ -26,7 +26,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 		assert(!('test1' in list), 'Dependencies should not be listed explicitly');
 		assert(!('test-package1' in list), 'Dependencies should not be listed explicitly');
 
-		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, brand, { minify: true });
+		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, { minify: true, brand });
 		const css = yield testhelper.bufferStream(cssStream);
 		const cssWithoutComment = css.replace(/\/\*.*Shrinkwrap[\s\S]+?\*\/\s*/,'');
 		assert.equal(cssWithoutComment, '.o-test-component-brand:after{content:"master"}', 'Expected minified output from test-package2');

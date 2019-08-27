@@ -131,6 +131,47 @@ describe('GET /v2/bundles/css', function() {
 		});
 	});
 
+	describe('when a module is requested with an invalid source param', function () {
+		const moduleName = 'o-layout@3.0.0';
+		const source = '^%^^£%$&@';
+
+		beforeEach(function () {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}&source=${source}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function (done) {
+			this.request.expect(400).end(done);
+		});
+
+		it('should respond with an error message ', function (done) {
+			this.request.expect(/must be a valid system code/i).end(done);
+		});
+
+	});
+
+	describe('when a module is requested for a valid source param', function () {
+		const moduleName = 'o-test-component@v1.0.34';
+		const source = 'test-source';
+
+		beforeEach(function () {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}&source=${source}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function (done) {
+			this.request.expect(200).end(done);
+		});
+
+		it('should respond with css for the given source', function (done) {
+			this.request.expect(`/** Shrinkwrap URL:\n *    /v2/bundles/css?modules=o-test-component%401.0.34%2Co-autoinit%401.5.1&shrinkwrap=\n */\n.o-test-component{content:"${source}"}`).end(done);
+		});
+	});
+
 	describe('when the modules parameter is missing', function() {
 
 		beforeEach(function() {
