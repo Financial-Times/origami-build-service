@@ -30,7 +30,7 @@ suiteWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
 			const installation = yield installer.createInstallation(moduleset);
 			assert.instanceOf(installation, ModuleInstallation);
 
-			const result = yield testhelper.bufferStream(yield bundler.getContent(installation, moduleset, brand, { minify: false }));
+			const result = yield testhelper.bufferStream(yield bundler.getContent(installation, moduleset, { minify: false, brand }));
 			assert.include(result.toString(), 'console.log("what is this?")', 'Source code of file ' + file + ' should be in the output');
 		})));
 	});
@@ -42,7 +42,7 @@ suiteWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
 
 		yield installation.install();
 		try {
-			yield testhelper.bufferStream(yield (new JsBundler({ log: log })).getContent(installation, moduleset, brand, {minify:'none'}));
+			yield testhelper.bufferStream(yield (new JsBundler({ log: log })).getContent(installation, moduleset, { minify: 'none', brand}));
 		} catch(err) {
 			assert.include(err.message, 'Module not found: Error: Can\'t resolve \'missingmodule\'', 'Error from jsbundler should be included: ' + err.stack);
 			assert.notInclude(err.message, installdir, 'Should hide full path');
@@ -59,7 +59,7 @@ suiteWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
 
 		yield installation.install();
 		try {
-			yield testhelper.bufferStream(yield (new JsBundler({ log: log })).getContent(installation, moduleset, brand, {minify:'none'}));
+			yield testhelper.bufferStream(yield (new JsBundler({ log: log })).getContent(installation, moduleset, { minify: 'none', brand}));
 		} catch(err) {
 			assert.notInclude(err.message, 'missingmodule', 'Should use custom file');
 			assert.include(err.message, 'Unexpected character \'#\'', 'Should use custom file');

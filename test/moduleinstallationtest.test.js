@@ -36,7 +36,7 @@ suite('installation-remote', function() {
 		const exists = yield Q.all([pfs.pathExists(list.jquery.paths[0]), pfs.pathExists(list.lodash.paths[0])]);
 		assert.deepEqual([true,true], exists, 'Expected installed files to exist');
 
-		const jsStream = yield (new JsBundler({ log: log })).getContent(installation, moduleset, brand, {minify:'none'});
+		const jsStream = yield (new JsBundler({ log: log })).getContent(installation, moduleset, { minify: 'none', brand});
 
 		const jsContent = yield testhelper.bufferStream(jsStream);
 
@@ -53,7 +53,7 @@ suite('installation-remote', function() {
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 
 		yield installation.install();
-		const jsStream = yield (new JsBundler({ log: log })).getContent(installation, moduleset, brand, {exportName:'myExportVariable'});
+		const jsStream = yield (new JsBundler({ log: log })).getContent(installation, moduleset, { exportName: 'myExportVariable', brand});
 		const jsContent = yield testhelper.bufferStream(jsStream);
 
 		assert.include(jsContent, 'myExportVariable');
@@ -75,7 +75,7 @@ suite('installation-remote', function() {
 		assert.include(path, 'bower_components/o-forms/main.scss');
 		assert.notInclude(path, '..');
 
-		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, brand);
+		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, { brand });
 		const css = yield testhelper.bufferStream(cssStream);
 		assert.include(css, '.o-forms');
 	});
@@ -87,7 +87,7 @@ suite('installation-remote', function() {
 
 		yield installation.install();
 		const bundler = new CssBundler({log:log});
-		const cssStream = yield bundler.getContent(installation, moduleset, brand, {minify:'none'});
+		const cssStream = yield bundler.getContent(installation, moduleset, { minify: 'none', brand});
 		const css = yield testhelper.bufferStream(cssStream);
 		assert.include(css, '/*', 'expected comments in unminified CSS');
 	});
@@ -97,7 +97,7 @@ suite('installation-remote', function() {
 		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 		yield installation.install();
-		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, brand, {minify:'none'});
+		const cssStream = yield (new CssBundler({ log: log })).getContent(installation, moduleset, { minify: 'none', brand});
 
 		const css = yield testhelper.bufferStream(cssStream);
 

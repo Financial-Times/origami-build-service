@@ -215,7 +215,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.polyfills = 'none';
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].babelRuntime, false);
+								assert.equal(bundler.getBundle.firstCall.args[3].babelRuntime, false);
 							});
 				});
 
@@ -223,7 +223,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.polyfills = '0';
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].babelRuntime, false);
+								assert.equal(bundler.getBundle.firstCall.args[3].babelRuntime, false);
 							});
 				});
 
@@ -231,7 +231,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.polyfills = 'no';
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].babelRuntime, false);
+								assert.equal(bundler.getBundle.firstCall.args[3].babelRuntime, false);
 							});
 				});
 
@@ -239,7 +239,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.polyfills = 'false';
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].babelRuntime, false);
+								assert.equal(bundler.getBundle.firstCall.args[3].babelRuntime, false);
 							});
 				});
 
@@ -247,7 +247,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.polyfills = undefined;
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].babelRuntime, true);
+								assert.equal(bundler.getBundle.firstCall.args[3].babelRuntime, true);
 							});
 				});
 
@@ -255,7 +255,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.polyfills = 'test';
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].babelRuntime, true);
+								assert.equal(bundler.getBundle.firstCall.args[3].babelRuntime, true);
 							});
 				});
 
@@ -264,7 +264,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.newerthan = now;
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].newerThan, Date.parse(now));
+								assert.equal(bundler.getBundle.firstCall.args[3].newerThan, Date.parse(now));
 							});
 				});
 
@@ -272,7 +272,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.newerthan = 'not a thing';
 					return middleware(request, response, next)
 							.then(() => {
-								assert.isNaN(bundler.getBundle.firstCall.args[4].newerThan);
+								assert.isNaN(bundler.getBundle.firstCall.args[3].newerThan);
 							});
 				});
 
@@ -280,7 +280,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.newerthan = undefined;
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].newerThan, false);
+								assert.equal(bundler.getBundle.firstCall.args[3].newerThan, false);
 							});
 				});
 
@@ -290,7 +290,7 @@ describe('lib/middleware/outputBundle', function() {
 						.then(() => {
 								assert.calledTwice(ModuleSet);
 								assert.calledWithExactly(ModuleSet, [ 'o-test-component@1.0.17' ]);
-								assert.deepEqual(bundler.getBundle.firstCall.args[4].versionLocks, ModuleSet.mockModuleSet);
+								assert.deepEqual(bundler.getBundle.firstCall.args[3].versionLocks, ModuleSet.mockModuleSet);
 							});
 				});
 
@@ -298,7 +298,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.minify = 'none';
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].minify, false);
+								assert.equal(bundler.getBundle.firstCall.args[3].minify, false);
 							});
 				});
 
@@ -306,7 +306,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.minify = undefined;
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].minify, true);
+								assert.equal(bundler.getBundle.firstCall.args[3].minify, true);
 							});
 				});
 
@@ -314,7 +314,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.minify = 'test';
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].minify, true);
+								assert.equal(bundler.getBundle.firstCall.args[3].minify, true);
 							});
 				});
 
@@ -322,7 +322,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.export = 'salmon';
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].exportName, 'salmon');
+								assert.equal(bundler.getBundle.firstCall.args[3].exportName, 'salmon');
 							});
 				});
 
@@ -330,7 +330,7 @@ describe('lib/middleware/outputBundle', function() {
 					request.query.export = undefined;
 					return middleware(request, response, next)
 							.then(() => {
-								assert.equal(bundler.getBundle.firstCall.args[4].exportName, 'Origami');
+								assert.equal(bundler.getBundle.firstCall.args[3].exportName, 'Origami');
 							});
 				});
 			});
