@@ -81,7 +81,7 @@ suite('installation-remote', function() {
 	});
 
 	spawnTestWithTempdir('css-no-minify has_external_dependency', function*(tmpdir) {
-		const moduleset = new ModuleSet(['o-gallery']);
+		const moduleset = new ModuleSet(['o-gallery@^3.0.0']);
 		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 
@@ -93,7 +93,7 @@ suite('installation-remote', function() {
 	});
 
 	spawnTestWithTempdir('version-of-subresource has_external_dependency', function*(tmpdir) {
-		const moduleset = new ModuleSet(['o-gallery']);
+		const moduleset = new ModuleSet(['o-gallery@^3.0.0']);
 		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 		yield installation.install();
