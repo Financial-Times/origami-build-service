@@ -60,7 +60,7 @@ suite('installation-remote', function() {
 	});
 
 	spawnTestWithTempdir('install-implied-main has_external_dependency', function*(tmpdir){
-		const moduleset = new ModuleSet(['Financial-Times/o-forms']);
+		const moduleset = new ModuleSet(['Financial-Times/o-forms@^7.0.0']);
 		const brand = 'master';
 		const installation = new ModuleInstallation(moduleset, { dir: tmpdir, log: log });
 
