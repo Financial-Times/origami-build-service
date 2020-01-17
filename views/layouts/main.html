@@ -9,9 +9,9 @@
 
 	<script>
 		var cutsTheMustard = (
-			'querySelector' in document &&
-			'localStorage' in window &&
-			'addEventListener' in window
+		'querySelector' in document &&
+		'localStorage' in window &&
+		'addEventListener' in window
 		);
 		if (cutsTheMustard) {
 			document.documentElement.className = document.documentElement.className.replace(/\bcore\b/g, 'enhanced');
@@ -43,7 +43,7 @@
 		}
 	</style>
 
-	<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-techdocs@^7.0.0,o-fonts@^3.0.0,o-grid@^4.0.0,o-icons@^5.0.0" />
+	<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-layout@^4.0.2,o-table@^8.0.0,o-header-services@^4.0.0,o-footer-services@^3.0.1,o-spacing@^2.0.0,o-syntax-highlight@^3.0.0,o-normalise@^2.0.1,o-fonts@^4.0.2&brand=internal" />
 	<link rel="stylesheet" href="main.css" />
 	<script src="https://polyfill.io/v2/polyfill.min.js?features=fetch,default"></script>
 	<script>
@@ -55,29 +55,58 @@
 				var s = document.getElementsByTagName('script')[0];
 				s.parentNode.insertBefore(o, s);
 			}
-		}('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-techdocs@^7.0.0,o-fonts@^3.0.0,o-grid@^4.0.0,o-icons@^5.0.0'));
+		}('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-layout@^4.0.2,o-table@^8.0.0,o-header-services@^4.0.0,o-footer-services@^3.0.1,o-spacing@^2.0.0,o-syntax-highlight@^3.0.0,o-normalise@^2.0.1,o-fonts@^4.0.2'));
 	</script>
 	<script src="main.js"></script>
 
 </head>
-<body class="o-techdocs">
 
-	<header class="o-header-services" data-o-component="o-header">
-		<div class="o-header-services__top o-header-services__container">
-			<div class="o-header-services__ftlogo"></div>
-			<div class="o-header-services__title">
-				<h1 class="o-header-services__product-name"><a href="/">Origami Build Service</a></h1><span class="o-header-subrand__product-tagline ">Components built and delivered</span>
-			</div>
+
+<body>
+
+	<div class="o-layout o-layout--docs" data-o-layout-nav-heading-selector="h2" data-o-layout-construct-nav="false" data-o-component="o-layout">
+		<div class="o-layout__header">
+			<header class="o-header-services " data-o-component="o-header-services">
+				<div class="o-header-services__top">
+					<div class="o-header-services__logo"></div>
+					<div class="o-header-services__title">
+						<a class="o-header-services__product-name" href="/">Origami Build Service</a>
+						<span class="o-header-services__product-tagline">Components built and delivered</span>
+					</div>
+				</div>
+			</header>
 		</div>
-	</header>
 
-	{{{body}}}
-
-	<footer class="o-techdocs-footer">
-		<div class="o-techdocs-footer__inner">
-			<p>&copy; THE FINANCIAL TIMES LTD. FT and 'Financial Times' are trademarks of The Financial Times Ltd.</p>
+		<div class="o-layout__sidebar">
+			{{>navigation}}
 		</div>
-	</footer>
+
+		<div class="o-layout__main o-layout-typography"  data-o-component='o-syntax-highlight'>
+			{{{body}}}
+		</div>
+
+		<div class="o-layout__footer">
+			<footer class="o-footer-services">
+				<div class="o-footer-services__container">
+					<div class="o-footer-services__wrapper o-footer-services__wrapper--top">
+						<a class="o-footer-services__icon-link o-footer-services__icon-link--github" href="https://github.com/Financial-Times/origami-build-service">View project on GitHub</a>
+						<a class="o-footer-services__icon-link o-footer-services__icon-link--slack" href="https://slack.com/messages/C02FU5ARJ/">#ft-origami</a>
+					</div>
+				</div>
+				<div class="o-footer-services__container">
+					<div class="o-footer-services__wrapper o-footer-services__wrapper--legal">
+						<div class="o-footer-services__links">
+							<a href="http://help.ft.com/help/legal-privacy/cookies/">Cookies</a>
+							<a href="http://help.ft.com/help/legal-privacy/copyright/copyright-policy/">Copyright</a>
+							<a href="http://help.ft.com/help/legal-privacy/privacy/">Privacy</a>
+							<a href="http://help.ft.com/help/legal-privacy/terms-conditions">Terms &amp; Conditions</a>
+						</div>
+						<p><span>&#xA9; THE FINANCIAL TIMES LTD 2020.</span> FT and &apos;Financial Times&apos; are trademarks of The Financial Times Ltd.</p>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
 
 </body>
 </html>
