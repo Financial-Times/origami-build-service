@@ -1,1 +1,6 @@
 @charset "UTF-8";
+
+pre {
+    margin-top: 0;
+    margin-bottom: var(--o-spacing-s6);
+}
