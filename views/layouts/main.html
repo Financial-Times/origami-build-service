@@ -64,7 +64,7 @@
 
 <body>
 
-	<div class="o-layout o-layout--docs" data-o-layout-nav-heading-selector="h2" data-o-layout-construct-nav="false" data-o-component="o-layout">
+	<div class="o-layout {{#pageLayout}}o-layout--{{.}}{{/pageLayout}}" data-o-layout-nav-heading-selector="h1, h2" data-o-layout-construct-nav="false" data-o-component="o-layout">
 		<div class="o-layout__header">
 			<header class="o-header-services " data-o-component="o-header-services">
 				<div class="o-header-services__top">
@@ -77,9 +77,11 @@
 			</header>
 		</div>
 
+		{{# showNav}}
 		<div class="o-layout__sidebar">
 			{{>navigation}}
 		</div>
+		{{/ showNav}}
 
 		<div class="o-layout__main o-layout-typography"  data-o-component='o-syntax-highlight'>
 			{{{body}}}
