@@ -125,7 +125,7 @@ First, change the hostname in your request to `origami-build-service-eu.herokuap
 heroku restart --app origami-build-service-eu
 ```
 
-If your change does appear then the old result may be cached by our CDN. You'll need to wait for a while, or clear the CDN cache. To clear CDN cache login to Fastly and find the `ft.com` service. Clear a specific URL (e.g. for a documentation update) or one or more of the following [surrogate keys](https://docs.fastly.com/en/guides/getting-started-with-surrogate-keys):
+If your change does appear then the old result may be cached by our CDN. You'll need to wait for a while, or clear the CDN cache. To clear CDN cache login to Fastly and find the `Origami Build Service` Fastly service. Clear a specific URL (e.g. for a documentation update) or one or more of the following [surrogate keys](https://docs.fastly.com/en/guides/getting-started-with-surrogate-keys):
 
 By origin:
 - eu
