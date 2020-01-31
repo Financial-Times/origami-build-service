@@ -114,6 +114,40 @@ You can promote either through the Heroku interface, or by running the following
 make promote
 ```
 
+You may need to [clear cdn cache](#cache-purge) for the release to take immediate effect. For example when updating documentation.
+
+Cache Purge
+----------
+
+First, change the hostname in your request to `origami-build-service-eu.herokuapp.com`. If your update does not appear, an old version is cached on the file system. Clear this by restarting the Heroku dynos:
+
+```sh
+heroku restart --app origami-build-service-eu
+```
+
+If your change does appear then the old result may be cached by our CDN. You'll need to wait for a while, or clear the CDN cache. To clear CDN cache login to Fastly and find the `Origami Build Service` Fastly service. Clear a specific URL (e.g. for a documentation update) or one or more of the following [surrogate keys](https://docs.fastly.com/en/guides/getting-started-with-surrogate-keys):
+
+By origin:
+- eu
+- us
+
+All bundle pages e.g. `/v2/bundles/css`:
+- js
+- css
+
+All file pages i.e. `/v2/files`:
+- files
+
+All module pages i.e. `/v2/modules`:
+- modules
+
+All demo pages i.e. `/v2/demos`:
+- demos
+
+By vary headers:
+- vary-accept-encoding
+- vary-origin
+- vary-access-control-request-headers
 
 Monitoring
 ----------
@@ -162,16 +196,7 @@ CR_API_KEY=<API-KEY> make deploy
 
 ### What do I do if my updated component is not appearing in bundles?
 
-This is most likely due to the heavy caching we use.
-
-First, change the hostname in your request to `origami-build-service-eu.herokuapp.com`. If your update appears now, then the CDN had cached the bundle. You'll need to wait for a while, or clear the CDN cache for your URL.
-
-If your component still doesn't appear, then we've cached an older version on the file system. You can clear this by restarting the Heroku dynos:
-
-```sh
-heroku restart --app origami-build-service-eu
-```
-
+This is most likely due to the heavy caching we use. See [Cache Purge](#cache-purge).
 
 Project Structure
 -----------------
