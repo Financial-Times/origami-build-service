@@ -46,7 +46,7 @@
     "q": "^1.5.1",
     "request": "^2.88.0",
     "require-all": "^2.1.0",
-    "rimraf": "^2.7.1",
+    "rimraf": "^3.0.2",
     "semver": "^4.3.1",
     "streamcat": "^2.0.0",
     "tryall": "^1.0.1",
