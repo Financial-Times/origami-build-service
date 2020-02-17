@@ -44,7 +44,7 @@
     "morgan": "^1.9.1",
     "origami-build-tools": "^5.8.2",
     "q": "^1.5.1",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "require-all": "^2.1.0",
     "rimraf": "^3.0.2",
     "semver": "^4.3.1",
