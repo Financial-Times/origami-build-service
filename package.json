@@ -35,7 +35,7 @@
     "express-ftwebservice": "^2.0.2",
     "fs-extra-p": "^4.6.1",
     "glob": "^7.1.6",
-    "gulp": "^3.9.0",
+    "gulp": "^4.0.2",
     "http-errors": "^1.7.3",
     "lru-cache": "^2.6.5",
     "measured": "^1.0.0",
