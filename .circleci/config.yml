@@ -3,28 +3,16 @@ jobs:
   test:
     working_directory: ~/service
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install Node.js dependencies
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      - run: npm install
       - run:
           name: Run linters
           command: make verify
       - run:
           name: Run unit tests
           command: make test-unit-coverage
-      ## TEMPORARILY REMOVED. SEE #171
-      # - run:
-      #   name: Run whitesource
-      #   command: make whitesource
       - run:
           name: Run integration tests
           command: make test-integration
