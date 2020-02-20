@@ -41,7 +41,7 @@
     "mime": "^1.6.0",
     "mkdirp": "^1.0.3",
     "morgan": "^1.9.1",
-    "origami-build-tools": "^5.8.2",
+    "origami-build-tools": "^8.2.12",
     "q": "^1.5.1",
     "request": "^2.88.2",
     "require-all": "^3.0.0",
