@@ -17,8 +17,7 @@
   },
   "main": "./lib/build-service.js",
   "scripts": {
-    "start": "node index.js",
-    "heroku-postbuild": "make auto-version"
+    "start": "node index.js"
   },
   "dependencies": {
     "@financial-times/health-check": "^1.11.0",
