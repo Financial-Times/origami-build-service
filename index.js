@@ -6,7 +6,7 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
 
-dotenv.load({
+dotenv.config({
 	silent: true
 });
 const options = {
