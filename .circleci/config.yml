@@ -1,26 +1,125 @@
-version: 2
+version: 2.1
+
+orbs:
+    change-api: financial-times/change-api@0.25.0
+
+
 jobs:
-  test:
-    working_directory: ~/service
+  deploy_dev:
     docker:
       - image: circleci/node:10
     steps:
       - checkout
-      - run: npm install
-      - run:
-          name: Run linters
-          command: make verify
-      - run:
-          name: Run unit tests
-          command: make test-unit-coverage
-      - run:
-          name: Run integration tests
-          command: make test-integration
-      - run:
-          name: Run old tests
-          command: make test-old
+      - run: npm ci
+      - run: ~/project/.circleci/create_netrc_file.sh
+      - run: git push https://git.heroku.com/origami-build-service-dev.git HEAD:master --force
+
+  deploy_staging:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run: npm ci
+      - run: ~/project/.circleci/create_netrc_file.sh
+      - run: git push https://git.heroku.com/origami-build-service-qa.git HEAD:master --force
+
+  deploy_service_production:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run: npm ci
+      - run: sudo ~/project/.circleci/install_heroku.sh
+      - run: ~/project/.circleci/create_netrc_file.sh
+      - run: heroku pipelines:promote --app origami-build-service-qa --to origami-build-service-eu,origami-build-service-us
+
+  lint_js:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run: npm ci
+      - run: make verify
+
+  tests:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run: npm ci
+      - run: make test-unit-coverage
+      - run: make test-integration
+      - run: make test-old
+
 workflows:
   version: 2
   test:
     jobs:
-      - test
+      - lint_js:
+          filters:
+            tags:
+              ignore: /^v.*/
+            branches:
+              ignore: master
+      - tests:
+          filters:
+            tags:
+              ignore: /^v.*/
+            branches:
+              ignore: master
+      - deploy_dev:
+          filters:
+            tags:
+              ignore: /^v.*/
+            branches:
+              ignore: master
+          requires:
+            - lint_js
+            - tests
+      - change-api/release-log:
+          requires:
+            - deploy_dev
+          systemCode: 'origami-build-service'
+          environment: 'dev'
+          slackChannels: 'origami-deploys'
+          filters:
+            tags:
+              ignore: /^v.*/
+            branches:
+              ignore: master
+      - deploy_staging:
+          filters:
+            tags:
+              ignore: /^v.*/
+            branches:
+              only:
+               - master
+      - change-api/release-log:
+          requires:
+            - deploy_staging
+          systemCode: 'origami-build-service'
+          environment: 'test'
+          slackChannels: 'origami-deploys'
+          filters:
+            tags:
+              ignore: /^v.*/
+            branches:
+              only:
+               - master
+      - deploy_service_production:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - change-api/release-log:
+          requires:
+            - deploy_service_production
+          systemCode: 'origami-build-service'
+          environment: 'prod'
+          slackChannels: 'origami-deploys'
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
