@@ -59,7 +59,7 @@
     "lintspaces-cli": "^0.7.1",
     "mocha": "^2.4.5",
     "mockery": "^2.1.0",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.3",
     "proclaim": "^3.6.0",
     "sinon": "^1.17.3",
     "sinon-as-promised": "^4.0.0",
