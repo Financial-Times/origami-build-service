@@ -42,8 +42,8 @@ origami-team
 
 ## Dependencies
 
-* github<br/>
-  resiliencePatterns: Cache<br/>
+* github  
+  resiliencePatterns: Cache  
   resilienceDetails: Modules installed from GitHub are cached in-memory, so many requests can still be served if GitHub is down. We also implement stale-on-error cache header extensions so that Fastly can still serve the majority of existing Build Service URLs if GitHub is down.
 * origami-bower-registry
 
@@ -145,4 +145,3 @@ The application is deployed to QA whenever a new commit is pushed to the `master
 ## Key Management Details
 
 The Build Service does not rely on any keys.
-
