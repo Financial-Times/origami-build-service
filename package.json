@@ -57,7 +57,7 @@
     "istanbul": "^0.4.5",
     "jsdom": "^16.2.2",
     "lintspaces-cli": "^0.7.1",
-    "mocha": "^2.4.5",
+    "mocha": "^7.1.2",
     "mockery": "^2.1.0",
     "nodemon": "^2.0.3",
     "proclaim": "^3.6.0",
