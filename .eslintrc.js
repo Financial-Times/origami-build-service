@@ -41,8 +41,6 @@ module.exports = {
 		'it': true,
 		'spawnTest': true,
 		'spawnTestWithTempdir': true,
-		'suite': true,
-		'suiteWithPackages': true,
-		'test': true
+		'describeWithPackages': true
 	}
 };

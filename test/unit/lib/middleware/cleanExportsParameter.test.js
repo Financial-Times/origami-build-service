@@ -44,11 +44,11 @@ describe('lib/middleware/cleanExportsParameter', () => {
 			[
 				'%27];alert(%27ha%27)//',
 				'\']',
-				'abc\"',
+				'abc"',
 				'invalid4---@*',
 				'.-invalid5@*',
 			].forEach((value) => {
-				describe(`when the \'export\' query string is invalid, containing the value '${value}'`, () => {
+				describe(`when the 'export' query string is invalid, containing the value '${value}'`, () => {
 
 					beforeEach(() => {
 						origamiService.mockRequest.query.export = value;
@@ -74,7 +74,7 @@ describe('lib/middleware/cleanExportsParameter', () => {
 				'valid4',
 				'valid_5',
 			].forEach((value) => {
-				describe(`when the \'export\' query string is valid, containing the value '${value}'`, () => {
+				describe(`when the 'export' query string is valid, containing the value '${value}'`, () => {
 
 					beforeEach(() => {
 						origamiService.mockRequest.query.export = value;

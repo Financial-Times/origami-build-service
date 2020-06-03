@@ -49,7 +49,7 @@ describe('lib/middleware/cleanSourceParameter', () => {
                 'inv@lid2',
                 'inva.lid3',
             ].forEach((value) => {
-                describe(`when the \'source\' query string is invalid, containing the value '${value}'`, () => {
+                describe(`when the 'source' query string is invalid, containing the value '${value}'`, () => {
 
                     beforeEach(() => {
                         origamiService.mockRequest.query.source = value;

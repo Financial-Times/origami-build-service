@@ -13,7 +13,7 @@ const metrics = require('./unit/mock/origami-service.mock').mockApp.ft.metrics;
 const InstallationManager = testhelper.InstallationManager;
 const createApp = testhelper.createApp;
 
-suiteWithPackages('files-api', [], function(temporaryDirectory){
+describeWithPackages('files-api', [], function(temporaryDirectory){
 	this.timeout(60*1000);
 
 	let FileProxy;
@@ -73,7 +73,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 		}
 	});
 
-	test('files-replaces-versions', function(){
+	it('files-replaces-versions', function(){
 		const fileProxy = new FileProxy();
 		const parsed = fileProxy.versionLockBuildserviceUrls(''+fs.readFileSync(__dirname + '/testmodules/html/demo.html'), 'html', '9.99', 'https://' + hostnames.preferred + '/files/html/9.99/demo.html');
 
@@ -90,7 +90,7 @@ suiteWithPackages('files-api', [], function(temporaryDirectory){
 		assert.include(unescaped, 'otherargs=zzz&amp;modules=singlequotes,html@9.99');
 	});
 
-	test('gallery-lock has_external_dependency', function(done){
+	it('gallery-lock has_external_dependency', function(done){
 		const app = createApp({
 			defaultLayout: 'main',
 			environment: 'test',

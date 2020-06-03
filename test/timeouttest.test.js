@@ -4,7 +4,7 @@ const assert = require('chai').assert;
 const testhelper = require('./testhelper');
 const Q = testhelper.Q;
 
-suite('timeout', function(){
+describe('timeout', function(){
 	const ttlScale = 10;
 
 	spawnTest('made-it', function*(){

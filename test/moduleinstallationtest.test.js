@@ -11,7 +11,7 @@ const Q = testhelper.Q;
 const ModuleInstallation = testhelper.ModuleInstallation;
 const ModuleSet = testhelper.ModuleSet;
 
-suite('installation-remote', function() {
+describe('installation-remote', function() {
 	this.timeout(10*60*1000);
 
 	spawnTestWithTempdir('install-external has_external_dependency', function*(tmpdir) {

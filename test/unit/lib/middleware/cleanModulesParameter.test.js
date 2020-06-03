@@ -52,7 +52,7 @@ describe('lib/middleware/cleanModulesParameter', () => {
 				'-invalid1,invalid2.@*',
 				'a'.repeat(51)
 			].forEach((value) => {
-				describe(`when the \'modules\' query string is invalid, containing the value '${value}'`, () => {
+				describe(`when the 'modules' query string is invalid, containing the value '${value}'`, () => {
 
 					beforeEach(() => {
 						origamiService.mockRequest.query.modules = `valid1,Valid2@^3.0.1,${value},valid3@~2.x,${'l'.repeat(50)}`;
