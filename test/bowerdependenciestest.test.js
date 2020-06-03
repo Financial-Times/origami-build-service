@@ -9,7 +9,7 @@ const ModuleInstallation = testhelper.ModuleInstallation;
 const ModuleSet = testhelper.ModuleSet;
 const formatErrorMessage = require('../lib/middleware/sanitize-errors').formatErrorMessage;
 
-suiteWithPackages('dependencies has_external_dependency', [], function(installdir){
+describeWithPackages('dependencies has_external_dependency', [], function(installdir){
 	this.timeout(20*1000);
 
 	spawnTest('install-with-deps', function*(){
@@ -30,7 +30,7 @@ suiteWithPackages('dependencies has_external_dependency', [], function(installdi
 		const css = yield testhelper.bufferStream(cssStream);
 		const cssWithoutComment = css.replace(/\/\*.*Shrinkwrap[\s\S]+?\*\/\s*/,'');
 		assert.equal(cssWithoutComment, '.o-test-component-brand:after{content:"master"}', 'Expected minified output from test-package2');
-		assert.match(css, /^\/\*\* Shrinkwrap URL:\n \*    \/v2\/bundles\/css\?modules=o-test-component%40\d+\.\d+\.\d+&shrinkwrap=o\-brand%40\d+\.\d+\.\d+&brand=master\n \*\/\n\.o\-test\-component\-brand\:after\{content:\"master\"\}$/);
+		assert.match(css, /^\/\*\* Shrinkwrap URL:\n \* {4}\/v2\/bundles\/css\?modules=o-test-component%40\d+\.\d+\.\d+&shrinkwrap=o-brand%40\d+\.\d+\.\d+&brand=master\n \*\/\n\.o-test-component-brand:after\{content:"master"\}$/);
 	});
 
 	spawnTest('conflict has_external_dependency', function*(){

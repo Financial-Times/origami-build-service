@@ -9,7 +9,7 @@ const log = testhelper.log;
 const ModuleInstallation = testhelper.ModuleInstallation;
 const ModuleSet = testhelper.ModuleSet;
 
-suite('assets', function(){
+describe('assets', function(){
 	this.timeout(120*1000);
 
 	spawnTestWithTempdir('excluded has_external_dependency', function*(tempdir){

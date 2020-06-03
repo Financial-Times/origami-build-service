@@ -8,7 +8,7 @@ const log = testhelper.log;
 const ModuleInstallation = testhelper.ModuleInstallation;
 const ModuleSet = testhelper.ModuleSet;
 
-suiteWithPackages('installation-css has_external_dependency', ['invalidcss', 'test1'], function(installdir){
+describeWithPackages('installation-css has_external_dependency', ['invalidcss', 'test1'], function(installdir){
 	this.timeout(15*1000);
 
 	spawnTest('ok-sass', function*(){

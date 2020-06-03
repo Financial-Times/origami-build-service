@@ -8,7 +8,7 @@ const InstallationManager = testhelper.InstallationManager;
 const ModuleSet = testhelper.ModuleSet;
 const pfs = require('fs-extra-p');
 
-suiteWithPackages('InstallationManager#createInstallation(moduleset, options)', [ 'test1' ], function(installdir) {
+describeWithPackages('InstallationManager#createInstallation(moduleset, options)', [ 'test1' ], function(installdir) {
 	this.timeout(20*1000);
 
 	spawnTest('it should delete any cached modules on disk when an object is evicted from the cache', function*() {

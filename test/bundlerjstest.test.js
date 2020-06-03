@@ -11,7 +11,7 @@ const ModuleInstallation = testhelper.ModuleInstallation;
 const InstallationManager = testhelper.InstallationManager;
 const ModuleSet = testhelper.ModuleSet;
 
-suiteWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
+describeWithPackages('installation-js', ['invalidjs', 'js'], function(installdir){
 	this.timeout(60*1000);
 
 	spawnTest('race', function*(){

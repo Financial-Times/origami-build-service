@@ -47,7 +47,7 @@ describe('lib/middleware/cleanBrandParameter', () => {
                 'inv@lid2',
                 'inva.lid3',
             ].forEach((value) => {
-                describe(`when the \'brand\' query string is invalid, containing the value '${value}'`, () => {
+                describe(`when the 'brand' query string is invalid, containing the value '${value}'`, () => {
 
                     beforeEach(() => {
                         origamiService.mockRequest.query.brand = value;

@@ -8,7 +8,7 @@ const log = testhelper.log;
 const ModuleInstallation = testhelper.ModuleInstallation;
 const ModuleSet = testhelper.ModuleSet;
 
-suiteWithPackages('demo-compilation', [], function(installdir){
+describeWithPackages('demo-compilation', [], function(installdir){
 	this.timeout(60*1000);
 
 	spawnTest('race', function*(){

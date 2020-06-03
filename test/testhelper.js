@@ -26,8 +26,8 @@ const createApp = require('../lib/build-service');
 
 Q.longStackSupport = true;
 
-function suiteWithPackages(name, packages, callback) {
-	return suite(name, function() {
+function describeWithPackages(name, packages, callback) {
+	return describe(name, function() {
 		const tempdir = fs.realpathSync('/tmp') + '/buildservice-test/' + uuid();
 
 		before(function(done) {
@@ -58,15 +58,15 @@ function suiteWithPackages(name, packages, callback) {
 	});
 }
 
-global.suiteWithPackages = suiteWithPackages;
+global.describeWithPackages = describeWithPackages;
 
 function spawnTest(name, generatorCallback, shouldSkip, only) {
-	let testFunc = test;
+	let testFunc = it;
 	if (shouldSkip) {
-		testFunc = test.skip;
+		testFunc = it.skip;
 	}
 	if (only) {
-		testFunc = test.only;
+		testFunc = it.only;
 	}
 	return testFunc(name, function(done) {
 		promiseTest.call(this, generatorCallback, done);
@@ -74,11 +74,11 @@ function spawnTest(name, generatorCallback, shouldSkip, only) {
 }
 
 
-spawnTest.skip = test.skip.bind(test);
+spawnTest.skip = it.skip.bind(it);
 global.spawnTest = spawnTest;
 
 function spawnTestWithTempdir(name, generatorCallback) {
-	return test(name, function(done) {
+	return it(name, function(done) {
 		const tmpdir = fs.realpathSync('/tmp') + '/buildservice-test/' + uuid();
 
 		const scopedGenerator = function*() {
@@ -118,11 +118,11 @@ function bufferStream(stream) {
 	});
 }
 
-spawnTestWithTempdir.skip = test.skip.bind(test);
+spawnTestWithTempdir.skip = it.skip.bind(it);
 global.spawnTestWithTempdir = spawnTestWithTempdir;
 
 module.exports = {
-	suiteWithPackages:suiteWithPackages,
+	describeWithPackages:describeWithPackages,
 	spawnTest:spawnTest,
 	spawnTestWithTempdir: spawnTestWithTempdir,
 
