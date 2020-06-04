@@ -144,9 +144,9 @@ describe('ModuleSet', function() {
 });
 
 
-suite('ModuleSet', function(){
+describe('ModuleSet', function(){
 
-	test('main-path', function(){
+	it('main-path', function(){
 		const moduleset = new ModuleSet([
 			'./local-path@*:/path_to_main',
 			'./local-path:/path-to-main',
@@ -171,7 +171,7 @@ suite('ModuleSet', function(){
 		assert.equal(modules[3].mainPathOverride, '/main.css');
 	});
 
-	test('id', function(){
+	it('id', function(){
 		const bundle1a = new ModuleSet(['o-colors', 'o-grid@*']);
 		const bundle1b = new ModuleSet(['o-grid@*', 'o-colors']);
 		const bundle2 = new ModuleSet(['o-colors', 'foo/o-grid@*']);
@@ -184,7 +184,7 @@ suite('ModuleSet', function(){
 		assert.notInclude(bundle3.getIdentifier(), '/');
 	});
 
-	test('long-id', function(){
+	it('long-id', function(){
 		const longPackageList = new Array(100).join('x').split('x').map(function(v,i){return 'package'+i;});
 		const bundle3 = new ModuleSet(longPackageList);
 		longPackageList.pop();
@@ -195,7 +195,7 @@ suite('ModuleSet', function(){
 		assert.notEqual(bundle3.getIdentifier(), bundle4.getIdentifier());
 	});
 
-	test('concatenate', function() {
+	it('concatenate', function() {
 		const bundleA = new ModuleSet(['o-colors', 'o-grid@*']);
 		const bundleB = new ModuleSet(['o-gallery', 'o-fonts']);
 		const expectedConcatenatedBundle = new ModuleSet(['o-colors', 'o-grid@*', 'o-gallery', 'o-fonts']);

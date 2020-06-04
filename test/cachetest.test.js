@@ -6,7 +6,7 @@ const Q = testhelper.Q;
 
 const PromiseCache = testhelper.PromiseCache;
 
-suite('promisecache', function(){
+describe('promisecache', function(){
 
 	spawnTest('cache-overflow', function*(){
 		const e = new PromiseCache({ capacity: 3 });
@@ -69,7 +69,7 @@ suite('promisecache', function(){
 		}), 'not used', 'Expected any previous value');
 	});
 
-	test('cache-time-expiry', function(done){
+	it('cache-time-expiry', function(done){
 		const ttlScale = 5; // slow down test in Jenkins
 		const e = new PromiseCache();
 		e.get({
@@ -139,11 +139,11 @@ suite('promisecache', function(){
 		}, 150*ttlScale);
 	});
 
-	test('date-parse', function(){
+	it('date-parse', function(){
 		assert.equal(1386684780000, Date.parse('2013-12-10T14:13'));
 	});
 
-	test('called-once', function(){
+	it('called-once', function(){
 		const e = new PromiseCache();
 		let count=0;
 		function inc() {

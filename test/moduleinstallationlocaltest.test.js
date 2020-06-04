@@ -7,7 +7,7 @@ const log = testhelper.log;
 const ModuleInstallation = testhelper.ModuleInstallation;
 const ModuleSet = testhelper.ModuleSet;
 
-suiteWithPackages('installation-local', [], function(installdir){
+describeWithPackages('installation-local', [], function(installdir){
 
 	spawnTest('missing main', function*(){
 		const moduleset = new ModuleSet(['o-test-component@1.0.17']);

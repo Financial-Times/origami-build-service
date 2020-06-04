@@ -4,16 +4,16 @@ const assert = require('chai').assert;
 const testhelper = require('./testhelper');
 const Q = testhelper.Q;
 
-suite('qtest', function(){
+describe('qtest', function(){
 
-	test('strict', function() {
+	it('strict', function() {
 		function cb() {
 			assert.isUndefined(this);
 		}
 		cb();
 	});
 
-	test('capture runs sync', function(){
+	it('capture runs sync', function(){
 		let ok = false;
 		Q.captureErrors(function(){
 			ok = true;

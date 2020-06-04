@@ -9,7 +9,7 @@ const InstallationManager = testhelper.InstallationManager;
 const Bundler = testhelper.Bundler;
 const ModuleMetadata = testhelper.ModuleMetadata;
 
-suiteWithPackages('metadata-api', [], function(temporaryDirectory){
+describeWithPackages('metadata-api', [], function(temporaryDirectory){
 	this.timeout(60*1000);
 
 	spawnTest('metadata-ok has_external_dependency', function*(){
