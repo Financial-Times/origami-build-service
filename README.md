@@ -26,7 +26,7 @@ Table Of Contents
 Requirements
 ------------
 
-Running Origami Build Service requires [Node.js] 8.x and [npm].
+Running Origami Build Service requires [Node.js] 12.x and [npm].
 
 
 Running Locally
