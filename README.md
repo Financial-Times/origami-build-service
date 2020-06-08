@@ -1,5 +1,5 @@
 
-Origami Build Service [![Build status](https://img.shields.io/circleci/project/Financial-Times/origami-build-service/master.svg)][ci] [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)][license]
+Origami Build Service [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)][license]
 =====================
 
   * Creates bundles of JavaScript and CSS from Origami (and Origami-compatible modules)
@@ -26,7 +26,7 @@ Table Of Contents
 Requirements
 ------------
 
-Running Origami Build Service requires [Node.js] 8.x and [npm].
+Running Origami Build Service requires [Node.js] 12.x and [npm].
 
 
 Running Locally

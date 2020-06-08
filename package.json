@@ -67,7 +67,7 @@
     "supertest-as-promised": "^4.0.0"
   },
   "engines": {
-    "node": "^10",
+    "node": "^12",
     "npm": "^6"
   },
   "engineStrict": true
