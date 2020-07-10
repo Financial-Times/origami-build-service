@@ -55,7 +55,7 @@
     "chai": "^4.2.0",
     "eslint": "^7.4.0",
     "istanbul": "^0.4.5",
-    "jsdom": "^16.2.2",
+    "jsdom": "^16.3.0",
     "lintspaces-cli": "^0.7.1",
     "mocha": "^8.0.1",
     "mockery": "^2.1.0",
