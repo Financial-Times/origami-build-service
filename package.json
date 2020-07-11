@@ -48,7 +48,7 @@
     "semver": "^7.3.2",
     "streamcat": "^2.6.4",
     "tryall": "^1.0.1",
-    "uuid": "^3.4.0",
+    "uuid": "^8.2.0",
     "webpack": "^3.12.0"
   },
   "devDependencies": {
