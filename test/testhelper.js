@@ -1,6 +1,6 @@
 'use strict';
 
-const uuid = require('uuid');
+const uuid = require('uuid').v4;
 const rmrf = require('rimraf');
 
 const log = require('./unit/mock/log.mock');
