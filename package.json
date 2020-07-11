@@ -35,7 +35,7 @@
     "glob": "^7.1.6",
     "gulp": "^4.0.2",
     "http-errors": "^1.8.0",
-    "lru-cache": "^5.1.1",
+    "lru-cache": "^6.0.0",
     "measured": "^1.0.0",
     "mime": "^1.6.0",
     "mkdirp": "^1.0.4",
