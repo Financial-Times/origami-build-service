@@ -3,7 +3,7 @@
 const buildService = require('../..');
 const mkdirp = require('mkdirp');
 const rmrf = require('rimraf');
-const uuid = require('uuid');
+const uuid = require('uuid').v4;
 
 const tempdir = `/tmp/buildservice/tests-${uuid()}`;
 const log = require('../unit/mock/log.mock');
