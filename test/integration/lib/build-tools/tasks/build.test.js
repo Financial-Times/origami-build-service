@@ -1,7 +1,6 @@
 'use strict';
 
 const proclaim = require('proclaim');
-const sinon = require('sinon');
 const gulp = require('gulp');
 
 const fs = require('fs-extra');
