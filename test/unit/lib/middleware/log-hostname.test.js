@@ -10,7 +10,7 @@ describe('lib/middleware/log-hostname', () => {
 
 	beforeEach(() => {
 
-		log = require('../../mock/log.mock');
+		log = require('../../../mock/log.mock');
 
 		origamiService = require('../../mock/origami-service.mock');
 		logHostname = require('../../../../lib/middleware/log-hostname');

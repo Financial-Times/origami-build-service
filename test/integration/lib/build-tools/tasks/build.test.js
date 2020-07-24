@@ -1,12 +1,14 @@
 'use strict';
 
 const proclaim = require('proclaim');
+const sinon = require('sinon');
 const gulp = require('gulp');
 
 const fs = require('fs-extra');
 const path = require('path');
 
 const build = require('../../../../../lib/build-tools/tasks/build');
+const logMock = require('../../../../mock/log.mock');
 
 const testRoot = path.join(__dirname, '../');
 const fixturePath = path.join(testRoot, 'fixtures/o-test');
@@ -40,7 +42,7 @@ describe('Build task', function() {
 		});
 
 		it('should work with default options', function(done) {
-			buildDuplex = build.js(gulp, defaultOptions)
+			buildDuplex = build.js(gulp, logMock, defaultOptions)
 				.on('end', function() {
 					const builtJsPath = path.join(defaultOptions['buildFolder'], 'main.js');
 					const builtJs = fs.readFileSync(builtJsPath, 'utf8');
@@ -55,7 +57,7 @@ describe('Build task', function() {
 
 		it('should work with production option', function(done) {
 			buildDuplex = build
-				.js(gulp, Object.assign({}, defaultOptions, {
+				.js(gulp, logMock, Object.assign({}, defaultOptions, {
 					env: 'production'
 				}))
 				.on('end', function () {
@@ -72,7 +74,7 @@ describe('Build task', function() {
 
 		it('should include the the babel-runtime polyfills by default', function(done) {
 			buildDuplex = build
-				.js(gulp, Object.assign({}, defaultOptions, {
+				.js(gulp, logMock, Object.assign({}, defaultOptions, {
 					js: path.join(testPath, './src/js/babelRuntime.js')
 				}))
 				.on('end', function () {
@@ -85,7 +87,7 @@ describe('Build task', function() {
 
 		it('should not include the the babel-runtime polyfills if \'babelRuntime\' is falsey', function(done) {
 			buildDuplex = build
-				.js(gulp, Object.assign({}, defaultOptions, {
+				.js(gulp, logMock, Object.assign({}, defaultOptions, {
 					js: path.join(testPath, './src/js/babelRuntime.js'),
 					babelRuntime: false
 				}))
@@ -99,7 +101,7 @@ describe('Build task', function() {
 
 		it('should build from custom source', function(done) {
 			buildDuplex = build
-				.js(gulp, Object.assign({}, defaultOptions, {
+				.js(gulp, logMock, Object.assign({}, defaultOptions, {
 					js: path.join(testPath, './src/js/test.js'),
 				}))
 				.on('end', function () {
@@ -115,7 +117,7 @@ describe('Build task', function() {
 		it('should build to a custom directory', function(done) {
 			const outputDirectory = path.join(testPath, 'custom-build-dir');
 			buildDuplex = build
-				.js(gulp, Object.assign({}, defaultOptions, {
+				.js(gulp, logMock, Object.assign({}, defaultOptions, {
 					buildFolder: outputDirectory
 				}))
 				.on('end', function () {
@@ -135,7 +137,7 @@ describe('Build task', function() {
 			// writing Webpack throws an error for an absolute path.
 			const outputName = 'bundle.js';
 			buildDuplex = build
-				.js(gulp, Object.assign({}, defaultOptions, {
+				.js(gulp, logMock, Object.assign({}, defaultOptions, {
 					buildJs: outputName,
 				}))
 				.on('end', function () {
@@ -152,7 +154,7 @@ describe('Build task', function() {
 
 		it('should fail on syntax error', function(done) {
 			buildDuplex = build
-				.js(gulp, Object.assign({}, defaultOptions, {
+				.js(gulp, logMock, Object.assign({}, defaultOptions, {
 					js: path.join(testPath, './src/js/syntax-error.js'),
 				}))
 				.on('error', function errorHandler(e) {
@@ -167,7 +169,7 @@ describe('Build task', function() {
 
 		it('should fail when a dependency is not found', function(done) {
 			buildDuplex = build
-				.js(gulp, Object.assign({}, defaultOptions, {
+				.js(gulp, logMock, Object.assign({}, defaultOptions, {
 					js: path.join(testPath, './src/js/missing-dep.js'),
 				}))
 				.on('error', function(e) {
@@ -196,7 +198,7 @@ describe('Build task', function() {
 		});
 
 		it('should work with default options', function(done) {
-			buildDuplex = build.sass(gulp, defaultOptions)
+			buildDuplex = build.sass(gulp, logMock, defaultOptions)
 				.on('end', function () {
 					const builtCssPath = path.join(defaultOptions['buildFolder'], 'main.css');
 					const builtCss = fs.readFileSync(builtCssPath, 'utf8');
@@ -207,7 +209,7 @@ describe('Build task', function() {
 
 		it('should work with production option', function(done) {
 			buildDuplex = build
-				.sass(gulp, Object.assign({}, defaultOptions, {
+				.sass(gulp, logMock, Object.assign({}, defaultOptions, {
 					env: 'production'
 				}))
 				.on('end', function () {
@@ -220,7 +222,7 @@ describe('Build task', function() {
 
 		it('should build from custom source', function(done) {
 			buildDuplex = build
-				.sass(gulp, Object.assign({}, defaultOptions, {
+				.sass(gulp, logMock, Object.assign({}, defaultOptions, {
 					sass: path.join(testPath, './src/scss/test.scss')
 				}))
 				.on('end', function () {
@@ -234,7 +236,7 @@ describe('Build task', function() {
 		it('should build to a custom directory', function(done) {
 			const outputFolder = path.join(testPath, '/test-build/');
 			buildDuplex = build
-				.sass(gulp, Object.assign({}, defaultOptions, {
+				.sass(gulp, logMock, Object.assign({}, defaultOptions, {
 					buildFolder: outputFolder
 				}))
 				.on('end', function () {
@@ -248,7 +250,7 @@ describe('Build task', function() {
 		it('should build to a custom file', function(done) {
 			const outputName = 'bundle.css';
 			buildDuplex = build
-				.sass(gulp, Object.assign({}, defaultOptions, {
+				.sass(gulp, logMock, Object.assign({}, defaultOptions, {
 					buildCss: outputName
 				}))
 				.on('end', function () {
