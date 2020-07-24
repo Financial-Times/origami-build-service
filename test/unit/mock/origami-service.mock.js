@@ -1,6 +1,6 @@
 'use strict';
 
-const log = require('../../log.mock');
+const log = require('../../mock/log.mock');
 const sinon = require('sinon');
 require('sinon-as-promised');
 
