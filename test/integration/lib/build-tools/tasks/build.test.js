@@ -1,4 +1,3 @@
-/* global describe, it, before, after, afterEach */
 'use strict';
 
 const proclaim = require('proclaim');
