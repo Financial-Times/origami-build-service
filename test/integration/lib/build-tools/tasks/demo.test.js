@@ -109,9 +109,9 @@ describe('Demo task', function() {
 			// At some point `options` was used over `demosDefaults`.
 			delete demoConfig.demosDefaults;
 			demoConfig.options = {
-				sass: "demos/src/demo.scss",
-				js: "demos/src/demo.js",
-				bodyClasses: "old-config-test"
+				sass: 'demos/src/demo.scss',
+				js: 'demos/src/demo.js',
+				bodyClasses: 'old-config-test'
 			};
 			fs.writeFileSync(origamiManifestPath, JSON.stringify(demoConfig));
 
@@ -128,7 +128,7 @@ describe('Demo task', function() {
 		it('should build demos using the deprecated config.json file for demo configuration over origami.json if it exists', function (done) {
 			// Define template and demos/src/config.json
 			const testKey = 'demos-src-config-demo';
-			const configPath = path.join(testPath, `demos/src/config.json`);
+			const configPath = path.join(testPath, 'demos/src/config.json');
 			const templatePath = `demos/src/${testKey}.mustache`;
 			const templateMarkup = `<div>${testKey}</div>`;
 			const config = {
