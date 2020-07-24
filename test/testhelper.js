@@ -3,7 +3,7 @@
 const uuid = require('uuid').v4;
 const rmrf = require('rimraf');
 
-const log = require('./unit/mock/log.mock');
+const log = require('./mock/log.mock');
 
 const pfs = require('fs-extra-p');
 const fs = require('fs');
