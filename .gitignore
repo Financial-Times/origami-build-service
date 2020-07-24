@@ -5,3 +5,4 @@ coverage
 docs/public
 node_modules
 npm-debug.log
+.DS_Store
