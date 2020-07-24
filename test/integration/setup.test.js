@@ -6,7 +6,7 @@ const rmrf = require('rimraf');
 const uuid = require('uuid').v4;
 
 const tempdir = `/tmp/buildservice/tests-${uuid()}`;
-const log = require('../unit/mock/log.mock');
+const log = require('../mock/log.mock');
 
 before(function() {
 	mkdirp.sync(tempdir);

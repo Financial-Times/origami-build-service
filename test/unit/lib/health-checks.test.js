@@ -17,7 +17,7 @@ describe('lib/health-checks', () => {
 		HealthCheck = sinon.stub().returns(mockHealthCheck);
 		mockery.registerMock('@financial-times/health-check', HealthCheck);
 
-		log = require('../mock/log.mock');
+		log = require('../../mock/log.mock');
 
 		healthChecks = require('../../../lib/health-checks');
 	});
