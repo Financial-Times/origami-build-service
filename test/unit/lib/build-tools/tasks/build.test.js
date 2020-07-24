@@ -7,10 +7,9 @@ const gulp = require('gulp');
 const fs = require('fs-extra');
 const path = require('path');
 
-const build = require('../../lib/tasks/build');
+const build = require('../../../../../lib/build-tools/tasks/build');
 
-const projectRoot = path.join(__dirname, '../../');
-const testRoot = path.join(projectRoot, '/test');
+const testRoot = path.join(__dirname, '../');
 const fixturePath = path.join(testRoot, 'fixtures/o-test');
 
 const CORE_JS_IDENTIFIER = '__core-js_shared__';

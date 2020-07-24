@@ -6,10 +6,9 @@ const path = require('path');
 const proclaim = require('proclaim');
 const gulp = require('gulp');
 
-const demo = require('../../lib/tasks/demo');
+const demo = require('../../../../../lib/build-tools/tasks/demo');
 
-const projectRoot = path.join(__dirname, '../../');
-const testRoot = path.join(projectRoot, '/test');
+const testRoot = path.join(__dirname, '../');
 const fixturePath = path.join(testRoot, 'fixtures/o-test');
 
 describe('Demo task', function() {
