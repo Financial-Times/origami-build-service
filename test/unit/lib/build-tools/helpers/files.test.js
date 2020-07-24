@@ -4,10 +4,9 @@ const fs = require('fs-extra');
 const path = require('path');
 const proclaim = require('proclaim');
 
-const files = require('../../lib/helpers/files');
+const files = require('../../../../../lib/build-tools/helpers/files');
 
-const projectRoot = path.join(__dirname, '../../');
-const testRoot = path.join(projectRoot, '/test');
+const testRoot = path.join(__dirname, '../');
 const fixturePath = path.join(testRoot, 'fixtures/o-test');
 
 describe('Files helper', () => {

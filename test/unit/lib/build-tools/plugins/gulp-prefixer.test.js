@@ -4,7 +4,7 @@
 const proclaim = require('proclaim');
 const File = require('vinyl');
 
-const prefixer = require('../../lib/plugins/gulp-prefixer.js');
+const prefixer = require('../../../../../lib/build-tools/plugins/gulp-prefixer');
 
 describe('gulp-prefixer', function() {
 	describe('in buffer mode', function() {
