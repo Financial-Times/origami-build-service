@@ -1,0 +1,7 @@
+{
+    "name": "o-test",
+    "main": [
+        "main.scss",
+        "main.js"
+    ]
+}
