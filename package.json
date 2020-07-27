@@ -64,7 +64,7 @@
     "gulp-clean-css": "^4.3.0",
     "gulp-if-else": "^1.0.3",
     "gulp-mustache": "^2.2.0",
-    "gulp-rename": "^1.4.0",
+    "gulp-rename": "^2.0.0",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.6",
