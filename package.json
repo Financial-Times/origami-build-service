@@ -48,7 +48,7 @@
     "streamcat": "^2.6.4",
     "tryall": "^1.0.1",
     "uuid": "^8.2.0",
-    "webpack": "^3.12.0",
+    "webpack": "^4.0.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.5",
     "babel-plugin-add-module-exports": "^0.2.1",
