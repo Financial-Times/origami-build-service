@@ -94,7 +94,7 @@
     "sinon-as-promised": "^4.0.0",
     "supertest": "^4.0.2",
     "supertest-as-promised": "^4.0.0",
-    "vinyl": "^2.2.0"
+    "vinyl": "^2.2.1"
   },
   "engines": {
     "node": "^12",
