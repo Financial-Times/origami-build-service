@@ -92,7 +92,7 @@
     "proclaim": "^3.6.0",
     "sinon": "^1.17.3",
     "sinon-as-promised": "^4.0.0",
-    "supertest": "^4.0.2",
+    "supertest": "^5.0.0",
     "supertest-as-promised": "^4.0.0",
     "vinyl": "^2.2.1"
   },
