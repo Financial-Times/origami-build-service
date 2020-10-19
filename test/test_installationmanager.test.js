@@ -6,7 +6,7 @@ const log = testhelper.log;
 const metrics = require('./unit/mock/origami-service.mock').mockApp.ft.metrics;
 const InstallationManager = testhelper.InstallationManager;
 const ModuleSet = testhelper.ModuleSet;
-const pfs = require('fs-extra-p');
+const fs = require('fs-extra');
 
 describeWithPackages('InstallationManager#createInstallation(moduleset, options)', [ 'test1' ], function(installdir) {
 	this.timeout(20*1000);
@@ -26,13 +26,13 @@ describeWithPackages('InstallationManager#createInstallation(moduleset, options)
 		const installationADirectory = installationA.getDirectory();
 
 		// The directory for installation A should exist
-		assert((yield pfs.pathExists(installationADirectory)) === true);
+		assert((yield fs.pathExists(installationADirectory)) === true);
 
 		yield installer.createInstallation(modulesetB);
 
 		// The directory for installation A should now not exist because the
 		// capacity of the LRU cache is 1
-		assert((yield pfs.pathExists(installationADirectory)) === false);
+		assert((yield fs.pathExists(installationADirectory)) === false);
 	});
 
 	spawnTest('it should create a ModuleInstallation for the requested ModuleSet', function*() {

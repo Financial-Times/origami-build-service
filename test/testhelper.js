@@ -5,8 +5,7 @@ const rmrf = require('rimraf');
 
 const log = require('./mock/log.mock');
 
-const pfs = require('fs-extra-p');
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const Q = require('../lib/utils/q');
 const Output = require('../lib/output');
@@ -31,7 +30,7 @@ function describeWithPackages(name, packages, callback) {
 		const tempdir = fs.realpathSync('/tmp') + '/buildservice-test/' + uuid();
 
 		before(function(done) {
-			pfs.ensureDir(tempdir)
+			fs.ensureDir(tempdir)
 			.then(function() {
 				// Make some symbolic links to the test modules in this
 				// repository in the temporary directory.  When the cache
@@ -40,14 +39,14 @@ function describeWithPackages(name, packages, callback) {
 				return Promise.all(packages.map(function(name){
 					const src = path.join(__dirname, '/testmodules/', name);
 					const dst = path.join(tempdir, '/', name.replace(/^.*\//,''));
-					return pfs.symlink(dst, src, 'dir').catch(err => {
+					return fs.symlink(dst, src, 'dir').catch(err => {
 						if (err.code !== 'EEXIST') {
 							throw err;
 						}
 					});
 				}));
 			})
-			.done(function() { done(); });
+			.then(function() { done(); });
 		});
 
 		callback.call(this, tempdir);
@@ -127,7 +126,7 @@ module.exports = {
 	spawnTestWithTempdir: spawnTestWithTempdir,
 
 	Q:Q,
-	pfs: pfs,
+	fs: fs,
 	log: log,
 	ModuleInstallation: ModuleInstallation,
 	InstallationManager: InstallationManager,
