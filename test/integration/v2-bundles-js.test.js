@@ -407,6 +407,21 @@ describe('GET /v2/bundles/js', function() {
 
     });
 
+    describe('when two modules are requested and one is an origami v1 component and the other is not an origami component', function () {
+		const modules = 'o-teaser@v3,lodash@*';
+
+		beforeEach(function () {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/js?modules=${modules}&newerthan=${now}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function (done) {
+			this.request.expect(200).end(done);
+		});
+	});
+
 });
 
 describe('when a module name is a relative directory', function() {

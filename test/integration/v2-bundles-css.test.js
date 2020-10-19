@@ -244,16 +244,30 @@ describe('GET /v2/bundles/css', function() {
 
 	});
 
-});
+	describe('when two modules are requested and one is an origami v1 component and the other is not an origami component', function () {
+		const modules = 'o-teaser@v3,lodash@*';
+		const source = 'test-source';
 
-describe('when a module name is a relative directory', function() {
+		beforeEach(function () {
+			const now = (new Date()).toISOString();
+			this.request = request(this.app)
+				.get(`/v2/bundles/css?modules=${modules}&newerthan=${now}&source=${source}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function (done) {
+			this.request.expect(200).end(done);
+		});
+	});
+
+	describe('when a module name is a relative directory', function() {
 		const moduleName = '../../../example';
 
 		beforeEach(function() {
 			const now = (new Date()).toISOString();
 			this.request = request(this.app)
-				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
-				.set('Connection', 'close');
+			.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
+			.set('Connection', 'close');
 		});
 
 		it('should respond with a 400 status', function(done) {
@@ -263,5 +277,7 @@ describe('when a module name is a relative directory', function() {
 		it('should respond with an error message ', function(done) {
 			this.request.expect(/The modules parameter contains module names which are not valid: \.\.\/\.\.\/\.\.\/example/i).end(done);
 		});
+
+	});
 
 });

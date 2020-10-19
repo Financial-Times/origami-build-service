@@ -40,7 +40,6 @@
     "cors": "^2.8.5",
     "denodeify": "^1.2.1",
     "dotenv": "^8.2.0",
-    "express-ftwebservice": "^2.0.2",
     "falafel": "^1.2.0",
     "fs-extra-p": "^8.1.0",
     "glob": "^7.1.6",
