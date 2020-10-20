@@ -67,6 +67,24 @@ describe('lib/middleware/checkModulesAllUseSameOrigamiVersion', () => {
 				});
 			});
 
+			describe('when the \'modules\' query string contains a module with a version range which spans across Origami spec v1 and v2 versions of the module', () => {
+
+				beforeEach(() => {
+					origamiService.mockRequest.query.modules = 'o-teaser@>=3';
+					middleware(origamiService.mockRequest, origamiService.mockResponse, spyNext);
+				});
+
+				it('creates a 400 HTTP error with a descriptive message', () => {
+					assert.calledOnce(httpError);
+					assert.calledWithExactly(httpError, 400, 'The version range >=3 for o-teaser is not allowed because it is ambiguous, it can return versions of the component which were built against different versions of the Origami Specification.');
+				});
+
+				it('calls `next` with the created error', () => {
+					assert.calledOnce(spyNext);
+					assert.calledWithExactly(spyNext, httpError.mockError);
+				});
+			});
+
 			describe('when the \'modules\' query string contains modules with a git ref as the version', () => {
 
 				beforeEach(() => {
