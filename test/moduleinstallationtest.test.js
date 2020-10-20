@@ -6,7 +6,7 @@ const JsBundler = testhelper.JsBundler;
 const CssBundler = testhelper.CssBundler;
 
 const log = testhelper.log;
-const pfs = testhelper.pfs;
+const fs = testhelper.fs;
 const Q = testhelper.Q;
 const ModuleInstallation = testhelper.ModuleInstallation;
 const ModuleSet = testhelper.ModuleSet;
@@ -31,9 +31,9 @@ describe('installation-remote', function() {
 		assert('jquery' in list);
 		assert('lodash' in list);
 
-		assert.equal(0, list.jquery.paths[0].indexOf(yield pfs.realpath(tmpdir)), 'should be absolute canonical path ' + list.jquery.paths[0]);
+		assert.equal(0, list.jquery.paths[0].indexOf(yield fs.realpath(tmpdir)), 'should be absolute canonical path ' + list.jquery.paths[0]);
 
-		const exists = yield Q.all([pfs.pathExists(list.jquery.paths[0]), pfs.pathExists(list.lodash.paths[0])]);
+		const exists = yield Q.all([fs.pathExists(list.jquery.paths[0]), fs.pathExists(list.lodash.paths[0])]);
 		assert.deepEqual([true,true], exists, 'Expected installed files to exist');
 
 		const jsStream = yield (new JsBundler({ log: log })).getContent(installation, moduleset, { minify: 'none', brand});

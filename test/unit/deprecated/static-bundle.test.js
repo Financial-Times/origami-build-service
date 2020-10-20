@@ -7,7 +7,6 @@ const sinon = require('sinon');
 
 describe('deprecated/static-bundle', function() {
 	let fs;
-	let pfs;
 	let staticBundle;
 	let uniqueid;
 
@@ -16,11 +15,8 @@ describe('deprecated/static-bundle', function() {
 		uniqueid = require('../mock/uniqueid.mock');
 		mockery.registerMock('../lib/utils/uniqueid', uniqueid);
 
-		fs = require('../mock/fs.mock');
-		mockery.registerMock('fs', fs);
-
-		pfs = require('../mock/fs-extra-p.mock');
-		mockery.registerMock('fs-extra-p', pfs);
+		fs = require('../mock/fs-extra.mock');
+		mockery.registerMock('fs-extra', fs);
 
 		staticBundle = require('../../../deprecated/static-bundle');
 	});
@@ -43,7 +39,7 @@ describe('deprecated/static-bundle', function() {
 			fileStats = {
 				isFile: sinon.stub().returns(true)
 			};
-			pfs.stat.resolves(fileStats);
+			fs.stat.resolves(fileStats);
 			staticBundle.getStaticBundleFilePath = sinon.stub().returns('mock-file-path');
 			returnedPromise = staticBundle.getStaticBundleStream(url, staticBundlesDirectory);
 		});
@@ -54,8 +50,8 @@ describe('deprecated/static-bundle', function() {
 		});
 
 		it('should stat the static bundle file path', function() {
-			assert.calledOnce(pfs.stat);
-			assert.calledWithExactly(pfs.stat, 'mock-file-path');
+			assert.calledOnce(fs.stat);
+			assert.calledWithExactly(fs.stat, 'mock-file-path');
 		});
 
 		it('should return a promise', function() {

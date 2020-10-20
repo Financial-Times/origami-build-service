@@ -1,8 +1,7 @@
 'use strict';
 
-const fs = require('fs');
 const path = require('path');
-const pfs = require('fs-extra-p');
+const fs = require('fs-extra');
 const uniqueid = require('../lib/utils/uniqueid');
 const URL = require('url');
 
@@ -10,7 +9,7 @@ const defaultStaticBundlesDirectory = path.resolve(__dirname, 'static-bundles');
 
 function getStaticBundleStream(url, staticBundlesDirectory) {
 	const filePath = module.exports.getStaticBundleFilePath(url, staticBundlesDirectory);
-	return pfs.stat(filePath).then((stats) => {
+	return fs.stat(filePath).then((stats) => {
 		if (!stats.isFile()) {
 			throw new Error('Static bundle is not a file');
 		}

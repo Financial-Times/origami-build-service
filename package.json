@@ -17,7 +17,8 @@
   },
   "main": "./lib/build-service.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "make test"
   },
   "dependencies": {
     "@financial-times/health-check": "2.1.1",
@@ -41,7 +42,6 @@
     "denodeify": "^1.2.1",
     "dotenv": "^8.2.0",
     "falafel": "^1.2.0",
-    "fs-extra-p": "^8.1.0",
     "glob": "^7.1.6",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^3.1.0",
@@ -97,7 +97,7 @@
   },
   "engines": {
     "node": "^12",
-    "npm": "^6"
+    "npm": "^7"
   },
   "engineStrict": true
 }
