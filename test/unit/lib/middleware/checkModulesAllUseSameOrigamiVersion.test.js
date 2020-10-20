@@ -57,7 +57,7 @@ describe('lib/middleware/checkModulesAllUseSameOrigamiVersion', () => {
 			describe('when the \'modules\' query string contains only modules with versions which use origami spec v2', () => {
 
 				beforeEach(() => {
-					origamiService.mockRequest.query.modules = 'o-teaser@^4.0.0';
+					origamiService.mockRequest.query.modules = 'o-teaser@^6.0.0';
 					middleware(origamiService.mockRequest, origamiService.mockResponse, spyNext);
 				});
 
