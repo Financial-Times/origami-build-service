@@ -8,6 +8,9 @@ module.exports = {
 	'ecmaFeatures': {
 		'modules': false
 	},
+	'parserOptions': {
+        'ecmaVersion': 2020
+    },
 	'rules': {
 		'no-unused-vars': 2,
 		'no-undef': 2,
