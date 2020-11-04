@@ -3,7 +3,6 @@
 const assert = require('chai').assert;
 const request = require('supertest');
 const jsdom = require('jsdom');
-const sinon = require('sinon');
 
 const { JSDOM } = jsdom;
 
