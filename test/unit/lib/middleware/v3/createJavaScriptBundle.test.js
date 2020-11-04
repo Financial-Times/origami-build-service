@@ -345,7 +345,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'throw new Error("Origami Build Service returned an error: The version 5wg in o-test@5wg@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version.")'
+					'throw new Error("Origami Build Service returned an error: The version 5wg in o-test@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version.")'
 				);
 				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
 
@@ -355,7 +355,7 @@ describe('createJavaScriptBundle', function () {
 				context.self = context;
 				proclaim.throws(function () {
 					script.runInNewContext(context);
-				}, 'Origami Build Service returned an error: The version 5wg in o-test@5wg@5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+				}, 'Origami Build Service returned an error: The version 5wg in o-test@5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
 			});
 		}
 	);
