@@ -5,9 +5,6 @@ module.exports = {
 		'node': true,
 		'es6': true
 	},
-	'ecmaFeatures': {
-		'modules': false
-	},
 	'parserOptions': {
         'ecmaVersion': 2020
     },
