@@ -48,6 +48,7 @@ describe('installDependencies', () => {
 		],
 		{
 			cwd: location,
+			preferLocal: true
 		}));
 	});
 });
