@@ -6,7 +6,7 @@ const getEcmaVersion = require('detect-es-version').getEcmaVersion;
 const vm = require('vm');
 const httpMock = require('node-mocks-http');
 
-describe.only('createJavaScriptBundle', function () {
+describe('createJavaScriptBundle', function () {
 	this.timeout(10 * 1000);
 	let createJavaScriptBundle;
 
