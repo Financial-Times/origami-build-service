@@ -7,7 +7,7 @@ const sinon = require('sinon');
 const fs = require('fs').promises;
 const path = require('path');
 
-describe.only('installDependencies', () => {
+describe('installDependencies', () => {
     let installDependencies;
     let execa;
 
