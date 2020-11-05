@@ -2,7 +2,7 @@
 
 const request = require('supertest');
 
-describe('GET /v3/bundles/js', function() {
+describe('GET /v3/bundles/css', function() {
     this.timeout(20000);
     this.slow(5000);
 
