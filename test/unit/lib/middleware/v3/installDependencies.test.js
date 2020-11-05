@@ -43,7 +43,8 @@ describe('installDependencies', () => {
 			'--package-lock=false',
 			'--strict-peer-deps',
 			'--update-notifier=false',
-			'--bin-links=false'
+			'--bin-links=false',
+			'--registry=https://origami-npm-registry-prototype.herokuapp.com'
 		],
 		{
 			cwd: location,
