@@ -1,0 +1,44 @@
+'use strict';
+
+const fs = require('fs').promises;
+const path = require('path');
+const proclaim = require('proclaim');
+const dedent = require('dedent');
+
+describe('lib/middleware/v3/createEntryFileSass', () => {
+	let createEntryFileSass;
+
+	beforeEach(() => {
+		createEntryFileSass = require('../../../../../lib/middleware/v3/createEntryFileSass')
+			.createEntryFileSass;
+	});
+
+	it('creates a index.scss file in the specified location and with the specified modules as imported and their primary mixin used', async function () {
+		await fs.mkdir('/tmp/bundle/', {recursive: true});
+
+		const location = await fs.mkdtemp('/tmp/bundle/');
+
+		const modules = {
+			'@financial-times/o-table': '100.0.0-11',
+			'@financial-times/o-grid': '100.0.0-11',
+		};
+
+		await createEntryFileSass(location, modules);
+
+		const EntryFileContents = await fs.readFile(
+			path.join(location, 'index.scss'),
+			'utf-8'
+		);
+		proclaim.deepStrictEqual(
+			EntryFileContents,
+            dedent`
+                $o-brand: "internal";
+                $system-code: "origami-polyfill-service";
+
+                @import "@financial-times/o-grid";
+                @include oGrid();
+                @import "@financial-times/o-table";
+                @include oTable();`
+		);
+	});
+});
