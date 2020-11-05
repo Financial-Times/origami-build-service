@@ -1,6 +1,5 @@
 'use strict';
 
-const assert = require('chai').assert;
 const request = require('supertest');
 
 describe('GET /v3/bundles/js', function() {
