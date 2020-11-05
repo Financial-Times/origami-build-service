@@ -27,7 +27,7 @@ const executeScript = (script, givenWindow) => {
     return window;
 };
 
-describe.only('GET /v3/bundles/js', function() {
+describe('GET /v3/bundles/js', function() {
     this.timeout(20000);
     this.slow(5000);
 
@@ -65,6 +65,10 @@ describe.only('GET /v3/bundles/js', function() {
                 .end(done);
         });
 
+        it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'application/javascript; charset=utf-8').end(done);
+		});
+
     });
 
     describe('when an invalid module is requested (nonexistent)', function() {
@@ -79,6 +83,10 @@ describe.only('GET /v3/bundles/js', function() {
         it('should respond with a 400 status', function(done) {
             this.request.expect(400).end(done);
         });
+
+        it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'application/javascript; charset=utf-8').end(done);
+		});
 
     });
 
@@ -99,6 +107,10 @@ describe.only('GET /v3/bundles/js', function() {
     //         this.request.expect(/cannot complete build due to compilation error from build tools:/i).end(done);
     //     });
 
+    // it('should respond with the expected `Content-Type` header', function(done) {
+    //     this.request.expect('Content-Type', 'application/javascript; charset=utf-8').end(done);
+    // });
+
     // });
 
     describe('when the modules parameter is missing', function() {
@@ -117,6 +129,10 @@ describe.only('GET /v3/bundles/js', function() {
             this.request.expect('throw new Error("Origami Build Service returned an error: The modules query parameter can not be empty.")').end(done);
         });
 
+        it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'application/javascript; charset=utf-8').end(done);
+		});
+
     });
 
     describe('when the modules parameter is not a string', function() {
@@ -134,6 +150,10 @@ describe.only('GET /v3/bundles/js', function() {
         it('should respond with an error message', function(done) {
             this.request.expect('throw new Error("Origami Build Service returned an error: The modules query parameter must be a string.")').end(done);
         });
+
+        it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'application/javascript; charset=utf-8').end(done);
+		});
 
     });
 
@@ -154,6 +174,9 @@ describe.only('GET /v3/bundles/js', function() {
             this.request.expect('throw new Error("Origami Build Service returned an error: The modules query parameter contains module names which are not valid: http://1.2.3.4/.")').end(done);
         });
 
+        it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'application/javascript; charset=utf-8').end(done);
+		});
     });
 
 });
