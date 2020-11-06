@@ -94,7 +94,7 @@
     "chai": "^4.2.0",
     "dedent": "^0.7.0",
     "detect-es-version": "^0.1.4",
-    "eslint": "^7.11.0",
+    "eslint": "^7.12.1",
     "jsdom": "^16.4.0",
     "lintspaces-cli": "^0.7.1",
     "mocha": "^8.2.1",
