@@ -13,7 +13,7 @@ describe('lib/middleware/v3/createEntryFileSass', () => {
 			.createEntryFileSass;
 	});
 
-	it('creates a index.scss file in the specified location and with the specified modules as imported and their primary mixin used', async function () {
+	it('creates a index.scss file in the specified location and with the specified brand and modules as imported and their primary mixin used', async function () {
 		await fs.mkdir('/tmp/bundle/', {recursive: true});
 
 		const location = await fs.mkdtemp('/tmp/bundle/');
@@ -23,7 +23,9 @@ describe('lib/middleware/v3/createEntryFileSass', () => {
 			'@financial-times/o-grid': '100.0.0-11',
 		};
 
-		await createEntryFileSass(location, modules);
+		const brand = 'master';
+
+		await createEntryFileSass(location, modules, brand);
 
 		const EntryFileContents = await fs.readFile(
 			path.join(location, 'index.scss'),
@@ -32,7 +34,7 @@ describe('lib/middleware/v3/createEntryFileSass', () => {
 		proclaim.deepStrictEqual(
 			EntryFileContents,
             dedent`
-                $o-brand: "internal";
+                $o-brand: "master";
                 $system-code: "origami-polyfill-service";
 
                 @import "@financial-times/o-grid";
