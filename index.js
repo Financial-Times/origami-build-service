@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
+const primeNpmCache = require('./lib/primeNpmCache').primeNpmCache;
 
 dotenv.config({
 	silent: true
@@ -34,6 +35,11 @@ const netrcContents = `machine github.com\nlogin ${process.env.GITHUB_USERNAME}\
 fs.writeFileSync(netrcFilePath, netrcContents);
 process.env.HOME = options.tempdir; // Workaround: Bower ends up using $HOME/.local/share/bower/empty despite config overriding this
 
-buildService(options).listen().catch(() => {
+primeNpmCache().then(() => {
+	buildService(options).listen().catch(() => {
+		process.exit(1);
+	});
+}).catch((err) => {
+	console.error(err);
 	process.exit(1);
 });
