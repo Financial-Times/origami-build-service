@@ -17,8 +17,9 @@
   },
   "main": "./lib/build-service.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "make test"
+    "start": "npm run requirements-check && node index.js",
+    "test": "make test",
+    "requirements-check": "node check_node_version.js"
   },
   "dependencies": {
     "@babel/core": "^7.12.3",
