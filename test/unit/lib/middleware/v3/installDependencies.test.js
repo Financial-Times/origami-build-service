@@ -22,6 +22,9 @@ describe('installDependencies', () => {
     });
 
 	it('it runs `npm install` within the provided location', async () => {
+		const appRoot = require('app-root-path');
+
+		const npm = path.join(appRoot.toString(), './node_modules/.bin/npm');
         await fs.mkdir('/tmp/bundle/', {recursive: true});
 
         const location = await fs.mkdtemp('/tmp/bundle/');
@@ -30,7 +33,7 @@ describe('installDependencies', () => {
         await installDependencies(location);
 
         proclaim.isTrue(execa.calledOnce);
-        proclaim.isTrue(execa.calledWithExactly('npm',
+        proclaim.isTrue(execa.calledWithExactly(npm,
 		[
 			'install',
 			'--production',
