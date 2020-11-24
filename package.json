@@ -82,6 +82,7 @@
     "require-all": "^3.0.0",
     "rimraf": "^3.0.2",
     "semver": "^7.3.2",
+    "server-timing": "^3.3.1",
     "stream-combiner2": "1.0.2",
     "streamcat": "^2.6.4",
     "through2": "^2.0.5",
