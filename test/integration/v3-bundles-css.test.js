@@ -7,13 +7,14 @@ describe.only('GET /v3/bundles/css', function() {
     this.timeout(20000);
     this.slow(5000);
 
-    describe('when a valid module and valid brand is requested', function() {
+    describe('when a valid module, valid brand and valid system-code is requested', function() {
         const moduleName = '@financial-times/o-normalise@100.0.0-11';
         const brand = 'master';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}`)
+                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -34,13 +35,14 @@ describe.only('GET /v3/bundles/css', function() {
 		});
     });
 
-    describe('when a valid module and invalid brand is requested', function() {
+    describe('when a valid module, valid system-code and invalid brand is requested', function() {
         const moduleName = '@financial-times/o-normalise@100.0.0-11';
         const brand = 'origami';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}`)
+                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -62,13 +64,14 @@ describe.only('GET /v3/bundles/css', function() {
 		});
     });
 
-    describe('when an invalid module and valid brand is requested', function() {
+    describe('when an invalid module, valid brand and valid system-code is requested', function() {
         const moduleName = 'hello-nonexistent-module@1';
         const brand = 'master';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}`)
+                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -92,10 +95,11 @@ describe.only('GET /v3/bundles/css', function() {
     describe('when an invalid module is requested (nonexistent)', function() {
         const moduleName = 'hello-nonexistent-module@1';
         const brand = 'master';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}`)
+                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -136,10 +140,11 @@ describe.only('GET /v3/bundles/css', function() {
 
     describe('when the modules parameter is missing', function() {
         const brand = 'master';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/css?brand=${brand}`)
+                .get(`/v3/bundles/css?brand=${brand}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -161,10 +166,11 @@ describe.only('GET /v3/bundles/css', function() {
 
     describe('when the modules parameter is not a string', function() {
         const brand = 'master';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/css?modules[]=foo&modules[]=bar&brand=${brand}`)
+                .get(`/v3/bundles/css?modules[]=foo&modules[]=bar&brand=${brand}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -187,10 +193,11 @@ describe.only('GET /v3/bundles/css', function() {
     describe('when a module name cannot be parsed', function() {
         const moduleName = 'http://1.2.3.4/';
         const brand = 'master';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}`)
+                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 

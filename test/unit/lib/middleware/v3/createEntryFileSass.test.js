@@ -6,12 +6,7 @@ const proclaim = require('proclaim');
 const dedent = require('dedent');
 
 describe('lib/middleware/v3/createEntryFileSass', () => {
-	let createEntryFileSass;
-
-	beforeEach(() => {
-		createEntryFileSass = require('../../../../../lib/middleware/v3/createEntryFileSass')
-			.createEntryFileSass;
-	});
+	const createEntryFileSass = require('../../../../../lib/middleware/v3/createEntryFileSass').createEntryFileSass;
 
 	it('creates a index.scss file in the specified location and with the specified brand and modules as imported and their primary mixin used', async function () {
 		await fs.mkdir('/tmp/bundle/', {recursive: true});
@@ -24,8 +19,9 @@ describe('lib/middleware/v3/createEntryFileSass', () => {
 		};
 
 		const brand = 'master';
+		const systemCode = 'origami';
 
-		await createEntryFileSass(location, modules, brand);
+		await createEntryFileSass(location, modules, brand, systemCode);
 
 		const EntryFileContents = await fs.readFile(
 			path.join(location, 'index.scss'),
@@ -35,7 +31,7 @@ describe('lib/middleware/v3/createEntryFileSass', () => {
 			EntryFileContents,
             dedent`
                 $o-brand: "master";
-                $system-code: "origami-polyfill-service";
+                $system-code: "origami";
 
                 @import "@financial-times/o-grid";
                 @include oGrid();
