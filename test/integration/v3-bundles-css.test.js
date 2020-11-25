@@ -3,7 +3,7 @@
 const proclaim = require('proclaim');
 const request = require('supertest');
 
-describe.only('GET /v3/bundles/css', function() {
+describe('GET /v3/bundles/css', function() {
     this.timeout(20000);
     this.slow(5000);
 
