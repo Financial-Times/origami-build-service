@@ -18,10 +18,11 @@ const options = {
 	log: console,
 	metricsAppName: 'origami-build-service',
 	name: 'Origami Build Service',
-	registryURL:
-		process.env.REGISTRY_URL || 'http://origami-bower-registry.ft.com',
+	bowerRegistryURL:
+		process.env.BOWER_REGISTRY_URL || 'http://origami-bower-registry.ft.com',
 	tempdir: `/tmp/buildservice-${process.pid}/`,
 	testHealthcheckFailure: process.env.TEST_HEALTHCHECK_FAILURE || false,
+	npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://origami-npm-registry-prototype.herokuapp.com'
 };
 
 /**
