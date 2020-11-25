@@ -1,0 +1,282 @@
+<div class="o-layout__sidebar">
+    <!-- for automatically generated sidebar -->
+</div>
+
+<div class="o-layout__main">
+    <h1 id="api-reference">
+        API reference
+    </h1>
+
+    <p>
+        The current version of the API is 2. It has exactly the same API interface as v1, but uses <a href="https://github.com/Financial-Times/origami-build-tools">Origami Build Tools</a>
+        for the builds. This uses libsass and is not 100% compatible with Ruby Sass, so we still make Ruby Sass builds available on the v1 endpoint. JavaScript bundles are built with OBT on both v1 and v2 endpoints.
+    </p>
+
+    <h2 id="get-v1-bundles-js">
+        GET /v2/bundles/js
+    </h2>
+
+    <p>
+        Fetch a set of modules and build a JavaScript bundle.
+    </p>
+
+    <table class="o-table o-table--responsive-lines" data-o-component="o-table" >
+        <thead>
+            <tr>
+                <th>Param</th>
+                <th data-o-table-heading-disable-sort>Where?</th>
+                <th data-o-table-heading-disable-sort>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="modules">
+                <td><code>modules</code></td>
+                <td>Querystring</td>
+                <td>
+                    A comma separated list of modules in the form <code>modulename@version</code>. Modulename may be a full URL (URL-encoded), or just the name of the repository. Where it is not a URL, the build service will try to find it as a
+                    repository from known Git sources. <code>version</code> is optional - if not present the build service will build the most recent version of the module, if it is present, it will be interpreted using Semver rules and the
+                    best matching version will be built. Using specific commit sha1s or branch names is not currently supported.
+                </td>
+            </tr>
+            <tr id="minify">
+                <td><code>minify</code></td>
+                <td>Querystring</td>
+                <td><em>(Optional)</em> If present and set to 'none', suppresses minification. Otherwise output will be minified automatically.</td>
+            </tr>
+            <tr id="polyfills">
+                <td><code>polyfills</code></td>
+                <td>Querystring</td>
+                <td>
+                    <p>
+                        <em>(Optional)</em> If present and set to 'none', does not add polyfills to the output. Use this if your bundle is conflicting with other polyfills (e.g. through the
+                        <a href="https://cdn.polyfill.io/">Polyfill Service</a>).
+                    </p>
+                    <p>
+                        The polyfill mechanism is adding <a href="https://github.com/babel/babel/tree/c440f045f548ab60d15880a60b34511a7ffec931/packages/babel-runtime">babel-runtime</a> to the bundle if required. This is not a complete polyfill
+                        as it does not modify existing built-ins (<a href="https://babeljs.io/docs/plugins/transform-runtime">reference</a>) and as such doesn't work on instance methods, e.g. <code>'foo'.repeat(1)</code>
+                    </p>
+                </td>
+            </tr>
+            <tr id="brand">
+                <td><code>brand</code></td>
+                <td>Querystring</td>
+                <td><em>(Optional)</em> The brand to build requested modules for. One of "master", "internal", or "whitelabel"</td>
+            </tr>
+            <tr id="source">
+                <td><code>source</code></td>
+                <td>Querystring</td>
+                <td><em>(Optional)</em> The [bizops system code](https://biz-ops.in.ft.com/list/Systems) for the system which is making the build service request.</td>
+            </tr>
+            <tr id="export">
+                <td><code>export</code></td>
+                <td>Querystring</td>
+                <td>
+                    <em>(Optional)</em> If present, generates a <a href="https://github.com/umdjs/umd">UMD</a> bundle for the supplied export name. UMD works with other module systems and if no module system is found sets the specified name as
+                    a window global. If absent, the default export name <code>Origami</code> will be used. To export nothing, pass an empty string.
+                </td>
+            </tr>
+            <tr id="callback">
+                <td><code>callback</code></td>
+                <td>Querystring</td>
+                <td>
+                    <em>(Optional)</em> If present, calls the named javascript function on the window object once the bundle is loaded, with the modules object as the first argument. The function name must match the PCRE expression
+                    <code>^[\w\.]+$</code> or it will be ignored.
+                </td>
+            </tr>
+            <tr id="newerthan">
+                <td><code>newerthan</code></td>
+                <td>Querystring</td>
+                <td>
+                    <em>(Optional)</em> If present and set to a valid <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> date in the past, the build service will not consider any cached copies of the build which are older than the
+                    date given, and if necessary will therefore begin a new build as if there were no build cached.
+                </td>
+            </tr>
+            <tr id="autoinit">
+                <td><code>autoinit</code></td>
+                <td>Querystring</td>
+                <td>
+                    <em>(Optional)</em> If absent, or present and set to a truthy value, the bundle will include code to dispatch the <code>o.DOMContentLoaded</code> and <code>o.load</code> events when their browser-native counterparts occur.
+                    If set to <code>0</code>, no auto-initialisation code will be included.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+
+    <p>The following HTTP errors can be returned:</p>
+
+    <ul>
+        <li><code>400 Bad Request</code>: The request was invalid</li>
+        <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
+        <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
+        <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+    </ul>
+
+    <h3 id="get-v2-bundles-css">GET /v2/bundles/css</h3>
+
+    <p>Fetch a set of modules and build a CSS bundle.</p>
+
+    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
+        <thead>
+            <tr>
+                <th>Param</th>
+                <th data-o-table-heading-disable-sort>Where</th>
+                <th data-o-table-heading-disable-sort>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="css-modules">
+                <td><code>modules</code></td>
+                <td>Querystring</td>
+                <td>
+                    A comma separated list of modules in the form <code>modulename@version</code>. Modulename may be a full URL (URL-encoded), or just the name of the repository. Where it is not a URL, the build service will try to find it as a
+                    repository from known Git sources. <code>version</code> is optional - if not present the build service will build the most recent version of the module, if it is present, it will be interpreted using Semver rules and the
+                    best matching version will be built. Using specific commit sha1s or branch names is not currently supported.
+                </td>
+            </tr>
+            <tr id="css-minify">
+                <td><code>minify</code></td>
+                <td>Querystring</td>
+                <td><em>(Optional)</em> If present and set to 'none', suppresses minification. Otherwise output will be minified automatically.</td>
+            </tr>
+            <tr id="css-newerthan">
+                <td><code>newerthan</code></td>
+                <td>Querystring</td>
+                <td>
+                    <em>(Optional)</em> If present and set to a valid <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> date in the past, the build service will not consider any cached copies of the build which are older than the
+                    date given, and if necessary will therefore begin a new build as if there were no build cached.
+                </td>
+            </tr>
+        </tbody>
+
+        <tbody></tbody>
+    </table>
+
+    <p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+
+    <p>The following HTTP errors can be returned:</p>
+
+    <ul>
+        <li><code>400 Bad Request</code>: The request was invalid</li>
+        <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
+        <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
+        <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+    </ul>
+
+    <h3 id="get-v1-files-module-version-path-">GET /v2/files/<code>module</code>@<code>version</code>/<code>path</code></h3>
+
+    <p>Loads and returns a file from a module component&#39;s repo.</p>
+    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
+        <thead>
+            <tr>
+                <th>Param</th>
+                <th data-o-table-heading-disable-sort>Where</th>
+                <th data-o-table-heading-disable-sort>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="files-module">
+                <td><code>module</code></td>
+                <td>URL</td>
+                <td>Name of a git repo containing a the file to return.</td>
+            </tr>
+            <tr id="files-version">
+                <td><code>version</code></td>
+                <td>URL</td>
+                <td>Semver compliant version number reference.</td>
+            </tr>
+            <tr id="files-path">
+                <td><code>path</code></td>
+                <td>URL</td>
+                <td>Path to the file within the repo.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>The most recent tagged version of the file that matches the specified Semver version number will be returned.</p>
+
+    <h3 id="get-v1-modules-module-version-">GET /v2/modules/<code>module</code>@<code>version</code></h3>
+
+    <p>Returns information in JSON format describing the module.</p>
+
+    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th data-o-table-heading-disable-sort>Type</th>
+                <th data-o-table-heading-disable-sort>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="modules-bowerEndpoint">
+                <td><code>bowerEndpoint</code></td>
+                <td>String</td>
+                <td>Name or URL of the package with an optional version number. It&#39;s in a format accepted by the <code>bower install</code> command.</td>
+            </tr>
+            <tr id="modules-bowerManifest">
+                <td><code>bowerManifest</code></td>
+                <td>Object</td>
+                <td>
+                    Content of the <a href="https://github.com/bower/bower#defining-a-package"><code>.bower.json</code></a> file that&#39;s created by the <code>bower install</code> command. It contains the exact version of the package and its
+                    dependencies.
+                </td>
+            </tr>
+            <tr id="modules-origamiManifest">
+                <td><code>origamiManifest</code></td>
+                <td>Object</td>
+                <td>
+                    Content of the <a href="/ft-origami/docs/syntax/origamijson/"><code>origami.json</code></a> file if it was found in the package.
+                </td>
+            </tr>
+            <tr id="modules-build">
+                <td><code>build</code></td>
+                <td>Object</td>
+                <td>
+                    Results of build tasks performed on the package. All properties in this object are optional. Each property in this object contains an object with a
+                    <code>valid</code> and an optional <code>error</code> properties.
+                </td>
+            </tr>
+            <tr id="modules-build-bundler-valid">
+                <td><code>build.bundler.valid</code></td>
+                <td>Boolean</td>
+                <td><code>true</code> if the package could be fetched and installed by the build service.</td>
+            </tr>
+            <tr id="modules-build-bundler-error">
+                <td><code>build.bundler.error</code></td>
+                <td>String</td>
+                <td>Message describing installation failure, if any.</td>
+            </tr>
+            <tr id="modules-build-origami-valid">
+                <td><code>build.origami.valid</code></td>
+                <td>Boolean</td>
+                <td><code>true</code> if this is an Origami module and no conformance errors were found.</td>
+            </tr>
+            <tr id="modules-build-origami-error">
+                <td><code>build.origami.error</code></td>
+                <td>String</td>
+                <td>Message describing the conformance error, if any.</td>
+            </tr>
+            <tr id="modules-build-css-valid">
+                <td><code>build.css.valid</code></td>
+                <td>Boolean</td>
+                <td><code>true</code> if CSS and Sass files in the package compiled successfully.</td>
+            </tr>
+            <tr id="modules-build-css-error">
+                <td><code>build.css.error</code></td>
+                <td>String</td>
+                <td>Sass compilation error message, if any.</td>
+            </tr>
+            <tr id="modules-build-js-valid">
+                <td><code>build.js.valid</code></td>
+                <td>Boolean</td>
+                <td><code>true</code> if JS was concatenated and minified without problems.</td>
+            </tr>
+            <tr id="modules-build-js-error">
+                <td><code>build.js.error</code></td>
+                <td>String</td>
+                <td>JS compilation error message, if any.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,6 +1,9 @@
 @charset "UTF-8";
 
-pre {
-    margin-top: 0;
-    margin-bottom: var(--o-spacing-s6);
+.o-layout__header .o-header-services__top .o-header-services__ftlogo {
+	background-image: url("https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1:origami?source=origami-build-service");
+}
+
+.o-table--responsive-flat td {
+	width: 0;
 }

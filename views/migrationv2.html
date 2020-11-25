@@ -1,0 +1,63 @@
+<div class="o-layout__sidebar">
+    <!-- for automatically generated sidebar -->
+</div>
+
+<div class="o-layout__main">
+    <h1 id="migration-guide">
+        Migration Guide
+    </h1>
+
+    <h2 id="v1-to-v2-migration">Migrating from v1 to v2</h2>
+
+    <p>The only potential breaking change in the v2 API is that we moved Sass compilation from Ruby Sass to LibSass. The only endpoint affected by this is <code>/v2/bundles/css</code>.</p>
+
+    <p>
+        Try replacing v1 with v2 in your requests. If you're using very old versions of some modules, some of your styles may break. In this case you'll need to update to newer versions of these modules.
+    </p>
+
+    <table class="o-table o-table--horizontal-lines" data-o-component="o-table">
+        <thead>
+            <tr>
+                <th>Before</th>
+                <th>After</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>/v1/bundles/css?modules=&hellip;</code></td>
+                <td><code>/v2/bundles/css?modules=&hellip;</code></td>
+            </tr>
+            <tr>
+                <td><code>/v1/files/&hellip;</code></td>
+                <td><code>/v2/files/&hellip;</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 id="unversioned-to-v2-migration">Migrating from unversioned to v2</h2>
+
+    <p>
+        Unversioned endpoints behave in exactly the same way as v1. See the
+        <a href="#v1-to-v2-migration">v1 to <code>v2</code> migration docs</a>
+        for information about breaking changes. To migrate, add v2 into the path before the endpoint:
+    </p>
+
+    <table class="o-table o-table--horizontal-lines" data-o-component="o-table">
+        <thead>
+            <tr>
+                <th>Before</th>
+                <th>After</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>/bundles/css?modules=&hellip;</code></td>
+                <td><code>/v2/bundles/css?modules=&hellip;</code></td>
+            </tr>
+            <tr>
+                <td><code>/files/&hellip;</code></td>
+                <td><code>/v2/files/&hellip;</code></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

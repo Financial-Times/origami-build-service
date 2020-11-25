@@ -5,16 +5,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>{{title}}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<base href="{{basePath}}"/>
 
 	<script>
-		var cutsTheMustard = (
-		'querySelector' in document &&
-		'localStorage' in window &&
-		'addEventListener' in window
-		);
-		if (cutsTheMustard) {
-			document.documentElement.className = document.documentElement.className.replace(/\bcore\b/g, 'enhanced');
+		var script = document.createElement('script');
+		var supportsDeferredScripts = "defer" in script && "async" in script;
+		window.cutsTheMustard = (typeof document.documentElement.dataset === 'object' && ('visibilityState' in document) && supportsDeferredScripts);
+		if (window.cutsTheMustard) {
+			document.documentElement.classList.replace('core', 'enhanced');
 		}
 	</script>
 
@@ -30,84 +27,31 @@
 		body {
 			margin: 0;
 		}
-		.origami-logo {
-			display: inline-block;
-			width: 40px;
-			height: 40px;
-			background-repeat: no-repeat;
-			background-position: 50% 50%;
-			background-size: contain;
-			background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2My4zIDYzLjMnPjxnPjxnPjxwb2x5Z29uIGZpbGw9JyNEN0QxQzYnIHBvaW50cz0nMzEuNyw1MS4zIDE5LjksNjMuMiAwLjEsNDMuNCAwLjEsMTkuNycvPjxwb2x5bGluZSBmaWxsPScjQjdCNUFCJyBwb2ludHM9JzQzLjYsMCAxOS45LDAgMC4xLDE5LjcgMTIsMzEuNiA0My42LDAnLz48cG9seWxpbmUgZmlsbD0nIzg3ODY4MCcgcG9pbnRzPSc2My4zLDQzLjQgNjMuMywxOS43IDQzLjYsMCAzMS43LDExLjggNjMuMyw0My40Jy8+PHBvbHlnb24gZmlsbD0nIzY0NjQ2NCcgcG9pbnRzPScxOS45LDYzLjIgNDMuNiw2My4yIDYzLjMsNDMuNCA1MS41LDMxLjYnLz48cGF0aCBmaWxsPScjRDdEMUM2JyBkPSdtMC4wOTgwNjggMTkuNycvPjwvZz48L2c+PC9zdmc+");
-			vertical-align: top;
-			margin-right: 10px;
-		}
 	</style>
 
-	<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-layout@^4.0.2,o-table@^8.0.0,o-header-services@^4.0.0,o-footer-services@^3.0.1,o-spacing@^2.0.0,o-syntax-highlight@^3.0.0,o-normalise@^2.0.1,o-fonts@^4.0.2&brand=internal" />
-	<link rel="stylesheet" href="main.css" />
+	<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-layout@^3,o-fonts@^3,o-syntax-highlight@^2,o-table@^7,o-forms@^7,o-buttons@^5,o-header-services@^3,o-footer-services@^2&brand=internal" />
+	<link rel="stylesheet" href="/main.css" />
+
 	<script src="https://polyfill.io/v2/polyfill.min.js?features=fetch,default"></script>
 	<script>
 		(function(src) {
-			if (cutsTheMustard) {
-				var o = document.createElement('script');
-				o.async = o.defer = true;
-				o.src = src;
+			if (window.cutsTheMustard) {
+				script.async = script.defer = true;
+				script.src = src;
 				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(o, s);
+				s.parentNode.insertBefore(script, s);
 			}
-		}('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-layout@^4.0.2,o-table@^8.0.0,o-header-services@^4.0.0,o-footer-services@^3.0.1,o-spacing@^2.0.0,o-syntax-highlight@^3.0.0,o-normalise@^2.0.1,o-fonts@^4.0.2'));
+		}('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-layout@^3,o-fonts@^3,o-syntax-highlight@^2,o-table@^7,o-forms@^7,o-buttons@^5,o-header-services@^3,o-footer-services@^2&brand=internal'));
 	</script>
 
 </head>
+<body data-o-component="o-syntax-highlight">
+	<div class="o-layout {{layoutStyle}}" data-o-component="o-layout">
+		{{> header}}
 
+		{{{body}}}
 
-<body>
-
-	<div class="o-layout {{#pageLayout}}o-layout--{{.}}{{/pageLayout}}" data-o-layout-nav-heading-selector="h1, h2" data-o-layout-construct-nav="false" data-o-component="o-layout">
-		<div class="o-layout__header">
-			<header class="o-header-services " data-o-component="o-header-services">
-				<div class="o-header-services__top">
-					<div class="o-header-services__logo"></div>
-					<div class="o-header-services__title">
-						<a class="o-header-services__product-name" href="/">Origami Build Service</a>
-						<span class="o-header-services__product-tagline">Components built and delivered</span>
-					</div>
-				</div>
-			</header>
-		</div>
-
-		{{# showNav}}
-		<div class="o-layout__sidebar">
-			{{>navigation}}
-		</div>
-		{{/ showNav}}
-
-		<div class="o-layout__main o-layout-typography"  data-o-component='o-syntax-highlight'>
-			{{{body}}}
-		</div>
-
-		<div class="o-layout__footer">
-			<footer class="o-footer-services">
-				<div class="o-footer-services__container">
-					<div class="o-footer-services__wrapper o-footer-services__wrapper--top">
-						<a class="o-footer-services__icon-link o-footer-services__icon-link--github" href="https://github.com/Financial-Times/origami-build-service">View project on GitHub</a>
-						<a class="o-footer-services__icon-link o-footer-services__icon-link--slack" href="https://slack.com/messages/C02FU5ARJ/">#origami-support</a>
-					</div>
-				</div>
-				<div class="o-footer-services__container">
-					<div class="o-footer-services__wrapper o-footer-services__wrapper--legal">
-						<div class="o-footer-services__links">
-							<a href="http://help.ft.com/help/legal-privacy/cookies/">Cookies</a>
-							<a href="http://help.ft.com/help/legal-privacy/copyright/copyright-policy/">Copyright</a>
-							<a href="http://help.ft.com/help/legal-privacy/privacy/">Privacy</a>
-							<a href="http://help.ft.com/help/legal-privacy/terms-conditions">Terms &amp; Conditions</a>
-						</div>
-						<p><span>&#xA9; THE FINANCIAL TIMES LTD 2020.</span> FT and &apos;Financial Times&apos; are trademarks of The Financial Times Ltd.</p>
-					</div>
-				</div>
-			</footer>
-		</div>
+		{{> footer}}
 	</div>
-
 </body>
 </html>
