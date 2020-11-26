@@ -39,4 +39,35 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
         `
 		);
 	});
+	it('creates a index.js file in the specified location and with the specified modules as imported, added to the Origami global variable and passed to the callback', async function () {
+		await fs.mkdir('/tmp/bundle/', {recursive: true});
+
+		const location = await fs.mkdtemp('/tmp/bundle/');
+
+		const modules = {
+			lodash: '^5',
+			preact: '^10.5.5',
+		};
+
+		await createEntryFileJavaScript(location, modules, 'start_application');
+
+		const EntryFileContents = await fs.readFile(
+			path.join(location, 'index.js'),
+			'utf-8'
+		);
+		proclaim.deepStrictEqual(
+			EntryFileContents,
+			dedent`
+        import * as preact from "preact";
+        import * as lodash from "lodash";
+        var modules = {};
+        if (typeof Origami === 'undefined') { self.Origami = {}; }
+        self.Origami["lodash"] = lodash;
+        modules["lodash"] = lodash;
+        self.Origami["preact"] = preact;
+        modules["preact"] = preact;
+        typeof start_application === 'function' && start_application(modules);
+        `
+		);
+	});
 });
