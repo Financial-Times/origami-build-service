@@ -26,21 +26,20 @@
 	<nav class="o-header-services__primary-nav" aria-label="primary">
 		<ul class="o-header-services__primary-nav-list">
 			{{#navigation.items}}
-			<li data-o-header-services-level="1">
+			<li {{#if subnav}}data-o-header-services-level="1" {{/if}}>
 				<a
 					class="o-header-services__nav-link {{#current}}o-header-services__nav-link--selected{{/current}}"
 					href="{{@root.basePath}}{{href}}"
-				>
-					{{name}} </a
-				><!--
-					--><button
+					>{{name}}</a
+				>{{#each subnav_items}}{{#if @first}}<!--
+				--><button
 					class="o-header-services__drop-down-button"
 					type="button"
 					name="button"
 					aria-label="Toggle dropdown menu"
 				></button>
 				<ul data-o-header-services-level="2" aria-hidden="true">
-					{{#subnav_items}}
+					{{/if}}
 					<li>
 						<a href="{{@root.basePath}}{{href}}">{{name}}</a>
 					</li>
@@ -53,9 +52,10 @@
 							Close dropdown menu
 						</button>
 					</li>
-					{{/subnav_items}}
+					{{#if @last}}
 				</ul>
-			</li>
+				{{/if}} {{/each}}
+			</>
 			{{/navigation.items}}
 		</ul>
 	</nav>
