@@ -175,7 +175,7 @@ describe('GET /v3/bundles/js', function() {
 
         it('should respond with an error message', function(done) {
             this.request.expect(({text}) => {
-                proclaim.deepStrictEqual(text, 'throw new Error("Origami Build Service returned an error: The modules query parameter can not be empty.")');
+                proclaim.deepStrictEqual(text, 'throw new Error("Origami Build Service returned an error: The modules query parameter contains module names which are not valid: http://1.2.3.4/.")');
             }).end(done);
         });
 
