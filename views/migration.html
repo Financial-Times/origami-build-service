@@ -1,0 +1,127 @@
+<div class="o-layout__sidebar">
+    <!-- for automatically generated sidebar -->
+</div>
+
+<div class="o-layout__main o-layout-typography" data-o-component="o-syntax-highlight">
+    <h1 id="migration-guide">
+        Migration Guide
+    </h1>
+
+    <h2 id="v2-to-v3-migration">Migrating from v2 to v3</h2>
+
+    <p>Version 3 only works with Origami components which have comply with the Origami specification version 2. If you're using older versions of Origami components, you will need to update to newer versions which comply with the Origami specification version 2.</p>
+
+    <p>Version 3 uses npm instead of Bower to install the requested components. You will need to update your Origami Build Service urls to use the npm package names instead of the bower package names for the components you are using. For most Origami components that means putting <code>@financial-times/</code>at the beginning of the name.</p>
+
+    <p>Version 3 no longer uses LibSass for compiling Sass and instead uses <a href="https://sass-lang.com/dart-sass">DartSass</a>.</p>
+
+    <p>Version 3 no longer uses Webpack for bundling JavaScript and instead uses <a href="https://esbuild.github.io/">ESBuild</a>.</p>
+
+    <p>Version 3 has removed the <code>/modules</code> endpoint.</p>
+
+    <p>The <code>/bundles/js</code> endpoint has removed support for several configuration parameters which are listed below:</p>
+
+    <table class="o-table o-table--horizontal-lines" data-o-component="o-table">
+        <thead>
+            <tr>
+                <th>Configuration parameter</th>
+                <th>Reasoning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>minify</code></td>
+                <td>All requests will be minified</td>
+            </tr>
+            <tr>
+                <td><code>polyfills</code></td>
+                <td>We have a separate <a href="https://polyfill.io/v3/">polyfill service</a> for serving polyfills</td>
+            </tr>
+            <tr>
+                <td><code>exports</code></td>
+                <td>We no longer support this feature as it is not being used by anyone.</td>
+            </tr>
+            <tr>
+                <td><code>newerthan</code></td>
+                <td>We no longer support this feature as it is not being used by anyone.</td>
+            </tr>
+            <tr>
+                <td><code>autoinit</code></td>
+                <td>We no longer include <a href="https://registry.origami.ft.com/components/o-autoinit@2.0.7/readme?brand=master">o-autoinit</a> by default. You will need to add it to the <code>modules</code> query parameter if you want to include it in the bundle.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="o-table o-table--horizontal-lines" data-o-component="o-table">
+        <thead>
+            <tr>
+                <th>Before</th>
+                <th>After</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>/v2/bundles/css?modules=o-table&hellip;</code></td>
+                <td><code>/v3/bundles/css?modules=@financial-times/o-table&hellip;</code></td>
+            </tr>
+            <tr>
+                <td><code>/v2/bundles/js?modules=o-table&hellip;</code></td>
+                <td><code>/v3/bundles/js?modules=@financial-times/o-table&hellip;</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 id="v1-to-v2-migration">Migrating from v1 to v2</h2>
+
+    <p>The only potential breaking change in the v2 API is that we moved Sass compilation from Ruby Sass to LibSass. The only endpoint affected by this is <code>/v2/bundles/css</code>.</p>
+
+    <p>
+        Try replacing v1 with v2 in your requests. If you're using very old versions of some modules, some of your styles may break. In this case you'll need to update to newer versions of these modules.
+    </p>
+
+    <table class="o-table o-table--horizontal-lines" data-o-component="o-table">
+        <thead>
+            <tr>
+                <th>Before</th>
+                <th>After</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>/v1/bundles/css?modules=&hellip;</code></td>
+                <td><code>/v2/bundles/css?modules=&hellip;</code></td>
+            </tr>
+            <tr>
+                <td><code>/v1/files/&hellip;</code></td>
+                <td><code>/v2/files/&hellip;</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 id="unversioned-to-v2-migration">Migrating from unversioned to v2</h2>
+
+    <p>
+        Unversioned endpoints behave in exactly the same way as v1. See the
+        <a href="#v1-to-v2-migration">v1 to <code>v2</code> migration docs</a>
+        for information about breaking changes. To migrate, add v2 into the path before the endpoint:
+    </p>
+
+    <table class="o-table o-table--horizontal-lines" data-o-component="o-table">
+        <thead>
+            <tr>
+                <th>Before</th>
+                <th>After</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>/bundles/css?modules=&hellip;</code></td>
+                <td><code>/v2/bundles/css?modules=&hellip;</code></td>
+            </tr>
+            <tr>
+                <td><code>/files/&hellip;</code></td>
+                <td><code>/v2/files/&hellip;</code></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
