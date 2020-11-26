@@ -9,6 +9,8 @@
 
     <h2 id="v2-to-v3-migration">Migrating from v2 to v3</h2>
 
+    <p>Version 3 bundle endpoints require a <code>system_code</code> query parameter which is the [bizops system code](https://biz-ops.in.ft.com/list/Systems) for the system which is making the build service request.</p>
+
     <p>Version 3 only works with Origami components which have comply with the Origami specification version 2. If you're using older versions of Origami components, you will need to update to newer versions which comply with the Origami specification version 2.</p>
 
     <p>Version 3 uses npm instead of Bower to install the requested components. You will need to update your Origami Build Service urls to use the npm package names instead of the bower package names for the components you are using. For most Origami components that means putting <code>@financial-times/</code>at the beginning of the name.</p>
