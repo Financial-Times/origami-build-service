@@ -71,8 +71,8 @@ We configure Origami Build Service using environment variables. In development, 
 
 ### Optional
 
-  * `NPM_REGISTRY_URL`: The npm Registry url to use when installing npm dependencies
-  * `BOWER_REGISTRY_URL`: The Bower Registry url to use when installing Bower dependencies
+  * `NPM_REGISTRY_URL`: The npm Registry url to use when installing npm dependencies. Defaults to `https://registry.npmjs.com`.
+  * `BOWER_REGISTRY_URL`: The Bower Registry url to use when installing Bower dependencies. Defaults to `http://origami-bower-registry.ft.com`.
 
 ### Headers
 
