@@ -60,7 +60,7 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 			dedent`
         import * as preact from "preact";
         import * as lodash from "lodash";
-        var modules = {};
+        let modules = {};
         if (typeof Origami === 'undefined') { self.Origami = {}; }
         self.Origami["lodash"] = lodash;
         modules["lodash"] = lodash;
