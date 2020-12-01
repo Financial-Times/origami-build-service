@@ -10,7 +10,7 @@
 			"href": "v2/docs/api",
 			"current": false,
 			"subnav": true,
-			"subnav_items": [
+			"subnavItems": [
 					{
 						"name": "v2",
 						"href": "v2/docs/api",
