@@ -18,6 +18,7 @@ before(function() {
 		requestLogFormat: null,
 		graphiteApiKey: 'xxx',
 		staticBundlesDirectory: `${__dirname}/mock-static-bundles`,
+		npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://origami-npm-registry-prototype.herokuapp.com',
 		tempdir
 	})
 	.listen()

@@ -69,6 +69,11 @@ We configure Origami Build Service using environment variables. In development, 
   * `RELEASE_ENV`: The Salesforce environment to include in change-logs. One of `Test` or `Production`
   * `SENTRY_DSN`: The Sentry URL to send error information to
 
+### Optional
+
+  * `NPM_REGISTRY_URL`: The npm Registry url to use when installing npm dependencies. Defaults to `https://registry.npmjs.com`.
+  * `BOWER_REGISTRY_URL`: The Bower Registry url to use when installing Bower dependencies. Defaults to `http://origami-bower-registry.ft.com`.
+
 ### Headers
 
 The service can also be configured by sending HTTP headers, these would normally be set in your CDN config:

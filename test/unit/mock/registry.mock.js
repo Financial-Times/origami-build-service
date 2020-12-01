@@ -7,6 +7,6 @@ module.exports = function() {
 	return {
 		getPackageList: sinon.stub().resolves([]),
 		packageListByURL: sinon.stub().resolves({}),
-		registryURL: ''
+		bowerRegistryURL: ''
 	};
 };

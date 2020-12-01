@@ -25,16 +25,16 @@ describe('lib/registry', () => {
 
 	describe('Registry(options)', () => {
 
-		it('defaults the registryURL to http://origami-bower-registry.ft.com', () => {
+		it('defaults the bowerRegistryURL to http://origami-bower-registry.ft.com', () => {
 			const registry = new Registry();
-			assert.equal(registry.registryURL, 'http://origami-bower-registry.ft.com');
+			assert.equal(registry.bowerRegistryURL, 'http://origami-bower-registry.ft.com');
 		});
 
-		it('can specify the registryURL', () => {
+		it('can specify the bowerRegistryURL', () => {
 			const registry = new Registry({
-				registryURL: 'http://example.com'
+				bowerRegistryURL: 'http://example.com'
 			});
-			assert.equal(registry.registryURL, 'http://example.com');
+			assert.equal(registry.bowerRegistryURL, 'http://example.com');
 		});
 
 		describe('Registry.getPackageList()', () => {
@@ -48,9 +48,9 @@ describe('lib/registry', () => {
 				assert.instanceOf(registry.getPackageList(), Promise);
 			});
 
-			it('requests /packages from registryURL', () => {
+			it('requests /packages from bowerRegistryURL', () => {
 				const registry = new Registry({
-					registryURL: 'http://example.com'
+					bowerRegistryURL: 'http://example.com'
 				});
 				registry.getPackageList();
 				assert.ok(requestPromise.calledWith({

@@ -5,9 +5,10 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
+const primeNpmCache = require('./lib/primeNpmCache').primeNpmCache;
 
 dotenv.config({
-	silent: true
+	silent: true,
 });
 const options = {
 	defaultLayout: 'main',
@@ -17,9 +18,11 @@ const options = {
 	log: console,
 	metricsAppName: 'origami-build-service',
 	name: 'Origami Build Service',
-	registryURL: process.env.REGISTRY_URL || 'http://origami-bower-registry.ft.com',
+	bowerRegistryURL:
+		process.env.BOWER_REGISTRY_URL || 'http://origami-bower-registry.ft.com',
 	tempdir: `/tmp/buildservice-${process.pid}/`,
-	testHealthcheckFailure: process.env.TEST_HEALTHCHECK_FAILURE || false
+	testHealthcheckFailure: process.env.TEST_HEALTHCHECK_FAILURE || false,
+	npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.com'
 };
 
 /**
@@ -34,6 +37,12 @@ const netrcContents = `machine github.com\nlogin ${process.env.GITHUB_USERNAME}\
 fs.writeFileSync(netrcFilePath, netrcContents);
 process.env.HOME = options.tempdir; // Workaround: Bower ends up using $HOME/.local/share/bower/empty despite config overriding this
 
-buildService(options).listen().catch(() => {
-	process.exit(1);
-});
+buildService(options)
+	.listen()
+	.then(() => {
+		return primeNpmCache(options.npmRegistryURL);
+	})
+	.catch(err => {
+		console.error(err);
+		process.exit(1);
+	});
