@@ -40,9 +40,9 @@ process.env.HOME = options.tempdir; // Workaround: Bower ends up using $HOME/.lo
 buildService(options)
 	.listen()
 	.then(() => {
-		return primeNpmCache(options.npmRegistryURL);
+		return primeNpmCache(options.npmRegistryURL).catch(console.log);
 	})
-	.catch(err => {
-		console.error(err);
+	.catch(error => {
+		console.error(error);
 		process.exit(1);
 	});
