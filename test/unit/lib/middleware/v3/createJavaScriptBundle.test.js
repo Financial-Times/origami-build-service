@@ -34,6 +34,7 @@ describe('createJavaScriptBundle', function () {
 				}
 			};
 			request.query.modules = '@financial-times/o-utils@1.1.7';
+			request.query.system_code = 'origami-build-service';
 
 			await createJavaScriptBundle(request, response);
 
@@ -80,6 +81,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				}
 			};
+			request.query.system_code = 'origami-build-service';
 
 			await createJavaScriptBundle(request, response);
 
@@ -127,6 +129,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = '';
+				request.query.system_code = 'origami-build-service';
 
 				await createJavaScriptBundle(request, response);
 
@@ -175,6 +178,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-test@1,o-test@1';
+				request.query.system_code = 'origami-build-service';
 
 				await createJavaScriptBundle(request, response);
 
@@ -222,6 +226,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-test@1,,';
+				request.query.system_code = 'origami-build-service';
 
 				await createJavaScriptBundle(request, response);
 
@@ -269,6 +274,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = ' o-test@1';
+				request.query.system_code = 'origami-build-service';
 
 				await createJavaScriptBundle(request, response);
 
@@ -316,6 +322,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-test@1 ';
+				request.query.system_code = 'origami-build-service';
 
 				await createJavaScriptBundle(request, response);
 
@@ -363,6 +370,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-test';
+				request.query.system_code = 'origami-build-service';
 
 				await createJavaScriptBundle(request, response);
 
@@ -410,6 +418,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-test@5wg';
+				request.query.system_code = 'origami-build-service';
 
 				await createJavaScriptBundle(request, response);
 
@@ -457,6 +466,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-TeSt@5';
+				request.query.system_code = 'origami-build-service';
 
 				await createJavaScriptBundle(request, response);
 

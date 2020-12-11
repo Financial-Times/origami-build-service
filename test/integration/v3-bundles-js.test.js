@@ -36,10 +36,11 @@ describe('GET /v3/bundles/js', function() {
 
     describe('when a valid module is requested', function() {
         const moduleName = '@financial-times/o-utils@1.1.7';
+        const system = 'origami-build-service';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/js?modules=${moduleName}`)
+                .get(`/v3/bundles/js?modules=${moduleName}&system_code=${system}`)
                 .set('Connection', 'close');
         });
 
@@ -76,10 +77,11 @@ describe('GET /v3/bundles/js', function() {
 
     describe('when an invalid module is requested (nonexistent)', function() {
         const moduleName = 'hello-nonexistent-module@1';
+        const system = 'origami-build-service';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/js?modules=${moduleName}`)
+                .get(`/v3/bundles/js?modules=${moduleName}&system_code=${system}`)
                 .set('Connection', 'close');
         });
 
@@ -117,10 +119,11 @@ describe('GET /v3/bundles/js', function() {
     // });
 
     describe('when the modules parameter is missing', function() {
+        const system = 'origami-build-service';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get('/v3/bundles/js')
+                .get('/v3/bundles/js?system_code=${system}')
                 .set('Connection', 'close');
         });
 
@@ -139,10 +142,11 @@ describe('GET /v3/bundles/js', function() {
     });
 
     describe('when the modules parameter is not a string', function() {
+        const system = 'origami-build-service';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get('/v3/bundles/js?modules[]=foo&modules[]=bar')
+                .get('/v3/bundles/js?modules[]=foo&modules[]=bar&system_code=${system}')
                 .set('Connection', 'close');
         });
 
@@ -162,10 +166,11 @@ describe('GET /v3/bundles/js', function() {
 
     describe('when a module name cannot be parsed', function() {
         const moduleName = 'http://1.2.3.4/';
+        const system = 'origami-build-service';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/js?modules=${moduleName}`)
+                .get(`/v3/bundles/js?modules=${moduleName}&system_code=${system}`)
                 .set('Connection', 'close');
         });
 
@@ -187,10 +192,11 @@ describe('GET /v3/bundles/js', function() {
     describe('when the callback parameter is an invalid value', function() {
         const moduleName = '@financial-times/o-utils@1.1.7';
         const callback = 'console.log("you got hacked!");//';
+        const system = 'origami-build-service';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/js?modules=${moduleName}&callback=${callback}`)
+                .get(`/v3/bundles/js?modules=${moduleName}&callback=${callback}&system_code=${system}`)
                 .set('Connection', 'close');
         });
 
@@ -213,10 +219,11 @@ describe('GET /v3/bundles/js', function() {
     describe('when the callback parameter is a valid value', function() {
         const moduleName = '@financial-times/o-utils@1.1.7';
         const callback = 'start_app';
+        const system = 'origami-build-service';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/js?modules=${moduleName}&callback=${callback}`)
+                .get(`/v3/bundles/js?modules=${moduleName}&callback=${callback}&system_code=${system}`)
                 .set('Connection', 'close');
         });
 
