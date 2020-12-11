@@ -7,7 +7,7 @@ const {
 	parseFileParameter,
 } = require('../../../../../lib/middleware/v3/parseFileParameter');
 
-describe.only('parseFileParameter', () => {
+describe('parseFileParameter', () => {
 	it('it is a function', async () => {
 		proclaim.isFunction(parseFileParameter);
 	});
