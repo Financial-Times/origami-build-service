@@ -123,7 +123,7 @@ describe('GET /v3/bundles/js', function() {
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get('/v3/bundles/js?system_code=${system}')
+                .get(`/v3/bundles/js?system_code=${system}`)
                 .set('Connection', 'close');
         });
 
@@ -146,7 +146,7 @@ describe('GET /v3/bundles/js', function() {
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get('/v3/bundles/js?modules[]=foo&modules[]=bar&system_code=${system}')
+                .get(`/v3/bundles/js?modules[]=foo&modules[]=bar&system_code=${system}`)
                 .set('Connection', 'close');
         });
 
