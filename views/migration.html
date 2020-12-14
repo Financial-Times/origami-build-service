@@ -15,11 +15,23 @@
 
     <p>Version 3 uses npm instead of Bower to install the requested components. You will need to update your Origami Build Service urls to use the npm package names instead of the bower package names for the components you are using. For most Origami components that means putting <code>@financial-times/</code>at the beginning of the name.</p>
 
+    <p>Version 3 has removed the <code>/modules</code> endpoint.</p>
+
+    <h3>Files endpoint</h3>
+
+    <p>version 2 only used uri path parameters for the api and not any query parameters (<code>GET /v2/files/module@version/path</code>) whereas version 3 uses only query parameters and not path parameters (<code>GET /v3/files?module=...&file=...&system_code=...</code>)</p>
+
+    <h4>Migration Example</h4>
+    From: <code>/v2/files/o-table@8/README.md</code>
+    To: <code>/v3/files?module=@financial-times/o-table@8&file=README.md&system_code=origami-build-service</code>
+
+    <h3>CSS endpoint</h3>
+
     <p>Version 3 no longer uses LibSass for compiling Sass and instead uses <a href="https://sass-lang.com/dart-sass">DartSass</a>.</p>
 
-    <p>Version 3 no longer uses Webpack for bundling JavaScript and instead uses <a href="https://esbuild.github.io/">ESBuild</a>.</p>
+    <h3>JS endpoint</h3>
 
-    <p>Version 3 has removed the <code>/modules</code> endpoint.</p>
+    <p>Version 3 no longer uses Webpack for bundling JavaScript and instead uses <a href="https://esbuild.github.io/">ESBuild</a>.</p>
 
     <p>The <code>/bundles/js</code> endpoint has removed support for several configuration parameters which are listed below:</p>
 
@@ -69,6 +81,10 @@
             <tr>
                 <td><code>/v2/bundles/js?modules=o-table&hellip;</code></td>
                 <td><code>/v3/bundles/js?modules=@financial-times/o-table&hellip;</code></td>
+            </tr>
+            <tr>
+                <td><code>/v2/files/o-table@8/README.md</code></td>
+                <td><code>/v3/files?module=@financial-times/o-table@8&file=README.md&system_code=origami-build-service</code></td>
             </tr>
         </tbody>
     </table>
