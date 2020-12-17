@@ -33,7 +33,7 @@ module.exports = {
 	},
 	overrides: [
 		{
-			files: ['**/*.test.js'],
+			files: ['**/*.test.js', 'test/testhelper.js'],
 			env: {
 				mocha: true,
 			},
