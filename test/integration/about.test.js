@@ -25,10 +25,14 @@ describe('GET /__about', function () {
 		this.request.expect(function (res) {
 			proclaim.isObject(res.body);
 
-			// we have to remove the dateDeployed key as it doesn't match
 			const aboutInfo = Object.assign({}, require('../../about.json'));
+			// we have to remove the dateDeployed key as it doesn't match
 			delete res.body.dateDeployed;
 			delete aboutInfo.dateDeployed;
+
+			// we have to remove the appVersion and _hostname as will be different when running the tests against the real servers.
+			delete res.body.appVersion;
+			delete res.body._hostname;
 			proclaim.deepEqual(res.body, aboutInfo);
 		}).end(done);
 	});
