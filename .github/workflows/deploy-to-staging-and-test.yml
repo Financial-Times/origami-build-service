@@ -24,3 +24,15 @@ jobs:
           system-code: "origami-build-service"
           environment: test
           slack-channels: "ft-changes,origami-deploys"
+
+  integration-tests:
+    needs: [deploy-dev]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 12.x
+      - run: npm install -g "npm@^7"
+      - run: npm ci
+      - run: HOST="https://origami-build-service-qa.herokuapp.com" make test-integration
