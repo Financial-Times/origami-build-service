@@ -20,13 +20,17 @@ describe('GET /v1/modules', function() {
 		});
 
 		it('should response with a year long surrogate cache control header', function(done) {
-			this.request
-				.expect('Surrogate-Control', 'public, max-age=31536000, stale-while-revalidate=31536000, stale-if-error=31536000')
-				.end(done);
+			if (process.env.HOST) {
+				this.skip();
+			} else {
+				this.request
+					.expect('Surrogate-Control', 'public, max-age=31536000, stale-while-revalidate=31536000, stale-if-error=31536000')
+					.end(done);
+			}
 		});
 
 		it('should respond with a v2 `Location` header', function(done) {
-			this.request.expect('Location', `/v2/modules/${moduleName}`).end(done);
+			this.request.expect('Location', `${this.basepath}/v2/modules/${moduleName}`).end(done);
 		});
 
 	});

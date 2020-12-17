@@ -21,7 +21,7 @@ describe('GET /files', function() {
 		});
 
 		it('should respond with a v2 `Location` header', function(done) {
-			this.request.expect('Location', `/v2/files/${moduleName}/${pathName}`).end(done);
+			this.request.expect('Location', `${this.basepath}/v2/files/${moduleName}/${pathName}`).end(done);
 		});
 
 	});

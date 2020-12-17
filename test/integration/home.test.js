@@ -17,15 +17,11 @@ describe('GET /', function() {
 	});
 
 	it('should respond with a v2 `Location` header', function(done) {
-		this.request.expect('Location', '/v2/').end(done);
+		this.request.expect('Location', `${this.basepath}/v2/`).end(done);
 	});
 
 	it('should respond with HTML', function(done) {
 		this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-	});
-
-	it('should respond with the build service documentation', function(done) {
-		this.request.expect('Moved Permanently. Redirecting to /v2/').end(done);
 	});
 
 });

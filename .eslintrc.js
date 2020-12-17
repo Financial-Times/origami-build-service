@@ -31,16 +31,24 @@ module.exports = {
 		'prefer-const': 1,
 		'no-const-assign': 2
 	},
-	'globals': {
-		'after': true,
-		'afterEach': true,
-		'before': true,
-		'beforeEach': true,
-		'describe': true,
-		'fetch': true,
-		'it': true,
-		'spawnTest': true,
-		'spawnTestWithTempdir': true,
-		'describeWithPackages': true
-	}
+	overrides: [
+		{
+			files: ['**/*.test.js'],
+			env: {
+				mocha: true,
+			},
+			'globals': {
+				'after': true,
+				'afterEach': true,
+				'before': true,
+				'beforeEach': true,
+				'describe': true,
+				'fetch': true,
+				'it': true,
+				'spawnTest': true,
+				'spawnTestWithTempdir': true,
+				'describeWithPackages': true
+			}
+		},
+	],
 };

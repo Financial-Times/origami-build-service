@@ -4,30 +4,45 @@ const buildService = require('../..');
 const mkdirp = require('mkdirp');
 const rmrf = require('rimraf');
 const uuid = require('uuid').v4;
+const process = require('process');
 
 const tempdir = `/tmp/buildservice/tests-${uuid()}`;
 const log = require('../mock/log.mock');
+const HOST = process.env.HOST;
 
 before(function() {
 	mkdirp.sync(tempdir);
-	return buildService({
-		defaultLayout: 'main',
-		environment: 'test',
-		log: log,
-		port: 0,
-		requestLogFormat: null,
-		graphiteApiKey: 'xxx',
-		staticBundlesDirectory: `${__dirname}/mock-static-bundles`,
-		npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://origami-npm-registry-prototype.herokuapp.com',
-		tempdir
-	})
-	.listen()
-	.then(app => {
-		this.app = app;
-	});
+	// If HOST is defined, we are wanting to test a real server and not the local express app in this project.
+	if (HOST) {
+		return new Promise(resolve => {
+			this.app = HOST;
+			this.basepath = new URL(HOST).pathname;
+			resolve();
+		});
+	} else {
+		return buildService({
+			defaultLayout: 'main',
+			environment: 'test',
+			log: log,
+			port: 0,
+			requestLogFormat: null,
+			graphiteApiKey: 'xxx',
+			staticBundlesDirectory: `${__dirname}/mock-static-bundles`,
+			npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://origami-npm-registry-prototype.herokuapp.com',
+			tempdir
+		})
+		.listen()
+		.then(app => {
+			this.app = app;
+			this.basepath = '';
+		});
+	}
 });
 
 after(function() {
-	this.app.ft.server.close();
-	rmrf.sync(tempdir);
+	// If HOST is not defined, we are testing the local express app in this project and need to stop the server to let the process exit.
+	if (!HOST) {
+		this.app.ft.server.close();
+		rmrf.sync(tempdir);
+	}
 });
