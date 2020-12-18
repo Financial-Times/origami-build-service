@@ -33,6 +33,8 @@ describe('GET /__about', function () {
 			// we have to remove the appVersion and _hostname as will be different when running the tests against the real servers.
 			delete res.body.appVersion;
 			delete res.body._hostname;
+			delete aboutInfo.appVersion;
+			delete aboutInfo._hostname;
 			proclaim.deepEqual(res.body, aboutInfo);
 		}).end(done);
 	});
