@@ -17,7 +17,7 @@ describe('GET /', function() {
 	});
 
 	it('should respond with a v2 `Location` header', function(done) {
-		this.request.expect('Location', `${this.basepath}/v2/`).end(done);
+		this.request.expect('Location', `${this.basepath}v2/`).end(done);
 	});
 
 	it('should respond with HTML', function(done) {

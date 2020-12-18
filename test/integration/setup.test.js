@@ -34,7 +34,7 @@ before(function() {
 		.listen()
 		.then(app => {
 			this.app = app;
-			this.basepath = '';
+			this.basepath = '/';
 		});
 	}
 });
