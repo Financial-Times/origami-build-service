@@ -21,6 +21,7 @@ describe('GET /v1/bundles/css', function() {
 		});
 
 		it('should response with a year long surrogate cache control header', function(done) {
+			// This test is not possible to run against a remote server which is behind a CDN such as Fastly because CDN's remove the Surrogate-Control header
 			if (process.env.HOST) {
 				this.skip();
 			} else {
@@ -36,6 +37,7 @@ describe('GET /v1/bundles/css', function() {
 
 	});
 
+	// These tests are not possible to run against a remote server because they require a set of fixture files to exist, which do not exist on our remote servers.
 	if (!process.env.HOST) {
 		describe('when a module is requested that has a static bundle', function() {
 			const moduleName = 'mock-modules/test-static';

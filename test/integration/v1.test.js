@@ -17,6 +17,7 @@ describe('GET /v1', function() {
 	});
 
 	it('should response with a year long surrogate cache control header', function(done) {
+			// This test is not possible to run against a remote server which is behind a CDN such as Fastly because CDN's remove the Surrogate-Control header
 		if (process.env.HOST) {
 			this.skip();
 		} else {
