@@ -20,7 +20,7 @@ describe('GET /modules', function() {
 		});
 
 		it('should respond with a v2 `Location` header', function(done) {
-			this.request.expect('Location', `${this.basepath}/v2/modules/${moduleName}`).end(done);
+			this.request.expect('Location', `${this.basepath}v2/modules/${moduleName}`).end(done);
 		});
 
 	});

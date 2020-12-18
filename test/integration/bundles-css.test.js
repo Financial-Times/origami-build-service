@@ -21,7 +21,7 @@ describe('GET /bundles/css', function() {
 		});
 
 		it('should respond with a v2 `Location` header', function(done) {
-			this.request.expect('Location', `${this.basepath}/v2/bundles/css?modules=${moduleName}&newerthan=${now}`).end(done);
+			this.request.expect('Location', `${this.basepath}v2/bundles/css?modules=${moduleName}&newerthan=${now}`).end(done);
 		});
 
 	});
