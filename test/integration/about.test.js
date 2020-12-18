@@ -30,7 +30,7 @@ describe('GET /__about', function () {
 			delete res.body.dateDeployed;
 			delete aboutInfo.dateDeployed;
 
-			// we have to remove the appVersion and _hostname as will be different when running the tests against the real servers.
+			// we have to remove the appVersion and _hostname as they will be different when running the tests against remote servers.
 			delete res.body.appVersion;
 			delete res.body._hostname;
 			delete aboutInfo.appVersion;

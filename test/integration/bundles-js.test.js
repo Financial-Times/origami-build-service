@@ -26,6 +26,7 @@ describe('GET /bundles/js', function() {
 
 	});
 
+	// These tests are not possible to run against a remote server because they require a set of fixture files to exist, which do not exist on our remote servers.
 	if (!process.env.HOST) {
 		describe('when a module is requested that has a static bundle', function() {
 			const moduleName = 'mock-modules/test-static';
