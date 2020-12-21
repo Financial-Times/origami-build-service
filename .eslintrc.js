@@ -38,13 +38,7 @@ module.exports = {
 				mocha: true,
 			},
 			'globals': {
-				'after': true,
-				'afterEach': true,
-				'before': true,
-				'beforeEach': true,
-				'describe': true,
 				'fetch': true,
-				'it': true,
 				'spawnTest': true,
 				'spawnTestWithTempdir': true,
 				'describeWithPackages': true
