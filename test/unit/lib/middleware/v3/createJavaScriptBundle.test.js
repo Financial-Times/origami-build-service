@@ -34,6 +34,7 @@ describe('createJavaScriptBundle', function () {
 				}
 			};
 			request.query.modules = '@financial-times/o-utils@1.1.7';
+			request.query.system_code = 'origami';
 
 			await createJavaScriptBundle(request, response);
 
@@ -80,6 +81,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				}
 			};
+			request.query.system_code = 'origami';
 
 			await createJavaScriptBundle(request, response);
 
@@ -127,6 +129,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = '';
+				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
 
@@ -175,6 +178,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-test@1,o-test@1';
+				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
 
@@ -222,6 +226,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-test@1,,';
+				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
 
@@ -269,6 +274,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = ' o-test@1';
+				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
 
@@ -316,6 +322,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-test@1 ';
+				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
 
@@ -363,6 +370,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-test';
+				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
 
@@ -410,6 +418,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-test@5wg';
+				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
 
@@ -457,6 +466,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				};
 				request.query.modules = 'o-TeSt@5';
+				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
 
@@ -485,6 +495,55 @@ describe('createJavaScriptBundle', function () {
 				proclaim.throws(function () {
 					script.runInNewContext(context);
 				}, 'Origami Build Service returned an error: The modules query parameter contains module names which are not valid: o-TeSt.');
+			});
+		}
+	);
+
+	context(
+		'when given a request with an invalid system code',
+		async () => {
+			it('it responds with a javascript bundle which throws an error', async () => {
+				const request = httpMock.createRequest();
+				const response = httpMock.createResponse();
+				response.startTime = sinon.spy();
+				response.endTime = sinon.spy();
+				request.app = {
+					ft: {
+						options: {
+							npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+						}
+					}
+				};
+				request.query.modules = '@financial-times/o-utils@1.1.7';
+				request.query.system_code = '$$origami!';
+
+				await createJavaScriptBundle(request, response);
+
+				const bundle = response._getData();
+
+				proclaim.deepStrictEqual(
+					response.getHeader('content-type'),
+					'application/javascript;charset=UTF-8'
+				);
+				proclaim.deepStrictEqual(
+					response.getHeader('cache-control'),
+					'max-age=0, must-revalidate, no-cache, no-store'
+                );
+                proclaim.deepStrictEqual(response.statusCode, 400);
+
+				proclaim.deepStrictEqual(
+					bundle,
+					'throw new Error("Origami Build Service returned an error: The system_code query parameter must be a valid Biz-Ops System Code.")'
+				);
+				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
+
+				const script = new vm.Script(bundle);
+
+				const context = {};
+				context.self = context;
+				proclaim.throws(function () {
+					script.runInNewContext(context);
+				}, 'Origami Build Service returned an error: The system_code query parameter must be a valid Biz-Ops System Code.');
 			});
 		}
 	);

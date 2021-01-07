@@ -36,10 +36,11 @@ describe('GET /v3/bundles/js', function() {
 
     describe('when a valid module is requested', function() {
         const moduleName = '@financial-times/o-utils@1.1.7';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/js?modules=${moduleName}`)
+                .get(`/v3/bundles/js?modules=${moduleName}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -76,10 +77,11 @@ describe('GET /v3/bundles/js', function() {
 
     describe('when an invalid module is requested (nonexistent)', function() {
         const moduleName = 'hello-nonexistent-module@1';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/js?modules=${moduleName}`)
+                .get(`/v3/bundles/js?modules=${moduleName}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -95,10 +97,11 @@ describe('GET /v3/bundles/js', function() {
 
     // describe('when an invalid module is requested (JavaScript compilation error)', function() {
     //     const moduleName = 'o-test-component@1.0.1';
+    //     const systemCode = 'origami';
 
     //     beforeEach(function() {
     //         this.request = request(this.app)
-    //             .get(`/v3/bundles/js?modules=${moduleName}`)
+    //             .get(`/v3/bundles/js?modules=${moduleName}&system_code=${systemCode}`)
     //             .set('Connection', 'close');
     //     });
 
@@ -117,10 +120,11 @@ describe('GET /v3/bundles/js', function() {
     // });
 
     describe('when the modules parameter is missing', function() {
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get('/v3/bundles/js')
+                .get(`/v3/bundles/js?system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -139,10 +143,11 @@ describe('GET /v3/bundles/js', function() {
     });
 
     describe('when the modules parameter is not a string', function() {
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get('/v3/bundles/js?modules[]=foo&modules[]=bar')
+                .get(`/v3/bundles/js?modules[]=foo&modules[]=bar&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -162,10 +167,11 @@ describe('GET /v3/bundles/js', function() {
 
     describe('when a module name cannot be parsed', function() {
         const moduleName = 'http://1.2.3.4/';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/js?modules=${moduleName}`)
+                .get(`/v3/bundles/js?modules=${moduleName}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -187,10 +193,11 @@ describe('GET /v3/bundles/js', function() {
     describe('when the callback parameter is an invalid value', function() {
         const moduleName = '@financial-times/o-utils@1.1.7';
         const callback = 'console.log("you got hacked!");//';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/js?modules=${moduleName}&callback=${callback}`)
+                .get(`/v3/bundles/js?modules=${moduleName}&callback=${callback}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -213,10 +220,11 @@ describe('GET /v3/bundles/js', function() {
     describe('when the callback parameter is a valid value', function() {
         const moduleName = '@financial-times/o-utils@1.1.7';
         const callback = 'start_app';
+        const systemCode = 'origami';
 
         beforeEach(function() {
             this.request = request(this.app)
-                .get(`/v3/bundles/js?modules=${moduleName}&callback=${callback}`)
+                .get(`/v3/bundles/js?modules=${moduleName}&callback=${callback}&system_code=${systemCode}`)
                 .set('Connection', 'close');
         });
 
@@ -244,6 +252,56 @@ describe('GET /v3/bundles/js', function() {
                 proclaim.deepStrictEqual(context.start_app.firstCall.args, [
                     context.Origami
                 ]);
+            }).end(done);
+        });
+
+        it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'application/javascript; charset=utf-8').end(done);
+		});
+
+    });
+
+    describe('when the system_code parameter is an invalid value', function() {
+        const moduleName = '@financial-times/o-utils@1.1.7';
+        const systemCode = '$$origami!';
+
+        beforeEach(function() {
+            this.request = request(this.app)
+                .get(`/v3/bundles/js?modules=${moduleName}&system_code=${systemCode}`)
+                .set('Connection', 'close');
+        });
+
+        it('should respond with a 400 status', function(done) {
+            this.request.expect(400).end(done);
+        });
+
+        it('should respond with an error message', function(done) {
+            this.request.expect(({text}) => {
+                proclaim.deepStrictEqual(text, 'throw new Error("Origami Build Service returned an error: The system_code query parameter must be a valid Biz-Ops System Code.")');
+            }).end(done);
+        });
+
+        it('should respond with the expected `Content-Type` header', function(done) {
+			this.request.expect('Content-Type', 'application/javascript; charset=utf-8').end(done);
+		});
+
+    });
+    describe('when the system_code parameter is missing', function() {
+        const moduleName = '@financial-times/o-utils@1.1.7';
+
+        beforeEach(function() {
+            this.request = request(this.app)
+                .get(`/v3/bundles/js?modules=${moduleName}`)
+                .set('Connection', 'close');
+        });
+
+        it('should respond with a 400 status', function(done) {
+            this.request.expect(400).end(done);
+        });
+
+        it('should respond with an error message', function(done) {
+            this.request.expect(({text}) => {
+                proclaim.deepStrictEqual(text, 'throw new Error("Origami Build Service returned an error: The system_code query parameter must be a string.")');
             }).end(done);
         });
 
