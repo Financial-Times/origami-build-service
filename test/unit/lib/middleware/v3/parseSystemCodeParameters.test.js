@@ -13,62 +13,61 @@ describe('parseSystemCodeParameter', () => {
 	});
 
 	it('throws UserError if system_code parameter is undefined', async () => {
-		proclaim.throws(() => {
-			parseSystemCodeParameter();
-		}, UserError);
-
-		proclaim.throws(() => {
-			parseSystemCodeParameter();
-		}, 'The system_code query parameter must be a string.');
+		try {
+			await parseSystemCodeParameter();
+			proclaim.notOk('Expected to throw an error but no error was thrown');
+		} catch (error) {
+			error instanceof UserError;
+			proclaim.deepStrictEqual(error.message, 'The system_code query parameter must be a string.');
+		}
 	});
 
 	it('throws UserError if system_code parameter is not a string', async () => {
-		proclaim.throws(() => {
-			parseSystemCodeParameter(1);
-		}, UserError);
+		try {
+			await parseSystemCodeParameter(1);
+			proclaim.notOk('Expected to throw an error but no error was thrown');
+		} catch (error) {
+			error instanceof UserError;
+			proclaim.deepStrictEqual(error.message, 'The system_code query parameter must be a string.');
+		}
+		try {
+			await parseSystemCodeParameter(true);
+			proclaim.notOk('Expected to throw an error but no error was thrown');
+		} catch (error) {
+			error instanceof UserError;
+			proclaim.deepStrictEqual(error.message, 'The system_code query parameter must be a string.');
+		}
 
-		proclaim.throws(() => {
-			parseSystemCodeParameter(1);
-		}, 'The system_code query parameter must be a string.');
-
-		proclaim.throws(() => {
-			parseSystemCodeParameter(true);
-		}, UserError);
-
-		proclaim.throws(() => {
-			parseSystemCodeParameter(true);
-		}, 'The system_code query parameter must be a string.');
-
-		proclaim.throws(() => {
-			parseSystemCodeParameter([]);
-		}, UserError);
-
-		proclaim.throws(() => {
-			parseSystemCodeParameter([]);
-		}, 'The system_code query parameter must be a string.');
+		try {
+			await parseSystemCodeParameter([]);
+			proclaim.notOk('Expected to throw an error but no error was thrown');
+		} catch (error) {
+			error instanceof UserError;
+			proclaim.deepStrictEqual(error.message, 'The system_code query parameter must be a string.');
+		}
 	});
 
 	it('throws UserError if system_code parameter is empty string', async () => {
-		proclaim.throws(() => {
-			parseSystemCodeParameter('');
-		}, UserError);
-
-		proclaim.throws(() => {
-			parseSystemCodeParameter('');
-		}, 'The system_code query parameter can not be empty.');
+		try {
+			await parseSystemCodeParameter('');
+			proclaim.notOk('Expected to throw an error but no error was thrown');
+		} catch (error) {
+			error instanceof UserError;
+			proclaim.deepStrictEqual(error.message, 'The system_code query parameter can not be empty.');
+		}
 	});
 
 	it('throws UserError if system_code parameter is not a valid value', async () => {
-		proclaim.throws(() => {
-			parseSystemCodeParameter('$$origami!');
-		}, UserError);
-
-		proclaim.throws(() => {
-			parseSystemCodeParameter('$$origami!');
-		}, 'The system_code query parameter must be a valid Biz-Ops System Code.');
+		try {
+			await parseSystemCodeParameter('$$origami!');
+			proclaim.notOk('Expected to throw an error but no error was thrown');
+		} catch (error) {
+			error instanceof UserError;
+			proclaim.deepStrictEqual(error.message, 'The system_code query parameter must be a valid Biz-Ops System Code.');
+		}
 	});
 
 	it('returns the system_code value if it is a valid system-code', async () => {
-		proclaim.deepStrictEqual(parseSystemCodeParameter('origami'), 'origami');
+		proclaim.deepStrictEqual(await parseSystemCodeParameter('origami'), 'origami');
 	});
 });

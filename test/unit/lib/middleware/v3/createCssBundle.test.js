@@ -533,17 +533,17 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
 					'text/css; charset=UTF-8'
-				);
+					);
+						proclaim.deepStrictEqual(
+							bundle,
+							'/*"Origami Build Service returned an error: The system_code query parameter must be a valid Biz-Ops System Code."*/'
+						);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
                 );
                 proclaim.deepStrictEqual(response.statusCode, 400);
 
-				proclaim.deepStrictEqual(
-					bundle,
-					'/*"Origami Build Service returned an error: The system_code query parameter must be a valid Biz-Ops System Code."*/'
-				);
 			});
 		}
 	);
