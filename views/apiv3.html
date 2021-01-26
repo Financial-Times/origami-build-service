@@ -43,7 +43,7 @@
             <tr id="js-system_code">
                 <td><code>system_code</code></td>
                 <td>Querystring</td>
-                <td>The [bizops system code](https://biz-ops.in.ft.com/list/Systems) for the system which is making the build service request.</td>
+                <td>The <a href="https://biz-ops.in.ft.com/list/Systems">bizops system code</a> for the system which is making the build service request.</td>
             </tr>
             <tr id="js-callback">
                 <td><code>callback</code></td>
@@ -97,7 +97,7 @@
             <tr id="css-system_code">
                 <td><code>system_code</code></td>
                 <td>Querystring</td>
-                <td>The [bizops system code](https://biz-ops.in.ft.com/list/Systems) for the system which is making the build service request.</td>
+                <td>The <a href="https://biz-ops.in.ft.com/list/Systems">bizops system code</a> for the system which is making the build service request.</td>
             </tr>
         </tbody>
 
@@ -113,5 +113,50 @@
         <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
         <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
         <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+    </ul>
+
+    <h3 id="get-v3-font">GET /v3/font</h3>
+
+    <p>Fetch a specific font from o-fonts-assets.</p>
+
+    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
+        <thead>
+            <tr>
+                <th>Param</th>
+                <th data-o-table-heading-disable-sort>Where</th>
+                <th data-o-table-heading-disable-sort>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="font-version">
+                <td><code>version</code></td>
+                <td>Querystring</td>
+                <td>
+                    The version of o-fonts-assets to use. <code>version</code> will be interpreted using SemVer rules and the
+                    best matching version will be used.
+                </td>
+            </tr>
+            <tr id="font-file">
+                <td><code>file</code></td>
+                <td>Querystring</td>
+                <td>The path to the file to have returned.</td>
+            </tr>
+            <tr id="font-system_code">
+                <td><code>system_code</code></td>
+                <td>Querystring</td>
+                <td>The <a href="https://biz-ops.in.ft.com/list/Systems">bizops system code</a> for the system which is making the build service request.</td>
+            </tr>
+        </tbody>
+
+        <tbody></tbody>
+    </table>
+
+    <p><em>Due to the expected long duration of downloading from npm, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+
+    <p>The following HTTP errors can be returned:</p>
+
+    <ul>
+        <li><code>400 Bad Request</code>: The request was invalid</li>
+        <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
     </ul>
 </div>
