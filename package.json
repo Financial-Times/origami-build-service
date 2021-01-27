@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/core": "^7.12.9",
     "@babel/preset-env": "^7.12.1",
-    "@financial-times/health-check": "2.1.1",
+    "@financial-times/health-check": "2.1.6",
     "@financial-times/origami-service": "^5.0.0",
     "@financial-times/origami-service-makefile": "^7.0.3",
     "@financial-times/sass": "^1.32.2",
