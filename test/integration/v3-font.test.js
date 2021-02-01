@@ -49,7 +49,7 @@ describe('GET /v3/font', function () {
 				.expect(({text}) => {
 					proclaim.deepEqual(
 						text,
-						'/*"Origami Build Service returned an error: The version 1hg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."*/'
+						'"Origami Build Service returned an error: The version 1hg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
 					);
 				})
 				.end(done);
@@ -60,7 +60,7 @@ describe('GET /v3/font', function () {
 		});
 
 		it('should respond with the expected `Content-Type` header', function (done) {
-			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
 		});
 	});
 
@@ -87,14 +87,14 @@ describe('GET /v3/font', function () {
 				.expect(({text}) => {
 					proclaim.deepEqual(
 						text,
-						'/*"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."*/'
+						'"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."'
 					);
 				})
 				.end(done);
 		});
 
 		it('should respond with the expected `Content-Type` header', function (done) {
-			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
 		});
 	});
 
@@ -116,14 +116,14 @@ describe('GET /v3/font', function () {
 		it('should respond with an error message', function (done) {
 			this.request
 				.expect(
-					'/*"Origami Build Service returned an error: The version query parameter can not be empty."*/'
+					'"Origami Build Service returned an error: The version query parameter can not be empty."'
 				)
 				.end(done);
 		});
 
 		it('should respond with the expected `Content-Type` header', function (done) {
 			this.request
-				.expect('Content-Type', 'text/html; charset=utf-8')
+				.expect('Content-Type', 'text/plain; charset=utf-8')
 				.end(done);
 		});
 	});
@@ -148,14 +148,14 @@ describe('GET /v3/font', function () {
 		it('should respond with an error message', function (done) {
 			this.request
 				.expect(
-					'/*"Origami Build Service returned an error: The version query parameter must be a string."*/'
+					'"Origami Build Service returned an error: The version query parameter must be a string."'
 				)
 				.end(done);
 		});
 
 		it('should respond with the expected `Content-Type` header', function (done) {
 			this.request
-				.expect('Content-Type', 'text/html; charset=utf-8')
+				.expect('Content-Type', 'text/plain; charset=utf-8')
 				.end(done);
 		});
 	});
@@ -183,7 +183,7 @@ describe('GET /v3/font', function () {
 				.expect(({text}) => {
 					proclaim.deepStrictEqual(
 						text,
-						'/*"Origami Build Service returned an error: The version http://1.2.3.4/ is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."*/'
+						'"Origami Build Service returned an error: The version http://1.2.3.4/ is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
 					);
 				})
 				.end(done);
@@ -191,7 +191,7 @@ describe('GET /v3/font', function () {
 
 		it('should respond with the expected `Content-Type` header', function (done) {
 			this.request
-				.expect('Content-Type', 'text/html; charset=utf-8')
+				.expect('Content-Type', 'text/plain; charset=utf-8')
 				.end(done);
 		});
 	});
@@ -219,7 +219,7 @@ describe('GET /v3/font', function () {
 				.expect(({text}) => {
 					proclaim.deepStrictEqual(
 						text,
-						'/*"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."*/'
+						'"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."'
 					);
 				})
 				.end(done);
@@ -227,7 +227,7 @@ describe('GET /v3/font', function () {
 
 		it('should respond with the expected `Content-Type` header', function (done) {
 			this.request
-				.expect('Content-Type', 'text/html; charset=utf-8')
+				.expect('Content-Type', 'text/plain; charset=utf-8')
 				.end(done);
 		});
 	});
