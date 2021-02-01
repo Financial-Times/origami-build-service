@@ -8,7 +8,7 @@ describe('GET /v3/bundles/css', function() {
     this.slow(5000);
 
     describe('when a valid module, valid brand and valid system-code is requested', function() {
-        const moduleName = '@financial-times/o-normalise@100.0.0-11';
+        const moduleName = '@financial-times/o-test-component@v2.0.0-beta.1';
         const brand = 'master';
         const systemCode = 'origami';
 
@@ -36,7 +36,7 @@ describe('GET /v3/bundles/css', function() {
     });
 
     describe('when a valid module, valid system-code and invalid brand is requested', function() {
-        const moduleName = '@financial-times/o-normalise@100.0.0-11';
+        const moduleName = '@financial-times/o-test-component@v2.0.0-beta.1';
         const brand = 'origami';
         const systemCode = 'origami';
 
