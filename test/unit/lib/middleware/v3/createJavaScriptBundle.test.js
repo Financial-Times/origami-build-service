@@ -29,7 +29,7 @@ describe('createJavaScriptBundle', function () {
 			request.app = {
 				ft: {
 					options: {
-						npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+						npmRegistryURL: 'https://registry.npmjs.com'
 					}
 				}
 			};
@@ -77,7 +77,7 @@ describe('createJavaScriptBundle', function () {
 			request.app = {
 				ft: {
 					options: {
-						npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+						npmRegistryURL: 'https://registry.npmjs.com'
 					}
 				}
 			};
@@ -124,7 +124,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+							npmRegistryURL: 'https://registry.npmjs.com'
 						}
 					}
 				};
@@ -173,7 +173,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+							npmRegistryURL: 'https://registry.npmjs.com'
 						}
 					}
 				};
@@ -221,7 +221,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+							npmRegistryURL: 'https://registry.npmjs.com'
 						}
 					}
 				};
@@ -269,7 +269,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+							npmRegistryURL: 'https://registry.npmjs.com'
 						}
 					}
 				};
@@ -317,7 +317,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+							npmRegistryURL: 'https://registry.npmjs.com'
 						}
 					}
 				};
@@ -365,7 +365,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+							npmRegistryURL: 'https://registry.npmjs.com'
 						}
 					}
 				};
@@ -413,7 +413,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+							npmRegistryURL: 'https://registry.npmjs.com'
 						}
 					}
 				};
@@ -461,7 +461,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+							npmRegistryURL: 'https://registry.npmjs.com'
 						}
 					}
 				};
@@ -510,7 +510,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://origami-npm-registry-prototype.herokuapp.com'
+							npmRegistryURL: 'https://registry.npmjs.com'
 						}
 					}
 				};
