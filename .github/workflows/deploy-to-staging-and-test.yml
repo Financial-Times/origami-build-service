@@ -26,7 +26,7 @@ jobs:
           slack-channels: "ft-changes,origami-deploys"
 
   integration-tests:
-    needs: [deploy-dev]
+    needs: [deploy-to-staging]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
