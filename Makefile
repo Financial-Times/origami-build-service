@@ -39,17 +39,17 @@ test: test-unit-coverage verify-coverage test-integration
 
 # Run the unit tests using mocha
 test-unit:
-	@if [ -d test/unit ]; then mocha "test/unit/**/*.test.js" --recursive --bail --exit ${CI:+--forbid-only} && $(TASK_DONE); fi
+	@if [ -d test/unit ]; then mocha "test/unit/**/*.test.js" --recursive --exit ${CI:+--forbid-only} && $(TASK_DONE); fi
 
 # Run the unit tests using mocha and generating
 # a coverage report if nyc or istanbul are installed
 test-unit-coverage:
 	@if [ -d test/unit ]; then \
 		if [ -x $(NPM_BIN)/nyc ]; then \
-			nyc --reporter=text --reporter=html $(NPM_BIN)/_mocha "test/unit/**/*.test.js" --recursive --bail --exit && $(TASK_DONE); \
+			nyc --reporter=text --reporter=html $(NPM_BIN)/_mocha "test/unit/**/*.test.js" --recursive --exit && $(TASK_DONE); \
 		else \
 			if [ -x $(NPM_BIN)/istanbul ]; then \
-				istanbul cover $(NPM_BIN)/_mocha -- "test/unit/**/*.test.js" --recursive --bail --exit && $(TASK_DONE); \
+				istanbul cover $(NPM_BIN)/_mocha -- "test/unit/**/*.test.js" --recursive --exit && $(TASK_DONE); \
 			else \
 				make test-unit; \
 			fi \
@@ -58,11 +58,11 @@ test-unit-coverage:
 
 # Run the integration tests using mocha
 test-integration:
-	@if [ -d test/integration ]; then mocha "test/integration/**/*.test.js" --recursive --bail --exit ${CI:+--forbid-only} --timeout $(INTEGRATION_TIMEOUT) --slow $(INTEGRATION_SLOW) $(INTEGRATION_FLAGS) && $(TASK_DONE); fi
+	@if [ -d test/integration ]; then mocha "test/integration/**/*.test.js" --recursive --exit ${CI:+--forbid-only} --timeout $(INTEGRATION_TIMEOUT) --slow $(INTEGRATION_SLOW) $(INTEGRATION_FLAGS) && $(TASK_DONE); fi
 
 # Additional test tasks
 # ---------------------
 
 test-old:
-	@NODE_ENV=test mocha test --bail --exit
+	@NODE_ENV=test mocha test --exit
 	@$(DONE)
