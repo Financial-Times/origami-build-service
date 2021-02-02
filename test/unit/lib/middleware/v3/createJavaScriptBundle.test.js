@@ -89,7 +89,7 @@ describe('createJavaScriptBundle', function () {
 
 			proclaim.deepStrictEqual(
 				response.getHeader('content-type'),
-				'application/javascript;charset=UTF-8'
+				'text/plain;charset=UTF-8'
 			);
 			proclaim.deepStrictEqual(
 				response.getHeader('cache-control'),
@@ -99,17 +99,8 @@ describe('createJavaScriptBundle', function () {
 
 			proclaim.deepStrictEqual(
 				bundle,
-				'throw new Error("Origami Build Service returned an error: The modules query parameter can not be empty.")'
+				'Origami Build Service returned an error: "The modules query parameter can not be empty."'
 			);
-			proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
-
-			const script = new vm.Script(bundle);
-
-			const context = {};
-			context.self = context;
-			proclaim.throws(function () {
-				script.runInNewContext(context);
-			}, 'Origami Build Service returned an error: The modules query parameter can not be empty.');
 		});
 	});
 
@@ -137,7 +128,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'application/javascript;charset=UTF-8'
+					'text/plain;charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -147,17 +138,8 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'throw new Error("Origami Build Service returned an error: The modules query parameter can not be empty.")'
+					'Origami Build Service returned an error: "The modules query parameter can not be empty."'
 				);
-				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
-
-				const script = new vm.Script(bundle);
-
-				const context = {};
-				context.self = context;
-				proclaim.throws(function () {
-					script.runInNewContext(context);
-				}, 'Origami Build Service returned an error: The modules query parameter can not be empty.');
 			});
 		}
 	);
@@ -186,7 +168,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'application/javascript;charset=UTF-8'
+					'text/plain;charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -196,17 +178,8 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'throw new Error("Origami Build Service returned an error: The modules query parameter contains duplicate module names.")'
+					'Origami Build Service returned an error: "The modules query parameter contains duplicate module names."'
 				);
-				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
-
-				const script = new vm.Script(bundle);
-
-				const context = {};
-				context.self = context;
-				proclaim.throws(function () {
-					script.runInNewContext(context);
-				}, 'Origami Build Service returned an error: The modules query parameter contains duplicate module names.');
 			});
 		}
 	);
@@ -234,7 +207,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'application/javascript;charset=UTF-8'
+					'text/plain;charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -244,17 +217,8 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'throw new Error("Origami Build Service returned an error: The modules query parameter can not contain empty module names.")'
+					'Origami Build Service returned an error: "The modules query parameter can not contain empty module names."'
 				);
-				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
-
-				const script = new vm.Script(bundle);
-
-				const context = {};
-				context.self = context;
-				proclaim.throws(function () {
-					script.runInNewContext(context);
-				}, 'Origami Build Service returned an error: The modules query parameter can not contain empty module names.');
 			});
 		}
 	);
@@ -282,7 +246,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'application/javascript;charset=UTF-8'
+					'text/plain;charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -292,17 +256,8 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'throw new Error("Origami Build Service returned an error: The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from \\" o-test@1\\" to make the module name valid.")'
+					'Origami Build Service returned an error: "The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from ` o-test@1` to make the module name valid."'
 				);
-				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
-
-				const script = new vm.Script(bundle);
-
-				const context = {};
-				context.self = context;
-				proclaim.throws(function () {
-					script.runInNewContext(context);
-				}, 'Origami Build Service returned an error: The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from \" o-test@1\" to make the module name valid.');
 			});
 		}
 	);
@@ -330,7 +285,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'application/javascript;charset=UTF-8'
+					'text/plain;charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -340,17 +295,8 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'throw new Error("Origami Build Service returned an error: The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from \\"o-test@1 \\" to make the module name valid.")'
+					'Origami Build Service returned an error: "The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from `o-test@1 ` to make the module name valid."'
 				);
-				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
-
-				const script = new vm.Script(bundle);
-
-				const context = {};
-				context.self = context;
-				proclaim.throws(function () {
-					script.runInNewContext(context);
-				}, 'Origami Build Service returned an error: The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from \"o-test@1 \" to make the module name valid.');
 			});
 		}
 	);
@@ -378,7 +324,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'application/javascript;charset=UTF-8'
+					'text/plain;charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -388,17 +334,8 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'throw new Error("Origami Build Service returned an error: The bundle request contains o-test with no version range, a version range is required.\\nPlease refer to TODO (build service documentation) for what is a valid version.")'
+					'Origami Build Service returned an error: "The bundle request contains o-test with no version range, a version range is required.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
 				);
-				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
-
-				const script = new vm.Script(bundle);
-
-				const context = {};
-				context.self = context;
-				proclaim.throws(function () {
-					script.runInNewContext(context);
-				}, 'Origami Build Service returned an error: The bundle request contains o-test with no version range, a version range is required.\nPlease refer to TODO (build service documentation) for what is a valid version.');
 			});
 		}
 	);
@@ -426,7 +363,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'application/javascript;charset=UTF-8'
+					'text/plain;charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -436,17 +373,8 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'throw new Error("Origami Build Service returned an error: The version 5wg in o-test@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version.")'
+					'Origami Build Service returned an error: "The version 5wg in o-test@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
 				);
-				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
-
-				const script = new vm.Script(bundle);
-
-				const context = {};
-				context.self = context;
-				proclaim.throws(function () {
-					script.runInNewContext(context);
-				}, 'Origami Build Service returned an error: The version 5wg in o-test@5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
 			});
 		}
 	);
@@ -474,7 +402,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'application/javascript;charset=UTF-8'
+					'text/plain;charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -484,17 +412,8 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'throw new Error("Origami Build Service returned an error: The modules query parameter contains module names which are not valid: o-TeSt.")'
+					'Origami Build Service returned an error: "The modules query parameter contains module names which are not valid: o-TeSt."'
 				);
-				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
-
-				const script = new vm.Script(bundle);
-
-				const context = {};
-				context.self = context;
-				proclaim.throws(function () {
-					script.runInNewContext(context);
-				}, 'Origami Build Service returned an error: The modules query parameter contains module names which are not valid: o-TeSt.');
 			});
 		}
 	);
@@ -523,7 +442,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'application/javascript;charset=UTF-8'
+					'text/plain;charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -533,17 +452,8 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'throw new Error("Origami Build Service returned an error: The system_code query parameter must be a valid Biz-Ops System Code.")'
+					'Origami Build Service returned an error: "The system_code query parameter must be a valid Biz-Ops System Code."'
 				);
-				proclaim.deepStrictEqual(getEcmaVersion(bundle), 5);
-
-				const script = new vm.Script(bundle);
-
-				const context = {};
-				context.self = context;
-				proclaim.throws(function () {
-					script.runInNewContext(context);
-				}, 'Origami Build Service returned an error: The system_code query parameter must be a valid Biz-Ops System Code.');
 			});
 		}
 	);

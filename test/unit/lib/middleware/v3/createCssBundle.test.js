@@ -71,7 +71,7 @@ describe('createCssBundle', function () {
 
 			proclaim.deepStrictEqual(
 				response.getHeader('content-type'),
-				'text/css; charset=UTF-8'
+				'text/plain; charset=UTF-8'
 			);
 			proclaim.deepStrictEqual(
 				response.getHeader('cache-control'),
@@ -81,7 +81,7 @@ describe('createCssBundle', function () {
 
 			proclaim.deepStrictEqual(
 				bundle,
-				'/*"Origami Build Service returned an error: The modules query parameter can not be empty."*/'
+				'Origami Build Service returned an error: \"The modules query parameter can not be empty.\"'
 			);
 		});
 	});
@@ -109,7 +109,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -119,7 +119,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The modules query parameter can not be empty."*/'
+					'Origami Build Service returned an error: \"The modules query parameter can not be empty.\"'
 				);
 			});
 		}
@@ -148,7 +148,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -158,7 +158,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The modules query parameter contains duplicate module names."*/'
+					'Origami Build Service returned an error: \"The modules query parameter contains duplicate module names.\"'
 				);
 			});
 		}
@@ -186,7 +186,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -196,7 +196,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The modules query parameter can not contain empty module names."*/'
+					'Origami Build Service returned an error: \"The modules query parameter can not contain empty module names.\"'
 				);
 			});
 		}
@@ -224,7 +224,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -234,7 +234,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from \\" o-test@1\\" to make the module name valid."*/'
+					'Origami Build Service returned an error: \"The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from ` o-test@1` to make the module name valid.\"'
 				);
 			});
 		}
@@ -262,7 +262,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -272,7 +272,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from \\"o-test@1 \\" to make the module name valid."*/'
+					'Origami Build Service returned an error: \"The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from `o-test@1 ` to make the module name valid.\"'
 				);
 			});
 		}
@@ -300,7 +300,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -310,7 +310,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The bundle request contains o-test with no version range, a version range is required.\\nPlease refer to TODO (build service documentation) for what is a valid version."*/'
+					'Origami Build Service returned an error: \"The bundle request contains o-test with no version range, a version range is required.\\nPlease refer to TODO (build service documentation) for what is a valid version.\"'
 				);
 			});
 		}
@@ -338,7 +338,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -348,7 +348,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The version 5wg in o-test@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."*/'
+					'Origami Build Service returned an error: \"The version 5wg in o-test@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version.\"'
 				);
 			});
 		}
@@ -376,7 +376,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -386,7 +386,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The modules query parameter contains module names which are not valid: o-TeSt."*/'
+					'Origami Build Service returned an error: \"The modules query parameter contains module names which are not valid: o-TeSt.\"'
 				);
 			});
 		}
@@ -415,7 +415,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -425,7 +425,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The brand query parameter must be either \\"master\\", \\"internal\\", or \\"whitelabel\\"."*/'
+					'Origami Build Service returned an error: \"The brand query parameter must be either `master`, `internal`, or `whitelabel`.\"'
 				);
 			});
 		}
@@ -453,7 +453,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -463,7 +463,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The brand query parameter must be a string. Either \\"master\\", \\"internal\\", or \\"whitelabel\\"."*/'
+					'Origami Build Service returned an error: \"The brand query parameter must be a string. Either `master`, `internal`, or `whitelabel`.\"'
 				);
 			});
 		}
@@ -492,7 +492,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -502,7 +502,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'/*"Origami Build Service returned an error: The system_code query parameter must be a string."*/'
+					'Origami Build Service returned an error: \"The system_code query parameter must be a string.\"'
 				);
 			});
 		}
@@ -532,11 +532,11 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/css; charset=UTF-8'
+					'text/plain; charset=UTF-8'
 					);
 						proclaim.deepStrictEqual(
 							bundle,
-							'/*"Origami Build Service returned an error: The system_code query parameter must be a valid Biz-Ops System Code."*/'
+							'Origami Build Service returned an error: \"The system_code query parameter must be a valid Biz-Ops System Code.\"'
 						);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
