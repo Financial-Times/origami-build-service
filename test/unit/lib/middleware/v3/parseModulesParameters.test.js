@@ -48,7 +48,7 @@ describe('parseModulesParameter', () => {
 
 		proclaim.throws(() => {
 			parseModulesParameter(' @ft/o-test@1');
-		}, 'The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from " @ft/o-test@1" to make the module name valid.');
+		}, 'The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from ` @ft/o-test@1` to make the module name valid.');
 	});
 
 	it('throws UserError if modules parameter contains module name with whitespace at the end', async () => {
@@ -58,11 +58,11 @@ describe('parseModulesParameter', () => {
 
 		proclaim.throws(() => {
 			parseModulesParameter('o-test@1 ');
-		}, 'The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from "o-test@1 " to make the module name valid.');
+		}, 'The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from `o-test@1 ` to make the module name valid.');
 
 		proclaim.throws(() => {
 			parseModulesParameter('@ft/o-test@1 ');
-		}, 'The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from "@ft/o-test@1 " to make the module name valid.');
+		}, 'The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from `@ft/o-test@1 ` to make the module name valid.');
 	});
 
 	it('throws UserError if modules parameter contains module name without a version', async () => {
