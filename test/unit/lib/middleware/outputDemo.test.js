@@ -61,7 +61,7 @@ describe('lib/middleware/outputDemo', function() {
 			middleware = outputDemo(origamiService.mockApp);
 
 			installationmanager.createInstallation.resolves(moduleInstallation);
-			moduleInstallation.listDirectNoneOrigamiComponents.resolves({});
+			moduleInstallation.listDirectNonOrigamiComponents.resolves({});
 		});
 
 		it('returns a middleware function', () => {
@@ -236,7 +236,7 @@ describe('lib/middleware/outputDemo', function() {
 			});
 
 			installationmanager.createInstallation.resolves(moduleInstallation);
-			moduleInstallation.listDirectNoneOrigamiComponents.resolves({});
+			moduleInstallation.listDirectNonOrigamiComponents.resolves({});
 		});
 
 		it('returns a middleware function', () => {
