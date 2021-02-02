@@ -12,5 +12,11 @@ jobs:
     - run: npm ci
     - run: make verify
     - run: make test-unit-coverage
+      env:
+        GITHUB_TOKEN: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}
     - run: make test-integration
+      env:
+        GITHUB_TOKEN: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}
     - run: make test-old
+      env:
+        GITHUB_TOKEN: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}
