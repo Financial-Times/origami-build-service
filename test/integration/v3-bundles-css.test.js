@@ -32,7 +32,11 @@ describe('GET /v3/bundles/css', function() {
 
         it('should respond with the expected `Content-Type` header', function(done) {
 			this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
-		});
+        });
+
+        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+        });
     });
 
     describe('when a valid module, valid system-code and invalid brand is requested', function() {
@@ -55,13 +59,17 @@ describe('GET /v3/bundles/css', function() {
         it('should respond with the css', function(done) {
             this.request
                 .expect(({text}) => {
-                    proclaim.deepStrictEqual(text, '/*"Origami Build Service returned an error: The brand query parameter must be either \\"master\\", \\"internal\\", or \\"whitelabel\\"."*/');
+                    proclaim.deepStrictEqual(text, 'Origami Build Service returned an error: "The brand query parameter must be either `master`, `internal`, or `whitelabel`."');
                 }).end(done);
         });
 
         it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
-		});
+			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+        });
+
+        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+        });
     });
 
     describe('when an invalid module, valid brand and valid system-code is requested', function() {
@@ -82,14 +90,17 @@ describe('GET /v3/bundles/css', function() {
         });
 
         it('should respond with the css', function(done) {
-            this.request.expect(({text}) => {
-                proclaim.deepStrictEqual(text,'/*"Origami Build Service returned an error: hello-nonexistent-module@1 is not in the npm registry"*/');
+                proclaim.deepStrictEqual(text,'Origami Build Service returned an error: "hello-nonexistent-module@1 is not in the npm registry"');
             }).end(done);
         });
 
         it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
-		});
+			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+        });
+
+        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+        });
     });
 
     describe('when an invalid module is requested (nonexistent)', function() {
@@ -110,8 +121,12 @@ describe('GET /v3/bundles/css', function() {
         });
 
         it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
-		});
+			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+        });
+
+        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+        });
 
     });
 
@@ -136,6 +151,10 @@ describe('GET /v3/bundles/css', function() {
         //     this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
         // });
 
+        // it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+		// 	this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+        // });
+
     // });
 
     describe('when the modules parameter is missing', function() {
@@ -155,12 +174,16 @@ describe('GET /v3/bundles/css', function() {
         });
 
         it('should respond with an error message', function(done) {
-            this.request.expect('/*"Origami Build Service returned an error: The modules query parameter can not be empty."*/').end(done);
+            this.request.expect('Origami Build Service returned an error: "The modules query parameter can not be empty."').end(done);
         });
 
         it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
-		});
+			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+        });
+
+        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+        });
 
     });
 
@@ -181,12 +204,16 @@ describe('GET /v3/bundles/css', function() {
         });
 
         it('should respond with an error message', function(done) {
-            this.request.expect('/*"Origami Build Service returned an error: The modules query parameter must be a string."*/').end(done);
+            this.request.expect('Origami Build Service returned an error: "The modules query parameter must be a string."').end(done);
         });
 
         it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
-		});
+			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+        });
+
+        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+        });
 
     });
 
@@ -208,12 +235,16 @@ describe('GET /v3/bundles/css', function() {
         });
 
         it('should respond with an error message', function(done) {
-            this.request.expect('/*"Origami Build Service returned an error: The modules query parameter contains module names which are not valid: http://1.2.3.4/."*/').end(done);
+            this.request.expect('Origami Build Service returned an error: "The modules query parameter contains module names which are not valid: http://1.2.3.4/."').end(done);
         });
 
         it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
-		});
+			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+        });
+
+        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+        });
 
     });
 
