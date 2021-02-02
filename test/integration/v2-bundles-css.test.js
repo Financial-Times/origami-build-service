@@ -2,6 +2,12 @@
 
 const assert = require('chai').assert;
 const request = require('supertest');
+const cheerio = require('cheerio');
+
+const getErrorMessage = (text) => {
+	const $ = cheerio.load(text);
+	return $('[data-test-id="error-message"]').text();
+};
 
 describe('GET /v2/bundles/css', function() {
 	this.timeout(20000);
@@ -244,6 +250,27 @@ describe('GET /v2/bundles/css', function() {
 
 	});
 
+	describe('when an origami specification v2 component is requested', function() {
+		const moduleName = 'o-test-component@2.0.0-beta.1';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v2/bundles/css?modules=${moduleName}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(400).end(done);
+		});
+
+		it('should respond with an error message', function(done) {
+			this.request
+				.expect(({text}) => {
+					assert.equal(getErrorMessage(text), 'o-test-component@2.0.0-beta.1 is an Origami v2 component, the Origami Build Service v2 CSS API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
+				})
+				.end(done);
+		});
+	});
 });
 
 describe('when a module name is a relative directory', function() {
