@@ -59,7 +59,7 @@ We configure Origami Build Service using environment variables. In development, 
 
 ### Required in Heroku
 
-  * `ORIGAMI_GITHUB_TOKEN`: A GitHub token with permission to read the private `o-fonts-assets` repository.
+  * `GITHUB_TOKEN`: A GitHub token with permission to read the private `o-fonts-assets` repository.
   * `GRAPHITE_API_KEY`: The FT's internal Graphite API key
   * `GRAPHITE_HOST`: The hostname of a Graphite server to gather metrics with.
   * `PREFERRED_HOSTNAME`: The hostname to use in documentation and as a base URL in bundle requests. This defaults to `www.ft.com/__origami/service/build`.
@@ -70,7 +70,7 @@ We configure Origami Build Service using environment variables. In development, 
 
 #### Deprecated:
 
-The following keys are required for v2 of the Build Service. They are deprecated and should not be used when developing new features, instead use `ORIGAMI_GITHUB_TOKEN`.
+The following keys are required for v2 of the Build Service. They are deprecated and should not be used when developing new features, instead use `GITHUB_TOKEN`.
 
   * `GITHUB_USERNAME`: A GitHub username with permission to view required private repositories.
   * `GITHUB_PASSWORD`: The GitHub password corresponding to `GITHUB_USERNAME`.
