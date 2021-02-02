@@ -4,6 +4,12 @@ const assert = require('chai').assert;
 const request = require('supertest');
 const jsdom = require('jsdom');
 const sinon = require('sinon');
+const cheerio = require('cheerio');
+
+const getErrorMessage = (text) => {
+	const $ = cheerio.load(text);
+	return $('[data-test-id="error-message"]').text();
+};
 
 const CORE_JS_GLOBAL_PROPERTY = '__core-js_shared__';
 
@@ -67,7 +73,7 @@ describe('GET /v2/bundles/js', function() {
         it('should export the bundle under `window.Origami`', function(done) {
             this.request
                 .expect(({text}) => {
-                    let resultWindow;
+                    let resultWindow = {};
                     assert.doesNotThrow(() => {
                         resultWindow = executeScript(text);
                     });
@@ -116,7 +122,7 @@ describe('GET /v2/bundles/js', function() {
         it('should respond with the bundled JavaScript without the o-autoinit module', function(done) {
             this.request
                 .expect(({ text }) => {
-                    let resultWindow;
+                    let resultWindow = {};
                     assert.doesNotThrow(() => {
                         resultWindow = executeScript(text);
                     });
@@ -145,7 +151,7 @@ describe('GET /v2/bundles/js', function() {
         it('should export the bundle under `window.foo`', function(done) {
             this.request
                 .expect(({ text }) => {
-                    let resultWindow;
+                    let resultWindow = {};
                     assert.doesNotThrow(() => {
                         resultWindow = executeScript(text);
                     });
@@ -449,5 +455,26 @@ describe('export parameter as xss attack vector', function() {
     it('should respond with HTML', function(done) {
 		this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
 	});
+});
 
+describe('when an origami specification v2 component is requested', function() {
+    const moduleName = 'o-test-component@2.0.0-beta.1';
+
+    beforeEach(function() {
+        this.request = request(this.app)
+            .get(`/v2/bundles/js?modules=${moduleName}`)
+            .set('Connection', 'close');
+    });
+
+    it('should respond with a 400 status', function(done) {
+        this.request.expect(400).end(done);
+    });
+
+    it('should respond with an error message', function(done) {
+        this.request
+            .expect(({text}) => {
+                assert.equal(getErrorMessage(text), 'o-test-component@2.0.0-beta.1 is an Origami v2 component, the Origami Build Service v2 CSS API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
+            })
+            .end(done);
+    });
 });

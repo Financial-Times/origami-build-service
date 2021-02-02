@@ -6,7 +6,7 @@ require('sinon-as-promised');
 const ModuleInstallation = (module.exports = sinon.stub());
 
 const mockModuleInstallation = {
-    listDirectNoneOrigamiComponents: sinon.stub().resolves([]),
+    listDirectNonOrigamiComponents: sinon.stub().resolves([]),
     listAllOrigamiComponents: sinon.stub().resolves([]),
 };
 
