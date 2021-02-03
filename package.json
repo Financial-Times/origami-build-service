@@ -90,6 +90,7 @@
     "through2": "^2.0.5",
     "tryall": "^1.0.1",
     "uuid": "^8.3.2",
+    "valid-filename": "^3.1.0",
     "validate-npm-package-name": "^3.0.0",
     "webpack": "^3.12.0",
     "webpack-stream": "^4.0.0"
@@ -117,5 +118,8 @@
     "node": "^12",
     "npm": "^7"
   },
-  "engineStrict": true
+  "engineStrict": true,
+  "volta": {
+    "node": "12.20.1"
+  }
 }

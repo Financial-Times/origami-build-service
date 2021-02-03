@@ -91,7 +91,7 @@ describe('GET /v3/bundles/css', function() {
 
         it('should respond with the css', function(done) {
             this.request.expect(({text}) => {
-                proclaim.deepStrictEqual(text,'Origami Build Service returned an error: "hello-nonexistent-module@1 is not in the npm regsitry"');
+                proclaim.deepStrictEqual(text,'Origami Build Service returned an error: "hello-nonexistent-module@1 is not in the npm registry"');
             }).end(done);
         });
 

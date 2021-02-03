@@ -15,11 +15,16 @@
 
     <p>Version 3 uses npm instead of Bower to install the requested components. You will need to update your Origami Build Service urls to use the npm package names instead of the bower package names for the components you are using. For most Origami components that means putting <code>@financial-times/</code>at the beginning of the name.</p>
 
+    <p>Version 3 has removed the <code>/modules</code> endpoint.</p>
+    <p>Version 3 has removed the <code>/files</code> endpoint. To request font files please use the /v3/font API endpoint</p>
+
+    <h3>CSS endpoint</h3>
+
     <p>Version 3 no longer uses LibSass for compiling Sass and instead uses <a href="https://sass-lang.com/dart-sass">DartSass</a>.</p>
 
-    <p>Version 3 no longer uses Webpack for bundling JavaScript and instead uses <a href="https://esbuild.github.io/">ESBuild</a>.</p>
+    <h3>JS endpoint</h3>
 
-    <p>Version 3 has removed the <code>/modules</code> endpoint.</p>
+    <p>Version 3 no longer uses Webpack for bundling JavaScript and instead uses <a href="https://esbuild.github.io/">ESBuild</a>.</p>
 
     <p>The <code>/bundles/js</code> endpoint has removed support for several configuration parameters which are listed below:</p>
 
