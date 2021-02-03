@@ -17,9 +17,12 @@ jobs:
     - run: make test-unit-coverage
       env:
         ORIGAMI_GITHUB_TOKEN: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}
+        DEBUG_SAFE_TO_LOG: ${{ secrets.DEBUG_SAFE_TO_LOG }}
     - run: make test-integration
       env:
         ORIGAMI_GITHUB_TOKEN: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}
+        DEBUG_SAFE_TO_LOG: ${{ secrets.DEBUG_SAFE_TO_LOG }}
     - run: make test-old
       env:
         ORIGAMI_GITHUB_TOKEN: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}
+        DEBUG_SAFE_TO_LOG: ${{ secrets.DEBUG_SAFE_TO_LOG }}
