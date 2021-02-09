@@ -6,6 +6,11 @@
 			"current": false
 		},
 		{
+			"name": "URL Builder",
+			"href": "url-builder",
+			"current": false
+		},
+		{
 			"name": "API Reference",
 			"href": "v2/docs/api",
 			"current": false,

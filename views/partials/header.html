@@ -28,8 +28,9 @@
 			{{#navigation.items}}
 			<li {{#if subnav}}data-o-header-services-level="1" {{/if}}>
 				<a
-					class="o-header-services__nav-link {{#current}}o-header-services__nav-link--selected{{/current}}"
+					class="o-header-services__nav-link"
 					href="{{@root.basePath}}{{href}}"
+					{{#current}}aria-current="page"{{/current}}
 					>{{name}}</a
 				>{{#each subnavItems}}{{#if @first}}<!--
 				--><button

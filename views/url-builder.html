@@ -1,0 +1,109 @@
+<div class="o-layout__main" data-o-component="o-syntax-highlight">
+
+	<div class="o-layout-typography">
+		<h1>URL Builder</h1>
+	</div>
+
+	{{#if error}}
+	<div class="o-layout-typography">
+		<h2>Unable To Check Your Build Service URL</h2>
+	</div>
+	<div data-o-message-close="false" class="o-message o-message--alert o-message--inner o-message--error o-spacing-s6" data-o-component="o-message">
+		<div class="o-message__container">
+			<div class="o-message__content ">
+				<p class="o-message__content-main">
+					{{error}}
+				</p>
+				<p class="o-message__content-additional">
+					Contact the Origami team,
+					via Slack <a href="https://slack.com/messages/C02FU5ARJ/">#origami-support</a>
+					or email <a href="mailto:origami.support@ft.com">origami.support@ft.com</a>, to report issues or request features</a>.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="o-layout-typography">
+		<h2>Check A Different Build Service URL</h2>
+	</div>
+	{{/if}}
+
+	<div class="o-layout-typography">
+		<form action="" method="post">
+			<label class="o-forms-field">
+				<span class="o-forms-title">
+					<span class="o-forms-title__main">Build Service URL</span>
+					<span class="o-forms-title__prompt">The Build Service URL you would like to check is using the latest version of Origami components.</span>
+
+				</span>
+				<span class="o-forms-input o-forms-input--text o-forms-input--suffix">
+					<input required type="text" name="build-service-url" {{#buildServiceUrl}}value="{{.}}"{{/buildServiceUrl}}>
+					<button type="submit" class="o-buttons o-buttons--primary o-buttons--big">Check</button>
+				</span>
+			</label>
+		</form>
+	</div>
+
+		{{#if results}}
+			<div class="o-layout-typography">
+				{{#if hasOutdatedComponents}}
+					<h2>The Build Service URL Given Is Outdated</h2>
+					<p>The following url requests the same components but with updated version numbers:</p>
+					<pre><code>{{updatedBuildServiceUrl}}</code></pre>
+					<p>
+						You may need to make changes to your project to upgrade, if there has been a major release of a component. The below table lists each requested component version along with the latest version number, and links to the components migration guides.
+					</p>
+					<p>
+						If you have any issues/questions the Origami team are here to help
+						via Slack <a href="https://slack.com/messages/C02FU5ARJ/">#origami-support</a>
+						or email <a href="mailto:origami.support@ft.com">origami.support@ft.com</a> 😊.
+					</p>
+				{{else}}
+					<h2>Your Build Service URL Uses The Latest Component Versions ✨</h2>
+					<p>
+						Nice! But if you think this is wrong or are having any problems, the Origami team are here to help
+						via Slack <a href="https://slack.com/messages/C02FU5ARJ/">#origami-support</a>
+						or email <a href="mailto:origami.support@ft.com">origami.support@ft.com</a>.
+					</p>
+				{{/if}}
+
+				<table class="o-table o-table--horizontal-lines " data-o-component="o-table">
+					<thead>
+						<tr>
+							<th scope="col" role="columnheader">requested component</th>
+							<th scope="col" role="columnheader" data-o-table-data-type="number">latest version</th>
+							<th scope="col" role="columnheader">migration guides</th>
+							<th scope="col" role="columnheader">report</th>
+						</tr>
+					</thead>
+					<tbody>
+					{{#results}}
+						<tr>
+						<td>{{name}}@{{requestedVersion}}</td>
+						<td>{{latestVersion}}</td>
+						<td><a href="https://registry.origami.ft.com/components/{{name}}/readme?brand={{../brand}}#migration-guide">{{name}} readme</a></td>
+						{{#if satisfies}}
+						<td><span class="o-labels o-labels--support-maintained">latest</span></td>
+						{{else}}
+						<td><span class="o-labels o-labels--support-deprecated">behind</span></td>
+						{{/if}}
+						</tr>
+					{{/results}}
+					</tbody>
+				</table>
+			</div>
+		{{else}}
+			<div class="o-layout-typography">
+				<p>Check if a Build Service URL is up to date using the form above. This can be helpful if your project relies on the Build Service and you would like to update to the latest version of components. For example, try submitting this outdated Build Service URL.</p>
+				<pre><code>https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-layout@^4.2.0,o-fonts@4.4.0,o-syntax-highlight@^3.0.8,o-table@^8.1.4,o-forms@^8.4.1,o-buttons@^6.2.0,o-header-services@^4.0.15,o-footer-services@^3.3.0&brand=internal</code></pre>
+			</div>
+			<div class="o-message o-message--alert o-message--inner o-message--neutral o-spacing-s6" data-o-message-close="false" data-o-component="o-message">
+				<div class="o-message__container">
+					<div class="o-message__content ">
+						<p class="o-message__content-main">
+							Note that this tool supports v2 and v3 versions of the Build Service but is not comprehensive. It only supports the bundles endpoint and does not support v2 Build Service URLs which include non-Origami modules (e.g. `?modules=jquery`), or those which specify a file path (e.g. "?modules=o-example@1.0.0:/path/to/file.scss").
+						</p>
+					</div>
+				</div>
+			</div>
+		{{/if}}
+</div>
