@@ -38,7 +38,7 @@ describe('GET /v2/files', function() {
 	});
 
 	describe('when a valid module but invalid file path (nonexistent) are requested', function() {
-		const moduleName = 'o-test-component';
+		const moduleName = 'o-test-component@1';
 		const pathName = 'NOTAFILE';
 
 		beforeEach(function() {
