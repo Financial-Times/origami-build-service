@@ -28,18 +28,17 @@
 	{{/if}}
 
 	<div class="o-layout-typography">
-		<form action="" method="post">
-			<label class="o-forms-field">
+		<form method="post">
+			<span class="o-forms-field">
 				<span class="o-forms-title">
-					<span class="o-forms-title__main">Build Service URL</span>
-					<span class="o-forms-title__prompt">The Build Service URL you would like to check is using the latest version of Origami components.</span>
-
+					<span id="build-service-url-title" class="o-forms-title__main">Build Service URL</span>
+					<span id="build-service-url-prompt" class="o-forms-title__prompt">The Build Service URL you would like to check is using the latest version of Origami components.</span>
 				</span>
 				<span class="o-forms-input o-forms-input--text o-forms-input--suffix">
-					<input required type="text" name="build-service-url" {{#buildServiceUrl}}value="{{.}}"{{/buildServiceUrl}}>
-					<button type="submit" class="o-buttons o-buttons--primary o-buttons--big">Check</button>
+					<input aria-labelledby="build-service-url-title" aria-describedby="build-service-url-prompt" required type="text" name="build-service-url" {{#buildServiceUrl}}value="{{.}}"{{/buildServiceUrl}}>
+					<button type="submit" class="o-buttons o-buttons--primary o-buttons--big" aria-label="Check your Build Service URL is up to date">Check</button>
 				</span>
-			</label>
+			</span>
 		</form>
 	</div>
 
