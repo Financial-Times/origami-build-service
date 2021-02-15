@@ -17,13 +17,15 @@
 			"subnav": true,
 			"subnavItems": [
 					{
-						"name": "v2",
+						"name": "V2",
 						"href": "v2/docs/api",
+						"label": "V2 API Reference",
 						"current": false
 					},
 					{
-						"name": "v3",
+						"name": "V3",
 						"href": "v3/docs/api",
+						"label": "V3 API Reference",
 						"current": false
 					}
 				]

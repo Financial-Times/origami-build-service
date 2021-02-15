@@ -37,26 +37,26 @@
 					class="o-header-services__drop-down-button"
 					type="button"
 					name="button"
-					aria-label="Toggle dropdown menu"
+					aria-label="Toggle &quot;{{#if ../label}}{{../label}}{{else}}{{../name}}{{/if}}&quot; dropdown menu"
 				></button>
 				<ul data-o-header-services-level="2" aria-hidden="true">
 					{{/if}}
 					<li>
-						<a href="{{@root.basePath}}{{href}}">{{name}}</a>
+						<a {{#label}}aria-label="{{.}}"{{/label}} href="{{@root.basePath}}{{href}}">{{name}}</a>
 					</li>
+					{{#if @last}}
 					<li>
 						<button
 							class="o-header-services__visually-hidden"
 							type="button"
 							name="button"
 						>
-							Close dropdown menu
+							Close "{{#if ../label}}{{../label}}{{else}}{{../name}}{{/if}}" dropdown menu
 						</button>
 					</li>
-					{{#if @last}}
 				</ul>
 				{{/if}} {{/each}}
-			</>
+			</li>
 			{{/navigation.items}}
 		</ul>
 	</nav>
