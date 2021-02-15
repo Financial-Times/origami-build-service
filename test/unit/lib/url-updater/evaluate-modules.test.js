@@ -117,7 +117,7 @@ describe('lib/evaluate-modules', () => {
             repoDataClientMock
         );
 
-        evaluateModules = require('../../../../lib/url-builder/evaluate-modules');
+        evaluateModules = require('../../../../lib/url-updater/evaluate-modules');
         UserError = require('../../../../lib/utils/usererror');
     });
 
