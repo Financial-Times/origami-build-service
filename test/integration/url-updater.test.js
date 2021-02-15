@@ -12,7 +12,7 @@ describe('GET /url-updater', function () {
 
     beforeEach(function () {
         this.request = request(this.app)
-            .post(`/url-updater`)
+            .post('/url-updater')
             .send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
             .set('Connection', 'close');
     });
@@ -41,7 +41,7 @@ describe('POST /url-updater', function () {
 
         beforeEach(function () {
             this.request = request(this.app)
-                .post(`/url-updater`)
+                .post('/url-updater')
                 .send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
                 .set('Connection', 'close');
         });
@@ -61,7 +61,7 @@ describe('POST /url-updater', function () {
 
         beforeEach(function () {
             this.request = request(this.app)
-                .post(`/url-updater`)
+                .post('/url-updater')
                 .send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
                 .set('Connection', 'close');
         });
@@ -80,7 +80,7 @@ describe('POST /url-updater', function () {
 
         beforeEach(function () {
             this.request = request(this.app)
-                .post(`/url-updater`)
+                .post('/url-updater')
                 .send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
                 .set('Connection', 'close');
         });
