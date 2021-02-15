@@ -1,7 +1,7 @@
 'use strict';
 
 const proclaim = require('proclaim');
-const parseBuildServiceUrl = require('../../../../lib/url-builder/parse-build-service-url');
+const parseBuildServiceUrl = require('../../../../lib/url-updater/parse-build-service-url');
 const UserError = require('../../../../lib/utils/usererror');
 
 describe('lib/parse-build-service-url', () => {

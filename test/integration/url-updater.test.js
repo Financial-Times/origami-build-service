@@ -4,7 +4,7 @@ const request = require('supertest');
 const proclaim = require('proclaim');
 const cheerio = require('cheerio');
 
-describe('GET /url-builder', function () {
+describe('GET /url-updater', function () {
     this.timeout(20000);
     this.slow(5000);
 
@@ -12,7 +12,7 @@ describe('GET /url-builder', function () {
 
     beforeEach(function () {
         this.request = request(this.app)
-            .post(`/url-builder`)
+            .post(`/url-updater`)
             .send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
             .set('Connection', 'close');
     });
@@ -32,7 +32,7 @@ describe('GET /url-builder', function () {
     });
 });
 
-describe('POST /url-builder', function () {
+describe('POST /url-updater', function () {
     this.timeout(20000);
     this.slow(5000);
 
@@ -41,7 +41,7 @@ describe('POST /url-builder', function () {
 
         beforeEach(function () {
             this.request = request(this.app)
-                .post(`/url-builder`)
+                .post(`/url-updater`)
                 .send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
                 .set('Connection', 'close');
         });
@@ -61,7 +61,7 @@ describe('POST /url-builder', function () {
 
         beforeEach(function () {
             this.request = request(this.app)
-                .post(`/url-builder`)
+                .post(`/url-updater`)
                 .send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
                 .set('Connection', 'close');
         });
@@ -80,7 +80,7 @@ describe('POST /url-builder', function () {
 
         beforeEach(function () {
             this.request = request(this.app)
-                .post(`/url-builder`)
+                .post(`/url-updater`)
                 .send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
                 .set('Connection', 'close');
         });

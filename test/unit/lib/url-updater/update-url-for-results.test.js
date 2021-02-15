@@ -1,7 +1,7 @@
 'use strict';
 
 const proclaim = require('proclaim');
-const updateUrlForResults = require('../../../../lib/url-builder/update-url-for-results');
+const updateUrlForResults = require('../../../../lib/url-updater/update-url-for-results');
 
 describe('lib/update-url-for-results.test', () => {
 

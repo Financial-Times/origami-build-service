@@ -2,7 +2,7 @@
 'use strict';
 
 const proclaim = require('proclaim');
-const parseModulesParameter = require('../../../../lib/url-builder/parse-modules-parameter');
+const parseModulesParameter = require('../../../../lib/url-updater/parse-modules-parameter');
 const UserError = require('../../../../lib/utils/usererror');
 
 describe('lib/parse-modules-parameter', () => {
