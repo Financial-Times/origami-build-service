@@ -8,7 +8,7 @@ jobs:
       with:
           persist-credentials: false
     - run: git config --global url."https://${{ secrets.ORIGAMI_GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-    - uses: actions/setup-node@v2.1.4
+    - uses: actions/setup-node@v2.1.5
       with:
         node-version: 12.x
     - run: npm install -g "npm@^7"
