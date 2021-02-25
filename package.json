@@ -46,6 +46,7 @@
     "bower-resolve-webpack-plugin": "^1.0.5",
     "cheerio": "^0.22.0",
     "cors": "^2.8.5",
+    "decompress": "^4.2.1",
     "denodeify": "^1.2.1",
     "dotenv": "^8.2.0",
     "esbuild": "^0.8.21",
@@ -54,6 +55,7 @@
     "falafel": "^1.2.0",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
+    "globby": "^11.0.2",
     "graceful-fs": "^4.2.4",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^3.1.0",
@@ -71,13 +73,16 @@
     "lodash": "^4.17.21",
     "lru-cache": "^6.0.0",
     "measured": "^1.0.0",
+    "merge-deep": "^3.0.3",
     "merge-stream": "^2.0.0",
     "mime": "^1.6.0",
     "mkdirp": "^1.0.4",
     "morgan": "^1.10.0",
+    "mustache": "^4.1.0",
     "node-sass": "^5.0.0",
     "node.extend": "^2.0.2",
     "npm": "^7.1.1",
+    "pretty": "^2.0.0",
     "q": "^1.5.1",
     "raven": "^2.6.4",
     "raw-loader": "^0.5.1",
@@ -98,6 +103,7 @@
   },
   "devDependencies": {
     "chai": "^4.3.3",
+    "chai-as-promised": "^7.1.1",
     "dedent": "^0.7.0",
     "detect-es-version": "^0.1.4",
     "eslint": "^7.21.0",
@@ -121,6 +127,7 @@
   },
   "engineStrict": true,
   "volta": {
-    "node": "12.20.1"
+    "node": "12.20.1",
+    "npm": "7.5.4"
   }
 }

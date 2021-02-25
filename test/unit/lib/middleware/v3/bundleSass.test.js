@@ -24,13 +24,15 @@ describe('bundleSass', () => {
 		context(
 			'a file is imported from within the node_modules folder', () => {
 				let location;
+				let entryPointPath;
 				beforeEach(async () => {
 					await fs.mkdir('/tmp/bundle/', {recursive: true});
 					location = await fs.mkdtemp('/tmp/bundle/');
 					await fs.mkdir(path.join(location, 'node_modules/secret'), {recursive: true});
+					entryPointPath = path.join(location, 'index.scss');
 
 					await fs.writeFile(
-						path.join(location, 'index.scss'),
+						entryPointPath,
 						'@import "secret"; * {color: red}',
 						'utf-8'
 					);
@@ -46,7 +48,7 @@ describe('bundleSass', () => {
 				});
 
 				it('it bundles and compiles the index.scss file in the provided folder location and returns it as a string', async () => {
-					const bundledJavaScript = await bundleSass(location);
+					const bundledJavaScript = await bundleSass(location, entryPointPath);
 					proclaim.deepStrictEqual(
 						bundledJavaScript,
 						'.secret{color:pink}*{color:red}\n'
@@ -60,13 +62,15 @@ describe('bundleSass', () => {
 		context(
 			'a file is imported from within the node_modules folder', () => {
 				let location;
+				let entryPointPath;
 				beforeEach(async () => {
 					await fs.mkdir('/tmp/bundle/', {recursive: true});
 					location = await fs.mkdtemp('/tmp/bundle/');
 					await fs.mkdir(path.join(location, 'node_modules/secret'), {recursive: true});
+					entryPointPath = path.join(location, 'index.scss');
 
 					await fs.writeFile(
-						path.join(location, 'index.scss'),
+						entryPointPath,
 						'@import "secret"; * {color: red}',
 						'utf-8'
 					);
@@ -83,7 +87,7 @@ describe('bundleSass', () => {
 
 				it('it throws an error', async () => {
 					try {
-						await bundleSass(location);
+						await bundleSass(location, entryPointPath);
 						proclaim.notOk('Expected function to throw but it did not.');
 					} catch (err) {
 						proclaim.isInstanceOf(err, Error);
