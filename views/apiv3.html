@@ -2,161 +2,175 @@
     <!-- for automatically generated sidebar -->
 </div>
 
-<div class="o-layout__main o-layout-typography" data-o-component="o-syntax-highlight">
-    <h1 id="api-reference">
-        API reference
-    </h1>
+<div class="o-layout__main" data-o-component="o-syntax-highlight">
 
-    <p>
-        The current version of the API is 3. It has a smaller API interface than
-        v3 for the bundle endpoints, uses a new build system for creating the
-        bundles, and installs the components from npm instead of from Bower.
-    </p>
+	<div class="o-spacing-s6 o-message o-message--notice o-message--inner o-message--warning" data-o-component="o-message" data-o-message-close="false">
+		<div class="o-message__container">
+			<div class="o-message__content ">
+				<p class="o-message__content-main">
+				    V3 of the Build Service API is experimental and may change at any time. For production applications we recommend using the <a href="/v2/docs/api">V2 Build Service API</a>).
+				</p>
+			</div>
+		</div>
+	</div>
 
-    <h2 id="get-v3-bundles-js">
-        GET /v3/bundles/js
-    </h2>
+    <div class="o-layout-typography">
 
-    <p>
-        Fetch a set of modules and build a JavaScript bundle.
-    </p>
+        <h1 id="api-reference">
+            API reference
+        </h1>
 
-    <table class="o-table o-table--responsive-lines" data-o-component="o-table" >
-        <thead>
-            <tr>
-                <th>Param</th>
-                <th data-o-table-heading-disable-sort>Where?</th>
-                <th data-o-table-heading-disable-sort>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr id="js-modules">
-                <td><code>modules</code></td>
-                <td>Querystring</td>
-                <td>
-                    A comma separated list of modules in the form <code>module@version</code>.
-                    <code>module</code> is the name of the module on the <a href="https://www.npmjs.com/">npm registry</a>
-                    <code>version</code> will be interpreted using SemVer rules and the
-                    best matching version will be built.
-                </td>
-            </tr>
-            <tr id="js-system_code">
-                <td><code>system_code</code></td>
-                <td>Querystring</td>
-                <td>The <a href="https://biz-ops.in.ft.com/list/Systems">bizops system code</a> for the system which is making the build service request.</td>
-            </tr>
-            <tr id="js-callback">
-                <td><code>callback</code></td>
-                <td>Querystring</td>
-                <td>
-                    <em>(Optional)</em> If present, calls the named javascript function on the window object once the bundle is loaded, with the modules object as the first argument.
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <p>
+            The current version of the API is 3. It has a smaller API interface than
+            v3 for the bundle endpoints, uses a new build system for creating the
+            bundles, and installs the components from npm instead of from Bower.
+        </p>
 
-    <p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+        <h2 id="get-v3-bundles-js">
+            GET /v3/bundles/js
+        </h2>
 
-    <p>The following HTTP errors can be returned:</p>
+        <p>
+            Fetch a set of modules and build a JavaScript bundle.
+        </p>
 
-    <ul>
-        <li><code>400 Bad Request</code>: The request was invalid</li>
-        <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
-        <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
-        <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
-    </ul>
+        <table class="o-table o-table--responsive-lines" data-o-component="o-table" >
+            <thead>
+                <tr>
+                    <th>Param</th>
+                    <th data-o-table-heading-disable-sort>Where?</th>
+                    <th data-o-table-heading-disable-sort>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="js-modules">
+                    <td><code>modules</code></td>
+                    <td>Querystring</td>
+                    <td>
+                        A comma separated list of modules in the form <code>module@version</code>.
+                        <code>module</code> is the name of the module on the <a href="https://www.npmjs.com/">npm registry</a>
+                        <code>version</code> will be interpreted using SemVer rules and the
+                        best matching version will be built.
+                    </td>
+                </tr>
+                <tr id="js-system_code">
+                    <td><code>system_code</code></td>
+                    <td>Querystring</td>
+                    <td>The <a href="https://biz-ops.in.ft.com/list/Systems">bizops system code</a> for the system which is making the build service request.</td>
+                </tr>
+                <tr id="js-callback">
+                    <td><code>callback</code></td>
+                    <td>Querystring</td>
+                    <td>
+                        <em>(Optional)</em> If present, calls the named javascript function on the window object once the bundle is loaded, with the modules object as the first argument.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <h3 id="get-v3-bundles-css">GET /v3/bundles/css</h3>
+        <p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
 
-    <p>Fetch a set of modules and build a CSS bundle.</p>
+        <p>The following HTTP errors can be returned:</p>
 
-    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
-        <thead>
-            <tr>
-                <th>Param</th>
-                <th data-o-table-heading-disable-sort>Where</th>
-                <th data-o-table-heading-disable-sort>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr id="css-modules">
-                <td><code>modules</code></td>
-                <td>Querystring</td>
-                <td>
-                    A comma separated list of modules in the form <code>module@version</code>.
-                    <code>module</code> is the name of the module on the <a href="https://www.npmjs.com/">npm registry</a>
-                    <code>version</code> will be interpreted using SemVer rules and the
-                    best matching version will be built.
-                </td>
-            </tr>
-            <tr id="css-brand">
-                <td><code>brand</code></td>
-                <td>Querystring</td>
-                <td>The brand to compile the CSS for. Can be one of <code>master</code>, <code>internal</code>, or <code>whitelabel</code></td>
-            </tr>
-            <tr id="css-system_code">
-                <td><code>system_code</code></td>
-                <td>Querystring</td>
-                <td>The <a href="https://biz-ops.in.ft.com/list/Systems">bizops system code</a> for the system which is making the build service request.</td>
-            </tr>
-        </tbody>
+        <ul>
+            <li><code>400 Bad Request</code>: The request was invalid</li>
+            <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
+            <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
+            <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+        </ul>
 
-        <tbody></tbody>
-    </table>
+        <h3 id="get-v3-bundles-css">GET /v3/bundles/css</h3>
 
-    <p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+        <p>Fetch a set of modules and build a CSS bundle.</p>
 
-    <p>The following HTTP errors can be returned:</p>
+        <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
+            <thead>
+                <tr>
+                    <th>Param</th>
+                    <th data-o-table-heading-disable-sort>Where</th>
+                    <th data-o-table-heading-disable-sort>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="css-modules">
+                    <td><code>modules</code></td>
+                    <td>Querystring</td>
+                    <td>
+                        A comma separated list of modules in the form <code>module@version</code>.
+                        <code>module</code> is the name of the module on the <a href="https://www.npmjs.com/">npm registry</a>
+                        <code>version</code> will be interpreted using SemVer rules and the
+                        best matching version will be built.
+                    </td>
+                </tr>
+                <tr id="css-brand">
+                    <td><code>brand</code></td>
+                    <td>Querystring</td>
+                    <td>The brand to compile the CSS for. Can be one of <code>master</code>, <code>internal</code>, or <code>whitelabel</code></td>
+                </tr>
+                <tr id="css-system_code">
+                    <td><code>system_code</code></td>
+                    <td>Querystring</td>
+                    <td>The <a href="https://biz-ops.in.ft.com/list/Systems">bizops system code</a> for the system which is making the build service request.</td>
+                </tr>
+            </tbody>
 
-    <ul>
-        <li><code>400 Bad Request</code>: The request was invalid</li>
-        <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
-        <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
-        <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
-    </ul>
+            <tbody></tbody>
+        </table>
 
-    <h3 id="get-v3-font">GET /v3/font</h3>
+        <p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
 
-    <p>Fetch a specific font from o-fonts-assets.</p>
+        <p>The following HTTP errors can be returned:</p>
 
-    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
-        <thead>
-            <tr>
-                <th>Param</th>
-                <th data-o-table-heading-disable-sort>Where</th>
-                <th data-o-table-heading-disable-sort>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr id="font-version">
-                <td><code>version</code></td>
-                <td>Querystring</td>
-                <td>
-                    The version of o-fonts-assets to use. <code>version</code> will be interpreted using SemVer rules and the
-                    best matching version will be used.
-                </td>
-            </tr>
-            <tr id="font-file">
-                <td><code>file</code></td>
-                <td>Querystring</td>
-                <td>The path to the file to have returned.</td>
-            </tr>
-            <tr id="font-system_code">
-                <td><code>system_code</code></td>
-                <td>Querystring</td>
-                <td>The <a href="https://biz-ops.in.ft.com/list/Systems">bizops system code</a> for the system which is making the build service request.</td>
-            </tr>
-        </tbody>
+        <ul>
+            <li><code>400 Bad Request</code>: The request was invalid</li>
+            <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
+            <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
+            <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+        </ul>
 
-        <tbody></tbody>
-    </table>
+        <h3 id="get-v3-font">GET /v3/font</h3>
 
-    <p><em>Due to the expected long duration of downloading from npm, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+        <p>Fetch a specific font from o-fonts-assets.</p>
 
-    <p>The following HTTP errors can be returned:</p>
+        <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
+            <thead>
+                <tr>
+                    <th>Param</th>
+                    <th data-o-table-heading-disable-sort>Where</th>
+                    <th data-o-table-heading-disable-sort>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="font-version">
+                    <td><code>version</code></td>
+                    <td>Querystring</td>
+                    <td>
+                        The version of o-fonts-assets to use. <code>version</code> will be interpreted using SemVer rules and the
+                        best matching version will be used.
+                    </td>
+                </tr>
+                <tr id="font-file">
+                    <td><code>file</code></td>
+                    <td>Querystring</td>
+                    <td>The path to the file to have returned.</td>
+                </tr>
+                <tr id="font-system_code">
+                    <td><code>system_code</code></td>
+                    <td>Querystring</td>
+                    <td>The <a href="https://biz-ops.in.ft.com/list/Systems">bizops system code</a> for the system which is making the build service request.</td>
+                </tr>
+            </tbody>
 
-    <ul>
-        <li><code>400 Bad Request</code>: The request was invalid</li>
-        <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
-    </ul>
+            <tbody></tbody>
+        </table>
+
+        <p><em>Due to the expected long duration of downloading from npm, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+
+        <p>The following HTTP errors can be returned:</p>
+
+        <ul>
+            <li><code>400 Bad Request</code>: The request was invalid</li>
+            <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
+        </ul>
+    </div>
 </div>
