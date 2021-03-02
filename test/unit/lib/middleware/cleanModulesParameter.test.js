@@ -64,7 +64,7 @@ describe('lib/middleware/cleanModulesParameter', () => {
 						const expectedModuleString = value
 							.split(',')
 							.map((value) => value.split('@')[0])
-                            .join(', ');
+							.join(', ');
 						assert.calledWithExactly(httpError, 400, `The modules parameter contains module names which are not valid: ${expectedModuleString}`);
 					});
 

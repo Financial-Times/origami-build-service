@@ -20,12 +20,12 @@ describe('createCssBundle', function () {
 			response.startTime = sinon.spy();
 			response.endTime = sinon.spy();
 			request.app = {
-					ft: {
-						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
-						}
+				ft: {
+					options: {
+						npmRegistryURL: 'https://registry.npmjs.com'
 					}
-				};
+				}
+			};
 			request.query.modules = '@financial-times/o-test-component@v2.0.0-beta.1';
 			request.query.brand = 'master';
 			request.query.system_code = 'origami';
@@ -58,12 +58,12 @@ describe('createCssBundle', function () {
 			response.startTime = sinon.spy();
 			response.endTime = sinon.spy();
 			request.app = {
-					ft: {
-						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
-						}
+				ft: {
+					options: {
+						npmRegistryURL: 'https://registry.npmjs.com'
 					}
-				};
+				}
+			};
 
 			await createCssBundle(request, response);
 
@@ -76,8 +76,8 @@ describe('createCssBundle', function () {
 			proclaim.deepStrictEqual(
 				response.getHeader('cache-control'),
 				'max-age=0, must-revalidate, no-cache, no-store'
-            );
-            proclaim.deepStrictEqual(response.statusCode, 400);
+			);
+			proclaim.deepStrictEqual(response.statusCode, 400);
 
 			proclaim.deepStrictEqual(
 				bundle,
@@ -114,8 +114,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -153,8 +153,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -191,8 +191,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -229,8 +229,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -267,8 +267,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -305,8 +305,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -343,8 +343,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -381,8 +381,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -420,8 +420,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -458,8 +458,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -497,8 +497,8 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -533,16 +533,16 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
 					'text/plain; charset=UTF-8'
-					);
-						proclaim.deepStrictEqual(
-							bundle,
-							'Origami Build Service returned an error: \"The system_code query parameter must be a valid Biz-Ops System Code.\"'
-						);
+				);
+				proclaim.deepStrictEqual(
+					bundle,
+					'Origami Build Service returned an error: \"The system_code query parameter must be a valid Biz-Ops System Code.\"'
+				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 			});
 		}

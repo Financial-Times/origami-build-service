@@ -94,8 +94,8 @@ describe('createJavaScriptBundle', function () {
 			proclaim.deepStrictEqual(
 				response.getHeader('cache-control'),
 				'max-age=0, must-revalidate, no-cache, no-store'
-            );
-            proclaim.deepStrictEqual(response.statusCode, 400);
+			);
+			proclaim.deepStrictEqual(response.statusCode, 400);
 
 			proclaim.deepStrictEqual(
 				bundle,
@@ -133,8 +133,8 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -173,8 +173,8 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -212,8 +212,8 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -251,8 +251,8 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -290,8 +290,8 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -329,8 +329,8 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -368,8 +368,8 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -407,8 +407,8 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
@@ -447,8 +447,8 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
 					'max-age=0, must-revalidate, no-cache, no-store'
-                );
-                proclaim.deepStrictEqual(response.statusCode, 400);
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
 
 				proclaim.deepStrictEqual(
 					bundle,
