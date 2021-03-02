@@ -63,12 +63,14 @@ describe('GET /v3/bundles/css', function() {
 				}).end(done);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-		});
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-		it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
 		});
 	});
 
@@ -95,12 +97,14 @@ describe('GET /v3/bundles/css', function() {
 			}).end(done);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-		});
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-		it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
 		});
 	});
 
@@ -121,12 +125,14 @@ describe('GET /v3/bundles/css', function() {
 			}).end(done);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-		});
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-		it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
 		});
 
 	});
@@ -178,12 +184,14 @@ describe('GET /v3/bundles/css', function() {
 			this.request.expect('Origami Build Service returned an error: "The modules query parameter can not be empty."').end(done);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-		});
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-		it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
 		});
 
 	});
@@ -208,12 +216,14 @@ describe('GET /v3/bundles/css', function() {
 			this.request.expect('Origami Build Service returned an error: "The modules query parameter must be a string."').end(done);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-		});
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-		it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
 		});
 
 	});
@@ -239,12 +249,14 @@ describe('GET /v3/bundles/css', function() {
 			this.request.expect('Origami Build Service returned an error: "The modules query parameter contains module names which are not valid: http://1.2.3.4/."').end(done);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-		});
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-		it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
 		});
 
 	});
