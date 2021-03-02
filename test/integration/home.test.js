@@ -20,7 +20,7 @@ describe('GET /', function() {
 		this.request.expect('Location', `${this.basepath}v2/`).end(done);
 	});
 
-	it('should respond with HTML', function(done) {
+	it('should respond with plaintext', function(done) {
 		this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
 	});
 
