@@ -30,37 +30,37 @@ describe('lib/utils/JSONParseIfExists', function() {
 
 		});
 
-        describe('when `path` points to a file which does exist', function() {
+		describe('when `path` points to a file which does exist', function() {
 
-            context('file is JSON', function() {
-                const value = {number: 13.7};
-                beforeEach(async function() {
-                    await fs.writeFile('./file-does-exist', JSON.stringify(value));
-                });
-                afterEach(async function() {
-                    await rmrf('./file-does-exist');
-                });
+			context('file is JSON', function() {
+				const value = {number: 13.7};
+				beforeEach(async function() {
+					await fs.writeFile('./file-does-exist', JSON.stringify(value));
+				});
+				afterEach(async function() {
+					await rmrf('./file-does-exist');
+				});
 
-                it('returns the file parsed as JSON', function() {
-                    assert.eventually.deepEqual(JSONParseIfExists('./file-does-not-exist'), value);
-                });
+				it('returns the file parsed as JSON', function() {
+					assert.eventually.deepEqual(JSONParseIfExists('./file-does-not-exist'), value);
+				});
 
-            });
+			});
 
-            context('file is not JSON', function() {
+			context('file is not JSON', function() {
 
-                beforeEach(async function() {
-                    await fs.writeFile('./file-does-exist', 'hello this file does not contain json');
-                });
-                afterEach(async function() {
-                    await rmrf('./file-does-exist');
-                });
+				beforeEach(async function() {
+					await fs.writeFile('./file-does-exist', 'hello this file does not contain json');
+				});
+				afterEach(async function() {
+					await rmrf('./file-does-exist');
+				});
 
-                it('returns a rejected promise with an error', function() {
-                    assert.isRejected(JSONParseIfExists('./file-does-not-exist'));
-                });
+				it('returns a rejected promise with an error', function() {
+					assert.isRejected(JSONParseIfExists('./file-does-not-exist'));
+				});
 
-            });
-        });
+			});
+		});
 	});
 });
