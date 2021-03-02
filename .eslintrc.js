@@ -6,9 +6,10 @@ module.exports = {
 		'es6': true
 	},
 	'parserOptions': {
-        'ecmaVersion': 2020
-    },
+		'ecmaVersion': 2020
+	},
 	'rules': {
+		'indent': ['error', 'tab'],
 		'no-unused-vars': 2,
 		'no-undef': 2,
 		'eqeqeq': 2,
