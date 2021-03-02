@@ -16,9 +16,9 @@ describe('lib/utils/parseModulesParameter', function() {
 
 	describe('parseModulesParameter(modules)', function() {
 
-        it('turns "o-colors,o-grid@^4,o-techdocs@*,o-buttons@latest" into a nested array where first items are the module name and second items are the version', function() {
-            assert.deepEqual(parseModulesParameter('o-colors,o-grid@^4,o-techdocs@*,o-buttons@latest'),
-            [['o-colors', ''], ['o-grid', '^4'], ['o-techdocs', '*'], ['o-buttons', 'latest']]);
-        });
+		it('turns "o-colors,o-grid@^4,o-techdocs@*,o-buttons@latest" into a nested array where first items are the module name and second items are the version', function() {
+			assert.deepEqual(parseModulesParameter('o-colors,o-grid@^4,o-techdocs@*,o-buttons@latest'),
+				[['o-colors', ''], ['o-grid', '^4'], ['o-techdocs', '*'], ['o-buttons', 'latest']]);
+		});
 	});
 });

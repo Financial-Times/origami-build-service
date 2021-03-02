@@ -60,14 +60,14 @@ describe('GET /v3/font', function () {
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-            it('should respond with the expected `Content-Type` header', function(done) {
-                this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-            });
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-            it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-                this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-            });
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 	});
 
 	describe('when the font requested does not exist', function () {
@@ -100,14 +100,14 @@ describe('GET /v3/font', function () {
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-            it('should respond with the expected `Content-Type` header', function(done) {
-                this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-            });
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-            it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-                this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-            });
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 	});
 
 	describe('when the version parameter is missing', function () {
@@ -134,14 +134,14 @@ describe('GET /v3/font', function () {
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-            it('should respond with the expected `Content-Type` header', function(done) {
-                this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-            });
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-            it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-                this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-            });
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 	});
 
 	describe('when the version parameter is not a string', function () {
@@ -170,14 +170,14 @@ describe('GET /v3/font', function () {
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-            it('should respond with the expected `Content-Type` header', function(done) {
-                this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-            });
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-            it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-                this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-            });
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 	});
 
 	describe('when a version cannot be parsed', function () {
@@ -210,14 +210,14 @@ describe('GET /v3/font', function () {
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-            it('should respond with the expected `Content-Type` header', function(done) {
-                this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-            });
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-            it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-                this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-            });
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 	});
 
 	describe('when the font_format parameter is an invalid value', function () {
@@ -250,13 +250,13 @@ describe('GET /v3/font', function () {
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-            it('should respond with the expected `Content-Type` header', function(done) {
-                this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-            });
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-            it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-                this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-            });
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 	});
 });

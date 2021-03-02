@@ -15,14 +15,14 @@ describe('lib/utils/compileerror', function () {
 	});
 
 	describe('compileerror(message)', function () {
-        it('is an instance of Error', function () {
-            assert.instanceOf(new CompileError('uh oh'), Error);
-        });
-        it('in an instance of CompileError', function () {
-            assert.instanceOf(new CompileError('uh oh'), CompileError);
-        });
-        it('sets the message instance property to the value of the argument', function () {
-            assert.deepEqual(new CompileError('uh oh').message, 'uh oh');
-        });
+		it('is an instance of Error', function () {
+			assert.instanceOf(new CompileError('uh oh'), Error);
+		});
+		it('in an instance of CompileError', function () {
+			assert.instanceOf(new CompileError('uh oh'), CompileError);
+		});
+		it('sets the message instance property to the value of the argument', function () {
+			assert.deepEqual(new CompileError('uh oh').message, 'uh oh');
+		});
 	});
 });

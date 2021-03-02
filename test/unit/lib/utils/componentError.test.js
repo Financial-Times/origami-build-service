@@ -15,14 +15,14 @@ describe('lib/utils/componentError', function () {
 	});
 
 	describe('componentError(message)', function () {
-        it('is an instance of Error', function () {
-            assert.instanceOf(new ComponentError('uh oh'), Error);
-        });
-        it('in an instance of ComponentError', function () {
-            assert.instanceOf(new ComponentError('uh oh'), ComponentError);
-        });
-        it('sets the message instance property to the value of the argument', function () {
-            assert.deepEqual(new ComponentError('uh oh').message, 'uh oh');
-        });
+		it('is an instance of Error', function () {
+			assert.instanceOf(new ComponentError('uh oh'), Error);
+		});
+		it('in an instance of ComponentError', function () {
+			assert.instanceOf(new ComponentError('uh oh'), ComponentError);
+		});
+		it('sets the message instance property to the value of the argument', function () {
+			assert.deepEqual(new ComponentError('uh oh').message, 'uh oh');
+		});
 	});
 });

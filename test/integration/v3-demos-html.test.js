@@ -50,14 +50,14 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-            it('should respond with the expected `Content-Type` header', function(done) {
-                this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-            });
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-            it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-                this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-            });
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 
 		it('should respond with an error message', function(done) {
 			this.request.expect('Origami Build Service returned an error: "@financial-times/o-test-component@2.0.7 has no demos defined within it\'s origami.json file. See the component specification for details on how to configure demos for a component: https://origami.ft.com/spec/"').end(done);
@@ -134,14 +134,14 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-            it('should respond with the expected `Content-Type` header', function(done) {
-                this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-            });
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-            it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-                this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-            });
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 
 		it('should respond with an error message', function(done) {
 			this.request.expect('Origami Build Service returned an error: "@financial-times/o-test-component@2.0.10\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Mustache templates: Unclosed section \\"causing-syntax-error-by-not-closing-section\\" at 126"').end(done);
@@ -166,14 +166,14 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-            it('should respond with the expected `Content-Type` header', function(done) {
-                this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-            });
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-            it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-                this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-            });
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 
 		it('should respond with an error message', function(done) {
 			this.request.expect(response => {
@@ -201,14 +201,14 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-            it('should respond with the expected `Content-Type` header', function(done) {
-                this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-            });
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-            it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-                this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-            });
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 
 		it('should respond with an error message', function(done) {
 			this.request.expect(response => {
