@@ -78,12 +78,12 @@ describe('bundleJavascript', () => {
 			await rmrf(location);
 		});
 		it('it throws an error', async () => {
-            try {
-                await bundleJavascript(location);
-                proclaim.notOk('Expected function to throw but it did not.');
-            } catch (err) {
-                proclaim.isInstanceOf(err, Error);
-            }
-        });
+			try {
+				await bundleJavascript(location);
+				proclaim.notOk('Expected function to throw but it did not.');
+			} catch (err) {
+				proclaim.isInstanceOf(err, Error);
+			}
+		});
 	});
 });

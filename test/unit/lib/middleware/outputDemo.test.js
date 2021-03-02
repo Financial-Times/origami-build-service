@@ -96,13 +96,13 @@ describe('lib/middleware/outputDemo', function() {
 				describe('when bundle takes more than 20 seconds', () => {
 					it('returns a 307, redirecting to itself', () => {
 						return middleware(request, response, next)
-						.then(() => {
-							assert.calledOnce(global.setTimeout);
-							assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
-							assert.calledOnce(response.redirect);
-							assert.equal(request.query.redirects, 1);
-							assert.calledWithExactly(response.redirect, 307, '/?redirects=1');
-						});
+							.then(() => {
+								assert.calledOnce(global.setTimeout);
+								assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
+								assert.calledOnce(response.redirect);
+								assert.equal(request.query.redirects, 1);
+								assert.calledWithExactly(response.redirect, 307, '/?redirects=1');
+							});
 					});
 				});
 
@@ -111,13 +111,13 @@ describe('lib/middleware/outputDemo', function() {
 						request.query.redirects = 1;
 
 						return middleware(request, response, next)
-						.then(() => {
-							assert.calledOnce(global.setTimeout);
-							assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
-							assert.calledOnce(response.redirect);
-							assert.equal(request.query.redirects, 2);
-							assert.calledWithExactly(response.redirect, 307, '/?redirects=2');
-						});
+							.then(() => {
+								assert.calledOnce(global.setTimeout);
+								assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
+								assert.calledOnce(response.redirect);
+								assert.equal(request.query.redirects, 2);
+								assert.calledWithExactly(response.redirect, 307, '/?redirects=2');
+							});
 					});
 				});
 
@@ -126,13 +126,13 @@ describe('lib/middleware/outputDemo', function() {
 						request.query.redirects = 2;
 
 						return middleware(request, response, next)
-						.then(() => {
-							assert.calledOnce(global.setTimeout);
-							assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
-							assert.calledOnce(response.redirect);
-							assert.equal(request.query.redirects, 3);
-							assert.calledWithExactly(response.redirect, 307, '/?redirects=3');
-						});
+							.then(() => {
+								assert.calledOnce(global.setTimeout);
+								assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
+								assert.calledOnce(response.redirect);
+								assert.equal(request.query.redirects, 3);
+								assert.calledWithExactly(response.redirect, 307, '/?redirects=3');
+							});
 					});
 				});
 
@@ -140,12 +140,12 @@ describe('lib/middleware/outputDemo', function() {
 					it('returns a Compile Error', () => {
 						request.query.redirects = 3;
 						return middleware(request, response, next)
-						.then(() => {
-							assert.calledOnce(global.setTimeout);
-							assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
-							assert.calledOnce(next);
-							assert.calledWithExactly(next, CompileError.mockInstance);
-						});
+							.then(() => {
+								assert.calledOnce(global.setTimeout);
+								assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
+								assert.calledOnce(next);
+								assert.calledWithExactly(next, CompileError.mockInstance);
+							});
 					});
 				});
 
@@ -161,10 +161,10 @@ describe('lib/middleware/outputDemo', function() {
 
 					it('passes the error into `next`', () => {
 						return middleware(request, response, next)
-						.then(() => {
-							assert.calledOnce(next);
-							assert.calledWithExactly(next, error);
-						});
+							.then(() => {
+								assert.calledOnce(next);
+								assert.calledWithExactly(next, error);
+							});
 					});
 				});
 			});
@@ -179,10 +179,10 @@ describe('lib/middleware/outputDemo', function() {
 						request.query.redirects = 1;
 
 						return middleware(request, response, next)
-						.then(() => {
-							assert.calledOnce(response.redirect);
-							assert.calledWithExactly(response.redirect, 307, '/');
-						});
+							.then(() => {
+								assert.calledOnce(response.redirect);
+								assert.calledWithExactly(response.redirect, 307, '/');
+							});
 					});
 				});
 

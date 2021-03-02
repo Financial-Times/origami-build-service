@@ -274,21 +274,21 @@ describe('GET /v2/bundles/css', function() {
 });
 
 describe('when a module name is a relative directory', function() {
-		const moduleName = '../../../example';
+	const moduleName = '../../../example';
 
-		beforeEach(function() {
-			const now = (new Date()).toISOString();
-			this.request = request(this.app)
-				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
-				.set('Connection', 'close');
-		});
+	beforeEach(function() {
+		const now = (new Date()).toISOString();
+		this.request = request(this.app)
+			.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
+			.set('Connection', 'close');
+	});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
-		});
+	it('should respond with a 400 status', function(done) {
+		this.request.expect(400).end(done);
+	});
 
-		it('should respond with an error message ', function(done) {
-			this.request.expect(/The modules parameter contains module names which are not valid: \.\.\/\.\.\/\.\.\/example/i).end(done);
-		});
+	it('should respond with an error message ', function(done) {
+		this.request.expect(/The modules parameter contains module names which are not valid: \.\.\/\.\.\/\.\.\/example/i).end(done);
+	});
 
 });

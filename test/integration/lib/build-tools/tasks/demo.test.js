@@ -176,7 +176,7 @@ describe('Demo task', function() {
 
 		it('should build demo html', function(done) {
 			demoDuplex = demo(gulp, logMock, Object.assign({}, defaultOptions))
-			.on('end', function() {
+				.on('end', function() {
 					const test = fs.readFileSync(path.join(testPath, 'demos/test.html'), 'utf8');
 					const pa11y = fs.readFileSync(path.join(testPath, 'demos/pa11y.html'), 'utf8');
 					proclaim.include(test, '<div>test</div>');
@@ -196,12 +196,12 @@ describe('Demo task', function() {
 				{{>partials/partial2}}
 			`, 'utf8');
 			demoDuplex = demo(gulp, logMock, Object.assign({}, defaultOptions))
-			.on('end', function() {
-				const test = fs.readFileSync(path.join(testPath, 'demos/test.html'), 'utf8');
-				proclaim.include(test, '<div>partial1</div>');
-				proclaim.include(test, '<div>partial2</div>');
-				done();
-			});
+				.on('end', function() {
+					const test = fs.readFileSync(path.join(testPath, 'demos/test.html'), 'utf8');
+					proclaim.include(test, '<div>partial1</div>');
+					proclaim.include(test, '<div>partial2</div>');
+					done();
+				});
 
 			demoDuplex.resume();
 		});

@@ -135,7 +135,7 @@ describe('promisecache', function(){
 			}).then(function(res){
 				assert.equal(res, 'new value', 'Expected build to finish');
 			})
-			.then(done, done);
+				.then(done, done);
 		}, 150*ttlScale);
 	});
 

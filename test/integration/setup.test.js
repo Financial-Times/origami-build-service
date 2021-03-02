@@ -31,11 +31,11 @@ before(function() {
 			npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.com',
 			tempdir
 		})
-		.listen()
-		.then(app => {
-			this.app = app;
-			this.basepath = '/';
-		});
+			.listen()
+			.then(app => {
+				this.app = app;
+				this.basepath = '/';
+			});
 	}
 });
 
