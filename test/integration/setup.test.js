@@ -10,7 +10,21 @@ const tempdir = `/tmp/buildservice/tests-${uuid()}`;
 const log = require('../mock/log.mock');
 const HOST = process.env.HOST;
 
+const chai = require('chai');
+const chaiJestSnapshot = require('chai-jest-snapshot');
+
+chai.use(chaiJestSnapshot);
+
+chai.assert.matchSnapshot = function matchSnapshot(object, ...args) {
+	chai.expect(object).to.matchSnapshot(...args);
+};
+
+beforeEach(function() {
+	chaiJestSnapshot.configureUsingMochaContext(this);
+});
+
 before(function() {
+	chaiJestSnapshot.resetSnapshotRegistry();
 	mkdirp.sync(tempdir);
 	// If HOST is defined, we are wanting to test a real server and not the local express app in this project.
 	if (HOST) {

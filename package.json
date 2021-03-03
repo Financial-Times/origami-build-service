@@ -104,6 +104,7 @@
   "devDependencies": {
     "chai": "^4.3.3",
     "chai-as-promised": "^7.1.1",
+    "chai-jest-snapshot": "^2.0.0",
     "dedent": "^0.7.0",
     "detect-es-version": "^0.1.4",
     "eslint": "^7.21.0",
