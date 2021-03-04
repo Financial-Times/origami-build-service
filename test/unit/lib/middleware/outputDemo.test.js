@@ -298,9 +298,7 @@ describe('lib/middleware/outputDemo', function() {
 			it('sends the demo HTML body contents', () => {
 				return middleware(request, response, next)
 					.then(() => {
-						assert.strictEqual(response.send.firstCall.args[0], `
-							<p>mock demo content</p>
-						`.trim());
+						assert.strictEqual(response.send.firstCall.args[0], '<p>mock demo content</p>\n');
 					});
 			});
 
@@ -335,12 +333,7 @@ describe('lib/middleware/outputDemo', function() {
 
 				it('strips them from the demo HTML', () => {
 					return middleware(request, response, next).then(() => {
-						assert.strictEqual(response.send.firstCall.args[0].replace(/\s+/g, ' ').trim(), `
-							<p>mock demo content</p>
-							<link href="not-origami">
-							<script src="not-origami"></script>
-							<script type="text/template">mock template</script>
-						`.replace(/\s+/g, ' ').trim());
+						assert.strictEqual(response.send.firstCall.args[0].replace(/\s+/g, ' ').trim(), '<p>mock demo content</p> <link href="not-origami" /> <script src="not-origami"></script> <script type="text/template"> mock template </script>');
 					});
 				});
 

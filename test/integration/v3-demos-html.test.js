@@ -27,8 +27,8 @@ describe('GET /v3/demo/html', function() {
 			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
 		});
 
-		it('should respond with the file contents', function(done) {
-			this.request.expect('<div data-o-component="o-test-component" class="o-test-component">\n</div>').end(done);
+		it('should respond with the demo html contents', function(done) {
+			this.request.expect('<div data-o-component="o-test-component" class="o-test-component"></div>\n').end(done);
 		});
 
 	});
@@ -85,8 +85,8 @@ describe('GET /v3/demo/html', function() {
 			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
 		});
 
-		it('should respond with the file contents', function(done) {
-			this.request.expect('<div data-o-component="o-test-component" class="o-test-component">\n</div>').end(done);
+		it('should respond with the demo html contents', function(done) {
+			this.request.expect('<div data-o-component="o-test-component" class="o-test-component"></div>\n').end(done);
 		});
 
 	});
@@ -112,7 +112,7 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		it('should respond with the demo html contents', function(done) {
-			this.request.expect('<div data-o-component="o-test-component" class="o-test-component">\n</div>').end(done);
+			this.request.expect('<div data-o-component="o-test-component" class="o-test-component"></div>\n').end(done);
 		});
 
 	});
