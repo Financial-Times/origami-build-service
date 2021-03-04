@@ -21,7 +21,7 @@ describe('createJavaScriptBundle', function () {
 	});
 
 	context('when given a valid request', function () {
-		it('it responds with a javascript bundle which contains the requested module', async () => {
+		it('it responds with a javascript bundle which contains the requested component', async () => {
 			const request = httpMock.createRequest();
 			const response = httpMock.createResponse();
 			response.startTime = sinon.spy();
@@ -33,14 +33,12 @@ describe('createJavaScriptBundle', function () {
 					}
 				}
 			};
-			request.query.modules = '@financial-times/o-utils@1.1.7';
+			request.query.components = '@financial-times/o-utils@1.1.7';
 			request.query.system_code = 'origami';
 
 			await createJavaScriptBundle(request, response);
 
 			const bundle = response._getData();
-			// console.log(JSON.stringify(bundle));
-			// process.exit(8)
 
 			proclaim.deepStrictEqual(
 				bundle,
@@ -70,7 +68,7 @@ describe('createJavaScriptBundle', function () {
 		});
 	});
 
-	context('when given a request with no modules parameter', function () {
+	context('when given a request with no components parameter', function () {
 		it('it responds with a javascript bundle which throws an error', async () => {
 			const request = httpMock.createRequest();
 			const response = httpMock.createResponse();
@@ -101,13 +99,13 @@ describe('createJavaScriptBundle', function () {
 
 			proclaim.deepStrictEqual(
 				bundle,
-				'Origami Build Service returned an error: "The modules query parameter can not be empty."'
+				'Origami Build Service returned an error: "The components query parameter can not be empty."'
 			);
 		});
 	});
 
 	context(
-		'when given a request with modules parameter as empty string',
+		'when given a request with components parameter as empty string',
 		async () => {
 			it('it responds with a javascript bundle which throws an error', async () => {
 				const request = httpMock.createRequest();
@@ -121,7 +119,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.modules = '';
+				request.query.components = '';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -140,14 +138,14 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The modules query parameter can not be empty."'
+					'Origami Build Service returned an error: "The components query parameter can not be empty."'
 				);
 			});
 		}
 	);
 
 	context(
-		'when given a request with a modules parameter which contains duplicates',
+		'when given a request with a components parameter which contains duplicates',
 		async () => {
 			it('it responds with a javascript bundle which throws an error', async () => {
 				const request = httpMock.createRequest();
@@ -161,7 +159,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.modules = 'o-test@1,o-test@1';
+				request.query.components = 'o-test@1,o-test@1';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -180,13 +178,13 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The modules query parameter contains duplicate module names."'
+					'Origami Build Service returned an error: "The components query parameter contains duplicate component names."'
 				);
 			});
 		}
 	);
 	context(
-		'when given a request with a modules parameter which contains empty module names',
+		'when given a request with a components parameter which contains empty component names',
 		async () => {
 			it('it responds with a javascript bundle which throws an error', async () => {
 				const request = httpMock.createRequest();
@@ -200,7 +198,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.modules = 'o-test@1,,';
+				request.query.components = 'o-test@1,,';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -219,13 +217,13 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The modules query parameter can not contain empty module names."'
+					'Origami Build Service returned an error: "The components query parameter can not contain empty component names."'
 				);
 			});
 		}
 	);
 	context(
-		'when given a request with a modules parameter which contains a module name with whitespace at the start',
+		'when given a request with a components parameter which contains a component name with whitespace at the start',
 		async () => {
 			it('it responds with a javascript bundle which throws an error', async () => {
 				const request = httpMock.createRequest();
@@ -239,7 +237,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.modules = ' o-test@1';
+				request.query.components = ' o-test@1';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -258,13 +256,13 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from ` o-test@1` to make the module name valid."'
+					'Origami Build Service returned an error: "The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from ` o-test@1` to make the component name valid."'
 				);
 			});
 		}
 	);
 	context(
-		'when given a request with a modules parameter which contains a module name with whitespace at the end',
+		'when given a request with a components parameter which contains a component name with whitespace at the end',
 		async () => {
 			it('it responds with a javascript bundle which throws an error', async () => {
 				const request = httpMock.createRequest();
@@ -278,7 +276,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.modules = 'o-test@1 ';
+				request.query.components = 'o-test@1 ';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -297,13 +295,13 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The modules query parameter contains module names which have whitespace at either the start of end of their name. Remove the whitespace from `o-test@1 ` to make the module name valid."'
+					'Origami Build Service returned an error: "The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from `o-test@1 ` to make the component name valid."'
 				);
 			});
 		}
 	);
 	context(
-		'when given a request with a modules parameter which contains a module name without a version',
+		'when given a request with a components parameter which contains a component name without a version',
 		async () => {
 			it('it responds with a javascript bundle which throws an error', async () => {
 				const request = httpMock.createRequest();
@@ -317,7 +315,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.modules = 'o-test';
+				request.query.components = 'o-test';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -342,7 +340,7 @@ describe('createJavaScriptBundle', function () {
 		}
 	);
 	context(
-		'when given a request with a modules parameter which contains a module name with an invalid version',
+		'when given a request with a components parameter which contains a component name with an invalid version',
 		async () => {
 			it('it responds with a javascript bundle which throws an error', async () => {
 				const request = httpMock.createRequest();
@@ -356,7 +354,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.modules = 'o-test@5wg';
+				request.query.components = 'o-test@5wg';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -381,7 +379,7 @@ describe('createJavaScriptBundle', function () {
 		}
 	);
 	context(
-		'when given a request with a modules parameter which contains a invalid module names',
+		'when given a request with a components parameter which contains a invalid component names',
 		async () => {
 			it('it responds with a javascript bundle which throws an error', async () => {
 				const request = httpMock.createRequest();
@@ -395,7 +393,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.modules = 'o-TeSt@5';
+				request.query.components = 'o-TeSt@5';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -414,7 +412,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The modules query parameter contains module names which are not valid: o-TeSt."'
+					'Origami Build Service returned an error: "The components query parameter contains component names which are not valid: o-TeSt."'
 				);
 			});
 		}
@@ -435,7 +433,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.modules = '@financial-times/o-utils@1.1.7';
+				request.query.components = '@financial-times/o-utils@1.1.7';
 				request.query.system_code = '$$origami!';
 
 				await createJavaScriptBundle(request, response);

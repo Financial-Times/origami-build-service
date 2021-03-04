@@ -18,7 +18,7 @@
     </h2>
 
     <p>
-        Fetch a set of modules and build a JavaScript bundle.
+        Fetch a set of components and build a JavaScript bundle.
     </p>
 
     <table class="o-table o-table--responsive-lines" data-o-component="o-table" >
@@ -30,12 +30,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr id="js-modules">
-                <td><code>modules</code></td>
+            <tr id="js-components">
+                <td><code>components</code></td>
                 <td>Querystring</td>
                 <td>
-                    A comma separated list of modules in the form <code>module@version</code>.
-                    <code>module</code> is the name of the module on the <a href="https://www.npmjs.com/">npm registry</a>
+                    A comma separated list of components in the form <code>component@version</code>.
+                    <code>component</code> is the name of the component on the <a href="https://www.npmjs.com/">npm registry</a>
                     <code>version</code> will be interpreted using SemVer rules and the
                     best matching version will be built.
                 </td>
@@ -49,7 +49,7 @@
                 <td><code>callback</code></td>
                 <td>Querystring</td>
                 <td>
-                    <em>(Optional)</em> If present, calls the named javascript function on the window object once the bundle is loaded, with the modules object as the first argument.
+                    <em>(Optional)</em> If present, calls the named javascript function on the window object once the bundle is loaded, with the components object as the first argument.
                 </td>
             </tr>
         </tbody>
@@ -61,14 +61,14 @@
 
     <ul>
         <li><code>400 Bad Request</code>: The request was invalid</li>
-        <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
+        <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of components specified</li>
         <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
-        <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+        <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the component code, reported from the build tools. This is likely an issue with the component, not with the build service itself</li>
     </ul>
 
     <h3 id="get-v3-bundles-css">GET /v3/bundles/css</h3>
 
-    <p>Fetch a set of modules and build a CSS bundle.</p>
+    <p>Fetch a set of components and build a CSS bundle.</p>
 
     <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
         <thead>
@@ -79,12 +79,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr id="css-modules">
-                <td><code>modules</code></td>
+            <tr id="css-components">
+                <td><code>components</code></td>
                 <td>Querystring</td>
                 <td>
-                    A comma separated list of modules in the form <code>module@version</code>.
-                    <code>module</code> is the name of the module on the <a href="https://www.npmjs.com/">npm registry</a>
+                    A comma separated list of components in the form <code>component@version</code>.
+                    <code>component</code> is the name of the component on the <a href="https://www.npmjs.com/">npm registry</a>
                     <code>version</code> will be interpreted using SemVer rules and the
                     best matching version will be built.
                 </td>
@@ -110,9 +110,9 @@
 
     <ul>
         <li><code>400 Bad Request</code>: The request was invalid</li>
-        <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
+        <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of components specified</li>
         <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
-        <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+        <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the component code, reported from the build tools. This is likely an issue with the component, not with the build service itself</li>
     </ul>
 
     <h3 id="get-v3-font">GET /v3/font</h3>
@@ -162,7 +162,7 @@
 
     <h3 id="get-v3-demo">GET /v3/demo</h3>
 
-    <p>Fetch a specific demo from a module.</p>
+    <p>Fetch a specific demo from a component.</p>
 
     <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
         <thead>
@@ -173,12 +173,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr id="demo-module">
-                <td><code>module</code></td>
+            <tr id="demo-component">
+                <td><code>component</code></td>
                 <td>Querystring</td>
                 <td>
-                    A module in the form <code>module@version</code>.
-                    <code>module</code> is the name of the module on the <a href="https://www.npmjs.com/">npm registry</a>
+                    A component in the form <code>component@version</code>.
+                    <code>component</code> is the name of the component on the <a href="https://www.npmjs.com/">npm registry</a>
                     <code>version</code> will be interpreted using SemVer rules and the
                     best matching version will be built.
                 </td>

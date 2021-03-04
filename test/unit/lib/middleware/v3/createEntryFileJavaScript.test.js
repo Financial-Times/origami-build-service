@@ -12,17 +12,17 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 			.createEntryFileJavaScript;
 	});
 
-	it('creates a index.js file in the specified location and with the specified modules as imported and added to the Origami global variable', async function () {
+	it('creates a index.js file in the specified location and with the specified components as imported and added to the Origami global variable', async function () {
 		await fs.mkdir('/tmp/bundle/', {recursive: true});
 
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
-		const modules = {
+		const components = {
 			lodash: '^5',
 			preact: '^10.5.5',
 		};
 
-		await createEntryFileJavaScript(location, modules);
+		await createEntryFileJavaScript(location, components);
 
 		const EntryFileContents = await fs.readFile(
 			path.join(location, 'index.js'),
@@ -39,17 +39,17 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
         `
 		);
 	});
-	it('creates a index.js file in the specified location and with the specified modules as imported, added to the Origami global variable and passed to the callback', async function () {
+	it('creates a index.js file in the specified location and with the specified components as imported, added to the Origami global variable and passed to the callback', async function () {
 		await fs.mkdir('/tmp/bundle/', {recursive: true});
 
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
-		const modules = {
+		const components = {
 			lodash: '^5',
 			preact: '^10.5.5',
 		};
 
-		await createEntryFileJavaScript(location, modules, 'start_application');
+		await createEntryFileJavaScript(location, components, 'start_application');
 
 		const EntryFileContents = await fs.readFile(
 			path.join(location, 'index.js'),
@@ -60,13 +60,13 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 			dedent`
         import * as preact from "preact";
         import * as lodash from "lodash";
-        let modules = {};
+        let components = {};
         if (typeof Origami === 'undefined') { self.Origami = {}; }
         self.Origami["lodash"] = lodash;
-        modules["lodash"] = lodash;
+        components["lodash"] = lodash;
         self.Origami["preact"] = preact;
-        modules["preact"] = preact;
-        typeof start_application === 'function' && start_application(modules);
+        components["preact"] = preact;
+        typeof start_application === 'function' && start_application(components);
         `
 		);
 	});

@@ -15,7 +15,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -43,7 +43,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -75,7 +75,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -103,7 +103,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -131,7 +131,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -163,7 +163,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -198,7 +198,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -233,7 +233,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -255,7 +255,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -277,7 +277,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -299,7 +299,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -309,7 +309,7 @@ describe('GET /v3/demo', function() {
 
 		it('should respond with an error message', function(done) {
 			this.request
-				.expect('Origami Build Service returned an error: "The module query parameter can only contain modules from the @financial-times namespace. The module being requested was: jquery."')
+				.expect('Origami Build Service returned an error: "The component query parameter can only contain components from the @financial-times namespace. The component being requested was: jquery."')
 				.end(done);
 		});
 	});
@@ -322,7 +322,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -345,7 +345,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -367,7 +367,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}`)
 				.set('Connection', 'close');
 		});
 
@@ -389,7 +389,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -410,7 +410,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -431,7 +431,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo[]=foo&demo[]=bar&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo[]=foo&demo[]=bar&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -452,7 +452,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -474,7 +474,7 @@ describe('GET /v3/demo', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -488,7 +488,7 @@ describe('GET /v3/demo', function() {
 				.end(done);
 		});
 	});
-	describe('when the request is missing the module parameter', function() {
+	describe('when the request is missing the component parameter', function() {
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -505,19 +505,19 @@ describe('GET /v3/demo', function() {
 
 		it('should respond with an error message', function(done) {
 			this.request
-				.expect('Origami Build Service returned an error: "The module query parameter must be a string."')
+				.expect('Origami Build Service returned an error: "The component query parameter must be a string."')
 				.end(done);
 		});
 	});
-	describe('when the request contains an invalid module parameter', function() {
-		const component = 'not:a^valid@module';
+	describe('when the request contains an invalid component parameter', function() {
+		const component = 'not:a^valid@component';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/demo?module=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
@@ -527,7 +527,7 @@ describe('GET /v3/demo', function() {
 
 		it('should respond with an error message', function(done) {
 			this.request
-				.expect('Origami Build Service returned an error: "The module query parameter can only contain modules from the @financial-times namespace. The module being requested was: not:a^valid."')
+				.expect('Origami Build Service returned an error: "The component query parameter can only contain components from the @financial-times namespace. The component being requested was: not:a^valid."')
 				.end(done);
 		});
 	});
