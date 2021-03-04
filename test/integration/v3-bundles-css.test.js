@@ -7,14 +7,14 @@ describe('GET /v3/bundles/css', function() {
 	this.timeout(20000);
 	this.slow(5000);
 
-	describe('when a valid module, valid brand and valid system-code is requested', function() {
-		const moduleName = '@financial-times/o-test-component@v2.0.0-beta.1';
+	describe('when a valid component, valid brand and valid system-code is requested', function() {
+		const componentName = '@financial-times/o-test-component@v2.0.0-beta.1';
 		const brand = 'master';
 		const systemCode = 'origami';
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.set('Connection', 'close');
 		});
 
@@ -39,14 +39,14 @@ describe('GET /v3/bundles/css', function() {
 		});
 	});
 
-	describe('when a valid module, valid system-code and invalid brand is requested', function() {
-		const moduleName = '@financial-times/o-test-component@v2.0.0-beta.1';
+	describe('when a valid component, valid system-code and invalid brand is requested', function() {
+		const componentName = '@financial-times/o-test-component@v2.0.0-beta.1';
 		const brand = 'origami';
 		const systemCode = 'origami';
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.set('Connection', 'close');
 		});
 
@@ -74,14 +74,14 @@ describe('GET /v3/bundles/css', function() {
 		});
 	});
 
-	describe('when an invalid module, valid brand and valid system-code is requested', function() {
-		const moduleName = 'hello-nonexistent-module@1';
+	describe('when an invalid component, valid brand and valid system-code is requested', function() {
+		const componentName = 'hello-nonexistent-component@1';
 		const brand = 'master';
 		const systemCode = 'origami';
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.set('Connection', 'close');
 		});
 
@@ -93,7 +93,7 @@ describe('GET /v3/bundles/css', function() {
 
 		it('should respond with the css', function(done) {
 			this.request.expect(({text}) => {
-				proclaim.deepStrictEqual(text,'Origami Build Service returned an error: "hello-nonexistent-module@1 is not in the npm registry"');
+				proclaim.deepStrictEqual(text,'Origami Build Service returned an error: "hello-nonexistent-component@1 is not in the npm registry"');
 			}).end(done);
 		});
 
@@ -108,14 +108,14 @@ describe('GET /v3/bundles/css', function() {
 		});
 	});
 
-	describe('when an invalid module is requested (nonexistent)', function() {
-		const moduleName = 'hello-nonexistent-module@1';
+	describe('when an invalid component is requested (nonexistent)', function() {
+		const componentName = 'hello-nonexistent-component@1';
 		const brand = 'master';
 		const systemCode = 'origami';
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.set('Connection', 'close');
 		});
 
@@ -137,14 +137,14 @@ describe('GET /v3/bundles/css', function() {
 
 	});
 
-	describe('when an invalid module is requested (Sass compilation error)', function() {
-		const moduleName = '@financial-times/o-test-component@2.0.3';
+	describe('when an invalid component is requested (Sass compilation error)', function() {
+		const componentName = '@financial-times/o-test-component@2.0.3';
 		const brand = 'master';
 		const systemCode = 'origami';
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.set('Connection', 'close');
 		});
 
@@ -168,7 +168,7 @@ describe('GET /v3/bundles/css', function() {
 
 	});
 
-	describe('when the modules parameter is missing', function() {
+	describe('when the components parameter is missing', function() {
 		const brand = 'master';
 		const systemCode = 'origami';
 
@@ -185,7 +185,7 @@ describe('GET /v3/bundles/css', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect('Origami Build Service returned an error: "The modules query parameter can not be empty."').end(done);
+			this.request.expect('Origami Build Service returned an error: "The components query parameter can not be empty."').end(done);
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
@@ -200,13 +200,13 @@ describe('GET /v3/bundles/css', function() {
 
 	});
 
-	describe('when the modules parameter is not a string', function() {
+	describe('when the components parameter is not a string', function() {
 		const brand = 'master';
 		const systemCode = 'origami';
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/bundles/css?modules[]=foo&modules[]=bar&brand=${brand}&system_code=${systemCode}`)
+				.get(`/v3/bundles/css?components[]=foo&components[]=bar&brand=${brand}&system_code=${systemCode}`)
 				.set('Connection', 'close');
 		});
 
@@ -217,7 +217,7 @@ describe('GET /v3/bundles/css', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect('Origami Build Service returned an error: "The modules query parameter must be a string."').end(done);
+			this.request.expect('Origami Build Service returned an error: "The components query parameter must be a string."').end(done);
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
@@ -232,14 +232,14 @@ describe('GET /v3/bundles/css', function() {
 
 	});
 
-	describe('when a module name cannot be parsed', function() {
-		const moduleName = 'http://1.2.3.4/';
+	describe('when a component name cannot be parsed', function() {
+		const componentName = 'http://1.2.3.4/';
 		const brand = 'master';
 		const systemCode = 'origami';
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.set('Connection', 'close');
 		});
 
@@ -250,7 +250,7 @@ describe('GET /v3/bundles/css', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect('Origami Build Service returned an error: "The modules query parameter contains module names which are not valid: http://1.2.3.4/."').end(done);
+			this.request.expect('Origami Build Service returned an error: "The components query parameter contains component names which are not valid: http://1.2.3.4/."').end(done);
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
