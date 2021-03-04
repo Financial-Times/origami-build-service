@@ -137,32 +137,36 @@ describe('GET /v3/bundles/css', function() {
 
 	});
 
-	// describe('when an invalid module is requested (Sass compilation error)', function() {
-	//     const moduleName = 'o-test-component@1.0.1';
+	describe('when an invalid module is requested (Sass compilation error)', function() {
+		const moduleName = '@financial-times/o-test-component@2.0.3';
+		const brand = 'master';
+		const systemCode = 'origami';
 
-	//     beforeEach(function() {
-	//         this.request = request(this.app)
-	//             .get(`/v3/bundles/css?modules=${moduleName}`)
-	//             .set('Connection', 'close');
-	//     });
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
 
-	//     it('should respond with a 560 status', function(done) {
-	//         this.request.expect(560).end(done);
-	//     });
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(400).end(done);
+		});
 
-	//     it('should respond with an error message', function(done) {
-	//         this.request.expect(/cannot complete build due to compilation error from build tools:/i).end(done);
-	//     });
+		it('should respond with an error message', function(done) {
+			this.request.expect(/Origami Build Service returned an error: /).end(done);
+		});
 
-	// it('should respond with the expected `Content-Type` header', function(done) {
-	//     this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
-	// });
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-	// it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-	// 	this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-	// });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 
-	// });
+	});
 
 	describe('when the modules parameter is missing', function() {
 		const brand = 'master';
