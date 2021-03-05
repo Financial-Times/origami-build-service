@@ -51,6 +51,45 @@ describe('createCssBundle', function () {
 		});
 	});
 
+	context('when given a valid request but the component is origami v1', function () {
+		it('it responds with a css bundle which contains the requested component', async () => {
+			const request = httpMock.createRequest();
+			const response = httpMock.createResponse();
+			response.startTime = sinon.spy();
+			response.endTime = sinon.spy();
+			request.app = {
+				ft: {
+					options: {
+						npmRegistryURL: 'https://registry.npmjs.com'
+					}
+				}
+			};
+			request.query.components = '@financial-times/o-utils@1';
+			request.query.brand = 'master';
+			request.query.system_code = 'origami';
+
+			await createCssBundle(request, response);
+
+			const bundle = response._getData();
+
+			proclaim.deepStrictEqual(
+				response.getHeader('content-type'),
+				'text/plain; charset=UTF-8'
+			);
+			proclaim.deepStrictEqual(
+				response.getHeader('cache-control'),
+				'max-age=0, must-revalidate, no-cache, no-store'
+			);
+			proclaim.deepStrictEqual(response.statusCode, 400);
+
+			proclaim.deepStrictEqual(
+				bundle,
+				'Origami Build Service returned an error: \"@financial-times/o-utils@1 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components.\"'
+			);
+
+		});
+	});
+
 	context('when given a request with no components parameter', function () {
 		it('it responds with a plain text error message', async () => {
 			const request = httpMock.createRequest();
