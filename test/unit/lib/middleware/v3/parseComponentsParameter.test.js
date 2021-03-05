@@ -23,32 +23,32 @@ describe('parseComponentsParameter', () => {
 
 	it('throws UserError if components parameter contains duplicates', async () => {
 		proclaim.throws(() => {
-			parseComponentsParameter('o-test@1,o-test@1');
+			parseComponentsParameter('@financial-times/o-test@1,@financial-times/o-test@1');
 		}, UserError);
 
 		proclaim.throws(() => {
-			parseComponentsParameter('o-test@1,o-test@1');
+			parseComponentsParameter('@financial-times/o-test@1,@financial-times/o-test@1');
 		}, 'The components query parameter contains duplicate component names.');
 	});
 
 	it('throws UserError if components parameter contains empty component names', async () => {
 		proclaim.throws(() => {
-			parseComponentsParameter('o-test@1,,');
+			parseComponentsParameter('@financial-times/o-test@1,,');
 		}, UserError);
 
 		proclaim.throws(() => {
-			parseComponentsParameter('o-test@1,,');
+			parseComponentsParameter('@financial-times/o-test@1,,');
 		}, 'The components query parameter can not contain empty component names.');
 	});
 
 	it('throws UserError if components parameter contains component name with whitespace at the start', async () => {
 		proclaim.throws(() => {
-			parseComponentsParameter(' o-test@1');
+			parseComponentsParameter(' @financial-times/o-test@1');
 		}, UserError);
 
 		proclaim.throws(() => {
-			parseComponentsParameter(' @ft/o-test@1');
-		}, 'The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from ` @ft/o-test@1` to make the component name valid.');
+			parseComponentsParameter(' @financial-times/o-test@1');
+		}, 'The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from ` @financial-times/o-test@1` to make the component name valid.');
 	});
 
 	it('throws UserError if components parameter contains component name with whitespace at the end', async () => {
@@ -61,62 +61,73 @@ describe('parseComponentsParameter', () => {
 		}, 'The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from `o-test@1 ` to make the component name valid.');
 
 		proclaim.throws(() => {
-			parseComponentsParameter('@ft/o-test@1 ');
-		}, 'The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from `@ft/o-test@1 ` to make the component name valid.');
+			parseComponentsParameter('@financial-times/o-test@1 ');
+		}, 'The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from `@financial-times/o-test@1 ` to make the component name valid.');
 	});
 
 	it('throws UserError if components parameter contains component name without a version', async () => {
 		proclaim.throws(() => {
-			parseComponentsParameter('o-test');
+			parseComponentsParameter('@financial-times/o-test');
 		}, UserError);
 
 		proclaim.throws(() => {
-			parseComponentsParameter('o-test');
-		}, 'The bundle request contains o-test with no version range, a version range is required.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+			parseComponentsParameter('@financial-times/o-test');
+		}, 'The bundle request contains @financial-times/o-test with no version range, a version range is required.\nPlease refer to TODO (build service documentation) for what is a valid version.');
 
 		proclaim.throws(() => {
-			parseComponentsParameter('@ft/o-test');
-		}, 'The bundle request contains @ft/o-test with no version range, a version range is required.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+			parseComponentsParameter('@financial-times/o-test');
+		}, 'The bundle request contains @financial-times/o-test with no version range, a version range is required.\nPlease refer to TODO (build service documentation) for what is a valid version.');
 	});
 
 	it('throws UserError if components parameter contains component name with an invalid version', async () => {
 		proclaim.throws(() => {
-			parseComponentsParameter('o-test@5wg');
+			parseComponentsParameter('@financial-times/o-test@5wg');
 		}, UserError);
 
 		proclaim.throws(() => {
-			parseComponentsParameter('o-test@5wg');
-		}, 'The version 5wg in o-test@5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+			parseComponentsParameter('@financial-times/o-test@5wg');
+		}, 'The version 5wg in @financial-times/o-test@5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
 
 		proclaim.throws(() => {
-			parseComponentsParameter('@ft/o-test@5wg');
-		}, 'The version 5wg in @ft/o-test@5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+			parseComponentsParameter('@financial-times/o-test@5wg');
+		}, 'The version 5wg in @financial-times/o-test@5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
 	});
 
 	it('throws UserError if components parameter contains invalid component names', async () => {
 		proclaim.throws(() => {
-			parseComponentsParameter('o-TeSt@5');
+			parseComponentsParameter('@financial-times/o-TeSt@5');
 		}, UserError);
 
 		proclaim.throws(() => {
-			parseComponentsParameter('o-TeSt@5');
-		}, 'The components query parameter contains component names which are not valid: o-TeSt.');
+			parseComponentsParameter('@financial-times/o-TeSt@5');
+		}, 'The components query parameter contains component names which are not valid: @financial-times/o-TeSt.');
 
 		proclaim.throws(() => {
-			parseComponentsParameter('@ft/o-TeSt@5');
-		}, 'The components query parameter contains component names which are not valid: @ft/o-TeSt.');
+			parseComponentsParameter('@financial-times/o-TeSt@5');
+		}, 'The components query parameter contains component names which are not valid: @financial-times/o-TeSt.');
 	});
 
-	it('returns aa object where the key is the component name and the value is the version range', async () => {
+	it('throws UserError if components parameter contains components which are not from the @financial-times namespace', async () => {
+		proclaim.throws(() => {
+			parseComponentsParameter(
+				'lodash@^5,preact@^10.5.5,@financial-times/o-table@100'
+			);
+		}, UserError);
+		proclaim.throws(() => {
+			parseComponentsParameter(
+				'lodash@^5,preact@^10.5.5,@financial-times/o-table@100'
+			);
+		}, 'The components query parameter can only contain components from the @financial-times namespace. Please remove the following from the components parameter: lodash.');
+	});
+	it('returns an object where the key is the component name and the value is the version range', async () => {
 		const components = {
-			lodash: '^5',
-			preact: '^10.5.5',
+			'@financial-times/o-test-component': '^13.7.0',
 			'@financial-times/o-table': '100',
 		};
 
 		proclaim.deepStrictEqual(
 			parseComponentsParameter(
-				'lodash@^5,preact@^10.5.5,@financial-times/o-table@100'
+				'@financial-times/o-test-component@^13.7.0,@financial-times/o-table@100'
 			),
 			components
 		);

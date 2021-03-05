@@ -75,7 +75,7 @@ describe('GET /v3/bundles/css', function() {
 	});
 
 	describe('when an invalid component, valid brand and valid system-code is requested', function() {
-		const componentName = 'hello-nonexistent-component@1';
+		const componentName = '@financial-times/hello-nonexistent-component@1';
 		const brand = 'master';
 		const systemCode = 'origami';
 
@@ -93,7 +93,41 @@ describe('GET /v3/bundles/css', function() {
 
 		it('should respond with the css', function(done) {
 			this.request.expect(({text}) => {
-				proclaim.deepStrictEqual(text,'Origami Build Service returned an error: "hello-nonexistent-component@1 is not in the npm registry"');
+				proclaim.deepStrictEqual(text,'Origami Build Service returned an error: "@financial-times/hello-nonexistent-component@1 is not in the npm registry"');
+			}).end(done);
+		});
+
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
+	});
+
+	describe('when a component which is not in the @financial-times namesspace, a valid brand and a valid system-code is requested', function() {
+		const componentName = 'lodash@1';
+		const brand = 'master';
+		const systemCode = 'origami';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(response => {
+				proclaim.deepStrictEqual(response.status, 400);
+			}).end(done);
+		});
+
+		it('should respond with the css', function(done) {
+			this.request.expect(({text}) => {
+				proclaim.deepStrictEqual(text,'Origami Build Service returned an error: "The components query parameter can only contain components from the @financial-times namespace. Please remove the following from the components parameter: lodash."');
 			}).end(done);
 		});
 
@@ -109,7 +143,7 @@ describe('GET /v3/bundles/css', function() {
 	});
 
 	describe('when an invalid component is requested (nonexistent)', function() {
-		const componentName = 'hello-nonexistent-component@1';
+		const componentName = '@financial-times/hello-nonexistent-component@1';
 		const brand = 'master';
 		const systemCode = 'origami';
 
@@ -122,6 +156,12 @@ describe('GET /v3/bundles/css', function() {
 		it('should respond with a 400 status', function(done) {
 			this.request.expect(response => {
 				proclaim.deepStrictEqual(response.status, 400);
+			}).end(done);
+		});
+
+		it('should respond with an error message', function(done) {
+			this.request.expect(({text}) => {
+				proclaim.deepStrictEqual(text,'Origami Build Service returned an error: "@financial-times/hello-nonexistent-component@1 is not in the npm registry"');
 			}).end(done);
 		});
 
