@@ -69,7 +69,7 @@ describe('createJavaScriptBundle', function () {
 	});
 
 	context('when given a request with no components parameter', function () {
-		it('it responds with a javascript bundle which throws an error', async () => {
+		it('it responds with a plain text error message', async () => {
 			const request = httpMock.createRequest();
 			const response = httpMock.createResponse();
 			response.startTime = sinon.spy();
@@ -89,7 +89,7 @@ describe('createJavaScriptBundle', function () {
 
 			proclaim.deepStrictEqual(
 				response.getHeader('content-type'),
-				'text/plain;charset=UTF-8'
+				'text/plain; charset=UTF-8'
 			);
 			proclaim.deepStrictEqual(
 				response.getHeader('cache-control'),
@@ -107,7 +107,7 @@ describe('createJavaScriptBundle', function () {
 	context(
 		'when given a request with components parameter as empty string',
 		async () => {
-			it('it responds with a javascript bundle which throws an error', async () => {
+			it('it responds with a plain text error message', async () => {
 				const request = httpMock.createRequest();
 				const response = httpMock.createResponse();
 				response.startTime = sinon.spy();
@@ -128,7 +128,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/plain;charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -147,7 +147,7 @@ describe('createJavaScriptBundle', function () {
 	context(
 		'when given a request with a components parameter which contains duplicates',
 		async () => {
-			it('it responds with a javascript bundle which throws an error', async () => {
+			it('it responds with a plain text error message', async () => {
 				const request = httpMock.createRequest();
 				const response = httpMock.createResponse();
 				response.startTime = sinon.spy();
@@ -159,7 +159,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.components = 'o-test@1,o-test@1';
+				request.query.components = '@financial-times/o-test@1,@financial-times/o-test@1';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -168,7 +168,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/plain;charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -186,7 +186,7 @@ describe('createJavaScriptBundle', function () {
 	context(
 		'when given a request with a components parameter which contains empty component names',
 		async () => {
-			it('it responds with a javascript bundle which throws an error', async () => {
+			it('it responds with a plain text error message', async () => {
 				const request = httpMock.createRequest();
 				const response = httpMock.createResponse();
 				response.startTime = sinon.spy();
@@ -198,7 +198,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.components = 'o-test@1,,';
+				request.query.components = '@financial-times/o-test@1,,';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -207,7 +207,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/plain;charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -225,7 +225,7 @@ describe('createJavaScriptBundle', function () {
 	context(
 		'when given a request with a components parameter which contains a component name with whitespace at the start',
 		async () => {
-			it('it responds with a javascript bundle which throws an error', async () => {
+			it('it responds with a plain text error message', async () => {
 				const request = httpMock.createRequest();
 				const response = httpMock.createResponse();
 				response.startTime = sinon.spy();
@@ -237,7 +237,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.components = ' o-test@1';
+				request.query.components = ' @financial-times/o-test@1';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -246,7 +246,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/plain;charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -256,7 +256,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from ` o-test@1` to make the component name valid."'
+					'Origami Build Service returned an error: "The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from ` @financial-times/o-test@1` to make the component name valid."'
 				);
 			});
 		}
@@ -264,7 +264,7 @@ describe('createJavaScriptBundle', function () {
 	context(
 		'when given a request with a components parameter which contains a component name with whitespace at the end',
 		async () => {
-			it('it responds with a javascript bundle which throws an error', async () => {
+			it('it responds with a plain text error message', async () => {
 				const request = httpMock.createRequest();
 				const response = httpMock.createResponse();
 				response.startTime = sinon.spy();
@@ -276,7 +276,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.components = 'o-test@1 ';
+				request.query.components = '@financial-times/o-test@1 ';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -285,7 +285,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/plain;charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -295,7 +295,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from `o-test@1 ` to make the component name valid."'
+					'Origami Build Service returned an error: "The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from `@financial-times/o-test@1 ` to make the component name valid."'
 				);
 			});
 		}
@@ -303,7 +303,7 @@ describe('createJavaScriptBundle', function () {
 	context(
 		'when given a request with a components parameter which contains a component name without a version',
 		async () => {
-			it('it responds with a javascript bundle which throws an error', async () => {
+			it('it responds with a plain text error message', async () => {
 				const request = httpMock.createRequest();
 				const response = httpMock.createResponse();
 				response.startTime = sinon.spy();
@@ -315,7 +315,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.components = 'o-test';
+				request.query.components = '@financial-times/o-test';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -324,7 +324,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/plain;charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -334,7 +334,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The bundle request contains o-test with no version range, a version range is required.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
+					'Origami Build Service returned an error: "The bundle request contains @financial-times/o-test with no version range, a version range is required.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
 				);
 			});
 		}
@@ -342,7 +342,7 @@ describe('createJavaScriptBundle', function () {
 	context(
 		'when given a request with a components parameter which contains a component name with an invalid version',
 		async () => {
-			it('it responds with a javascript bundle which throws an error', async () => {
+			it('it responds with a plain text error message', async () => {
 				const request = httpMock.createRequest();
 				const response = httpMock.createResponse();
 				response.startTime = sinon.spy();
@@ -354,7 +354,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.components = 'o-test@5wg';
+				request.query.components = '@financial-times/o-test@5wg';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -363,7 +363,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/plain;charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -373,7 +373,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The version 5wg in o-test@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
+					'Origami Build Service returned an error: "The version 5wg in @financial-times/o-test@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
 				);
 			});
 		}
@@ -381,7 +381,7 @@ describe('createJavaScriptBundle', function () {
 	context(
 		'when given a request with a components parameter which contains a invalid component names',
 		async () => {
-			it('it responds with a javascript bundle which throws an error', async () => {
+			it('it responds with a plain text error message', async () => {
 				const request = httpMock.createRequest();
 				const response = httpMock.createResponse();
 				response.startTime = sinon.spy();
@@ -402,7 +402,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/plain;charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -419,9 +419,48 @@ describe('createJavaScriptBundle', function () {
 	);
 
 	context(
+		'when given a request with a components parameter which contains a component names not in the @financial-times namespace',
+		async () => {
+			it('it responds with a plain text error message', async () => {
+				const request = httpMock.createRequest();
+				const response = httpMock.createResponse();
+				response.startTime = sinon.spy();
+				response.endTime = sinon.spy();
+				request.app = {
+					ft: {
+						options: {
+							npmRegistryURL: 'https://registry.npmjs.com'
+						}
+					}
+				};
+				request.query.components = 'o-test@5';
+
+				await createJavaScriptBundle(request, response);
+
+				const bundle = response._getData();
+
+				proclaim.deepStrictEqual(
+					response.getHeader('content-type'),
+					'text/plain; charset=UTF-8'
+				);
+				proclaim.deepStrictEqual(
+					response.getHeader('cache-control'),
+					'max-age=0, must-revalidate, no-cache, no-store'
+				);
+				proclaim.deepStrictEqual(response.statusCode, 400);
+
+				proclaim.deepStrictEqual(
+					bundle,
+					'Origami Build Service returned an error: \"The components query parameter can only contain components from the @financial-times namespace. Please remove the following from the components parameter: o-test.\"'
+				);
+			});
+		}
+	);
+
+	context(
 		'when given a request with an invalid system code',
 		async () => {
-			it('it responds with a javascript bundle which throws an error', async () => {
+			it('it responds with a plain text error message', async () => {
 				const request = httpMock.createRequest();
 				const response = httpMock.createResponse();
 				response.startTime = sinon.spy();
@@ -442,7 +481,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					response.getHeader('content-type'),
-					'text/plain;charset=UTF-8'
+					'text/plain; charset=UTF-8'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
