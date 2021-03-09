@@ -13,22 +13,26 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 200 status', function(done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+		it('should respond with the expected `Content-Type` header', function() {
+			assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
 		});
 
-		it('should respond with the demo html contents', function(done) {
-			this.request.expect('<div data-o-component="o-test-component" class="o-test-component"></div>\n').end(done);
+		it('should respond with the demo html contents', function() {
+			assert.deepEqual(response.text, '<div data-o-component="o-test-component" class="o-test-component"></div>\n');
 		});
 
 	});
@@ -39,28 +43,32 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-			it('should respond with the expected `Content-Type` header', function(done) {
-				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
 			});
 
-			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
 			});
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect('Origami Build Service returned an error: "@financial-times/o-test-component@2.0.7 has no demos defined within it\'s origami.json file. See the component specification for details on how to configure demos for a component: https://origami.ft.com/spec/"').end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.0.7 has no demos defined within it\'s origami.json file. See the component specification for details on how to configure demos for a component: https://origami.ft.com/spec/"');
 		});
 
 	});
@@ -71,22 +79,26 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 200 status', function(done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+		it('should respond with the expected `Content-Type` header', function() {
+			assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
 		});
 
-		it('should respond with the demo html contents', function(done) {
-			this.request.expect('<div data-o-component="o-test-component" class="o-test-component"></div>\n').end(done);
+		it('should respond with the demo html contents', function() {
+			assert.deepEqual(response.text, '<div data-o-component="o-test-component" class="o-test-component"></div>\n');
 		});
 
 	});
@@ -97,22 +109,26 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'internal';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 200 status', function(done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+		it('should respond with the expected `Content-Type` header', function() {
+			assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
 		});
 
-		it('should respond with the demo html contents', function(done) {
-			this.request.expect('<div data-o-component="o-test-component" class="o-test-component"></div>\n').end(done);
+		it('should respond with the demo html contents', function() {
+			assert.deepEqual(response.text, '<div data-o-component="o-test-component" class="o-test-component"></div>\n');
 		});
 
 	});
@@ -123,28 +139,32 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-			it('should respond with the expected `Content-Type` header', function(done) {
-				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
 			});
 
-			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
 			});
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect('Origami Build Service returned an error: "@financial-times/o-test-component@2.0.10\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Mustache templates: Unclosed section \\"causing-syntax-error-by-not-closing-section\\" at 126"').end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.0.10\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Mustache templates: Unclosed section \\"causing-syntax-error-by-not-closing-section\\" at 126"');
 		});
 
 	});
@@ -155,31 +175,33 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-			it('should respond with the expected `Content-Type` header', function(done) {
-				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
 			});
 
-			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
 			});
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(response => {
-				const body = response.text;
-				assert.include(body, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.0.11\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Sass: Error: ');
-			}).end(done);
+		it('should respond with an error message', function() {
+			const body = response.text;
+			assert.include(body, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.0.11\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Sass: Error: ');
 		});
 
 	});
@@ -190,31 +212,33 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-			it('should respond with the expected `Content-Type` header', function(done) {
-				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
 			});
 
-			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
 			});
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(response => {
-				const body = response.text;
-				assert.include(body, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.0.12\'s demo named \\"test-demo\\" could not be built due to a compilation error within the JavaScript: ');
-			}).end(done);
+		it('should respond with an error message', function() {
+			const body = response.text;
+			assert.include(body, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.0.12\'s demo named \\"test-demo\\" could not be built due to a compilation error within the JavaScript: ');
 		});
 
 	});
@@ -225,18 +249,22 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect('Origami Build Service returned an error: "@financial-times/o-test-component@v2.0.1 has no demo with the requested name: NOTADEMO"').end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@v2.0.1 has no demo with the requested name: NOTADEMO"');
 		});
 
 	});
@@ -247,18 +275,22 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect('Origami Build Service returned an error: "@financial-times/o-test-component@2.0.1 has no demo with the requested name: NOTADEMO"').end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.0.1 has no demo with the requested name: NOTADEMO"');
 		});
 
 	});
@@ -269,18 +301,22 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect('Origami Build Service returned an error: "@financial-times/o-test-component@99.0.0 is not in the npm registry"').end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@99.0.0 is not in the npm registry"');
 		});
 
 	});
@@ -291,20 +327,22 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "The component query parameter can only contain components from the @financial-times namespace. The component being requested was: jquery."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The component query parameter can only contain components from the @financial-times namespace. The component being requested was: jquery."');
 		});
 	});
 
@@ -314,20 +352,22 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "@financial-times/o-test-component@2.0.13 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.0.13 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components."');
 		});
 	});
 
@@ -337,20 +377,23 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "@financial-times/o-test-component@1.0.0 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@1.0.0 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components."')
+			;
 		});
 	});
 
@@ -359,20 +402,23 @@ describe('GET /v3/demo/html', function() {
 		const demo = 'test-demo';
 		const system_code = 'origami';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "The brand query parameter must be a string. Either `master`, `internal`, or `whitelabel`."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The brand query parameter must be a string. Either `master`, `internal`, or `whitelabel`."')
+			;
 		});
 	});
 	describe('when the request contains an invalid brand parameter', function() {
@@ -381,20 +427,23 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'denshiba';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "The brand query parameter must be either `master`, `internal`, or `whitelabel`."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The brand query parameter must be either `master`, `internal`, or `whitelabel`."')
+			;
 		});
 	});
 	describe('when the request is missing the demo parameter', function() {
@@ -402,20 +451,23 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "The demo query parameter must be a string."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The demo query parameter must be a string."')
+			;
 		});
 	});
 	describe('when the request contains an invalid demo parameter', function() {
@@ -423,20 +475,23 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo[]=foo&demo[]=bar&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "The demo query parameter must be a string."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The demo query parameter must be a string."')
+			;
 		});
 	});
 	describe('when the request is missing the system_code parameter', function() {
@@ -444,20 +499,23 @@ describe('GET /v3/demo/html', function() {
 		const demo = 'test-demo';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "The system_code query parameter must be a string."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The system_code query parameter must be a string."')
+			;
 		});
 	});
 	describe('when the request contains an invalid system_code parameter', function() {
@@ -466,20 +524,23 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'not_a_system_code_137';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "The system_code query parameter must be a valid Biz-Ops System Code."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The system_code query parameter must be a valid Biz-Ops System Code."')
+			;
 		});
 	});
 	describe('when the request is missing the component parameter', function() {
@@ -487,20 +548,23 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "The component query parameter must be a string."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The component query parameter must be a string."')
+			;
 		});
 	});
 	describe('when the request contains an invalid component parameter', function() {
@@ -509,20 +573,23 @@ describe('GET /v3/demo/html', function() {
 		const system_code = 'origami';
 		const brand = 'master';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request
-				.expect('Origami Build Service returned an error: "The component query parameter can only contain components from the @financial-times namespace. The component being requested was: not:a^valid."')
-				.end(done);
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The component query parameter can only contain components from the @financial-times namespace. The component being requested was: not:a^valid."')
+			;
 		});
 	});
 
