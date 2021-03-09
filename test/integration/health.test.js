@@ -1,34 +1,36 @@
 'use strict';
 
 const request = require('supertest');
-const proclaim = require('proclaim');
+const {assert} = require('chai');
 
 describe('GET /__health', function () {
 	this.timeout(20000);
 	this.slow(5000);
 
-	beforeEach(function () {
-		this.request = request(this.app)
+	/**
+	 * @type {request.Response}
+	 */
+	let response;
+	before(async function () {
+		response = await request(this.app)
 			.get('/__health')
 			.set('Connection', 'close');
 	});
 
-	it('should respond with a 200 status', function (done) {
-		this.request.expect(200).end(done);
+	it('should respond with a 200 status', function () {
+		assert.equal(response.status, 200);
 	});
 
-	it('should respond with UTF-8 JSON', function (done) {
-		this.request.expect('Content-Type', 'application/json; charset=utf-8').end(done);
+	it('should respond with UTF-8 JSON', function () {
+		assert.deepEqual(response.headers['content-type'], 'application/json; charset=utf-8');
 	});
 
-	it('should contain health data', function (done) {
-		this.request.expect(function (res) {
-			proclaim.equal(res.body.schemaVersion, 1);
-			proclaim.equal(res.body.name, 'build-service');
-			proclaim.equal(res.body.systemCode, 'build-service');
-			proclaim.equal(res.body.description, 'Front end build process as a service. Fetches specified Origami components from git, runs Origami build process, and returns the resulting CSS or JS bundle over HTTP.');
-			proclaim.lessThanOrEqual(res.body.checks.length, 11);
-		}).end(done);
+	it('should contain health data', function () {
+		assert.equal(response.body.schemaVersion, 1);
+		assert.equal(response.body.name, 'build-service');
+		assert.equal(response.body.systemCode, 'build-service');
+		assert.equal(response.body.description, 'Front end build process as a service. Fetches specified Origami components from git, runs Origami build process, and returns the resulting CSS or JS bundle over HTTP.');
+		assert.isAtMost(response.body.checks.length, 11);
 	});
 
 });

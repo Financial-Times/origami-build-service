@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('chai').assert;
+const {assert} = require('chai');
 const request = require('supertest');
 const jsdom = require('jsdom');
 const sinon = require('sinon');
@@ -43,44 +43,37 @@ describe('GET /v2/bundles/js', function() {
 	describe('when a valid module is requested', function() {
 		const moduleName = 'o-test-component@1.0.2';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 200 status', function(done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 
-		it('should respond with the bundled JavaScript', function(done) {
-			this.request
-				.expect(/^\/\*\* Shrinkwrap URL:\n \*/)
-				.expect(({ text }) => {
-					assert.doesNotThrow(() => executeScript(text));
-				})
-				.end(done);
+		it('should respond with the bundled JavaScript', function() {
+			assert.match(response.text, /^\/\*\* Shrinkwrap URL:\n \*/);
+			assert.doesNotThrow(() => executeScript(response.text));
 		});
 
-		it('should minify the bundle', function(done) {
-			this.request.end((error, response) => {
-				assert.notInclude(response.text, '// unminified');
-				done(error);
+		it('should minify the bundle', function() {
+			assert.notInclude(response.text, '// unminified');
+		});
+
+		it('should export the bundle under `window.Origami`', function() {
+			let resultWindow = {};
+			assert.doesNotThrow(() => {
+				resultWindow = executeScript(response.text);
 			});
-		});
-
-		it('should export the bundle under `window.Origami`', function(done) {
-			this.request
-				.expect(({text}) => {
-					let resultWindow = {};
-					assert.doesNotThrow(() => {
-						resultWindow = executeScript(text);
-					});
-					assert.property(resultWindow, 'Origami');
-					assert.property(resultWindow.Origami, moduleName.split('@')[0]);
-				})
-				.end(done);
+			assert.property(resultWindow, 'Origami');
+			assert.property(resultWindow.Origami, moduleName.split('@')[0]);
 		});
 
 	});
@@ -88,19 +81,23 @@ describe('GET /v2/bundles/js', function() {
 	describe('when a valid module is requested (with the `minify` parameter set to `none`)', function() {
 		const moduleName = 'o-test-component@1.0.2';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&minify=none`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 200 status', function(done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 
-		it('should respond with the bundled JavaScript unminified', function(done) {
-			this.request.expect(/ sourceMappingURL=data:application\/json;charset=utf-8;base64,/i).end(done);
+		it('should respond with the bundled JavaScript unminified', function() {
+			assert.match(response.text, / sourceMappingURL=data:application\/json;charset=utf-8;base64,/i);
 		});
 
 	});
@@ -108,28 +105,28 @@ describe('GET /v2/bundles/js', function() {
 	describe('when a valid module is requested (with the `autoinit` parameter set to `0`)', function() {
 		const moduleName = 'o-test-component@1.0.2';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&autoinit=0`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 200 status', function(done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 
-		it('should respond with the bundled JavaScript without the o-autoinit module', function(done) {
-			this.request
-				.expect(({ text }) => {
-					let resultWindow = {};
-					assert.doesNotThrow(() => {
-						resultWindow = executeScript(text);
-					});
-					assert.property(resultWindow, 'Origami');
-					assert.notProperty(resultWindow.Origami, 'o-autoinit');
-				})
-				.end(done);
+		it('should respond with the bundled JavaScript without the o-autoinit module', function() {
+			let resultWindow = {};
+			assert.doesNotThrow(() => {
+				resultWindow = executeScript(response.text);
+			});
+			assert.property(resultWindow, 'Origami');
+			assert.notProperty(resultWindow.Origami, 'o-autoinit');
 		});
 
 	});
@@ -137,28 +134,28 @@ describe('GET /v2/bundles/js', function() {
 	describe('when a valid module is requested (with the `export` parameter set to `foo`)', function() {
 		const moduleName = 'o-test-component@1.0.2';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&export=foo`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 200 status', function(done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 
-		it('should export the bundle under `window.foo`', function(done) {
-			this.request
-				.expect(({ text }) => {
-					let resultWindow = {};
-					assert.doesNotThrow(() => {
-						resultWindow = executeScript(text);
-					});
-					assert.property(resultWindow, 'foo');
-					assert.property(resultWindow.foo, moduleName.split('@')[0]);
-				})
-				.end(done);
+		it('should export the bundle under `window.foo`', function() {
+			let resultWindow = {};
+			assert.doesNotThrow(() => {
+				resultWindow = executeScript(response.text);
+			});
+			assert.property(resultWindow, 'foo');
+			assert.property(resultWindow.foo, moduleName.split('@')[0]);
 		});
 
 	});
@@ -166,28 +163,28 @@ describe('GET /v2/bundles/js', function() {
 	describe('when a valid module is requested (with the `export` parameter set to an empty string)', function() {
 		const moduleName = 'o-test-component@1.0.2';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&export=`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 200 status', function(done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 
-		it('should not export the bundle onto `window`', function(done) {
+		it('should not export the bundle onto `window`', function() {
 			const givenWindow = createWindow();
 			Object.defineProperty(givenWindow, 'Origami', { set() {
 				throw new Error('Attempted to set Origami property on window');
 			} });
-			this.request
-				.expect(({ text }) => {
-					assert.doesNotThrow(() => executeScript(text, givenWindow));
-					assert.notProperty(givenWindow, 'Origimi');
-				})
-				.end(done);
+			assert.doesNotThrow(() => executeScript(response.text, givenWindow));
+			assert.notProperty(givenWindow, 'Origimi');
 		});
 
 	});
@@ -203,13 +200,13 @@ describe('GET /v2/bundles/js', function() {
 				.set('Connection', 'close');
 		};
 
-		it('should respond with a 200 status', function(done) {
+		it('should respond with a 200 status', function() {
 			makeRequest.call(this, givenCallback)
 				.expect(200)
-				.end(done);
+			;
 		});
 
-		it('should include the given callback parameter, executed with the bundle context', function(done) {
+		it('should include the given callback parameter, executed with the bundle context', function() {
 			const givenWindow = createWindow();
 			givenWindow.page = {
 				load: {
@@ -221,11 +218,11 @@ describe('GET /v2/bundles/js', function() {
 					assert.doesNotThrow(() => executeScript(text, givenWindow));
 					assert.property(givenWindow.page.load.deep.getCall(0).args[0], moduleName.split('@')[0]);
 				})
-				.end(done);
+			;
 		});
 
 		[';my.Function', 'my.function;other'].forEach((callback) => {
-			it(`should call the callback if it is '${callback}' and does not match the pattern ^[\\w\\.]+$`, function(done) {
+			it(`should call the callback if it is '${callback}' and does not match the pattern ^[\\w\\.]+$`, function() {
 				const givenWindow = createWindow();
 				givenWindow.page = {
 					load: {
@@ -237,7 +234,7 @@ describe('GET /v2/bundles/js', function() {
 						assert.doesNotThrow(() => executeScript(text, givenWindow));
 						assert.isTrue(givenWindow.page.load.deep.notCalled, 'Callback was called unexpectedly');
 					})
-					.end(done);
+				;
 			});
 		});
 	});
@@ -245,27 +242,27 @@ describe('GET /v2/bundles/js', function() {
 	describe('when a valid module is requested (with the `polyfills` parameter set to `none`)', function() {
 		const moduleName = 'o-test-component@1.0.2';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&polyfills=none&minify=none`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 200 status', function(done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 
-		it('should respond with the bundled JavaScript with no polyfills', function(done) {
-			this.request
-				.expect(({ text }) => {
-					let resultWindow;
-					assert.doesNotThrow(() => {
-						resultWindow = executeScript(text);
-					});
-					assert.notProperty(resultWindow, CORE_JS_GLOBAL_PROPERTY);
-				})
-				.end(done);
+		it('should respond with the bundled JavaScript with no polyfills', function() {
+			let resultWindow;
+			assert.doesNotThrow(() => {
+				resultWindow = executeScript(response.text);
+			});
+			assert.notProperty(resultWindow, CORE_JS_GLOBAL_PROPERTY);
 		});
 
 	});
@@ -276,27 +273,27 @@ describe('GET /v2/bundles/js', function() {
          */
 		const moduleName = 'o-test-component@1.0.16';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&polyfills=true&minify=none`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 200 status', function(done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 
-		it('should respond with the bundled JavaScript containing polyfills', function(done) {
-			this.request
-				.expect(({ text }) => {
-					let resultWindow;
-					assert.doesNotThrow(() => {
-						resultWindow = executeScript(text);
-					});
-					assert.property(resultWindow, CORE_JS_GLOBAL_PROPERTY);
-				})
-				.end(done);
+		it('should respond with the bundled JavaScript containing polyfills', function() {
+			let resultWindow;
+			assert.doesNotThrow(() => {
+				resultWindow = executeScript(response.text);
+			});
+			assert.property(resultWindow, CORE_JS_GLOBAL_PROPERTY);
 		});
 
 	});
@@ -304,19 +301,23 @@ describe('GET /v2/bundles/js', function() {
 	describe('when an invalid module is requested (nonexistent)', function() {
 		const moduleName = 'test-404';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/package .* not found/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /package .* not found/i);
 		});
 
 	});
@@ -324,55 +325,67 @@ describe('GET /v2/bundles/js', function() {
 	describe('when an invalid module is requested (JavaScript compilation error)', function() {
 		const moduleName = 'o-test-component@1.0.1';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 560 status', function(done) {
-			this.request.expect(560).end(done);
+		it('should respond with a 560 status', function() {
+			assert.equal(response.status, 560);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/cannot complete build due to compilation error from build tools:/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /cannot complete build due to compilation error from build tools:/i);
 		});
 
 	});
 
 	describe('when the modules parameter is missing', function() {
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get('/v2/bundles/js')
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/the modules parameter is required and must be a comma-separated list of modules/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /the modules parameter is required and must be a comma-separated list of modules/i);
 		});
 
 	});
 
 	describe('when the modules parameter is not a string', function() {
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get('/v2/bundles/js?modules[]=foo&modules[]=bar')
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/the modules parameter is required and must be a comma-separated list of modules/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /the modules parameter is required and must be a comma-separated list of modules/i);
 		});
 
 	});
@@ -380,19 +393,23 @@ describe('GET /v2/bundles/js', function() {
 	describe('when a module name cannot be parsed', function() {
 		const moduleName = 'http://1.2.3.4/';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/The modules parameter contains module names which are not valid: http:\/\/1.2.3.4\//i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /The modules parameter contains module names which are not valid: http:\/\/1.2.3.4\//i);
 		});
 
 	});
@@ -400,15 +417,19 @@ describe('GET /v2/bundles/js', function() {
 	describe('when the bundle type is invalid', function() {
 		const moduleName = 'o-test-component@1.0.11';
 
-		beforeEach(function() {
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
 			const now = (new Date()).toISOString();
-			this.request = request(this.app)
+			response = await request(this.app)
 				.get(`/v2/bundles/javascript?modules=${moduleName}&newerthan=${now}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
 	});
@@ -418,19 +439,23 @@ describe('GET /v2/bundles/js', function() {
 describe('when a module name is a relative directory', function() {
 	const moduleName = '../../../example';
 
-	beforeEach(function() {
+	/**
+		 * @type {request.Response}
+		 */
+	let response;
+	before(async function () {
 		const now = (new Date()).toISOString();
-		this.request = request(this.app)
+		response = await request(this.app)
 			.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
 			.set('Connection', 'close');
 	});
 
-	it('should respond with a 400 status', function(done) {
-		this.request.expect(400).end(done);
+	it('should respond with a 400 status', function() {
+		assert.equal(response.status, 400);
 	});
 
-	it('should respond with an error message ', function(done) {
-		this.request.expect(/The modules parameter contains module names which are not valid: \.\.\/\.\.\/\.\.\/example/i).end(done);
+	it('should respond with an error message ', function() {
+		assert.match(response.text, /The modules parameter contains module names which are not valid: \.\.\/\.\.\/\.\.\/example/i);
 	});
 
 });
@@ -438,43 +463,47 @@ describe('when a module name is a relative directory', function() {
 describe('export parameter as xss attack vector', function() {
 	const moduleName = 'o-test-component@1.0.16';
 
-	beforeEach(function() {
-		this.request = request(this.app)
+	/**
+		 * @type {request.Response}
+		 */
+	let response;
+	before(async function () {
+		response = await request(this.app)
 			.get(`/v2/bundles/js?modules=${moduleName}&export='];alert('oops')//`)
 			.set('Connection', 'close');
 	});
 
-	it('should respond with a 400 status', function(done) {
-		this.request.expect(400).end(done);
+	it('should respond with a 400 status', function() {
+		assert.equal(response.status, 400);
 	});
 
-	it('should respond with an error message ', function(done) {
-		this.request.expect(/The export parameter can only contain underscore, period, and alphanumeric characters. The export parameter given was: &#x27;];alert\(&#x27;oops&#x27;\)\/\//).end(done);
+	it('should respond with an error message ', function() {
+		assert.match(response.text, /The export parameter can only contain underscore, period, and alphanumeric characters. The export parameter given was: &#x27;];alert\(&#x27;oops&#x27;\)\/\//);
 	});
 
-	it('should respond with HTML', function(done) {
-		this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+	it('should respond with HTML', function() {
+		assert.deepEqual(response.headers['content-type'], 'text/html; charset=utf-8');
 	});
 });
 
 describe('when an origami specification v2 component is requested', function() {
 	const moduleName = 'o-test-component@2.0.0-beta.1';
 
-	beforeEach(function() {
-		this.request = request(this.app)
+	/**
+		 * @type {request.Response}
+		 */
+	let response;
+	before(async function () {
+		response = await request(this.app)
 			.get(`/v2/bundles/js?modules=${moduleName}`)
 			.set('Connection', 'close');
 	});
 
-	it('should respond with a 400 status', function(done) {
-		this.request.expect(400).end(done);
+	it('should respond with a 400 status', function() {
+		assert.equal(response.status, 400);
 	});
 
-	it('should respond with an error message', function(done) {
-		this.request
-			.expect(({text}) => {
-				assert.equal(getErrorMessage(text), 'o-test-component@2.0.0-beta.1 is an Origami v2 component, the Origami Build Service v2 CSS API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
-			})
-			.end(done);
+	it('should respond with an error message', function() {
+		assert.equal(getErrorMessage(response.text), 'o-test-component@2.0.0-beta.1 is an Origami v2 component, the Origami Build Service v2 CSS API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
 	});
 });

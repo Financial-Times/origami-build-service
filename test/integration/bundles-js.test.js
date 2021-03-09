@@ -1,6 +1,7 @@
 'use strict';
 
 const request = require('supertest');
+const {assert} = require('chai');
 
 describe('GET /bundles/js', function() {
 	this.timeout(20000);
@@ -10,18 +11,22 @@ describe('GET /bundles/js', function() {
 		const moduleName = 'mock-modules/test-ok';
 		const now = (new Date()).toISOString();
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/bundles/js?modules=${moduleName}&newerthan=${now}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 301 status', function(done) {
-			this.request.expect(301).end(done);
+		it('should respond with a 301 status', function() {
+			assert.equal(response.status, 301);
 		});
 
-		it('should respond with a v2 `Location` header', function(done) {
-			this.request.expect('Location', `${this.basepath}v2/bundles/js?modules=${moduleName}&newerthan=${now}`).end(done);
+		it('should respond with a v2 `Location` header', function() {
+			assert.deepEqual(response.headers['location'], `${this.basepath}v2/bundles/js?modules=${moduleName}&newerthan=${now}`);
 		});
 
 	});
@@ -31,25 +36,29 @@ describe('GET /bundles/js', function() {
 		describe('when a module is requested that has a static bundle', function() {
 			const moduleName = 'mock-modules/test-static';
 
-			beforeEach(function() {
-				this.request = request(this.app)
+			/**
+		 * @type {request.Response}
+		 */
+			let response;
+			before(async function () {
+				response = await request(this.app)
 					.get(`/bundles/js?modules=${moduleName}`)
 					.set('Connection', 'close');
 			});
 
-			it('should respond with a 200 status', function(done) {
-				this.request.expect(200).end(done);
+			it('should respond with a 200 status', function() {
+				assert.equal(response.status, 200);
 			});
 
-			it('should respond with the expected `Content-Type` header', function(done) {
-				this.request.expect('Content-Type', 'application/javascript; charset=utf-8').end(done);
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'application/javascript; charset=utf-8');
 			});
 
-			it('should respond with the contents of the static bundle', function(done) {
-				this.request.expect('/* STATIC BUNDLE (bundles/js) */\n').end(done);
+			it('should respond with the contents of the static bundle', function() {
+				assert.deepEqual(response.text, '/* STATIC BUNDLE (bundles/js) */\n');
 			});
 
-			it('should ignore URL encoding when checking for static bundles', function(done) {
+			it('should ignore URL encoding when checking for static bundles', function() {
 				const pathUnencoded = `/bundles/js?modules=${moduleName}^1.0.0`;
 				const pathEncoded = `/bundles/js?modules=${moduleName}%5E1.0.0`;
 				const expectedContent = '/* STATIC BUNDLE (bundles/js) */\n';
@@ -63,7 +72,7 @@ describe('GET /bundles/js', function() {
 							.get(pathEncoded)
 							.set('Connection', 'close')
 							.expect(expectedContent)
-							.end(done);
+						;
 					});
 			});
 
