@@ -1,6 +1,7 @@
 'use strict';
 
 const request = require('supertest');
+const {assert} = require('chai');
 
 describe('GET /v1/demos', function() {
 	this.timeout(40400);
@@ -10,22 +11,26 @@ describe('GET /v1/demos', function() {
 		const moduleName = 'o-test-component';
 		const pathName = 'main';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v1/demos/${moduleName}/${pathName}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+		it('should respond with the expected `Content-Type` header', function() {
+			assert.deepEqual(response.headers['content-type'], 'text/html; charset=utf-8');
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /not found/i);
 		});
 
 	});
@@ -33,22 +38,26 @@ describe('GET /v1/demos', function() {
 	describe('when a valid module and no demo is requested', function() {
 		const moduleName = 'o-test-component';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v1/demos/${moduleName}/`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+		it('should respond with the expected `Content-Type` header', function() {
+			assert.deepEqual(response.headers['content-type'], 'text/html; charset=utf-8');
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /not found/i);
 		});
 
 	});
@@ -56,22 +65,26 @@ describe('GET /v1/demos', function() {
 	describe('when a valid module and no demo is requested, without ending /', function() {
 		const moduleName = 'o-test-component';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v1/demos/${moduleName}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+		it('should respond with the expected `Content-Type` header', function() {
+			assert.deepEqual(response.headers['content-type'], 'text/html; charset=utf-8');
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /not found/i);
 		});
 
 	});
@@ -80,22 +93,26 @@ describe('GET /v1/demos', function() {
 		const moduleName = 'o-test-component@1.0.19';
 		const pathName = 'main';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v1/demos/${moduleName}/${pathName}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
-		it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/html; charset=utf-8').end(done);
+		it('should respond with the expected `Content-Type` header', function() {
+			assert.deepEqual(response.headers['content-type'], 'text/html; charset=utf-8');
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /not found/i);
 		});
 
 	});
@@ -104,18 +121,22 @@ describe('GET /v1/demos', function() {
 		const moduleName = 'o-test-component';
 		const pathName = 'NOTADEMO';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v1/demos/${moduleName}/${pathName}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /not found/i);
 		});
 
 	});
@@ -124,18 +145,22 @@ describe('GET /v1/demos', function() {
 		const moduleName = 'o-test-component@1.0.19';
 		const pathName = 'NOTADEMO';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v1/demos/${moduleName}/${pathName}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /not found/i);
 		});
 
 	});
@@ -144,18 +169,22 @@ describe('GET /v1/demos', function() {
 		const moduleName = 'non-existent-module';
 		const pathName = 'README.md';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v1/demos/${moduleName}/${pathName}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /not found/i);
 		});
 
 	});
@@ -164,18 +193,22 @@ describe('GET /v1/demos', function() {
 		const moduleName = 'non-existent-module@1.0.0';
 		const pathName = 'README.md';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v1/demos/${moduleName}/${pathName}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /not found/i);
 		});
 
 	});
@@ -184,18 +217,22 @@ describe('GET /v1/demos', function() {
 		const moduleName = 'o-test-component@99.0.0';
 		const pathName = 'main';
 
-		beforeEach(function() {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(`/v1/demos/${moduleName}/${pathName}`)
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function(done) {
-			this.request.expect(404).end(done);
+		it('should respond with a 404 status', function() {
+			assert.equal(response.status, 404);
 		});
 
-		it('should respond with an error message', function(done) {
-			this.request.expect(/not found/i).end(done);
+		it('should respond with an error message', function() {
+			assert.match(response.text, /not found/i);
 		});
 
 	});
