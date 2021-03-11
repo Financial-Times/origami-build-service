@@ -32,7 +32,7 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		it('should respond with the demo html contents', function() {
-			assert.deepEqual(response.text, '<div data-o-component="o-test-component" class="o-test-component"></div>\n');
+			assert.deepEqual(response.text, '<div data-o-component="o-test-component" class="o-test-component"></div>');
 		});
 
 	});
@@ -98,7 +98,7 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		it('should respond with the demo html contents', function() {
-			assert.deepEqual(response.text, '<div data-o-component="o-test-component" class="o-test-component"></div>\n');
+			assert.deepEqual(response.text, '<div data-o-component="o-test-component" class="o-test-component"></div>');
 		});
 
 	});
@@ -128,7 +128,7 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		it('should respond with the demo html contents', function() {
-			assert.deepEqual(response.text, '<div data-o-component="o-test-component" class="o-test-component"></div>\n');
+			assert.deepEqual(response.text, '<div data-o-component="o-test-component" class="o-test-component"></div>');
 		});
 
 	});
@@ -591,6 +591,32 @@ describe('GET /v3/demo/html', function() {
 			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The component query parameter can only contain components from the @financial-times namespace. The component being requested was: not:a^valid."')
 			;
 		});
+	});
+
+	describe('when a valid component at specific version and demo which contains html syntax errors are requested', function() {
+		const component = '@financial-times/o-test-component@2.0.15';
+		const demo = 'test-demo';
+		const system_code = 'origami';
+		const brand = 'master';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
+		});
+
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The HTML in the demo contains syntax errors."');
+		});
+
 	});
 
 });
