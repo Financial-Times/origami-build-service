@@ -453,7 +453,7 @@ describe('createJavaScriptBundle', function () {
 	);
 
 	context(
-		'when given a request with a components parameter which contains a component names not in the @financial-times namespace',
+		'when given a request with a components parameter which contains component names not in the @financial-times namespace',
 		async () => {
 			it('it responds with a plain text error message', async () => {
 				const request = httpMock.createRequest();
@@ -467,6 +467,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
+				request.query.system_code = 'origami';
 				request.query.components = 'o-test@5';
 
 				await createJavaScriptBundle(request, response);
