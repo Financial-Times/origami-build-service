@@ -73,6 +73,7 @@
     "lodash": "^4.17.21",
     "lru-cache": "^6.0.0",
     "measured": "^1.0.0",
+    "mem": "^1.1.0",
     "merge-deep": "^3.0.3",
     "merge-stream": "^2.0.0",
     "mime": "^1.6.0",
