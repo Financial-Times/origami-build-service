@@ -19,6 +19,7 @@ describe('GET /v3/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -51,6 +52,7 @@ describe('GET /v3/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -85,6 +87,7 @@ describe('GET /v3/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -107,7 +110,7 @@ describe('GET /v3/bundles/css', function() {
 		});
 	});
 
-	describe('when a component which is not in the @financial-times namesspace, a valid brand and a valid system-code is requested', function() {
+	describe('when a component which is not in the @financial-times namespace, a valid brand and a valid system-code is requested', function() {
 		const componentName = 'lodash@1';
 		const brand = 'master';
 		const systemCode = 'origami';
@@ -119,6 +122,7 @@ describe('GET /v3/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -153,6 +157,7 @@ describe('GET /v3/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -184,6 +189,7 @@ describe('GET /v3/bundles/css', function() {
 		beforeEach(function() {
 			this.request = request(this.app)
 				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -217,6 +223,7 @@ describe('GET /v3/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -251,6 +258,7 @@ describe('GET /v3/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/css?brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -285,6 +293,7 @@ describe('GET /v3/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/css?components[]=foo&components[]=bar&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -320,6 +329,7 @@ describe('GET /v3/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 

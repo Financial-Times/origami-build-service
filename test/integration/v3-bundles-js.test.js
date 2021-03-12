@@ -45,6 +45,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -87,6 +88,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -120,6 +122,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -150,6 +153,7 @@ describe('GET /v3/bundles/js', function() {
 		beforeEach(function() {
 			this.request = request(this.app)
 				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -184,6 +188,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -217,6 +222,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -250,6 +256,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?components[]=foo&components[]=bar&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -284,6 +291,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -318,6 +326,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?components=${componentName}&callback=${callback}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -353,6 +362,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?components=${componentName}&callback=${callback}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -400,6 +410,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -432,6 +443,7 @@ describe('GET /v3/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/bundles/js?components=${componentName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
