@@ -245,12 +245,7 @@ describe('GET /v3/font', function () {
 		});
 
 		it('should respond with an error message', function () {
-
-			assert.deepStrictEqual(
-				response.text,						'"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."'
-			);
-
-
+			assert.deepStrictEqual(response.text, '"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."');
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
