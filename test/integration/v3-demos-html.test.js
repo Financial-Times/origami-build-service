@@ -635,7 +635,7 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The HTML in the demo contains syntax errors."');
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The HTML in the demo contains syntax errors. Error: Unexpected character \\"/\\" (24:5)"');
 		});
 
 	});
