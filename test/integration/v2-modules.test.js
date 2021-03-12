@@ -17,6 +17,7 @@ describe('GET /v2/modules', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/modules/${moduleName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -50,6 +51,7 @@ describe('GET /v2/modules', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/modules/${moduleName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -73,6 +75,7 @@ describe('GET /v2/modules', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/modules/${moduleName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 

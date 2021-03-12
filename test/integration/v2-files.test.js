@@ -24,6 +24,7 @@ describe('GET /v2/files', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/files/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -52,6 +53,7 @@ describe('GET /v2/files', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/files/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -76,6 +78,7 @@ describe('GET /v2/files', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/files/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -100,6 +103,7 @@ describe('GET /v2/files', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/files/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -124,6 +128,7 @@ describe('GET /v2/files', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/files/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
