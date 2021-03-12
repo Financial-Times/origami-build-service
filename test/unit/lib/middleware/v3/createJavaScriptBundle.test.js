@@ -21,6 +21,51 @@ describe('createJavaScriptBundle', function () {
 	});
 
 	context('when given a valid request', function () {
+
+		context('and the response takes more than 25 seconds to be generated', function () {
+			this.timeout(30000);
+
+			let fakeNpmRegistryAddress;
+			let fakeNpmRegistry;
+			beforeEach(function() {
+				fakeNpmRegistry = require('express')().use(() => {}).listen(0);
+				fakeNpmRegistryAddress = `http://localhost:${fakeNpmRegistry.address().port}`;
+			});
+
+			afterEach( function() {
+				fakeNpmRegistry.close();
+			});
+
+			it('it responds with a redirect back to the same location', async () => {
+				const request = httpMock.createRequest();
+				const response = httpMock.createResponse();
+				request.app = {
+					ft: {
+						options: {
+							npmRegistryURL: fakeNpmRegistryAddress
+						}
+					}
+				};
+				request.basePath = '/';
+				request.path = '/v3/bundles/js';
+				request.query.components = '@financial-times/o-test-component@2.0.0';
+				request.query.system_code = 'origami';
+
+				await createJavaScriptBundle(request, response);
+
+				proclaim.deepStrictEqual(response.statusCode, 307);
+				proclaim.deepStrictEqual(
+					response.getHeader('location'),
+					'/v3/bundles/js?components=%40financial-times%2Fo-test-component%402.0.0&system_code=origami'
+				);
+				proclaim.deepStrictEqual(
+					response.getHeader('cache-control'),
+					'private, no-store'
+				);
+
+			});
+		});
+
 		it('it responds with a javascript bundle which contains the requested component', async () => {
 			const request = httpMock.createRequest();
 			const response = httpMock.createResponse();
