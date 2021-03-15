@@ -1,252 +1,346 @@
 'use strict';
 
-const proclaim = require('proclaim');
+const {assert} = require('chai');
 const request = require('supertest');
 
 describe('GET /v3/bundles/css', function() {
-    this.timeout(20000);
-    this.slow(5000);
+	this.timeout(20000);
+	this.slow(5000);
 
-    describe('when a valid module, valid brand and valid system-code is requested', function() {
-        const moduleName = '@financial-times/o-test-component@v2.0.0-beta.1';
-        const brand = 'master';
-        const systemCode = 'origami';
+	describe('when a valid component, valid brand and valid system-code is requested', function() {
+		const componentName = '@financial-times/o-test-component@v2.0.0-beta.1';
+		const brand = 'master';
+		const systemCode = 'origami';
 
-        beforeEach(function() {
-            this.request = request(this.app)
-                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
-                .set('Connection', 'close');
-        });
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
 
-        it('should respond with a 200 status', function(done) {
-            this.request.expect(response => {
-                proclaim.deepStrictEqual(response.status, 200);
-            }).end(done);
-        });
+		it('should respond with a 200 status', function() {
+			assert.deepStrictEqual(response.status, 200);
+		});
 
-        it('should respond with the css', function(done) {
-            this.request.expect(({text}) => {
-                proclaim.deepStrictEqual(text, '.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'The square root of 64 is "8".\'}\n');
-            }).end(done);
-        });
+		it('should respond with the css', function() {
+			assert.deepStrictEqual(response.text, '.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'The square root of 64 is "8".\'}\n');
+		});
 
-        it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
-        });
+		it('should respond with the expected `Content-Type` header', function() {
+			assert.deepEqual(response.headers['content-type'], 'text/css; charset=utf-8');
+		});
 
-        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-        });
-    });
+		it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+			assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
+		});
+	});
 
-    describe('when a valid module, valid system-code and invalid brand is requested', function() {
-        const moduleName = '@financial-times/o-test-component@v2.0.0-beta.1';
-        const brand = 'origami';
-        const systemCode = 'origami';
+	describe('when a valid component, valid system-code and invalid brand is requested', function() {
+		const componentName = '@financial-times/o-test-component@v2.0.0-beta.1';
+		const brand = 'origami';
+		const systemCode = 'origami';
 
-        beforeEach(function() {
-            this.request = request(this.app)
-                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
-                .set('Connection', 'close');
-        });
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
 
-        it('should respond with a 400 status', function(done) {
-            this.request.expect(response => {
-                proclaim.deepStrictEqual(response.status, 400);
-            }).end(done);
-        });
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
+		});
 
-        it('should respond with the css', function(done) {
-            this.request
-                .expect(({text}) => {
-                    proclaim.deepStrictEqual(text, 'Origami Build Service returned an error: "The brand query parameter must be either `master`, `internal`, or `whitelabel`."');
-                }).end(done);
-        });
+		it('should respond with the css', function() {
+			assert.deepStrictEqual(response.text, 'Origami Build Service returned an error: "The brand query parameter must be either `master`, `internal`, or `whitelabel`."');
+		});
 
-        it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-        });
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
 
-        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-        });
-    });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
+			});
+		});
+	});
 
-    describe('when an invalid module, valid brand and valid system-code is requested', function() {
-        const moduleName = 'hello-nonexistent-module@1';
-        const brand = 'master';
-        const systemCode = 'origami';
+	describe('when an invalid component, valid brand and valid system-code is requested', function() {
+		const componentName = '@financial-times/hello-nonexistent-component@1';
+		const brand = 'master';
+		const systemCode = 'origami';
 
-        beforeEach(function() {
-            this.request = request(this.app)
-                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
-                .set('Connection', 'close');
-        });
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
 
-        it('should respond with a 400 status', function(done) {
-            this.request.expect(response => {
-                proclaim.deepStrictEqual(response.status, 400);
-            }).end(done);
-        });
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
+		});
 
-        it('should respond with the css', function(done) {
-            this.request.expect(({text}) => {
-                proclaim.deepStrictEqual(text,'Origami Build Service returned an error: "hello-nonexistent-module@1 is not in the npm registry"');
-            }).end(done);
-        });
+		it('should respond with the css', function() {
+			assert.deepStrictEqual(response.text,'Origami Build Service returned an error: "@financial-times/hello-nonexistent-component@1 is not in the npm registry"');
+		});
 
-        it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-        });
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
 
-        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-        });
-    });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
+			});
+		});
+	});
 
-    describe('when an invalid module is requested (nonexistent)', function() {
-        const moduleName = 'hello-nonexistent-module@1';
-        const brand = 'master';
-        const systemCode = 'origami';
+	describe('when a component which is not in the @financial-times namesspace, a valid brand and a valid system-code is requested', function() {
+		const componentName = 'lodash@1';
+		const brand = 'master';
+		const systemCode = 'origami';
 
-        beforeEach(function() {
-            this.request = request(this.app)
-                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
-                .set('Connection', 'close');
-        });
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
 
-        it('should respond with a 400 status', function(done) {
-            this.request.expect(response => {
-                proclaim.deepStrictEqual(response.status, 400);
-            }).end(done);
-        });
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
+		});
 
-        it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-        });
+		it('should respond with the css', function() {
+			assert.deepStrictEqual(response.text,'Origami Build Service returned an error: "The components query parameter can only contain components from the @financial-times namespace. Please remove the following from the components parameter: lodash."');
+		});
 
-        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-        });
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
 
-    });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
+			});
+		});
+	});
 
-    // describe('when an invalid module is requested (Sass compilation error)', function() {
-    //     const moduleName = 'o-test-component@1.0.1';
+	describe('when an invalid component is requested (nonexistent)', function() {
+		const componentName = '@financial-times/hello-nonexistent-component@1';
+		const brand = 'master';
+		const systemCode = 'origami';
 
-    //     beforeEach(function() {
-    //         this.request = request(this.app)
-    //             .get(`/v3/bundles/css?modules=${moduleName}`)
-    //             .set('Connection', 'close');
-    //     });
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
 
-    //     it('should respond with a 560 status', function(done) {
-    //         this.request.expect(560).end(done);
-    //     });
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
+		});
 
-    //     it('should respond with an error message', function(done) {
-    //         this.request.expect(/cannot complete build due to compilation error from build tools:/i).end(done);
-    //     });
+		it('should respond with an error message', function() {
+			assert.deepStrictEqual(response.text,'Origami Build Service returned an error: "@financial-times/hello-nonexistent-component@1 is not in the npm registry"');
+		});
 
-        // it('should respond with the expected `Content-Type` header', function(done) {
-        //     this.request.expect('Content-Type', 'text/css; charset=utf-8').end(done);
-        // });
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
 
-        // it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-		// 	this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-        // });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
+			});
+		});
 
-    // });
+	});
 
-    describe('when the modules parameter is missing', function() {
-        const brand = 'master';
-        const systemCode = 'origami';
+	describe('when an invalid component is requested (origami v1)', function() {
+		const componentName = '@financial-times/o-utils@1';
+		const brand = 'master';
+		const systemCode = 'origami';
 
-        beforeEach(function() {
-            this.request = request(this.app)
-                .get(`/v3/bundles/css?brand=${brand}&system_code=${systemCode}`)
-                .set('Connection', 'close');
-        });
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
 
-        it('should respond with a 400 status', function(done) {
-            this.request.expect(response => {
-                proclaim.deepStrictEqual(response.status, 400);
-            }).end(done);
-        });
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(response => {
+				assert.deepStrictEqual(response.status, 400);
+			}).end(done);
+		});
 
-        it('should respond with an error message', function(done) {
-            this.request.expect('Origami Build Service returned an error: "The modules query parameter can not be empty."').end(done);
-        });
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
 
-        it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
 
-        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-        });
+	});
 
-    });
+	describe('when an invalid component is requested (Sass compilation error)', function() {
+		const componentName = '@financial-times/o-test-component@2.0.3';
+		const brand = 'master';
+		const systemCode = 'origami';
 
-    describe('when the modules parameter is not a string', function() {
-        const brand = 'master';
-        const systemCode = 'origami';
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
 
-        beforeEach(function() {
-            this.request = request(this.app)
-                .get(`/v3/bundles/css?modules[]=foo&modules[]=bar&brand=${brand}&system_code=${systemCode}`)
-                .set('Connection', 'close');
-        });
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
+		});
 
-        it('should respond with a 400 status', function(done) {
-            this.request.expect(response => {
-                proclaim.deepStrictEqual(response.status, 400);
-            }).end(done);
-        });
+		it('should respond with an error message', function() {
+			assert.match(response.text, /Origami Build Service returned an error: /);
+		});
 
-        it('should respond with an error message', function(done) {
-            this.request.expect('Origami Build Service returned an error: "The modules query parameter must be a string."').end(done);
-        });
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
 
-        it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
+			});
+		});
 
-        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-        });
+	});
 
-    });
+	describe('when the components parameter is missing', function() {
+		const brand = 'master';
+		const systemCode = 'origami';
 
-    describe('when a module name cannot be parsed', function() {
-        const moduleName = 'http://1.2.3.4/';
-        const brand = 'master';
-        const systemCode = 'origami';
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
 
-        beforeEach(function() {
-            this.request = request(this.app)
-                .get(`/v3/bundles/css?modules=${moduleName}&brand=${brand}&system_code=${systemCode}`)
-                .set('Connection', 'close');
-        });
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
+		});
 
-        it('should respond with a 400 status', function(done) {
-            this.request.expect(response => {
-                proclaim.deepStrictEqual(response.status, 400);
-            }).end(done);
-        });
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The components query parameter can not be empty."');
+		});
 
-        it('should respond with an error message', function(done) {
-            this.request.expect('Origami Build Service returned an error: "The modules query parameter contains module names which are not valid: http://1.2.3.4/."').end(done);
-        });
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
 
-        it('should respond with the expected `Content-Type` header', function(done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
-        });
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
+			});
+		});
 
-        it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
-			this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
-        });
+	});
 
-    });
+	describe('when the components parameter is not a string', function() {
+		const brand = 'master';
+		const systemCode = 'origami';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?components[]=foo&components[]=bar&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
+		});
+
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The components query parameter must be a string."');
+		});
+
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
+			});
+		});
+
+	});
+
+	describe('when a component name cannot be parsed', function() {
+		const componentName = 'http://1.2.3.4/';
+		const brand = 'master';
+		const systemCode = 'origami';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function() {
+			assert.equal(response.status, 400);
+		});
+
+		it('should respond with an error message', function() {
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The components query parameter contains component names which are not valid: http://1.2.3.4/."');
+		});
+
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
+			});
+		});
+
+	});
 
 });

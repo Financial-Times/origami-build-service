@@ -1,6 +1,6 @@
 'use strict';
 
-const proclaim = require('proclaim');
+const {assert} = require('chai');
 const request = require('supertest');
 
 describe('GET /v3/font', function () {
@@ -13,21 +13,22 @@ describe('GET /v3/font', function () {
 		const format = 'woff2';
 		const system = 'origami';
 
-		beforeEach(function () {
-			this.request = request(this.app)
+		/**
+			 * @type {request.Response}
+		 	 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(
 					`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`
-				)
-				.set('Connection', 'close');
+				);
 		});
 
-		it('should respond with a 200 status', function (done) {
-			this.request.expect(200).end(done);
+		it('should respond with a 200 status', function () {
+			assert.equal(response.status, 200);
 		});
-		it('should respond with the expected `Content-Type` header', function (done) {
-			this.request
-				.expect('Content-Type', 'font/woff2')
-				.end(done);
+		it('should respond with the expected `Content-Type` header', function () {
+			assert.equal(response.headers['content-type'], 'font/woff2');
 		});
 	});
 
@@ -36,31 +37,38 @@ describe('GET /v3/font', function () {
 		const file = 'BentonSans-Bold.woff2';
 		const system = 'origami';
 
-		beforeEach(function () {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(
 					`/v3/font?version=${version}&file=${file}&system_code=${system}`
-				)
-				.set('Connection', 'close');
+				);
 		});
 
-		it('should respond with an error message', function (done) {
-			this.request
-				.expect(({text}) => {
-					proclaim.deepEqual(
-						text,
-						'"Origami Build Service returned an error: The version 1hg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
-					);
-				})
-				.end(done);
+		it('should respond with an error message', function () {
+			assert.deepEqual(
+				response.text,
+				'"Origami Build Service returned an error: The version 1hg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
+			);
+
+
 		});
 
-		it('should respond with a 400 status', function (done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function () {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with the expected `Content-Type` header', function (done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.equal(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.equal(response.headers['x-content-type-options'], 'nosniff');
+			});
 		});
 	});
 
@@ -70,31 +78,38 @@ describe('GET /v3/font', function () {
 		const format = 'magic';
 		const system = 'origami';
 
-		beforeEach(function () {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(
 					`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`
-				)
-				.set('Connection', 'close');
+				);
 		});
 
-		it('should respond with a 400 status', function (done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function () {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function (done) {
-			this.request
-				.expect(({text}) => {
-					proclaim.deepEqual(
-						text,
-						'"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."'
-					);
-				})
-				.end(done);
+		it('should respond with an error message', function () {
+			assert.deepEqual(
+				response.text,
+				'"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."'
+			);
+
+
 		});
 
-		it('should respond with the expected `Content-Type` header', function (done) {
-			this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.equal(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.equal(response.headers['x-content-type-options'], 'nosniff');
+			});
 		});
 	});
 
@@ -103,28 +118,34 @@ describe('GET /v3/font', function () {
 		const format = 'woff';
 		const system = 'origami';
 
-		beforeEach(function () {
-			this.request = request(this.app).get(
-				`/v3/font?font_name=${font}&font_format=${format}&system_code=${system}`
-			).set('Connection', 'close');
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app).get(
+				`/v3/font?font_name=${font}&font_format=${format}&system_code=${system}`);
 		});
 
-		it('should respond with a 400 status', function (done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function () {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function (done) {
-			this.request
-				.expect(
-					'"Origami Build Service returned an error: The version query parameter can not be empty."'
-				)
-				.end(done);
+		it('should respond with an error message', function () {
+			assert.deepEqual(response.text,
+				'"Origami Build Service returned an error: The version query parameter can not be empty."'
+			);
+
 		});
 
-		it('should respond with the expected `Content-Type` header', function (done) {
-			this.request
-				.expect('Content-Type', 'text/plain; charset=utf-8')
-				.end(done);
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.equal(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.equal(response.headers['x-content-type-options'], 'nosniff');
+			});
 		});
 	});
 
@@ -133,30 +154,36 @@ describe('GET /v3/font', function () {
 		const format = 'woff';
 		const system = 'origami';
 
-		beforeEach(function () {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(
 					`/v3/font?version[]=foo&version[]=bar&font_name=${font}&font_format=${format}&system_code=${system}`
-				)
-				.set('Connection', 'close');
+				);
 		});
 
-		it('should respond with a 400 status', function (done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function () {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function (done) {
-			this.request
-				.expect(
-					'"Origami Build Service returned an error: The version query parameter must be a string."'
-				)
-				.end(done);
+		it('should respond with an error message', function () {
+			assert.deepEqual(response.text,
+				'"Origami Build Service returned an error: The version query parameter must be a string."'
+			);
+
 		});
 
-		it('should respond with the expected `Content-Type` header', function (done) {
-			this.request
-				.expect('Content-Type', 'text/plain; charset=utf-8')
-				.end(done);
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.equal(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.equal(response.headers['x-content-type-options'], 'nosniff');
+			});
 		});
 	});
 
@@ -166,33 +193,38 @@ describe('GET /v3/font', function () {
 		const format = 'woff';
 		const system = 'origami';
 
-		beforeEach(function () {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(
 					`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`
-				)
-				.set('Connection', 'close');
+				);
 		});
 
-		it('should respond with a 400 status', function (done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function () {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function (done) {
-			this.request
-				.expect(({text}) => {
-					proclaim.deepStrictEqual(
-						text,
-						'"Origami Build Service returned an error: The version http://1.2.3.4/ is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
-					);
-				})
-				.end(done);
+		it('should respond with an error message', function () {
+
+			assert.deepStrictEqual(						response.text,
+				'"Origami Build Service returned an error: The version http://1.2.3.4/ is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
+			);
+
+
 		});
 
-		it('should respond with the expected `Content-Type` header', function (done) {
-			this.request
-				.expect('Content-Type', 'text/plain; charset=utf-8')
-				.end(done);
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.equal(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.equal(response.headers['x-content-type-options'], 'nosniff');
+			});
 		});
 	});
 
@@ -202,33 +234,38 @@ describe('GET /v3/font', function () {
 		const format = 'json';
 		const system = 'origami';
 
-		beforeEach(function () {
-			this.request = request(this.app)
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
 				.get(
 					`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`
-				)
-				.set('Connection', 'close');
+				);
 		});
 
-		it('should respond with a 400 status', function (done) {
-			this.request.expect(400).end(done);
+		it('should respond with a 400 status', function () {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message', function (done) {
-			this.request
-				.expect(({text}) => {
-					proclaim.deepStrictEqual(
-						text,
-						'"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."'
-					);
-				})
-				.end(done);
+		it('should respond with an error message', function () {
+
+			assert.deepStrictEqual(
+				response.text,						'"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."'
+			);
+
+
 		});
 
-		it('should respond with the expected `Content-Type` header', function (done) {
-			this.request
-				.expect('Content-Type', 'text/plain; charset=utf-8')
-				.end(done);
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.equal(response.headers['content-type'], 'text/plain; charset=utf-8');
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.equal(response.headers['x-content-type-options'], 'nosniff');
+			});
 		});
 	});
 });

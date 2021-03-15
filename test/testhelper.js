@@ -31,22 +31,22 @@ function describeWithPackages(name, packages, callback) {
 
 		before(function(done) {
 			fs.ensureDir(tempdir)
-			.then(function() {
+				.then(function() {
 				// Make some symbolic links to the test modules in this
 				// repository in the temporary directory.  When the cache
 				// tries to reclaim from disk it will pick up the modules
 				// we've created symlinks to here
-				return Promise.all(packages.map(function(name){
-					const src = path.join(__dirname, '/testmodules/', name);
-					const dst = path.join(tempdir, '/', name.replace(/^.*\//,''));
-					return fs.symlink(dst, src, 'dir').catch(err => {
-						if (err.code !== 'EEXIST') {
-							throw err;
-						}
-					});
-				}));
-			})
-			.then(function() { done(); });
+					return Promise.all(packages.map(function(name){
+						const src = path.join(__dirname, '/testmodules/', name);
+						const dst = path.join(tempdir, '/', name.replace(/^.*\//,''));
+						return fs.symlink(dst, src, 'dir').catch(err => {
+							if (err.code !== 'EEXIST') {
+								throw err;
+							}
+						});
+					}));
+				})
+				.then(function() { done(); });
 		});
 
 		callback.call(this, tempdir);

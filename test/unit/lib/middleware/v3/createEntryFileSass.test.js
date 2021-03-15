@@ -29,7 +29,7 @@ describe('lib/middleware/v3/createEntryFileSass', () => {
 		);
 		proclaim.deepStrictEqual(
 			EntryFileContents,
-            dedent`
+			dedent`
                 $o-brand: "master";
                 $system-code: "origami";
 

@@ -68,7 +68,7 @@ describe('Build task', function() {
 					proclaim.doesNotInclude(builtJs, '"This is a test"');
 					proclaim.doesNotInclude(builtJs, 'function Test() {\n\tvar name = \'test\';');
 					done();
-			});
+				});
 		});
 
 		it('should include the the babel-runtime polyfills by default', function(done) {
@@ -216,7 +216,7 @@ describe('Build task', function() {
 					const builtCss = fs.readFileSync(builtCssPath, 'utf8');;
 					proclaim.equal(builtCss, 'div{color:#00f}');
 					done();
-			});
+				});
 		});
 
 		it('should build from custom source', function(done) {
