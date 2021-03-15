@@ -11,7 +11,7 @@ include node_modules/@financial-times/origami-service-makefile/index.mk
 # Configuration
 # -------------
 
-INTEGRATION_TIMEOUT = 10000
+INTEGRATION_TIMEOUT = 60000
 INTEGRATION_SLOW = 2000
 
 SERVICE_NAME = Origami Build Service
