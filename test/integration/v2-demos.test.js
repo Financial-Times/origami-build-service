@@ -24,6 +24,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -51,6 +52,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -78,6 +80,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -105,6 +108,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -133,6 +137,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -161,6 +166,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}?brand=internal`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -189,6 +195,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -217,6 +224,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -241,6 +249,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -265,6 +274,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -289,6 +299,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -312,6 +323,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -335,6 +347,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -358,6 +371,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -382,6 +396,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
