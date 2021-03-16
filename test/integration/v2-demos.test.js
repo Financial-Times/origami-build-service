@@ -356,7 +356,7 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function () {
-			assert.equal(getErrorMessage(response.text), 'Demos may only be built for components which have been released with a valid semver version number.');
+			assert.equal(getErrorMessage(response.text), 'Demos may only be built for components at a valid semver version number or their latest release.');
 		});
 	});
 
@@ -380,7 +380,7 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function () {
-			assert.equal(getErrorMessage(response.text), 'Demos may only be built for components which have been released with a valid semver version number.');
+			assert.equal(getErrorMessage(response.text), 'Demos may only be built for components at a valid semver version number or their latest release.');
 
 		});
 	});
