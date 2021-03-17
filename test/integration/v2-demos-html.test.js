@@ -384,6 +384,35 @@ describe('GET /v2/demos', function() {
 		});
 	});
 
+
+	describe('when a valid module and demo are requested but the demo has invalid html', function () {
+		const moduleName = 'o-video@6.1.3';
+		const pathName = 'placeholder';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function () {
+			assert.equal(response.status, 200);
+		});
+
+		it('should respond with the expected `Content-Type` header', function () {
+			assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
+		});
+
+		it('should respond with the file contents', function () {
+			assert.include(response.text, 'data-o-component="o-video"');
+		});
+	});
+
 	describe('when an origami specification v2 component is requested', function() {
 		const moduleName = 'o-test-component@2.0.0-beta.1';
 		const pathName = 'main';
