@@ -7,6 +7,7 @@ const sinon = require('sinon');
 describe('lib/middleware/outputDemo', function() {
 	let bundler;
 	let cacheControlHeaderFromExpiry;
+	let surrogateControlHeaderFromExpiry;
 	let CompileError;
 	let fileproxy;
 	let HttpError;
@@ -23,6 +24,8 @@ describe('lib/middleware/outputDemo', function() {
 
 		cacheControlHeaderFromExpiry = require('../../mock/cacheControlHeaderFromExpiry.mock');
 		mockery.registerMock('../utils/cacheControlHeaderFromExpiry', cacheControlHeaderFromExpiry);
+		surrogateControlHeaderFromExpiry = require('../../mock/surrogateControlHeaderFromExpiry.mock');
+		mockery.registerMock('../utils/surrogateControlHeaderFromExpiry', surrogateControlHeaderFromExpiry);
 
 		CompileError = require('../../mock/compileerror.mock');
 		mockery.registerMock('../utils/compileerror', CompileError);
@@ -197,6 +200,7 @@ describe('lib/middleware/outputDemo', function() {
 						};
 						bundler.getBundle.resolves(bundle);
 						cacheControlHeaderFromExpiry.returnsArg(0);
+						surrogateControlHeaderFromExpiry.returnsArg(0);
 					});
 
 					it('uses files mimetype as the content-type of the response', () => {
@@ -272,6 +276,7 @@ describe('lib/middleware/outputDemo', function() {
 				};
 				bundler.getBundle.resolves(bundle);
 				cacheControlHeaderFromExpiry.returnsArg(0);
+				surrogateControlHeaderFromExpiry.returnsArg(0);
 			});
 
 			it('uses text/plain as the content-type of the response', () => {

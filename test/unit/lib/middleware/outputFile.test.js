@@ -6,6 +6,7 @@ const sinon = require('sinon');
 
 describe('lib/middleware/outputFile', () => {
 	let cacheControlHeaderFromExpiry;
+	let surrogateControlHeaderFromExpiry;
 	let fileproxy;
 	let HttpError;
 	let installationmanager;
@@ -15,6 +16,8 @@ describe('lib/middleware/outputFile', () => {
 	beforeEach(() => {
 		cacheControlHeaderFromExpiry = require('../../mock/cacheControlHeaderFromExpiry.mock');
 		mockery.registerMock('../utils/cacheControlHeaderFromExpiry', cacheControlHeaderFromExpiry);
+		surrogateControlHeaderFromExpiry = require('../../mock/surrogateControlHeaderFromExpiry.mock');
+		mockery.registerMock('../utils/surrogateControlHeaderFromExpiry', surrogateControlHeaderFromExpiry);
 
 		fileproxy = require('../../mock/fileproxy.mock');
 		mockery.registerMock('../fileproxy', fileproxy);

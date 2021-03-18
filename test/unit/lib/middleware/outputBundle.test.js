@@ -7,6 +7,7 @@ const sinon = require('sinon');
 describe('lib/middleware/outputBundle', function() {
 	let bundler;
 	let cacheControlHeaderFromExpiry;
+	let surrogateControlHeaderFromExpiry;
 	let CompileError;
 	let installationmanager;
 	let ModuleSet;
@@ -19,6 +20,8 @@ describe('lib/middleware/outputBundle', function() {
 
 		cacheControlHeaderFromExpiry = require('../../mock/cacheControlHeaderFromExpiry.mock');
 		mockery.registerMock('../utils/cacheControlHeaderFromExpiry', cacheControlHeaderFromExpiry);
+		surrogateControlHeaderFromExpiry = require('../../mock/surrogateControlHeaderFromExpiry.mock');
+		mockery.registerMock('../utils/surrogateControlHeaderFromExpiry', surrogateControlHeaderFromExpiry);
 
 		CompileError = require('../../mock/compileerror.mock');
 		mockery.registerMock('../utils/compileerror', CompileError);
@@ -180,6 +183,7 @@ describe('lib/middleware/outputBundle', function() {
 						};
 						bundler.getBundle.resolves(bundle);
 						cacheControlHeaderFromExpiry.returnsArg(0);
+						surrogateControlHeaderFromExpiry.returnsArg(0);
 					});
 
 					it('uses files mimetype as the content-type of the response', () => {
