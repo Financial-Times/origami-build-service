@@ -56,6 +56,36 @@ describe('bundleSass', () => {
 				});
 			}
 		);
+
+		context(
+			'with properties which need to be prefixed', () => {
+				let location;
+				let entryPointPath;
+				beforeEach(async () => {
+					await fs.mkdir('/tmp/bundle/', {recursive: true});
+					location = await fs.mkdtemp('/tmp/bundle/');
+					entryPointPath = path.join(location, 'index.scss');
+
+					await fs.writeFile(
+						entryPointPath,
+						'* {flex-wrap: wrap;display: flex;}',
+						'utf-8'
+					);
+				});
+
+				afterEach(async () => {
+					await rmrf(location);
+				});
+
+				it('it returns the compiled css with prefixes applied', async () => {
+					const bundledJavaScript = await bundleSass(location, entryPointPath);
+					proclaim.deepStrictEqual(
+						bundledJavaScript,
+						'*{-ms-flex-wrap:wrap;flex-wrap:wrap;display:-ms-flexbox;display:flex}\n'
+					);
+				});
+			}
+		);
 	});
 
 	context('given invalid sass', () => {
