@@ -3,7 +3,7 @@
 const request = require('supertest');
 const {assert} = require('chai');
 
-describe('GET /v2', function() {
+describe('GET /v3', function() {
 	this.timeout(20000);
 	this.slow(5000);
 
@@ -13,7 +13,7 @@ describe('GET /v2', function() {
 	let response;
 	before(async function () {
 		response = await request(this.app)
-			.get('/v2')
+			.get('/v3')
 			.set('Connection', 'close');
 	});
 
