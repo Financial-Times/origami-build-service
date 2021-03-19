@@ -326,7 +326,7 @@ describe('GET /v2/bundles/css', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.equal(getErrorMessage(response.text), 'o-test-component@2.0.0-beta.1 is an Origami v2 component, the Origami Build Service v2 CSS API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
+			assert.equal(getErrorMessage(response.text), 'o-test-component@2.0.0-beta.1 is not an Origami v1 component, the Origami Build Service v2 CSS bundle API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
 		});
 	});
 });
