@@ -42,6 +42,30 @@ describe('GET /v2/files', function() {
 
 	});
 
+	describe('when a valid module and file path are requested, but a dependency has an invalid origami.json', function() {
+		const moduleName = 'o-header@2.5.13';
+		const pathName = 'img/ft-logo.png';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v2/files/${moduleName}/${pathName}`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
+		});
+
+		it('should respond with the expected `Content-Type` header', function() {
+			assert.deepEqual(response.headers['content-type'], 'image/png');
+		});
+	});
+
 	describe('when a valid module but invalid file path (nonexistent) are requested', function() {
 		const moduleName = 'o-test-component@1';
 		const pathName = 'NOTAFILE';
@@ -137,7 +161,7 @@ describe('GET /v2/files', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.equal(getErrorMessage(response.text), 'o-test-component@2.0.0-beta.1 is an Origami v2 component, the Origami Build Service v2 CSS API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
+			assert.equal(getErrorMessage(response.text), 'o-test-component@2.0.0-beta.1 is not an Origami v1 component, the Origami Build Service v2 files API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
 		});
 	});
 
