@@ -148,6 +148,9 @@ By origin:
 - eu
 - us
 
+All documentation pages e.g. `/v2`, `/v2/api`, `/v2/migration`, `/v3/`, `/v3/api`, `/url-updater`:
+- website
+
 All bundle pages e.g. `/v2/bundles/css`:
 - js
 - css

@@ -8,21 +8,22 @@ describe('GET /url-updater', function () {
 	this.timeout(20000);
 	this.slow(5000);
 
-	const modules = 'o-test-component@^1.0.0';
-
 	/**
 	 * @type {request.Response}
 	 */
 	let response;
 	before(async function () {
 		response = await request(this.app)
-			.post('/url-updater')
-			.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
+			.get('/url-updater')
 			.set('Connection', 'close');
 	});
 
 	it('should respond with a 200 status', function () {
 		assert.equal(response.status, 200);
+	});
+
+	it('should respond with surrogate-key containing `website`', function() {
+		assert.deepEqual(response.headers['surrogate-key'], 'website');
 	});
 
 	it('should include a build service url input', function () {
