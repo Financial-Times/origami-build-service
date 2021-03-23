@@ -48,7 +48,7 @@ describe('createJavaScriptBundle', function () {
 				};
 				request.basePath = '/';
 				request.path = '/v3/bundles/js';
-				request.query.components = '@financial-times/o-test-component@2.0.0';
+				request.query.components = '@financial-times/o-test-component@2.1.0';
 				request.query.system_code = 'origami';
 
 				await createJavaScriptBundle(request, response);
@@ -56,7 +56,7 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(response.statusCode, 307);
 				proclaim.deepStrictEqual(
 					response.getHeader('location'),
-					'/v3/bundles/js?components=%40financial-times%2Fo-test-component%402.0.0&system_code=origami'
+					'/v3/bundles/js?components=%40financial-times%2Fo-test-component%402.1.0&system_code=origami'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),

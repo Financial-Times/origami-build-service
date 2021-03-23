@@ -17,8 +17,8 @@ describe('lib/update-url-for-results.test', () => {
 	const specV2Result = {
 		name: 'o-test-component',
 		requestedVersion: '^1.0.0',
-		versions: ['1.0.0', '2.0.0'],
-		latestVersion: '2.0.0',
+		versions: ['1.0.0', '2.1.0'],
+		latestVersion: '2.1.0',
 		satisfies: false,
 		latestOrigamiSpec: '2'
 	};
