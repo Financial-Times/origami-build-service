@@ -28,7 +28,7 @@ describe('GET /v3/bundles/css', function() {
 		});
 
 		it('should respond with the css', function() {
-			assert.deepStrictEqual(response.text, '.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'The square root of 64 is "8".\'}\n');
+			assert.deepStrictEqual(response.text, '.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'Hello world!  The square root of 64 is "8".\'}\n');
 		});
 
 		it('should respond with the expected `Content-Type` header', function() {

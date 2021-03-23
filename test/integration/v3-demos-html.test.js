@@ -615,7 +615,7 @@ describe('GET /v3/demo/html', function() {
 	});
 
 	describe('when a valid component at specific version and demo which contains html syntax errors are requested', function() {
-		const component = '@financial-times/o-test-component@2.0.15';
+		const component = '@financial-times/o-test-component@2.1.15';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';

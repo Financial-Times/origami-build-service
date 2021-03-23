@@ -251,7 +251,7 @@ describe('GET /v3/demo', function() {
 	});
 
 	describe('when a valid component and non-existent demo are requested', function() {
-		const component = '@financial-times/o-test-component@v2.0.1';
+		const component = '@financial-times/o-test-component@v2.1.1';
 		const demo = 'NOTADEMO';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -272,7 +272,7 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@v2.0.1 has no demo with the requested name: NOTADEMO"');
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@v2.1.1 has no demo with the requested name: NOTADEMO"');
 		});
 
 	});
