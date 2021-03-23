@@ -33,7 +33,7 @@ describe('createJavaScriptBundle', function () {
 					}
 				}
 			};
-			request.query.components = '@financial-times/o-test-component@2.0.0';
+			request.query.components = '@financial-times/o-test-component@2.1.0';
 			request.query.system_code = 'origami';
 
 			await createJavaScriptBundle(request, response);
@@ -506,7 +506,7 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test-component@2.0.0';
+				request.query.components = '@financial-times/o-test-component@2.1.0';
 				request.query.system_code = '$$origami!';
 
 				await createJavaScriptBundle(request, response);

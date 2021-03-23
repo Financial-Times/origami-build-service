@@ -371,7 +371,7 @@ describe('GET /v2/demos', function() {
 	});
 
 	describe('when an origami specification v2 component is requested', function() {
-		const moduleName = 'o-test-component@2.0.0-beta.1';
+		const moduleName = 'o-test-component@2.1.0-beta.1';
 		const pathName = 'main';
 
 		/**

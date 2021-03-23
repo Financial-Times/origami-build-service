@@ -79,8 +79,8 @@ describe('lib/evaluate-modules', () => {
 			}),
 			Object.assign({}, mockRepoDataClientVersionEntity, {
 				name: 'o-test-component',
-				version: '2.0.0',
-				versionTag: 'v2.0.0',
+				version: '2.1.0',
+				versionTag: 'v2.1.0',
 				origamiVersion: 'v2'
 			}),
 			Object.assign({}, mockRepoDataClientVersionEntity, {
@@ -145,13 +145,13 @@ describe('lib/evaluate-modules', () => {
 
 	it('includes the latest non-prerelease version number', async () => {
 		const results = await evaluateModules([['o-test-component', '^1']]);
-		proclaim.equal(results[0].latestVersion, '2.0.0');
+		proclaim.equal(results[0].latestVersion, '2.1.0');
 	});
 
 	it('includes an array of all version numbers', async () => {
 		const result = await evaluateModules([['o-test-component', '^1']]);
 		proclaim.lengthEquals(result, 1, 'Expected one result for the requested component.');
-		proclaim.deepEqual(result[0].versions, ['1.5.0', '2.0.0', '2.1.0-beta.1'], 'Expected all versions of the requested component to be returned in the result.');
+		proclaim.deepEqual(result[0].versions, ['1.5.0', '2.1.0', '2.1.0-beta.1'], 'Expected all versions of the requested component to be returned in the result.');
 	});
 
 	it('includes whether the requested version is the latest version', async () => {
