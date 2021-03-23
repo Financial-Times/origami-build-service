@@ -24,6 +24,7 @@ describe('GET /v2/bundles/css', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -52,6 +53,7 @@ describe('GET /v2/bundles/css', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}&minify=none`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -76,6 +78,7 @@ describe('GET /v2/bundles/css', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -100,6 +103,7 @@ describe('GET /v2/bundles/css', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -125,6 +129,7 @@ describe('GET /v2/bundles/css', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -150,6 +155,7 @@ describe('GET /v2/bundles/css', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -170,6 +176,7 @@ describe('GET /v2/bundles/css', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}&source=${source}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -195,6 +202,7 @@ describe('GET /v2/bundles/css', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}&source=${source}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -216,6 +224,7 @@ describe('GET /v2/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get('/v2/bundles/css')
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -238,6 +247,7 @@ describe('GET /v2/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get('/v2/bundles/css?modules[]=foo&modules[]=bar')
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -262,6 +272,7 @@ describe('GET /v2/bundles/css', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -286,6 +297,7 @@ describe('GET /v2/bundles/css', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/CSS?modules=${moduleName}&newerthan=${now}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -305,6 +317,7 @@ describe('GET /v2/bundles/css', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/bundles/css?modules=${moduleName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -313,7 +326,7 @@ describe('GET /v2/bundles/css', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.equal(getErrorMessage(response.text), 'o-test-component@2.2.0-beta.1 is an Origami v2 component, the Origami Build Service v2 CSS API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
+			assert.equal(getErrorMessage(response.text), 'o-test-component@2.1.0-beta.1 is not an Origami v1 component, the Origami Build Service v2 CSS bundle API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
 		});
 	});
 });
@@ -329,6 +342,7 @@ describe('when a module name is a relative directory', function() {
 		const now = (new Date()).toISOString();
 		response = await request(this.app)
 			.get(`/v2/bundles/css?modules=${moduleName}&newerthan=${now}`)
+			.redirects(5)
 			.set('Connection', 'close');
 	});
 

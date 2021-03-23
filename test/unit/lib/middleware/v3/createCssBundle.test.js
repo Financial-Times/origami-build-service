@@ -14,6 +14,51 @@ describe('createCssBundle', function () {
 	});
 
 	context('when given a valid request', function () {
+
+		context('and the response takes more than 25 seconds to be generated', function () {
+			this.timeout(30000);
+
+			let fakeNpmRegistryAddress;
+			let fakeNpmRegistry;
+			beforeEach(function() {
+				fakeNpmRegistry = require('express')().use(() => {}).listen(0);
+				fakeNpmRegistryAddress = `http://localhost:${fakeNpmRegistry.address().port}`;
+			});
+
+			afterEach( function() {
+				fakeNpmRegistry.close();
+			});
+
+			it('it responds with a redirect back to the same location', async () => {
+				const request = httpMock.createRequest();
+				const response = httpMock.createResponse();
+				request.app = {
+					ft: {
+						options: {
+							npmRegistryURL: fakeNpmRegistryAddress
+						}
+					}
+				};
+				request.basePath = '/';
+				request.path = '/v3/bundles/css';
+				request.query.components = '@financial-times/o-test-component@v2.0.0-beta.1';
+				request.query.brand = 'master';
+				request.query.system_code = 'origami';
+
+				await createCssBundle(request, response);
+
+				proclaim.deepStrictEqual(response.statusCode, 307);
+				proclaim.deepStrictEqual(
+					response.getHeader('location'),
+					'/v3/bundles/css?components=%40financial-times%2Fo-test-component%40v2.0.0-beta.1&brand=master&system_code=origami'
+				);
+				proclaim.deepStrictEqual(
+					response.getHeader('cache-control'),
+					'private, no-store'
+				);
+
+			});
+		});
 		it('it responds with a css bundle which contains the requested component', async () => {
 			const request = httpMock.createRequest();
 			const response = httpMock.createResponse();

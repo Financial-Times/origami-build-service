@@ -20,6 +20,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -50,6 +51,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -86,6 +88,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -116,6 +119,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -146,6 +150,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -182,6 +187,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -219,6 +225,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -256,6 +263,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -282,6 +290,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -308,6 +317,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -334,6 +344,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -360,6 +371,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -386,6 +398,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -411,6 +424,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -436,6 +450,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -460,6 +475,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -484,6 +500,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo[]=foo&demo[]=bar&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -508,6 +525,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -533,6 +551,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -557,6 +576,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -582,6 +602,7 @@ describe('GET /v3/demo', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 

@@ -14,14 +14,13 @@ describe('GET /v3/font', function () {
 		const system = 'origami';
 
 		/**
-			 * @type {request.Response}
-		 	 */
+		 * @type {request.Response}
+		 */
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(
-					`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`
-				);
+				.get(`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
+				.redirects(5);
 		});
 
 		it('should respond with a 200 status', function () {
@@ -43,9 +42,8 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(
-					`/v3/font?version=${version}&file=${file}&system_code=${system}`
-				);
+				.get(`/v3/font?version=${version}&file=${file}&system_code=${system}`)
+				.redirects(5);
 		});
 
 		it('should respond with an error message', function () {
@@ -84,9 +82,8 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(
-					`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`
-				);
+				.get(`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
+				.redirects(5);
 		});
 
 		it('should respond with a 400 status', function () {
@@ -123,8 +120,9 @@ describe('GET /v3/font', function () {
 		 */
 		let response;
 		before(async function () {
-			response = await request(this.app).get(
-				`/v3/font?font_name=${font}&font_format=${format}&system_code=${system}`);
+			response = await request(this.app)
+				.get(`/v3/font?font_name=${font}&font_format=${format}&system_code=${system}`)
+				.redirects(5);
 		});
 
 		it('should respond with a 400 status', function () {
@@ -160,9 +158,8 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(
-					`/v3/font?version[]=foo&version[]=bar&font_name=${font}&font_format=${format}&system_code=${system}`
-				);
+				.get(`/v3/font?version[]=foo&version[]=bar&font_name=${font}&font_format=${format}&system_code=${system}`)
+				.redirects(5);
 		});
 
 		it('should respond with a 400 status', function () {
@@ -199,9 +196,8 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(
-					`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`
-				);
+				.get(`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
+				.redirects(5);
 		});
 
 		it('should respond with a 400 status', function () {
@@ -240,9 +236,8 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(
-					`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`
-				);
+				.get(`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
+				.redirects(5);
 		});
 
 		it('should respond with a 400 status', function () {
@@ -250,12 +245,7 @@ describe('GET /v3/font', function () {
 		});
 
 		it('should respond with an error message', function () {
-
-			assert.deepStrictEqual(
-				response.text,						'"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."'
-			);
-
-
+			assert.deepStrictEqual(response.text, '"Origami Build Service returned an error: The font_format query parameter must be one of the supported formats: woff woff2."');
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {

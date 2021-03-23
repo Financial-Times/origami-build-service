@@ -24,6 +24,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -51,6 +52,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -78,6 +80,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -105,6 +108,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -133,6 +137,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -161,6 +166,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html?brand=internal`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -189,6 +195,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -217,6 +224,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -241,6 +249,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -265,6 +274,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -289,6 +299,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -312,6 +323,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -335,6 +347,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -343,7 +356,7 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function () {
-			assert.equal(getErrorMessage(response.text), 'Demos may only be built for components which have been released with a valid semver version number.');
+			assert.equal(getErrorMessage(response.text), 'Demos may only be built for components at a valid semver version number or their latest release.');
 		});
 	});
 
@@ -358,6 +371,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -366,7 +380,36 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function () {
-			assert.equal(getErrorMessage(response.text), 'Demos may only be built for components which have been released with a valid semver version number.');
+			assert.equal(getErrorMessage(response.text), 'Demos may only be built for components at a valid semver version number or their latest release.');
+		});
+	});
+
+
+	describe('when a valid module and demo are requested but the demo has invalid html', function () {
+		const moduleName = 'o-video@6.1.3';
+		const pathName = 'placeholder';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function () {
+			assert.equal(response.status, 200);
+		});
+
+		it('should respond with the expected `Content-Type` header', function () {
+			assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
+		});
+
+		it('should respond with the file contents', function () {
+			assert.include(response.text, 'data-o-component="o-video"');
 		});
 	});
 
@@ -381,6 +424,7 @@ describe('GET /v2/demos', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get(`/v2/demos/${moduleName}/${pathName}/html`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -389,7 +433,7 @@ describe('GET /v2/demos', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.equal(getErrorMessage(response.text), 'o-test-component@2.0.0-beta.1 is an Origami v2 component, the Origami Build Service v2 CSS API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
+			assert.equal(getErrorMessage(response.text), 'o-test-component@2.0.0-beta.1 is not an Origami v1 component, the Origami Build Service v2 demos API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
 		});
 	});
 

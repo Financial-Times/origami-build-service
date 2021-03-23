@@ -51,6 +51,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -89,6 +90,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&minify=none`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -113,6 +115,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&autoinit=0`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -142,6 +145,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&export=foo`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -171,6 +175,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&export=`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -197,6 +202,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = new Date().toISOString();
 			return request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&callback=${callback}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		};
 
@@ -250,6 +256,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&polyfills=none&minify=none`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -281,6 +288,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}&polyfills=true&minify=none`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -309,6 +317,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -333,6 +342,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -355,6 +365,7 @@ describe('GET /v2/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get('/v2/bundles/js')
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -377,6 +388,7 @@ describe('GET /v2/bundles/js', function() {
 		before(async function () {
 			response = await request(this.app)
 				.get('/v2/bundles/js?modules[]=foo&modules[]=bar')
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -401,6 +413,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -425,6 +438,7 @@ describe('GET /v2/bundles/js', function() {
 			const now = (new Date()).toISOString();
 			response = await request(this.app)
 				.get(`/v2/bundles/javascript?modules=${moduleName}&newerthan=${now}`)
+				.redirects(5)
 				.set('Connection', 'close');
 		});
 
@@ -447,6 +461,7 @@ describe('when a module name is a relative directory', function() {
 		const now = (new Date()).toISOString();
 		response = await request(this.app)
 			.get(`/v2/bundles/js?modules=${moduleName}&newerthan=${now}`)
+			.redirects(5)
 			.set('Connection', 'close');
 	});
 
@@ -470,6 +485,7 @@ describe('export parameter as xss attack vector', function() {
 	before(async function () {
 		response = await request(this.app)
 			.get(`/v2/bundles/js?modules=${moduleName}&export='];alert('oops')//`)
+			.redirects(5)
 			.set('Connection', 'close');
 	});
 
@@ -496,6 +512,7 @@ describe('when an origami specification v2 component is requested', function() {
 	before(async function () {
 		response = await request(this.app)
 			.get(`/v2/bundles/js?modules=${moduleName}`)
+			.redirects(5)
 			.set('Connection', 'close');
 	});
 
@@ -504,6 +521,6 @@ describe('when an origami specification v2 component is requested', function() {
 	});
 
 	it('should respond with an error message', function() {
-		assert.equal(getErrorMessage(response.text), 'o-test-component@2.1.0-beta.1 is an Origami v2 component, the Origami Build Service v2 CSS API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
+		assert.equal(getErrorMessage(response.text), 'o-test-component@2.1.0-beta.1 is not an Origami v1 component, the Origami Build Service v2 JS bundle API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
 	});
 });
