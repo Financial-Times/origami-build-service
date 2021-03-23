@@ -81,7 +81,7 @@ describe('createCssBundle', function () {
 
 			proclaim.deepStrictEqual(
 				bundle,
-				'.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'The square root of 64 is "8".\'}\n'
+				'.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'Hello world!  The square root of 64 is "8".\'}\n'
 			);
 			proclaim.deepStrictEqual(response.statusCode, 200);
 			proclaim.deepStrictEqual(
