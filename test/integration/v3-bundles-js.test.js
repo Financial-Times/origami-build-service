@@ -35,7 +35,7 @@ describe('GET /v3/bundles/js', function() {
 	this.slow(5000);
 
 	describe('when a valid component is requested', function() {
-		const componentName = '@financial-times/o-test-component@2.0.0';
+		const componentName = '@financial-times/o-test-component@2.1.0';
 		const systemCode = 'origami';
 
 		/**
@@ -178,7 +178,7 @@ describe('GET /v3/bundles/js', function() {
 	});
 
 	describe('when an invalid component is requested (JavaScript compilation error)', function() {
-		const componentName = '@financial-times/o-test-component@2.0.14';
+		const componentName = '@financial-times/o-test-component@2.1.14';
 		const systemCode = 'origami';
 
 		/**
@@ -315,7 +315,7 @@ describe('GET /v3/bundles/js', function() {
 	});
 
 	describe('when the callback parameter is an invalid value', function() {
-		const componentName = '@financial-times/o-test-component@2.0.0';
+		const componentName = '@financial-times/o-test-component@2.1.0';
 		const callback = 'console.log("you got hacked!";//';
 		const systemCode = 'origami';
 
@@ -351,7 +351,7 @@ describe('GET /v3/bundles/js', function() {
 	});
 
 	describe('when the callback parameter is a valid value', function() {
-		const componentName = '@financial-times/o-test-component@2.0.0';
+		const componentName = '@financial-times/o-test-component@2.1.0';
 		const callback = 'start_app';
 		const systemCode = 'origami';
 
@@ -400,7 +400,7 @@ describe('GET /v3/bundles/js', function() {
 	});
 
 	describe('when the system_code parameter is an invalid value', function() {
-		const componentName = '@financial-times/o-test-component@2.0.0';
+		const componentName = '@financial-times/o-test-component@2.1.0';
 		const systemCode = '$$origami!';
 
 		/**
@@ -434,7 +434,7 @@ describe('GET /v3/bundles/js', function() {
 
 	});
 	describe('when the system_code parameter is missing', function() {
-		const componentName = '@financial-times/o-test-component@2.0.0';
+		const componentName = '@financial-times/o-test-component@2.1.0';
 
 		/**
 		 * @type {request.Response}

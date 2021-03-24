@@ -8,7 +8,7 @@ describe('GET /v3/bundles/css', function() {
 	this.slow(5000);
 
 	describe('when a valid component, valid brand and valid system-code is requested', function() {
-		const componentName = '@financial-times/o-test-component@v2.0.0-beta.1';
+		const componentName = '@financial-times/o-test-component@v2.1.0-beta.1';
 		const brand = 'master';
 		const systemCode = 'origami';
 
@@ -28,7 +28,7 @@ describe('GET /v3/bundles/css', function() {
 		});
 
 		it('should respond with the css', function() {
-			assert.deepStrictEqual(response.text, '.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'The square root of 64 is "8".\'}\n');
+			assert.deepStrictEqual(response.text, '.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'Hello world!  The square root of 64 is "8".\'}\n');
 		});
 
 		it('should respond with the expected `Content-Type` header', function() {
@@ -41,7 +41,7 @@ describe('GET /v3/bundles/css', function() {
 	});
 
 	describe('when a valid component, valid system-code and invalid brand is requested', function() {
-		const componentName = '@financial-times/o-test-component@v2.0.0-beta.1';
+		const componentName = '@financial-times/o-test-component@v2.1.0-beta.1';
 		const brand = 'origami';
 		const systemCode = 'origami';
 
@@ -212,7 +212,7 @@ describe('GET /v3/bundles/css', function() {
 	});
 
 	describe('when an invalid component is requested (Sass compilation error)', function() {
-		const componentName = '@financial-times/o-test-component@2.0.3';
+		const componentName = '@financial-times/o-test-component@2.1.3';
 		const brand = 'master';
 		const systemCode = 'origami';
 

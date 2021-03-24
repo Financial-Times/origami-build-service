@@ -41,7 +41,7 @@ describe('createCssBundle', function () {
 				};
 				request.basePath = '/';
 				request.path = '/v3/bundles/css';
-				request.query.components = '@financial-times/o-test-component@v2.0.0-beta.1';
+				request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
 				request.query.brand = 'master';
 				request.query.system_code = 'origami';
 
@@ -50,7 +50,7 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(response.statusCode, 307);
 				proclaim.deepStrictEqual(
 					response.getHeader('location'),
-					'/v3/bundles/css?components=%40financial-times%2Fo-test-component%40v2.0.0-beta.1&brand=master&system_code=origami'
+					'/v3/bundles/css?components=%40financial-times%2Fo-test-component%40v2.1.0-beta.1&brand=master&system_code=origami'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -71,7 +71,7 @@ describe('createCssBundle', function () {
 					}
 				}
 			};
-			request.query.components = '@financial-times/o-test-component@v2.0.0-beta.1';
+			request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
 			request.query.brand = 'master';
 			request.query.system_code = 'origami';
 
@@ -81,7 +81,7 @@ describe('createCssBundle', function () {
 
 			proclaim.deepStrictEqual(
 				bundle,
-				'.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'The square root of 64 is "8".\'}\n'
+				'.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'Hello world!  The square root of 64 is "8".\'}\n'
 			);
 			proclaim.deepStrictEqual(response.statusCode, 200);
 			proclaim.deepStrictEqual(
@@ -529,7 +529,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test-component@v2.0.0-beta.1';
+				request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
 				request.query.brand = 'origami';
 
 				await createCssBundle(request, response);
@@ -568,7 +568,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test-component@v2.0.0-beta.1';
+				request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
 
 				await createCssBundle(request, response);
 
@@ -606,7 +606,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test-component@v2.0.0-beta.1';
+				request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
 				request.query.brand = 'master';
 
 				await createCssBundle(request, response);
@@ -645,7 +645,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test-component@v2.0.0-beta.1';
+				request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
 				request.query.brand = 'master';
 				request.query.system_code = '$$origami!';
 

@@ -12,13 +12,13 @@ describe('lib/parse-modules-parameter', () => {
 		describe('which includes modules of exact versions', () => {
 			it('returns an array of module name / version entries', () => {
 				const testURL = new URL(
-					`${baseUrl}?modules=o-layout@4.2.0,o-fonts@v4.4.0,o-example@2.0.0-beta.1`
+					`${baseUrl}?modules=o-layout@4.2.0,o-fonts@v4.4.0,o-example@2.1.0-beta.1`
 				);
 				const results = parseModulesParameter(testURL);
 				proclaim.deepEqual(results, [
 					['o-layout','4.2.0'],
 					['o-fonts','v4.4.0'],
-					['o-example','2.0.0-beta.1']
+					['o-example','2.1.0-beta.1']
 				]);
 			});
 		});

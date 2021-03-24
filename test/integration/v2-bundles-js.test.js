@@ -503,7 +503,7 @@ describe('export parameter as xss attack vector', function() {
 });
 
 describe('when an origami specification v2 component is requested', function() {
-	const moduleName = 'o-test-component@2.0.0-beta.1';
+	const moduleName = 'o-test-component@2.1.0-beta.1';
 
 	/**
 		 * @type {request.Response}
@@ -521,6 +521,6 @@ describe('when an origami specification v2 component is requested', function() {
 	});
 
 	it('should respond with an error message', function() {
-		assert.equal(getErrorMessage(response.text), 'o-test-component@2.0.0-beta.1 is not an Origami v1 component, the Origami Build Service v2 JS bundle API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
+		assert.equal(getErrorMessage(response.text), 'o-test-component@2.1.0-beta.1 is not an Origami v1 component, the Origami Build Service v2 JS bundle API only supports Origami v1 components.\n\nIf you want to use Origami v2 components you will need to use the Origami Build Service v3 API');
 	});
 });
