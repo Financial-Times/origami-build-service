@@ -67,8 +67,33 @@ describe('GET /v2/bundles/css', function() {
 
 	});
 
-	describe('when an invalid module is requested (nonexistent)', function() {
-		const moduleName = 'test-404';
+	describe('when a valid module is requested with a shrinkwrap url', function () {
+		// Uses a real example which users may have in production,
+		// it is a less common example which includes a github url as a
+		// shrinkwrap dependency:
+		const moduleName = 'o-gallery@4.0.9';
+		const modulesParam = `${moduleName}%2Co-autoinit%401.5.1`;
+		const shrinkwrapParam = 'ftdomdelegate%404.0.6%2Cfticons%401.23.1%2Chttps%3A%2F%2Fgithub.com%2Fftlabs%2Fftscroller.git%2Cmathsass%400.10.1%2Co-assets%403.4.9%2Co-brand%403.3.0%2Co-colors%405.3.1%2Co-icons%406.3.0%2Co-utils%401.1.7%2Co-viewport%404.0.5';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v2/bundles/css?modules=${modulesParam}&shrinkwrap=${shrinkwrapParam}&brand=master`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function () {
+			assert.equal(response.status, 200);
+		});
+	});
+
+	describe('when the module requested isn\'t on the allow list', function () {
+
+		const moduleName = 'evil-code';
 
 		/**
 		 * @type {request.Response}
@@ -82,12 +107,39 @@ describe('GET /v2/bundles/css', function() {
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 404 status', function() {
-			assert.equal(response.status, 404);
+		it('should respond with a 400 status', function () {
+			assert.equal(response.status, 400);
 		});
 
-		it('should respond with an error message ', function() {
-			assert.match(response.text, /package .* not found/i);
+		it('should respond with an error message', function () {
+			assert.match(response.text, /An unrecognised component, &quot;evil-code&quot;, was included in the module parameter./i);
+		});
+
+	});
+
+	describe('when the shrinkwrap param includes a module which isn\'t on the allow list', function () {
+
+		const moduleName = 'o-test-component';
+		const shrinkwrapParameter = 'malicious-person/evil-code<script></script>#';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			const now = (new Date()).toISOString();
+			response = await request(this.app)
+				.get(`/v2/bundles/css?modules=${moduleName}&shrinkwrap=${shrinkwrapParameter}&newerthan=${now}`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function () {
+			assert.equal(response.status, 400);
+		});
+
+		it('should respond with a html escaped error message', function () {
+			assert.match(response.text, /&quot;malicious-person\/evil-code&lt;script&gt;&lt;\/script&gt;&quot;/i);
 		});
 
 	});
