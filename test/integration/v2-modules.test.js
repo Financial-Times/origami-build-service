@@ -41,30 +41,6 @@ describe('GET /v2/modules', function() {
 
 	});
 
-	describe('when an invalid module is requested (nonexistent)', function() {
-		const moduleName = 'test-404';
-
-		/**
-		 * @type {request.Response}
-		 */
-		let response;
-		before(async function () {
-			response = await request(this.app)
-				.get(`/v2/modules/${moduleName}`)
-				.redirects(5)
-				.set('Connection', 'close');
-		});
-
-		it('should respond with a 404 status', function() {
-			assert.equal(response.status, 404);
-		});
-
-		it('should respond with an error message', function() {
-			assert.match(response.text, /package .* not found/i);
-		});
-
-	});
-
 	describe('when an invalid module is requested (Sass/JavaScript compilation errors)', function() {
 		const moduleName = 'o-test-component@1.0.1';
 
