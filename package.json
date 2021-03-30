@@ -110,7 +110,7 @@
     "chai-jest-snapshot": "^2.0.0",
     "dedent": "^0.7.0",
     "detect-es-version": "^0.1.4",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "jsdom": "^16.5.2",
     "lintspaces-cli": "^0.7.1",
     "mocha": "^8.3.1",
