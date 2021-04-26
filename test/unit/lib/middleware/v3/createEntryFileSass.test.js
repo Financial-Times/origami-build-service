@@ -33,9 +33,19 @@ describe('lib/middleware/v3/createEntryFileSass', () => {
                 $o-brand: "master";
                 $system-code: "origami";
 
-                @import "@financial-times/o-grid";
+                @import "@financial-times/o-grid/main";
+                @if not mixin-exists('oGrid') {
+                    @error 'Could not compile sass as @financial-times/o-grid does not have a primary mixin. ' +
+                    'If you think this is an issue, please contact the Origami community on Slack in #origami-support. ' +
+                    'If you want to learn more about what a primary mixin is, here is a link to the specification -- https://origami.ft.com/spec/v2/components/sass/#primary-mixin';
+                }
                 @include oGrid();
-                @import "@financial-times/o-table";
+                @import "@financial-times/o-table/main";
+                @if not mixin-exists('oTable') {
+                    @error 'Could not compile sass as @financial-times/o-table does not have a primary mixin. ' +
+                    'If you think this is an issue, please contact the Origami community on Slack in #origami-support. ' +
+                    'If you want to learn more about what a primary mixin is, here is a link to the specification -- https://origami.ft.com/spec/v2/components/sass/#primary-mixin';
+                }
                 @include oTable();`
 		);
 	});
