@@ -4,6 +4,8 @@ const fs = require('fs').promises;
 const path = require('path');
 const proclaim = require('proclaim');
 const dedent = require('dedent');
+const installDependencies = require('../../../../../lib/middleware/v3/installDependencies').installDependencies;
+
 describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 	let createEntryFileJavaScript;
 
@@ -18,9 +20,15 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
 		const components = {
-			lodash: '^5',
+			lodash: '^4',
 			preact: '^10.5.5',
 		};
+
+		await fs.writeFile(path.join(location, 'package.json'), JSON.stringify({
+			dependencies: components
+		}));
+
+		await installDependencies(location);
 
 		await createEntryFileJavaScript(location, components);
 
@@ -45,9 +53,15 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
 		const components = {
-			lodash: '^5',
+			lodash: '^4',
 			preact: '^10.5.5',
 		};
+
+		await fs.writeFile(path.join(location, 'package.json'), JSON.stringify({
+			dependencies: components
+		}));
+
+		await installDependencies(location);
 
 		await createEntryFileJavaScript(location, components, 'start_application');
 
