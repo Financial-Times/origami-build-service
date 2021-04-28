@@ -20,6 +20,8 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
 		const components = {
+			'@financial-times/o-colors': 'prerelease',
+			'@financial-times/o-brand': 'prerelease',
 			lodash: '^4',
 			preact: '^10.5.5',
 		};
@@ -53,6 +55,8 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
 		const components = {
+			'@financial-times/o-colors': 'prerelease',
+			'@financial-times/o-brand': 'prerelease',
 			lodash: '^4',
 			preact: '^10.5.5',
 		};
