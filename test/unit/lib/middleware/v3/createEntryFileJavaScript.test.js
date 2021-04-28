@@ -20,6 +20,40 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
 		const components = {
+			lodash: '^4',
+			preact: '^10.5.5',
+		};
+
+		await fs.writeFile(path.join(location, 'package.json'), JSON.stringify({
+			dependencies: components
+		}));
+
+		await installDependencies(location);
+
+		await createEntryFileJavaScript(location, components);
+
+		const EntryFileContents = await fs.readFile(
+			path.join(location, 'index.js'),
+			'utf-8'
+		);
+		proclaim.deepStrictEqual(
+			EntryFileContents,
+			dedent`
+        import * as preact from "preact";
+        import * as lodash from "lodash";
+        if (typeof Origami === 'undefined') { self.Origami = {}; }
+        self.Origami["lodash"] = lodash;
+        self.Origami["preact"] = preact;
+        `
+		);
+	});
+
+	it('does not import components in the index.js if they do not export javascript', async function () {
+		await fs.mkdir('/tmp/bundle/', {recursive: true});
+
+		const location = await fs.mkdtemp('/tmp/bundle/');
+
+		const components = {
 			'@financial-times/o-colors': 'prerelease',
 			'@financial-times/o-brand': 'prerelease',
 			lodash: '^4',
@@ -49,6 +83,7 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
         `
 		);
 	});
+
 	it('creates a index.js file in the specified location and with the specified components as imported, added to the Origami global variable and passed to the callback', async function () {
 		await fs.mkdir('/tmp/bundle/', {recursive: true});
 
