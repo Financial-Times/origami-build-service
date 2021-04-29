@@ -5,7 +5,6 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
-const primeNpmCache = require('./lib/primeNpmCache').primeNpmCache;
 
 dotenv.config({
 	silent: true,
@@ -39,9 +38,6 @@ process.env.HOME = options.tempdir; // Workaround: Bower ends up using $HOME/.lo
 
 buildService(options)
 	.listen()
-	.then(() => {
-		return primeNpmCache(options.npmRegistryURL).catch(console.error);
-	})
 	.catch(error => {
 		console.error(error);
 		process.exit(1);
