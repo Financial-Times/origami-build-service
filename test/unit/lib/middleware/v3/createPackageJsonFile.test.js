@@ -24,7 +24,7 @@ describe('lib/middleware/v3/createPackageJsonFile', () => {
 		await createPackageJsonFile(location, modules);
 
 		proclaim.deepStrictEqual(await fs.readFile(path.join(location, 'package.json'), 'utf-8'), JSON.stringify({
-			dependencies: modules,
+			peerDependencies: modules,
 		}, undefined, '\t'));
 
 	});
