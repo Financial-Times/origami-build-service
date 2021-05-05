@@ -353,7 +353,7 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/jquery@3.0.0 is not in the npm registry');
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/jquery@3.0.0 is not in the npm registry"');
 		});
 	});
 
@@ -609,7 +609,7 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The component query parameter contains component names which are not valid: not:a^valid.')
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The component query parameter contains component names which are not valid: not:a^valid."')
 			;
 		});
 	});
