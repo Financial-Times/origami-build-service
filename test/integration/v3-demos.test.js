@@ -8,7 +8,7 @@ describe('GET /v3/demo', function() {
 	this.slow(5000);
 
 	describe('when a valid component and demo are requested', function() {
-		const component = '@financial-times/o-test-component@2.1.1';
+		const component = 'o-test-component@2.2.9';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -39,7 +39,7 @@ describe('GET /v3/demo', function() {
 	});
 
 	describe('when a valid component with no demos is requested', function() {
-		const component = '@financial-times/o-test-component@2.1.7';
+		const component = 'o-test-component@2.2.7';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -70,13 +70,13 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.1.7 has no demos defined within it\'s origami.json file. See the component specification for details on how to configure demos for a component: https://origami.ft.com/spec/"');
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.2.7 has no demos defined within it\'s origami.json file. See the component specification for details on how to configure demos for a component: https://origami.ft.com/spec/"');
 		});
 
 	});
 
 	describe('when a valid component at specific version and demo are requested', function() {
-		const component = '@financial-times/o-test-component@2.1.1';
+		const component = 'o-test-component@2.2.9';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -107,7 +107,7 @@ describe('GET /v3/demo', function() {
 	});
 
 	describe('when a valid component at specific version and demo and brand are requested', function() {
-		const component = '@financial-times/o-test-component@2.1.1';
+		const component = 'o-test-component@2.2.9';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'internal';
@@ -138,7 +138,7 @@ describe('GET /v3/demo', function() {
 	});
 
 	describe('when a valid component at specific version and demo which contains mustache compilation errors are requested', function() {
-		const component = '@financial-times/o-test-component@2.1.10';
+		const component = 'o-test-component@2.2.10';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -169,13 +169,13 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.1.10\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Mustache templates: Unclosed section \\"causing-syntax-error-by-not-closing-section\\" at 126"');
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.2.10\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Mustache templates: Unclosed section \\"causing-syntax-error-by-not-closing-section\\" at 126"');
 		});
 
 	});
 
 	describe('when a valid component at specific version and demo which contains sass compilation errors are requested', function() {
-		const component = '@financial-times/o-test-component@2.1.11';
+		const component = 'o-test-component@2.2.11';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -207,13 +207,13 @@ describe('GET /v3/demo', function() {
 
 		it('should respond with an error message', function() {
 			const body = response.text;
-			assert.include(body, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.1.11\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Sass: Error: ');
+			assert.include(body, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.2.11\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Sass: Error: ');
 		});
 
 	});
 
 	describe('when a valid component at specific version and demo which contains javascript compilation errors are requested', function() {
-		const component = '@financial-times/o-test-component@2.1.12';
+		const component = 'o-test-component@2.2.12';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -245,13 +245,13 @@ describe('GET /v3/demo', function() {
 
 		it('should respond with an error message', function() {
 			const body = response.text;
-			assert.include(body, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.1.12\'s demo named \\"test-demo\\" could not be built due to a compilation error within the JavaScript: ');
+			assert.include(body, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.2.12\'s demo named \\"test-demo\\" could not be built due to a compilation error within the JavaScript: ');
 		});
 
 	});
 
 	describe('when a valid component and non-existent demo are requested', function() {
-		const component = '@financial-times/o-test-component@v2.1.1';
+		const component = 'o-test-component@v2.2.9';
 		const demo = 'NOTADEMO';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -272,13 +272,13 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@v2.1.1 has no demo with the requested name: NOTADEMO"');
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@v2.2.9 has no demo with the requested name: NOTADEMO"');
 		});
 
 	});
 
 	describe('when a valid component at specific version but non-existent demo are requested', function() {
-		const component = '@financial-times/o-test-component@2.1.1';
+		const component = 'o-test-component@2.2.9';
 		const demo = 'NOTADEMO';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -299,13 +299,13 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.1.1 has no demo with the requested name: NOTADEMO"');
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.2.9 has no demo with the requested name: NOTADEMO"');
 		});
 
 	});
 
 	describe('when a valid component at non-existent version is requested', function() {
-		const component = '@financial-times/o-test-component@99.0.0';
+		const component = 'o-test-component@99.0.0';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -353,13 +353,13 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The component query parameter can only contain components from the @financial-times namespace. The component being requested was: jquery."')
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/jquery@3.0.0 is not in the npm registry')
 			;
 		});
 	});
 
 	describe('when a valid component which does not have an origami manifest is requested', function() {
-		const component = '@financial-times/o-test-component@2.1.13';
+		const component = 'o-test-component@2.2.13';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -380,13 +380,13 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.1.13 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components."')
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.2.13 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components."')
 			;
 		});
 	});
 
 	describe('when an origami specification v1 component is requested', function() {
-		const component = '@financial-times/o-test-component@1.0.0';
+		const component = 'o-test-component@1.0.0';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'master';
@@ -413,7 +413,7 @@ describe('GET /v3/demo', function() {
 	});
 
 	describe('when the request is missing the brand parameter', function() {
-		const component = '@financial-times/o-test-component@2.1.1';
+		const component = 'o-test-component@2.2.9';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 
@@ -438,7 +438,7 @@ describe('GET /v3/demo', function() {
 		});
 	});
 	describe('when the request contains an invalid brand parameter', function() {
-		const component = '@financial-times/o-test-component@2.1.1';
+		const component = 'o-test-component@2.2.9';
 		const demo = 'test-demo';
 		const system_code = 'origami';
 		const brand = 'denshiba';
@@ -464,7 +464,7 @@ describe('GET /v3/demo', function() {
 		});
 	});
 	describe('when the request is missing the demo parameter', function() {
-		const component = '@financial-times/o-test-component@2.1.1';
+		const component = 'o-test-component@2.2.9';
 		const system_code = 'origami';
 		const brand = 'master';
 
@@ -489,7 +489,7 @@ describe('GET /v3/demo', function() {
 		});
 	});
 	describe('when the request contains an invalid demo parameter', function() {
-		const component = '@financial-times/o-test-component@2.1.1';
+		const component = 'o-test-component@2.2.9';
 		const system_code = 'origami';
 		const brand = 'master';
 
@@ -514,7 +514,7 @@ describe('GET /v3/demo', function() {
 		});
 	});
 	describe('when the request is missing the system_code parameter', function() {
-		const component = '@financial-times/o-test-component@2.1.1';
+		const component = 'o-test-component@2.2.9';
 		const demo = 'test-demo';
 		const brand = 'master';
 
@@ -539,7 +539,7 @@ describe('GET /v3/demo', function() {
 		});
 	});
 	describe('when the request contains an invalid system_code parameter', function() {
-		const component = '@financial-times/o-test-component@2.1.1';
+		const component = 'o-test-component@2.2.9';
 		const demo = 'test-demo';
 		const system_code = 'not_a_system_code_137';
 		const brand = 'master';
@@ -611,7 +611,7 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The component query parameter can only contain components from the @financial-times namespace. The component being requested was: not:a^valid."')
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The component query parameter contains component names which are not valid: not:a^valid."')
 			;
 		});
 	});

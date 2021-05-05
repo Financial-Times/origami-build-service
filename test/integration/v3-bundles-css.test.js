@@ -8,7 +8,7 @@ describe('GET /v3/bundles/css', function() {
 	this.slow(5000);
 
 	describe('when a valid component, valid brand and valid system-code is requested', function() {
-		const componentName = '@financial-times/o-test-component@v2.1.0-beta.1';
+		const componentName = 'o-test-component@v2.2.9';
 		const brand = 'master';
 		const systemCode = 'origami';
 
@@ -41,7 +41,7 @@ describe('GET /v3/bundles/css', function() {
 	});
 
 	describe('when a valid component, valid system-code and invalid brand is requested', function() {
-		const componentName = '@financial-times/o-test-component@v2.1.0-beta.1';
+		const componentName = 'o-test-component@v2.2.9';
 		const brand = 'origami';
 		const systemCode = 'origami';
 
@@ -76,7 +76,7 @@ describe('GET /v3/bundles/css', function() {
 	});
 
 	describe('when an invalid component, valid brand and valid system-code is requested', function() {
-		const componentName = '@financial-times/hello-nonexistent-component@1';
+		const componentName = 'hello-nonexistent-component@1';
 		const brand = 'master';
 		const systemCode = 'origami';
 
@@ -110,43 +110,8 @@ describe('GET /v3/bundles/css', function() {
 		});
 	});
 
-	describe('when a component which is not in the @financial-times namespace, a valid brand and a valid system-code is requested', function() {
-		const componentName = 'lodash@1';
-		const brand = 'master';
-		const systemCode = 'origami';
-
-		/**
-		 * @type {request.Response}
-		 */
-		let response;
-		before(async function () {
-			response = await request(this.app)
-				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
-				.redirects(5)
-				.set('Connection', 'close');
-		});
-
-		it('should respond with a 400 status', function() {
-			assert.equal(response.status, 400);
-		});
-
-		it('should respond with the css', function() {
-			assert.deepStrictEqual(response.text,'Origami Build Service returned an error: "The components query parameter can only contain components from the @financial-times namespace. Please remove the following from the components parameter: lodash."');
-		});
-
-		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-			it('should respond with the expected `Content-Type` header', function() {
-				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
-			});
-
-			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
-				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
-			});
-		});
-	});
-
 	describe('when an invalid component is requested (nonexistent)', function() {
-		const componentName = '@financial-times/hello-nonexistent-component@1';
+		const componentName = 'hello-nonexistent-component@1';
 		const brand = 'master';
 		const systemCode = 'origami';
 
@@ -182,7 +147,7 @@ describe('GET /v3/bundles/css', function() {
 	});
 
 	describe('when an invalid component is requested (origami v1)', function() {
-		const componentName = '@financial-times/o-utils@1';
+		const componentName = 'o-utils@1';
 		const brand = 'master';
 		const systemCode = 'origami';
 
@@ -212,7 +177,7 @@ describe('GET /v3/bundles/css', function() {
 	});
 
 	describe('when an invalid component is requested (Sass compilation error)', function() {
-		const componentName = '@financial-times/o-test-component@2.1.3';
+		const componentName = 'o-test-component@2.2.3';
 		const brand = 'master';
 		const systemCode = 'origami';
 
