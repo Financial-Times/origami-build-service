@@ -41,7 +41,7 @@ describe('createCssBundle', function () {
 				};
 				request.basePath = '/';
 				request.path = '/v3/bundles/css';
-				request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
+				request.query.components = 'o-test-component@v2.2.2';
 				request.query.brand = 'master';
 				request.query.system_code = 'origami';
 
@@ -50,7 +50,7 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(response.statusCode, 307);
 				proclaim.deepStrictEqual(
 					response.getHeader('location'),
-					'/v3/bundles/css?components=%40financial-times%2Fo-test-component%40v2.1.0-beta.1&brand=master&system_code=origami'
+					'/v3/bundles/css?components=o-test-component%40v2.2.2&brand=master&system_code=origami'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),
@@ -71,7 +71,7 @@ describe('createCssBundle', function () {
 					}
 				}
 			};
-			request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
+			request.query.components = 'o-test-component@v2.2.2';
 			request.query.brand = 'master';
 			request.query.system_code = 'origami';
 
@@ -109,7 +109,7 @@ describe('createCssBundle', function () {
 					}
 				}
 			};
-			request.query.components = '@financial-times/o-utils@1';
+			request.query.components = 'o-utils@1';
 			request.query.brand = 'master';
 			request.query.system_code = 'origami';
 
@@ -129,7 +129,7 @@ describe('createCssBundle', function () {
 
 			proclaim.deepStrictEqual(
 				bundle,
-				'Origami Build Service returned an error: \"@financial-times/o-utils@1 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components.\"'
+				'Origami Build Service returned an error: \"o-utils@1 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components.\"'
 			);
 
 		});
@@ -224,7 +224,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test@1,@financial-times/o-test@1';
+				request.query.components = 'o-test@1,o-test@1';
 
 				await createCssBundle(request, response);
 
@@ -262,7 +262,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test@1,,';
+				request.query.components = 'o-test@1,,';
 
 				await createCssBundle(request, response);
 
@@ -338,7 +338,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test@1 ';
+				request.query.components = 'o-test@1 ';
 
 				await createCssBundle(request, response);
 
@@ -356,7 +356,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: \"The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from `@financial-times/o-test@1 ` to make the component name valid.\"'
+					'Origami Build Service returned an error: \"The components query parameter contains component names which have whitespace at either the start of end of their name. Remove the whitespace from `o-test@1 ` to make the component name valid.\"'
 				);
 			});
 		}
@@ -376,7 +376,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test';
+				request.query.components = 'o-test';
 
 				await createCssBundle(request, response);
 
@@ -394,7 +394,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: \"The bundle request contains @financial-times/o-test with no version range, a version range is required.\\nPlease refer to TODO (build service documentation) for what is a valid version.\"'
+					'Origami Build Service returned an error: \"The bundle request contains o-test with no version range, a version range is required.\\nPlease refer to TODO (build service documentation) for what is a valid version.\"'
 				);
 			});
 		}
@@ -414,7 +414,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test@5wg';
+				request.query.components = 'o-test@5wg';
 
 				await createCssBundle(request, response);
 
@@ -432,7 +432,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: \"The version 5wg in @financial-times/o-test@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version.\"'
+					'Origami Build Service returned an error: \"The version 5wg in o-test@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version.\"'
 				);
 			});
 		}
@@ -452,7 +452,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-TeSt@5';
+				request.query.components = 'o-TeSt@5';
 
 				await createCssBundle(request, response);
 
@@ -470,50 +470,12 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: \"The components query parameter contains component names which are not valid: @financial-times/o-TeSt.\"'
+					'Origami Build Service returned an error: \"The components query parameter contains component names which are not valid: o-TeSt.\"'
 				);
 			});
 		}
 	);
 
-	context(
-		'when given a request with a components parameter which contains a component names not in the @financial-times namespace',
-		async () => {
-			it('it responds with a plain text error message', async () => {
-				const request = httpMock.createRequest();
-				const response = httpMock.createResponse();
-				response.startTime = sinon.spy();
-				response.endTime = sinon.spy();
-				request.app = {
-					ft: {
-						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
-						}
-					}
-				};
-				request.query.components = 'o-test@5';
-
-				await createCssBundle(request, response);
-
-				const bundle = response._getData();
-
-				proclaim.deepStrictEqual(
-					response.getHeader('content-type'),
-					'text/plain; charset=UTF-8'
-				);
-				proclaim.deepStrictEqual(
-					response.getHeader('cache-control'),
-					'max-age=0, must-revalidate, no-cache, no-store'
-				);
-				proclaim.deepStrictEqual(response.statusCode, 400);
-
-				proclaim.deepStrictEqual(
-					bundle,
-					'Origami Build Service returned an error: \"The components query parameter can only contain components from the @financial-times namespace. Please remove the following from the components parameter: o-test.\"'
-				);
-			});
-		}
-	);
 	context(
 		'when given a request with an invalid brand parameter',
 		async () => {
@@ -529,7 +491,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
+				request.query.components = 'o-test-component@v2.2.2';
 				request.query.brand = 'origami';
 
 				await createCssBundle(request, response);
@@ -568,7 +530,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
+				request.query.components = 'o-test-component@v2.2.2';
 
 				await createCssBundle(request, response);
 
@@ -606,7 +568,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
+				request.query.components = 'o-test-component@v2.2.2';
 				request.query.brand = 'master';
 
 				await createCssBundle(request, response);
@@ -645,7 +607,7 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.query.components = '@financial-times/o-test-component@v2.1.0-beta.1';
+				request.query.components = 'o-test-component@v2.2.2';
 				request.query.brand = 'master';
 				request.query.system_code = '$$origami!';
 

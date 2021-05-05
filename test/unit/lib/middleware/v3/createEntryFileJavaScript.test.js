@@ -6,7 +6,8 @@ const proclaim = require('proclaim');
 const dedent = require('dedent');
 const installDependencies = require('../../../../../lib/middleware/v3/installDependencies').installDependencies;
 
-describe('lib/middleware/v3/createEntryFileJavaScript', () => {
+describe('lib/middleware/v3/createEntryFileJavaScript', function () {
+	this.timeout(30 * 1000);
 	let createEntryFileJavaScript;
 
 	beforeEach(() => {
@@ -20,8 +21,7 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
 		const components = {
-			lodash: '^4',
-			preact: '^10.5.5',
+			'@financial-times/o-table': 'prerelease',
 		};
 
 		await fs.writeFile(path.join(location, 'package.json'), JSON.stringify({
@@ -39,11 +39,9 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		proclaim.deepStrictEqual(
 			EntryFileContents,
 			dedent`
-        import * as preact from "preact";
-        import * as lodash from "lodash";
+        import * as oTable from "@financial-times/o-table";
         if (typeof Origami === 'undefined') { self.Origami = {}; }
-        self.Origami["lodash"] = lodash;
-        self.Origami["preact"] = preact;
+        self.Origami["o-table"] = oTable;
         `
 		);
 	});
@@ -54,10 +52,7 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
 		const components = {
-			'@financial-times/o-colors': 'prerelease',
 			'@financial-times/o-brand': 'prerelease',
-			lodash: '^4',
-			preact: '^10.5.5',
 		};
 
 		await fs.writeFile(path.join(location, 'package.json'), JSON.stringify({
@@ -75,11 +70,7 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		proclaim.deepStrictEqual(
 			EntryFileContents,
 			dedent`
-        import * as preact from "preact";
-        import * as lodash from "lodash";
         if (typeof Origami === 'undefined') { self.Origami = {}; }
-        self.Origami["lodash"] = lodash;
-        self.Origami["preact"] = preact;
         `
 		);
 	});
@@ -90,10 +81,8 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
 		const components = {
-			'@financial-times/o-colors': 'prerelease',
-			'@financial-times/o-brand': 'prerelease',
-			lodash: '^4',
-			preact: '^10.5.5',
+			'@financial-times/o-table': 'prerelease',
+			'@financial-times/o-brand': 'prerelease'
 		};
 
 		await fs.writeFile(path.join(location, 'package.json'), JSON.stringify({
@@ -111,14 +100,11 @@ describe('lib/middleware/v3/createEntryFileJavaScript', () => {
 		proclaim.deepStrictEqual(
 			EntryFileContents,
 			dedent`
-        import * as preact from "preact";
-        import * as lodash from "lodash";
+        import * as oTable from "@financial-times/o-table";
         let components = {};
         if (typeof Origami === 'undefined') { self.Origami = {}; }
-        self.Origami["lodash"] = lodash;
-        components["lodash"] = lodash;
-        self.Origami["preact"] = preact;
-        components["preact"] = preact;
+        self.Origami["o-table"] = oTable;
+        components["o-table"] = oTable;
         typeof start_application === 'function' && start_application(components);
         `
 		);

@@ -35,7 +35,7 @@ describe('GET /v3/bundles/js', function() {
 	this.slow(5000);
 
 	describe('when a valid component is requested', function() {
-		const componentName = '@financial-times/o-test-component@2.1.0';
+		const componentName = 'o-test-component@2.2.9';
 		const systemCode = 'origami';
 
 		/**
@@ -63,7 +63,7 @@ describe('GET /v3/bundles/js', function() {
 				resultWindow = executeScript(response.text);
 			});
 			assert.property(resultWindow, 'Origami');
-			assert.property(resultWindow.Origami, '@financial-times/o-test-component');
+			assert.property(resultWindow.Origami, 'o-test-component');
 		});
 
 		it('should respond with the expected `Content-Type` header', function() {
@@ -76,43 +76,8 @@ describe('GET /v3/bundles/js', function() {
 
 	});
 
-	describe('when a component which is not in the @financial-times namesspace, a valid brand and a valid system-code is requested', function() {
-		const componentName = 'lodash@1';
-		const brand = 'master';
-		const systemCode = 'origami';
-
-		/**
-		 * @type {request.Response}
-		 */
-		let response;
-		before(async function () {
-			response = await request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
-				.redirects(5)
-				.set('Connection', 'close');
-		});
-
-		it('should respond with a 400 status', function() {
-			assert.equal(response.status, 400);
-		});
-
-		it('should respond with an error message', function() {
-			assert.deepStrictEqual(response.text,'Origami Build Service returned an error: "The components query parameter can only contain components from the @financial-times namespace. Please remove the following from the components parameter: lodash."');
-		});
-
-		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
-			it('should respond with the expected `Content-Type` header', function() {
-				assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
-			});
-
-			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
-				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
-			});
-		});
-	});
-
 	describe('when an invalid component is requested (nonexistent)', function() {
-		const componentName = '@financial-times/hello-nonexistent-component@1';
+		const componentName = 'hello-nonexistent-component@1';
 		const systemCode = 'origami';
 
 		/**
@@ -147,7 +112,7 @@ describe('GET /v3/bundles/js', function() {
 	});
 
 	describe('when an invalid component is requested (origami v1)', function() {
-		const componentName = '@financial-times/o-utils@1';
+		const componentName = 'o-utils@1';
 		const systemCode = 'origami';
 
 		beforeEach(function() {
@@ -162,7 +127,7 @@ describe('GET /v3/bundles/js', function() {
 		});
 
 		it('should respond with an error message', function(done) {
-			this.request.expect('Origami Build Service returned an error: "@financial-times/o-utils@1 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components."').end(done);
+			this.request.expect('Origami Build Service returned an error: "o-utils@1 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components."').end(done);
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
@@ -178,7 +143,7 @@ describe('GET /v3/bundles/js', function() {
 	});
 
 	describe('when an invalid component is requested (JavaScript compilation error)', function() {
-		const componentName = '@financial-times/o-test-component@2.1.14';
+		const componentName = 'o-test-component@2.2.14';
 		const systemCode = 'origami';
 
 		/**
@@ -315,7 +280,7 @@ describe('GET /v3/bundles/js', function() {
 	});
 
 	describe('when the callback parameter is an invalid value', function() {
-		const componentName = '@financial-times/o-test-component@2.1.0';
+		const componentName = 'o-test-component@2.2.9';
 		const callback = 'console.log("you got hacked!";//';
 		const systemCode = 'origami';
 
@@ -351,7 +316,7 @@ describe('GET /v3/bundles/js', function() {
 	});
 
 	describe('when the callback parameter is a valid value', function() {
-		const componentName = '@financial-times/o-test-component@2.1.0';
+		const componentName = 'o-test-component@2.2.9';
 		const callback = 'start_app';
 		const systemCode = 'origami';
 
@@ -382,7 +347,7 @@ describe('GET /v3/bundles/js', function() {
 			context.self = context;
 			script.runInNewContext(context);
 			assert.isObject(context.Origami);
-			assert.isObject(context.Origami['@financial-times/o-test-component']);
+			assert.isObject(context.Origami['o-test-component']);
 			assert.isTrue(context.start_app.calledOnce);
 			assert.deepStrictEqual(context.start_app.firstCall.args, [
 				context.Origami
@@ -400,7 +365,7 @@ describe('GET /v3/bundles/js', function() {
 	});
 
 	describe('when the system_code parameter is an invalid value', function() {
-		const componentName = '@financial-times/o-test-component@2.1.0';
+		const componentName = 'o-test-component@2.2.9';
 		const systemCode = '$$origami!';
 
 		/**
@@ -434,7 +399,7 @@ describe('GET /v3/bundles/js', function() {
 
 	});
 	describe('when the system_code parameter is missing', function() {
-		const componentName = '@financial-times/o-test-component@2.1.0';
+		const componentName = 'o-test-component@2.2.9';
 
 		/**
 		 * @type {request.Response}
