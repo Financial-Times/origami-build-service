@@ -242,7 +242,7 @@ describe('createCssBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: \"The components query parameter contains duplicate component names.\"'
+					'Origami Build Service returned an error: \"The components query parameter contains duplicate component names. Please remove one of the follow from the components parameter: o-test\"'
 				);
 			});
 		}

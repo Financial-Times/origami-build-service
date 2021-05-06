@@ -28,7 +28,7 @@ describe('parseComponentsParameter', () => {
 
 		proclaim.throws(() => {
 			parseComponentsParameter('o-test@1,o-test@1');
-		}, 'The components query parameter contains duplicate component names.');
+		}, 'The components query parameter contains duplicate component names. Please remove one of the follow from the components parameter: o-test');
 	});
 
 	it('throws UserError if components parameter contains empty component names', async () => {
