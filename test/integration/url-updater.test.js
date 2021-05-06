@@ -57,7 +57,7 @@ describe('POST /url-updater', function () {
 
 		it('should respond with an updated build service url', function () {
 			// expect a release of v2 or later in the updated url
-			assert.match(response.text, /modules&#x3D;o-test-component@\^([2-9]|\d\d+)/);
+			assert.match(response.text, /components&#x3D;o-test-component@\^([2-9]|\d\d+)/);
 		});
 	});
 
