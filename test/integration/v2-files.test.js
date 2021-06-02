@@ -141,7 +141,7 @@ describe('GET /v2/files', function() {
 
 	});
 
-	describe('when an origami specification v2 component is requested', function() {
+	describe('when an origami component which does not follow v1 of of the specification is requested', function() {
 		const moduleName = 'o-test-component@2.1.0-beta.1';
 		const pathName = 'main';
 
