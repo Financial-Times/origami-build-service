@@ -47,7 +47,7 @@ describe('POST /url-updater', function () {
 		before(async function () {
 			response = await request(this.app)
 				.post('/url-updater')
-				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
+				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal&system_code=origami`)
 				.set('Connection', 'close');
 		});
 
@@ -58,6 +58,40 @@ describe('POST /url-updater', function () {
 		it('should respond with an updated build service url', function () {
 			// expect a release of v2 or later in the updated url
 			assert.match(response.text, /modules&#x3D;o-test-component@\^([2-9]|\d\d+)/);
+		});
+
+		it('should not mention missing query parameters', function () {
+			// expect a release of v2 or later in the updated url
+			assert.notInclude(response.text, 'missing query parameter');
+		});
+	});
+
+	describe('with an outdated build service url and missing parameters', function () {
+		const modules = 'o-test-component@^1.0.0';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.post('/url-updater')
+				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function () {
+			assert.equal(response.status, 200);
+		});
+
+		it('should respond with an updated build service url', function () {
+			// expect a release of v2 or later in the updated url
+			assert.match(response.text, /modules&#x3D;o-test-component@\^([2-9]|\d\d+)/);
+		});
+
+		it('should specify that the brand and system_code query parameters are missing', function () {
+			// expect a release of v2 or later in the updated url
+			assert.include(response.text, 'missing query parameter');
 		});
 	});
 
