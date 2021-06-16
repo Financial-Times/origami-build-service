@@ -64,7 +64,7 @@ describe('installDependencies', () => {
 		const location = await fs.mkdtemp('/tmp/bundle/');
 		await fs.writeFile(path.join(location, 'package.json'), '{"dependencies":{"preact":"^10"}}', 'utf-8');
 
-		await installDependencies(location, 'https://registry.npmjs.com');
+		await installDependencies(location, 'https://registry.npmjs.org');
 
 		proclaim.isTrue(execa.calledOnce);
 		proclaim.isTrue(execa.calledWithExactly(npm,
@@ -81,7 +81,7 @@ describe('installDependencies', () => {
 				'--strict-peer-deps',
 				'--update-notifier=false',
 				'--bin-links=false',
-				'--registry=https://registry.npmjs.com'
+				'--registry=https://registry.npmjs.org'
 			],
 			{
 				cwd: location,
