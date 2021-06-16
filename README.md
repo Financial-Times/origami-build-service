@@ -77,7 +77,7 @@ The following keys are required for v2 of the Build Service. They are deprecated
 
 ### Optional
 
-  * `NPM_REGISTRY_URL`: The npm Registry url to use when installing npm dependencies. Defaults to `https://registry.npmjs.com`.
+  * `NPM_REGISTRY_URL`: The npm Registry url to use when installing npm dependencies. Defaults to `https://registry.npmjs.org`.
   * `BOWER_REGISTRY_URL`: The Bower Registry url to use when installing Bower dependencies. Defaults to `http://origami-bower-registry.ft.com`.
 
 ### Headers

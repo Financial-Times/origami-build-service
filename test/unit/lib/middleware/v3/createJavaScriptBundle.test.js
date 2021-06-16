@@ -74,7 +74,7 @@ describe('createJavaScriptBundle', function () {
 			request.app = {
 				ft: {
 					options: {
-						npmRegistryURL: 'https://registry.npmjs.com'
+						npmRegistryURL: 'https://registry.npmjs.org'
 					}
 				}
 			};
@@ -120,7 +120,7 @@ describe('createJavaScriptBundle', function () {
 			request.app = {
 				ft: {
 					options: {
-						npmRegistryURL: 'https://registry.npmjs.com'
+						npmRegistryURL: 'https://registry.npmjs.org'
 					}
 				}
 			};
@@ -156,7 +156,7 @@ describe('createJavaScriptBundle', function () {
 			request.app = {
 				ft: {
 					options: {
-						npmRegistryURL: 'https://registry.npmjs.com'
+						npmRegistryURL: 'https://registry.npmjs.org'
 					}
 				}
 			};
@@ -194,7 +194,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -234,7 +234,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -273,7 +273,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -312,7 +312,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -351,7 +351,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -390,7 +390,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -429,7 +429,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -468,7 +468,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -508,7 +508,7 @@ describe('createJavaScriptBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};

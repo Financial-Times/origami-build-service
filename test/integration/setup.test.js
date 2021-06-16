@@ -42,7 +42,7 @@ before(function() {
 			requestLogFormat: null,
 			graphiteApiKey: 'xxx',
 			staticBundlesDirectory: `${__dirname}/mock-static-bundles`,
-			npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.com',
+			npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org',
 			tempdir
 		})
 			.listen()

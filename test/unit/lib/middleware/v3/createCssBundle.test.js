@@ -67,7 +67,7 @@ describe('createCssBundle', function () {
 			request.app = {
 				ft: {
 					options: {
-						npmRegistryURL: 'https://registry.npmjs.com'
+						npmRegistryURL: 'https://registry.npmjs.org'
 					}
 				}
 			};
@@ -105,7 +105,7 @@ describe('createCssBundle', function () {
 			request.app = {
 				ft: {
 					options: {
-						npmRegistryURL: 'https://registry.npmjs.com'
+						npmRegistryURL: 'https://registry.npmjs.org'
 					}
 				}
 			};
@@ -144,7 +144,7 @@ describe('createCssBundle', function () {
 			request.app = {
 				ft: {
 					options: {
-						npmRegistryURL: 'https://registry.npmjs.com'
+						npmRegistryURL: 'https://registry.npmjs.org'
 					}
 				}
 			};
@@ -181,7 +181,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -220,7 +220,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -258,7 +258,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -296,7 +296,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -334,7 +334,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -372,7 +372,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -410,7 +410,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -448,7 +448,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -487,7 +487,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -526,7 +526,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -564,7 +564,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
@@ -603,7 +603,7 @@ describe('createCssBundle', function () {
 				request.app = {
 					ft: {
 						options: {
-							npmRegistryURL: 'https://registry.npmjs.com'
+							npmRegistryURL: 'https://registry.npmjs.org'
 						}
 					}
 				};
