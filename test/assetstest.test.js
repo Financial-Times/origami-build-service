@@ -13,7 +13,7 @@ describe('assets', function(){
 	this.timeout(120*1000);
 
 	spawnTestWithTempdir('excluded has_external_dependency', function*(tempdir){
-		const moduleset = new ModuleSet(['o-colors']);
+		const moduleset = new ModuleSet(['o-colors@^5.0.0']);
 		const installation = new ModuleInstallation(moduleset, { dir:tempdir, log:log });
 
 		yield installation.install(moduleset);
@@ -24,7 +24,7 @@ describe('assets', function(){
 	});
 
 	spawnTestWithTempdir('included has_external_dependency', function*(tempdir){
-		const moduleset = new ModuleSet(['o-header']);
+		const moduleset = new ModuleSet(['o-header@^8.0.0']);
 		const installation = new ModuleInstallation(moduleset, {dir:tempdir, log:log});
 
 		yield installation.install(moduleset);
