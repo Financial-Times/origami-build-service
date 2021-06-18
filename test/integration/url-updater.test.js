@@ -47,7 +47,7 @@ describe('POST /url-updater', function () {
 		before(async function () {
 			response = await request(this.app)
 				.post('/url-updater')
-				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
+				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}%26brand=internal`)
 				.set('Connection', 'close');
 		});
 
@@ -71,7 +71,7 @@ describe('POST /url-updater', function () {
 		before(async function () {
 			response = await request(this.app)
 				.post('/url-updater')
-				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
+				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}%26brand=internal`)
 				.set('Connection', 'close');
 		});
 
@@ -94,7 +94,7 @@ describe('POST /url-updater', function () {
 		before(async function () {
 			response = await request(this.app)
 				.post('/url-updater')
-				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal`)
+				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}%26brand=internal`)
 				.set('Connection', 'close');
 		});
 
