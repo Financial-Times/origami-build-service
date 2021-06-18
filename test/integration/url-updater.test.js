@@ -47,7 +47,7 @@ describe('POST /url-updater', function () {
 		before(async function () {
 			response = await request(this.app)
 				.post('/url-updater')
-				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}&brand=internal&system_code=origami`)
+				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}%26brand=internal%26system_code=origami`)
 				.set('Connection', 'close');
 		});
 
