@@ -46,10 +46,22 @@
 			<div class="o-layout-typography">
 				{{#if hasOutdatedComponents}}
 					<h2>The Build Service URL Given Is Outdated</h2>
-					<p>The following url requests the same components but with updated version numbers:</p>
+
+					{{#if missingParamWarnings}}
+						<p>To upgrade, start by using the below Build Service url which requests the same components but with updated version numbers, and add the following missing query parameter(s) (see the <a href="https://www.ft.com/__origami/service/build/v3/docs/api">Build Service API documentation</a> for details):</p>
+						<ul>
+							{{#missingParamWarnings}}
+							<li>{{.}}</li>
+							{{/missingParamWarnings}}
+						</ul>
+					{{else}}
+						<p>To upgrade, start by using the below Build Service url which requests the same components but with updated version numbers.</p>
+					{{/if}}
+
 					<pre><code>{{updatedBuildServiceUrl}}</code></pre>
+
 					<p>
-						You may need to make changes to your project to upgrade, if there has been a major release of a component. The below table lists each requested component version along with the latest version number, and links to the components migration guides.
+						If there has been a major release of a component you may need to take additional steps to upgrade each component. The below table lists each requested component version along with the latest version number, and links to the components migration guides.
 					</p>
 					<p>
 						If you have any issues/questions the Origami team are here to help
