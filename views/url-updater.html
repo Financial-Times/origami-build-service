@@ -50,7 +50,7 @@
 					{{#if hasComponentsBehindTheLatestBowerMajor}}
 						{{> url-updater/v2-bower}}
 					{{else if hasComponentsBehindTheLatestMajor}}
-						{{#if npmOnlyUpgrades}}
+						{{#if npmUpgrades}}
 							{{> url-updater/v2-migration}}
 						{{else}}
 							{{> url-updater/v3-major}}
@@ -75,8 +75,9 @@
 						<tr>
 							<th scope="col" role="columnheader">requested component</th>
 							<th scope="col" role="columnheader" data-o-table-data-type="number">latest version</th>
-							<th scope="col" role="columnheader">migration guides</th>
+							<th scope="col" role="columnheader">readmes</th>
 							<th scope="col" role="columnheader">report</th>
+							<th scope="col" role="columnheader">notes</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -84,14 +85,43 @@
 						<tr>
 							<td>{{name}}@{{requestedVersion}}</td>
 							<td>{{latestVersion}}</td>
-							<td><a href="https://registry.origami.ft.com/components/{{name}}/readme?brand={{../brand}}#migration-guide">{{name}} readme</a></td>
+							<td><a href="https://registry.origami.ft.com/components/{{name}}/readme?brand={{../brand}}">{{name}} readme</a></td>
 							<td>
 								{{#if satisfies}}
 									<span class="o-labels o-labels--jade">latest</span></td>
 								{{else if belowLatestMajorRelease }}
-									<span class="o-labels o-labels--crimson">behind</span>
+									{{#if npmNextUpgrade}}
+										{{#if postNpmUpgrade}}
+											<span class="o-labels o-labels--crimson">major behind</span>
+										{{else}}
+											<span class="o-labels o-labels--lemon">major behind</span>
+										{{/if}}
+									{{else}}
+										<span class="o-labels o-labels--crimson">major behind</span>
+									{{/if}}
+								{{else if aboveLatestRelease}}
+									<span class="o-labels">does not exist</span>
+								{{else }}
+									<span class="o-labels o-labels--lemon">minor/patch behind</span>
+								{{/if}}
+							</td>
+							<td style="width: 25rem;">
+								{{#if satisfies}}
+									Up to date.
+								{{else if belowLatestMajorRelease }}
+									{{#if npmNextUpgrade}}
+										No code changes should be required to upgrade to the next major version of {{name}} ({{firstNpmOnlyMajor}}), which adds support for V3 of the Origami Build Service.
+										{{#if postNpmUpgrade}}
+											However code changes may be required to upgrade further, the latest major version is ({{latestVersion}}).
+										{{/if}}
+									{{else}}
+										To upgrade follow the migration guides linked to from the
+										<a href="https://registry.origami.ft.com/components/{{name}}/readme?brand={{../brand}}#migration-guide">{{name}} readme</a>.
+									{{/if}}
+								{{else if aboveLatestRelease}}
+									It looks like you've requested a version that does not exist.
 								{{else}}
-									<span class="o-labels o-labels--lemon">behind</span>
+									You may be missing out on bug fixes and new features, no code chanages should be required to upgrade.
 								{{/if}}
 							</td>
 						</tr>

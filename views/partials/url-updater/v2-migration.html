@@ -1,8 +1,8 @@
-<p>Your Origami Build Service URL includes outdated components, some are a major version behind the latest release:
+<p>Your Origami Build Service URL includes outdated components{{#if postNpmUpgrades}}, some are more than one major version{{else}} which are a major version{{/if}} behind the latest release:
 
 <ol>
     <li>
-        <p>To upgrade, start by using the below Origami Build Service url which requests the same components but with updated version numbers, and includes the latest version of <a href="https://registry.origami.ft.com/components/o-autoinit@2.0.7/readme?brand=master">o-autoinit</a>:</p>
+        <p>To upgrade, start by using the below Origami Build Service URL which requests the same components but with updated version numbers, and includes the latest version of <a href="https://registry.origami.ft.com/components/o-autoinit@2.0.7/readme?brand=master">o-autoinit</a>:</p>
         <pre><code>{{updatedBuildServiceUrl}}</code></pre>
     </li>
     {{#if missingParamWarnings}}
@@ -15,25 +15,25 @@
         </ul>
     </li>
     {{/if}}
+    {{#if postNpmUpgrades}}
+    <li>
+        <p>Some major component releases require no code changes for Origami Build Service users (those that <a href="https://origami.ft.com/blog/2021/01/18/deprecating-bower-and-origami-via-npm/">drop Bower support</a>). However, the following components have recieved extra major releases which may require code changes from your project. Follow the migration guide for each:</p>
+        <ul>
+        {{#results}}
+            {{#if postNpmUpgrade}}
+                <li>
+                    <a href="https://github.com/Financial-Times/{{ name }}/blob/master/MIGRATION.md">{{ name }} from {{firstNpmOnlyMajor}} to {{latestMajor}}</a>
+                </li>
+            {{/if}}
+        {{/results}}
+        </ul>
+    </li>
+    {{/if}}
 </ol>
 
+{{^if postNpmUpgrades}}
 <p>No code changes should be required 🎉 However the Origami team are here to help
     via Slack <a href="https://slack.com/messages/C02FU5ARJ/">#origami-support</a>
     or email <a href="mailto:origami.support@ft.com">origami.support@ft.com</a> if you have any problems.
 </p>
-
-<details class="o-spacing-s6">
-    <summary>
-        For reference, here is a list of components with major releases including links to their migration guides.
-    </summary>
-    <p>These releases add support for <a href="/v3/docs/api">v3</a> of the Origami Build Service and should not require code changes.</p>
-    <ul>
-    {{#results}}
-        {{#if belowLatestMajorRelease}}
-            <li>
-                <a href="https://github.com/Financial-Times/{{ name }}/blob/master/MIGRATION.md">{{ name }}@^{{ lastBowerMajor }}</a>
-            </li>
-        {{/if}}
-    {{/results}}
-    </ul>
-</details>
+{{/if}}

@@ -46,5 +46,6 @@
 "o-typography": "6.0.0",
 "o-utils": "1.0.0",
 "o-viewport": "4.0.0",
-"o-visual-effects": "3.0.0"
+"o-visual-effects": "3.0.0",
+"o-test-component": "1.0.0"
 }
