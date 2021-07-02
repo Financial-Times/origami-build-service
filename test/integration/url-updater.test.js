@@ -66,6 +66,42 @@ describe('POST /url-updater', function () {
 		});
 	});
 
+	describe('with a valid build service url which contains a very outdated component request', function () {
+		const modules = 'o-forms@^7.1.2';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.post('/url-updater')
+				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}%26brand=internal%26system_code=origami`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function () {
+			assert.equal(response.status, 200);
+		});
+
+		it('should respond with an updated build service v2 url (not v3)', function () {
+			// so users may upgrade components to their last Bower version before
+			// then migrating to v3 of the Origami Build Service
+			assert.include(response.text, 'v2/bundles/css?modules&#x3D;o-forms@^8.0.0');
+		});
+
+		it('should respond with an updated build service v2 url (not v3)', function () {
+			// so users may upgrade components to their last Bower version before
+			// then migrating to v3 of the Origami Build Service
+			assert.include(response.text, 'v2/bundles/css?modules&#x3D;o-forms@^8.0.0');
+		});
+
+		it('should respond with an explanation to migrate to the latest Bower release first', function () {
+			assert.include(response.text, 'not compatible with the latest version of the Origami Build Service');
+			assert.include(response.text, 'We recommend upgrading your components incrementally.');
+		});
+	});
+
 	describe('with an outdated build service url and missing parameters', function () {
 		const modules = 'o-test-component@^1.0.0';
 
