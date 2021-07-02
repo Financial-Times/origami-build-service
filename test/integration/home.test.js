@@ -21,8 +21,8 @@ describe('GET /', function() {
 		assert.equal(response.status, 301);
 	});
 
-	it('should respond with a v2 `Location` header', function() {
-		assert.deepEqual(response.headers['location'], `${this.basepath}v2/`);
+	it('should respond with a v3 `Location` header', function() {
+		assert.deepEqual(response.headers['location'], `${this.basepath}v3/`);
 	});
 
 	it('should respond with plaintext', function() {
