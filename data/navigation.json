@@ -12,7 +12,7 @@
 		},
 		{
 			"name": "API Reference",
-			"href": "v2/docs/api",
+			"href": "v3/docs/api",
 			"current": false,
 			"subnav": true,
 			"subnavItems": [
