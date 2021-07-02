@@ -51,7 +51,7 @@ describe('lib/update-url-for-results.test', () => {
 		describe('where all results follow v1 of the Origami Component specification', () => {
 			it('sets modules with the Build Service version to v2', async () => {
 				const updatedUrl = await updateUrlForResults(
-					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0&brand=internal',
+					new URL('https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0&brand=internal'),
 					[specV1Result]
 				);
 				proclaim.equal(
@@ -64,7 +64,7 @@ describe('lib/update-url-for-results.test', () => {
 		describe('where all results do not follow v1 of the Origami Component specification', () => {
 			it('sets modules with the Build Service version to v3', async () => {
 				const updatedUrl = await updateUrlForResults(
-					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-test-component@^2.1.0&brand=internal',
+					new URL('https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-test-component@^2.1.0&brand=internal'),
 					[bowerRequestedNpmAvailable]
 				);
 				proclaim.equal(
@@ -77,7 +77,7 @@ describe('lib/update-url-for-results.test', () => {
 		describe('where all results with one exception follow v1 of the Origami Component specification', () => {
 			it('sets the Build Service version to v3', async () => {
 				const updatedUrl = await updateUrlForResults(
-					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0,o-test-component@^2.1.0&brand=internal',
+					new URL('https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0,o-test-component@^2.1.0&brand=internal'),
 					[specV1Result, bowerRequestedNpmAvailable]
 				);
 				proclaim.equal(
@@ -90,7 +90,7 @@ describe('lib/update-url-for-results.test', () => {
 		describe('where all results with one exception follow v1 of the Origami Component specification', () => {
 			it('sets the Build Service version to v3', async () => {
 				const updatedUrl = await updateUrlForResults(
-					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0,o-test-component@^2.1.0&brand=internal',
+					new URL('https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0,o-test-component@^2.1.0&brand=internal'),
 					[specV1Result, bowerRequestedNpmAvailable]
 				);
 				proclaim.equal(
@@ -103,7 +103,7 @@ describe('lib/update-url-for-results.test', () => {
 		describe('where the requested version is below the first npm-only release', () => {
 			it('sets the Build Service version to v3', async () => {
 				const updatedUrl = await updateUrlForResults(
-					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0,o-test-component@^2.1.0&brand=internal',
+					new URL('https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0,o-test-component@^2.1.0&brand=internal'),
 					[specV1Result, bowerRequestedNpmAvailable]
 				);
 				proclaim.equal(
@@ -116,7 +116,7 @@ describe('lib/update-url-for-results.test', () => {
 		describe('where the requested version is below the last Bower release and a future npm-only release is available', () => {
 			it('sets the Build Service version to v2 with the last Bower release', async () => {
 				const updatedUrl = await updateUrlForResults(
-					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-dummy@^1.0.0&brand=internal',
+					new URL('https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-dummy@^1.0.0&brand=internal'),
 					[earlyBowerRequestedFutureNpmAvailable]
 				);
 				proclaim.equal(
