@@ -161,13 +161,6 @@ describe('lib/evaluate-modules', () => {
 		proclaim.isTrue(resultV2[0].satisfies, 'Expected the given component version/range to satisfy the latest version.');
 	});
 
-	it('includes the Origami Specification version the module conforms to', async () => {
-		const resultV1 = await evaluateModules([['o-test-component', '^1']]);
-		proclaim.equal(resultV1[0].latestOrigamiSpec, 'v2', 'Although the requested version of the component follows v1 of the Origami Component Specification, the latest component release follows v2.');
-		const resultV2 = await evaluateModules([['o-test-component', '^2']]);
-		proclaim.equal(resultV2[0].latestOrigamiSpec, 'v2', 'Expected the latest version of the component to follow v2 of the Origami Component Specification.');
-	});
-
 	it('sorts by out of date results first', async () => {
 		const result1 = await evaluateModules([['o-test-component', '^1'], ['o-example', '^2']]);
 		proclaim.equal(result1[0].name, 'o-test-component', 'Expected "o-test-component" to be the first result, as the version given is behind the latest release when other modules given are not.');

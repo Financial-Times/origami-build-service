@@ -10,8 +10,7 @@ describe('lib/update-url-for-results.test', () => {
 		requestedVersion: '^1.0.0',
 		versions: ['1.0.0', '1.0.1'],
 		latestVersion: '1.0.1',
-		satisfies: true,
-		latestOrigamiSpec: '1'
+		satisfies: true
 	};
 
 	const bowerRequestedNpmAvailable = {
@@ -28,8 +27,7 @@ describe('lib/update-url-for-results.test', () => {
 		belowLatestMajorRelease: true,
 		aboveLatestRelease: false,
 		requestedLastBowerMajor: true,
-		hasFurtherNpmOnlyMajorReleases: false,
-		latestOrigamiSpec: '2.0'
+		hasFurtherNpmOnlyMajorReleases: false
 	};
 
 	const earlyBowerRequestedFutureNpmAvailable = {
@@ -46,8 +44,7 @@ describe('lib/update-url-for-results.test', () => {
 		belowLatestMajorRelease: true,
 		aboveLatestRelease: false,
 		requestedLastBowerMajor: false,
-		hasFurtherNpmOnlyMajorReleases: false,
-		latestOrigamiSpec: '2.0'
+		hasFurtherNpmOnlyMajorReleases: false
 	};
 
 	describe('given a Build Service url and module results', () => {
