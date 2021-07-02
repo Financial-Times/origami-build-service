@@ -1,4 +1,4 @@
-<p>Your Origami Build Service URL includes outdated components{{#if postNpmUpgrades}}, some are more than one major version{{else}} which are a major version{{/if}} behind the latest release:
+<p>Your Origami Build Service URL includes outdated components{{#if hasFurtherNpmOnlyMajorReleases}}, some are more than one major version{{else}} which are a major version{{/if}} behind the latest release:
 
 <ol>
     <li>
@@ -15,12 +15,12 @@
         </ul>
     </li>
     {{/if}}
-    {{#if postNpmUpgrades}}
+    {{#if hasFurtherNpmOnlyMajorReleases}}
     <li>
         <p>Some major component releases require no code changes for Origami Build Service users (those that <a href="https://origami.ft.com/blog/2021/01/18/deprecating-bower-and-origami-via-npm/">drop Bower support</a>). However, the following components have recieved extra major releases which may require code changes from your project. Follow the migration guide for each:</p>
         <ul>
         {{#results}}
-            {{#if postNpmUpgrade}}
+            {{#if hasFurtherNpmOnlyMajorReleases}}
                 <li>
                     <a href="https://github.com/Financial-Times/{{ name }}/blob/master/MIGRATION.md">{{ name }} from {{firstNpmOnlyMajor}} to {{latestMajor}}</a>
                 </li>
@@ -31,7 +31,7 @@
     {{/if}}
 </ol>
 
-{{^if postNpmUpgrades}}
+{{^if hasFurtherNpmOnlyMajorReleases}}
 <p>No code changes should be required 🎉 However the Origami team are here to help
     via Slack <a href="https://slack.com/messages/C02FU5ARJ/">#origami-support</a>
     or email <a href="mailto:origami.support@ft.com">origami.support@ft.com</a> if you have any problems.

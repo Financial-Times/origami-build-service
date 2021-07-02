@@ -90,8 +90,8 @@
 								{{#if satisfies}}
 									<span class="o-labels o-labels--jade">latest</span></td>
 								{{else if belowLatestMajorRelease }}
-									{{#if npmNextUpgrade}}
-										{{#if postNpmUpgrade}}
+									{{#if requestedLastBowerMajor}}
+										{{#if hasFurtherNpmOnlyMajorReleases}}
 											<span class="o-labels o-labels--crimson">major behind</span>
 										{{else}}
 											<span class="o-labels o-labels--lemon">major behind</span>
@@ -109,9 +109,9 @@
 								{{#if satisfies}}
 									Up to date.
 								{{else if belowLatestMajorRelease }}
-									{{#if npmNextUpgrade}}
+									{{#if requestedLastBowerMajor}}
 										No code changes should be required to upgrade to the next major version of {{name}} ({{firstNpmOnlyMajor}}), which adds support for V3 of the Origami Build Service.
-										{{#if postNpmUpgrade}}
+										{{#if hasFurtherNpmOnlyMajorReleases}}
 											However code changes may be required to upgrade further, the latest major version is ({{latestVersion}}).
 										{{/if}}
 									{{else}}
