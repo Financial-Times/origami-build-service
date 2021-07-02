@@ -14,19 +14,46 @@ describe('lib/update-url-for-results.test', () => {
 		latestOrigamiSpec: '1'
 	};
 
-	const specV2Result = {
+	const bowerRequestedNpmAvailable = {
 		name: 'o-test-component',
 		requestedVersion: '^1.0.0',
+		lastBowerMajor: '1.0.0',
 		versions: ['1.0.0', '2.1.0'],
 		latestVersion: '2.1.0',
+		requestedMajor: '1.0.0',
 		satisfies: false,
-		latestOrigamiSpec: '2'
+		latestMajor: '2.0.0',
+		firstNpmOnlyMajor: true,
+		belowLatestBowerRelease: false,
+		belowLatestMajorRelease: true,
+		aboveLatestRelease: false,
+		requestedLastBowerMajor: true,
+		hasFurtherNpmOnlyMajorReleases: false,
+		latestOrigamiSpec: '2.0'
+	};
+
+	const earlyBowerRequestedFutureNpmAvailable = {
+		name: 'o-dummy',
+		requestedVersion: '^1.0.0',
+		lastBowerMajor: '2.0.0',
+		versions: ['1.0.0', '2.1.0', '3.0.0'],
+		latestVersion: '3.0.0',
+		requestedMajor: '1.0.0',
+		satisfies: false,
+		latestMajor: '3.0.0',
+		firstNpmOnlyMajor: true,
+		belowLatestBowerRelease: true,
+		belowLatestMajorRelease: true,
+		aboveLatestRelease: false,
+		requestedLastBowerMajor: false,
+		hasFurtherNpmOnlyMajorReleases: false,
+		latestOrigamiSpec: '2.0'
 	};
 
 	describe('given a Build Service url and module results', () => {
 		describe('where all results follow v1 of the Origami Component specification', () => {
-			it('sets modules with the Build Service version to v2', () => {
-				const updatedUrl = updateUrlForResults(
+			it('sets modules with the Build Service version to v2', async () => {
+				const updatedUrl = await updateUrlForResults(
 					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0&brand=internal',
 					[specV1Result]
 				);
@@ -37,28 +64,67 @@ describe('lib/update-url-for-results.test', () => {
 			});
 		});
 
-		describe('where all results follow v2 of the Origami Component specification', () => {
-			it('sets modules with the Build Service version to v3', () => {
-				const updatedUrl = updateUrlForResults(
+		describe('where all results do not follow v1 of the Origami Component specification', () => {
+			it('sets modules with the Build Service version to v3', async () => {
+				const updatedUrl = await updateUrlForResults(
 					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-test-component@^2.1.0&brand=internal',
-					[specV2Result]
+					[bowerRequestedNpmAvailable]
 				);
 				proclaim.equal(
 					decodeURIComponent(updatedUrl.toString()),
-					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-test-component@^2.1.0&brand=internal'
+					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-test-component@^2.1.0,o-autoinit@^2.0.7&brand=internal'
 				);
 			});
 		});
 
-		describe('where 1 module follows v2 of the Origami Component specification, and the rest v1', () => {
-			it('sets the Build Service version to v3', () => {
-				const updatedUrl = updateUrlForResults(
+		describe('where all results with one exception follow v1 of the Origami Component specification', () => {
+			it('sets the Build Service version to v3', async () => {
+				const updatedUrl = await updateUrlForResults(
 					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0,o-test-component@^2.1.0&brand=internal',
-					[specV1Result, specV2Result]
+					[specV1Result, bowerRequestedNpmAvailable]
 				);
 				proclaim.equal(
 					decodeURIComponent(updatedUrl.toString()),
-					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-example@^1.0.1,o-test-component@^2.1.0&brand=internal'
+					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-example@^1.0.1,o-test-component@^2.1.0,o-autoinit@^2.0.7&brand=internal'
+				);
+			});
+		});
+
+		describe('where all results with one exception follow v1 of the Origami Component specification', () => {
+			it('sets the Build Service version to v3', async () => {
+				const updatedUrl = await updateUrlForResults(
+					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0,o-test-component@^2.1.0&brand=internal',
+					[specV1Result, bowerRequestedNpmAvailable]
+				);
+				proclaim.equal(
+					decodeURIComponent(updatedUrl.toString()),
+					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-example@^1.0.1,o-test-component@^2.1.0,o-autoinit@^2.0.7&brand=internal'
+				);
+			});
+		});
+
+		describe('where the requested version is below the first npm-only release', () => {
+			it('sets the Build Service version to v3', async () => {
+				const updatedUrl = await updateUrlForResults(
+					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0,o-test-component@^2.1.0&brand=internal',
+					[specV1Result, bowerRequestedNpmAvailable]
+				);
+				proclaim.equal(
+					decodeURIComponent(updatedUrl.toString()),
+					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-example@^1.0.1,o-test-component@^2.1.0,o-autoinit@^2.0.7&brand=internal'
+				);
+			});
+		});
+
+		describe('where the requested version is below the last Bower release and a future npm-only release is available', () => {
+			it('sets the Build Service version to v2 with the last Bower release', async () => {
+				const updatedUrl = await updateUrlForResults(
+					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-dummy@^1.0.0&brand=internal',
+					[earlyBowerRequestedFutureNpmAvailable]
+				);
+				proclaim.equal(
+					decodeURIComponent(updatedUrl.toString()),
+					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-dummy@^2.0.0&brand=internal'
 				);
 			});
 		});
