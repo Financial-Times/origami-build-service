@@ -45,29 +45,20 @@
 		{{#if results}}
 			<div class="o-layout-typography">
 				{{#if hasOutdatedComponents}}
-					<h2>The Build Service URL Given Is Outdated</h2>
+					<h2>The Origami Build Service URL Given Is Outdated</h2>
 
-					{{#if missingParamWarnings}}
-						<p>To upgrade, start by using the below Build Service url which requests the same components but with updated version numbers, and add the following missing query parameter(s) (see the <a href="https://www.ft.com/__origami/service/build/v3/docs/api">Build Service API documentation</a> for details):</p>
-						<ul>
-							{{#missingParamWarnings}}
-							<li>{{.}}</li>
-							{{/missingParamWarnings}}
-						</ul>
+					{{#if hasComponentsBehindTheLatestBowerMajor}}
+						{{> url-updater/v2-bower}}
+					{{else if hasComponentsBehindTheLatestMajor}}
+						{{#if npmUpgrades}}
+							{{> url-updater/v2-migration}}
+						{{else}}
+							{{> url-updater/v3-major}}
+						{{/if}}
 					{{else}}
-						<p>To upgrade, start by using the below Build Service url which requests the same components but with updated version numbers.</p>
+						{{> url-updater/v3-minor}}
 					{{/if}}
 
-					<pre><code>{{updatedBuildServiceUrl}}</code></pre>
-
-					<p>
-						If there has been a major release of a component you may need to take additional steps to upgrade each component. The below table lists each requested component version along with the latest version number, and links to the components migration guides.
-					</p>
-					<p>
-						If you have any issues/questions the Origami team are here to help
-						via Slack <a href="https://slack.com/messages/C02FU5ARJ/">#origami-support</a>
-						or email <a href="mailto:origami.support@ft.com">origami.support@ft.com</a> 😊.
-					</p>
 				{{else}}
 					<h2>Your Build Service URL Uses The Latest Component Versions ✨</h2>
 					<p>
@@ -77,26 +68,62 @@
 					</p>
 				{{/if}}
 
+				<h2>Summary</h2>
+
 				<table class="o-table o-table--horizontal-lines " data-o-component="o-table">
 					<thead>
 						<tr>
 							<th scope="col" role="columnheader">requested component</th>
 							<th scope="col" role="columnheader" data-o-table-data-type="number">latest version</th>
-							<th scope="col" role="columnheader">migration guides</th>
+							<th scope="col" role="columnheader">readmes</th>
 							<th scope="col" role="columnheader">report</th>
+							<th scope="col" role="columnheader">notes</th>
 						</tr>
 					</thead>
 					<tbody>
 					{{#results}}
 						<tr>
-						<td>{{name}}@{{requestedVersion}}</td>
-						<td>{{latestVersion}}</td>
-						<td><a href="https://registry.origami.ft.com/components/{{name}}/readme?brand={{../brand}}#migration-guide">{{name}} readme</a></td>
-						{{#if satisfies}}
-						<td><span class="o-labels o-labels--support-maintained">latest</span></td>
-						{{else}}
-						<td><span class="o-labels o-labels--support-deprecated">behind</span></td>
-						{{/if}}
+							<td>{{name}}@{{requestedVersion}}</td>
+							<td>{{latestVersion}}</td>
+							<td><a href="https://registry.origami.ft.com/components/{{name}}/readme?brand={{../brand}}">{{name}} readme</a></td>
+							<td>
+								{{#if satisfies}}
+									<span class="o-labels o-labels--jade">latest</span></td>
+								{{else if belowLatestMajorRelease }}
+									{{#if requestedLastBowerMajor}}
+										{{#if hasFurtherNpmOnlyMajorReleases}}
+											<span class="o-labels o-labels--crimson">major behind</span>
+										{{else}}
+											<span class="o-labels o-labels--lemon">major behind</span>
+										{{/if}}
+									{{else}}
+										<span class="o-labels o-labels--crimson">major behind</span>
+									{{/if}}
+								{{else if aboveLatestRelease}}
+									<span class="o-labels">does not exist</span>
+								{{else }}
+									<span class="o-labels o-labels--lemon">minor/patch behind</span>
+								{{/if}}
+							</td>
+							<td style="width: 25rem;">
+								{{#if satisfies}}
+									Up to date.
+								{{else if belowLatestMajorRelease }}
+									{{#if requestedLastBowerMajor}}
+										No code changes should be required to upgrade to the next major version of {{name}} ({{firstNpmOnlyMajor}}), which adds support for V3 of the Origami Build Service.
+										{{#if hasFurtherNpmOnlyMajorReleases}}
+											However code changes may be required to upgrade further, the latest major version is ({{latestVersion}}).
+										{{/if}}
+									{{else}}
+										To upgrade follow the migration guides linked to from the
+										<a href="https://registry.origami.ft.com/components/{{name}}/readme?brand={{../brand}}#migration-guide">{{name}} readme</a>.
+									{{/if}}
+								{{else if aboveLatestRelease}}
+									It looks like you've requested a version that does not exist.
+								{{else}}
+									You may be missing out on bug fixes and new features, no code chanages should be required to upgrade.
+								{{/if}}
+							</td>
 						</tr>
 					{{/results}}
 					</tbody>
@@ -105,7 +132,7 @@
 		{{else}}
 			<div class="o-layout-typography">
 				<p>Check if a Build Service URL is up to date using the form above. This can be helpful if your project relies on the Build Service and you would like to update to the latest version of components. For example, try submitting this outdated Build Service URL.</p>
-				<pre><code>https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-layout@^4.2.0,o-fonts@4.4.0,o-syntax-highlight@^3.0.8,o-table@^8.1.4,o-forms@^8.4.1,o-buttons@^6.2.0,o-header-services@^4.0.15,o-footer-services@^3.3.0&brand=internal</code></pre>
+				<pre><code>https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-layout@^3.2.0,o-fonts@4.4.0,o-syntax-highlight@^3.0.8,o-table@^8.1.4,o-forms@^8.4.1,o-buttons@^6.2.0,o-header-services@^4.0.15,o-footer-services@^3.3.0&brand=internal</code></pre>
 			</div>
 			<div class="o-message o-message--alert o-message--inner o-message--neutral o-spacing-s6" data-o-message-close="false" data-o-component="o-message">
 				<div class="o-message__container">

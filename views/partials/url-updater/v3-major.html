@@ -1,0 +1,24 @@
+<p>Your Origami Build Service URL includes outdated components, some are one or more major versions behind the latest release:
+
+<ol>
+    <li>
+        <p>To upgrade, start by using the below Origami Build Service URL which requests the same components but with updated version numbers:</p>
+        <pre><code>{{updatedBuildServiceUrl}}</code></pre>
+    </li>
+    <li>
+     <p>Next, verify your Origami Build Service request returns component code sucessfully (try putting it in your browser's URL bar for example). See the <a href="/v3/docs/api">Origami Build Service API documentation</a> if you have any issues, for example a missing query parameter.</p>
+    </li>
+    <li>
+        <p>Then follow the migration guide for each component which has had a major release. Make the required code changes to your project, if any:</p>
+        <ul>
+        {{#results}}
+            {{#if belowLatestMajorRelease}}
+                <li>
+                    <a href="https://github.com/Financial-Times/{{ name }}/blob/master/MIGRATION.md">{{ name }}@^{{ latestVersion }}</a>
+                </li>
+            {{/if}}
+        {{/results}}
+        </ul>
+    </li>
+</ol>
+

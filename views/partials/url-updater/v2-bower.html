@@ -1,0 +1,21 @@
+<p>Your Origami Build Service URL includes some components which are more than one major version behind the latest release, and are not compatible with the latest version of the Origami Build Service (<a href="/v3/docs/api">v3</a>).</p>
+
+<ol>
+    <li>
+        <p>We recommend upgrading your components incrementally. First, migrate the following components to the last version compatible with <a href="/v2/docs/api">v2</a> of the Origami Build Service only (not to the latest release yet). Follow the linked to migration guide for each component and use the updated Origami Build Service URL provided:</p>
+        <ul>
+        {{#results}}
+            {{#if belowLatestBowerRelease}}
+                <li>
+                    <a href="https://github.com/Financial-Times/{{ name }}/blob/master/MIGRATION.md">{{ name }} from {{ requestedMajor }} to {{ lastBowerMajor }}</a>
+                </li>
+            {{/if}}
+        {{/results}}
+        </ul>
+
+        <pre><code>{{updatedBuildServiceUrl}}</code></pre>
+    </li>
+    <li>
+        <p>Next, place your updated Build Service URL back into this tool for instructions to upgrade to <a href="/v3/docs/api">v3</a> of the Origami Build Service, which will enable you to include the latest release of each component.</p>
+    </li>
+</ol>

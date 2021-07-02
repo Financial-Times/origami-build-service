@@ -1,0 +1,39 @@
+<p>Your Origami Build Service URL includes outdated components{{#if hasFurtherNpmOnlyMajorReleases}}, some are more than one major version{{else}} which are a major version{{/if}} behind the latest release:
+
+<ol>
+    <li>
+        <p>To upgrade, start by using the below Origami Build Service URL which requests the same components but with updated version numbers{{#if v2AutoInit}}, and includes the latest version of <a href="https://registry.origami.ft.com/components/o-autoinit@2.0.7/readme?brand=master">o-autoinit</a>{{/if}}:</p>
+        <pre><code>{{updatedBuildServiceUrl}}</code></pre>
+    </li>
+    {{#if missingParamWarnings}}
+    <li>
+        <p>Next, add the following missing query parameter(s) to the above request – see the <a href="v3/docs/api">Origami Build Service API documentation</a> for details:</p>
+        <ul>
+            {{#missingParamWarnings}}
+            <li>{{.}}</li>
+            {{/missingParamWarnings}}
+        </ul>
+    </li>
+    {{/if}}
+    {{#if hasFurtherNpmOnlyMajorReleases}}
+    <li>
+        <p>Some major component releases require no code changes for Origami Build Service users (those that <a href="https://origami.ft.com/blog/2021/01/18/deprecating-bower-and-origami-via-npm/">drop Bower support</a>). However, the following components have recieved extra major releases which may require code changes from your project. Follow the migration guide for each:</p>
+        <ul>
+        {{#results}}
+            {{#if hasFurtherNpmOnlyMajorReleases}}
+                <li>
+                    <a href="https://github.com/Financial-Times/{{ name }}/blob/master/MIGRATION.md">{{ name }} from {{firstNpmOnlyMajor}} to {{latestMajor}}</a>
+                </li>
+            {{/if}}
+        {{/results}}
+        </ul>
+    </li>
+    {{/if}}
+</ol>
+
+{{^if hasFurtherNpmOnlyMajorReleases}}
+<p>No code changes should be required 🎉 However the Origami team are here to help
+    via Slack <a href="https://slack.com/messages/C02FU5ARJ/">#origami-support</a>
+    or email <a href="mailto:origami.support@ft.com">origami.support@ft.com</a> if you have any problems.
+</p>
+{{/if}}
