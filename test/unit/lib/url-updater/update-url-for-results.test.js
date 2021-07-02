@@ -48,19 +48,6 @@ describe('lib/update-url-for-results.test', () => {
 	};
 
 	describe('given a Build Service url and module results', () => {
-		describe('where all results follow v1 of the Origami Component specification', () => {
-			it('sets modules with the Build Service version to v2', async () => {
-				const updatedUrl = await updateUrlForResults(
-					new URL('https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.0&brand=internal'),
-					[specV1Result]
-				);
-				proclaim.equal(
-					decodeURIComponent(updatedUrl.toString()),
-					'https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-example@^1.0.1&brand=internal'
-				);
-			});
-		});
-
 		describe('where all results do not follow v1 of the Origami Component specification', () => {
 			it('sets modules with the Build Service version to v3', async () => {
 				const updatedUrl = await updateUrlForResults(
