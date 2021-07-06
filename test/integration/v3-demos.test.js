@@ -616,4 +616,32 @@ describe('GET /v3/demo', function() {
 		});
 	});
 
+
+	describe('when a demo\'s JavaScript includes a `script` tag.', function () {
+		const component = 'o-autocomplete@1.0.0';
+		const demo = 'static';
+		const system_code = 'origami';
+		const brand = 'master';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
+		});
+
+		it('should inline the JavaScript with the script tag escaped', function() {
+			assert.include(response.text, '<script>document.F=Object<\\/script>')
+			;
+		});
+	});
+
 });
