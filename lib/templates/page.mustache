@@ -23,10 +23,6 @@
 		<link rel="stylesheet" href="{{{.}}}" />
 	{{/oDemoDependenciesStylePath}}
 
-	{{#oDemoComponentStylePath}}
-		<link rel="stylesheet" href="{{{.}}}" />
-	{{/oDemoComponentStylePath}}
-
 	{{#oDemoComponentStyle}}
 		<style>{{{.}}}</style>
 	{{/oDemoComponentStyle}}
@@ -34,9 +30,6 @@
 <body>
 	{{> oDemoTpl}}
 	<script src="https://registry.origami.ft.com/embedapi?autoload=resize"></script>
-	{{#oDemoComponentScriptPath}}
-		<script src="{{{ oDemoComponentScriptPath }}}" defer></script>
-	{{/oDemoComponentScriptPath}}
 	{{#oDemoComponentScript}}
 		<script>{{{ oDemoComponentScript }}}</script>
 	{{/oDemoComponentScript}}
