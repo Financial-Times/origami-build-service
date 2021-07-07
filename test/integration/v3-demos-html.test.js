@@ -169,7 +169,7 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.include(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.2.10\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Mustache templates: Unclosed section \\"causing-syntax-error-by-not-closing-section\\""');
+			assert.include(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@2.2.10\'s demo named \\"test-demo\\" could not be built due to a compilation error within the Mustache templates: Unclosed section \\"causing-syntax-error-by-not-closing-section\\"');
 		});
 
 	});
@@ -635,7 +635,7 @@ describe('GET /v3/demo/html', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.include(response.text, 'Origami Build Service returned an error: "The HTML in the demo contains syntax errors."');
+			assert.include(response.text, 'Origami Build Service returned an error: "The HTML in the demo contains syntax errors.');
 		});
 
 	});
