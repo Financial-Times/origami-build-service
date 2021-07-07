@@ -17,8 +17,6 @@ exports[`GET /v3/demo when a valid component and demo are requested should respo
 		<script src=\\"https://polyfill.io/v3/polyfill.min.js?features=CustomEvent&flags=gated&unknown=polyfill\\"></script>
 
 
-
-
 		<style>.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:'Hello world!  The square root of 64 is \\"8\\".'}
 </style>
 </head>
@@ -50,8 +48,6 @@ exports[`GET /v3/demo when a valid component at specific version and demo and br
 		<script src=\\"https://polyfill.io/v3/polyfill.min.js?features=CustomEvent&flags=gated&unknown=polyfill\\"></script>
 
 
-
-
 		<style>.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:'Hello employee 317. Hope you find this internal tool or product helpful. The square root of 64 is \\"8\\".'}
 </style>
 </head>
@@ -81,8 +77,6 @@ exports[`GET /v3/demo when a valid component at specific version and demo are re
 	</style>
 
 		<script src=\\"https://polyfill.io/v3/polyfill.min.js?features=CustomEvent&flags=gated&unknown=polyfill\\"></script>
-
-
 
 
 		<style>.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:'Hello world!  The square root of 64 is \\"8\\".'}
