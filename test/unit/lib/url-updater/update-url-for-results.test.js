@@ -56,7 +56,7 @@ describe('lib/update-url-for-results.test', () => {
 				);
 				proclaim.equal(
 					decodeURIComponent(updatedUrl.toString()),
-					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-test-component@^2.1.0,o-autoinit@^2.0.7&brand=internal'
+					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-test-component@^2.1.0,o-autoinit@^3.0.0&brand=internal'
 				);
 			});
 		});
@@ -69,7 +69,7 @@ describe('lib/update-url-for-results.test', () => {
 				);
 				proclaim.equal(
 					decodeURIComponent(updatedUrl.toString()),
-					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-example@^1.0.1,o-test-component@^2.1.0,o-autoinit@^2.0.7&brand=internal'
+					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-example@^1.0.1,o-test-component@^2.1.0,o-autoinit@^3.0.0&brand=internal'
 				);
 			});
 		});
@@ -82,7 +82,7 @@ describe('lib/update-url-for-results.test', () => {
 				);
 				proclaim.equal(
 					decodeURIComponent(updatedUrl.toString()),
-					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-example@^1.0.1,o-test-component@^2.1.0,o-autoinit@^2.0.7&brand=internal'
+					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-example@^1.0.1,o-test-component@^2.1.0,o-autoinit@^3.0.0&brand=internal'
 				);
 			});
 		});
@@ -95,7 +95,7 @@ describe('lib/update-url-for-results.test', () => {
 				);
 				proclaim.equal(
 					decodeURIComponent(updatedUrl.toString()),
-					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-example@^1.0.1,o-test-component@^2.1.0,o-autoinit@^2.0.7&brand=internal'
+					'https://www.ft.com/__origami/service/build/v3/bundles/css?components=o-example@^1.0.1,o-test-component@^2.1.0,o-autoinit@^3.0.0&brand=internal'
 				);
 			});
 		});
