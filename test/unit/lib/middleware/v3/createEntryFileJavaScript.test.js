@@ -39,10 +39,9 @@ describe('lib/middleware/v3/createEntryFileJavaScript', function () {
 		proclaim.deepStrictEqual(
 			EntryFileContents,
 			dedent`
-import * as oTable from "@financial-times/o-table";
-if (typeof Origami === 'undefined') { self.Origami = {}; }
-self.Origami["o-table"] = oTable.default || oTable;
-self.Origami["o-table"].default = oTable.default; // With the .default property for backward compatibility.
+        import * as oTable from "@financial-times/o-table";
+        if (typeof Origami === 'undefined') { self.Origami = {}; }
+        self.Origami["o-table"] = oTable;
         `
 		);
 	});
@@ -101,15 +100,13 @@ self.Origami["o-table"].default = oTable.default; // With the .default property 
 		proclaim.deepStrictEqual(
 			EntryFileContents,
 			dedent`
-import * as oTable from "@financial-times/o-table";
-let components = {};
-if (typeof Origami === 'undefined') { self.Origami = {}; }
-self.Origami["o-table"] = oTable.default || oTable;
-self.Origami["o-table"].default = oTable.default; // With the .default property for backward compatibility.
-components["o-table"] = oTable.default || oTable;
-components["o-table"].default = oTable.default; // With the .default property for backward compatibility.
-typeof start_application === 'function' && start_application(components);
-`
+        import * as oTable from "@financial-times/o-table";
+        let components = {};
+        if (typeof Origami === 'undefined') { self.Origami = {}; }
+        self.Origami["o-table"] = oTable;
+        components["o-table"] = oTable;
+        typeof start_application === 'function' && start_application(components);
+        `
 		);
 	});
 });
