@@ -22,6 +22,75 @@ describe('createJavaScriptBundle', function () {
 
 	context('when given a valid request', function () {
 
+		context('for a component with a default export', async function () {
+			let script;
+
+			beforeEach(async function () {
+				const request = httpMock.createRequest();
+				const response = httpMock.createResponse();
+				response.startTime = sinon.spy();
+				response.endTime = sinon.spy();
+				request.app = {
+					ft: {
+						options: {
+							npmRegistryURL: 'https://registry.npmjs.org'
+						}
+					}
+				};
+				request.query.system_code = 'origami';
+				request.query.components = 'o-test-component@3.1.0';
+
+				await createJavaScriptBundle(request, response);
+
+				const bundle = response._getData();
+
+				script = new vm.Script(bundle);
+			});
+
+			it('adds the component API to the global object with an alias on the default property (for backward compatibility) ', async () => {
+				const context = {};
+				context.self = context;
+				script.runInNewContext(context);
+				proclaim.isObject(context.Origami);
+				proclaim.equal(context.Origami['o-test-component'], context.Origami['o-test-component'].default);
+			});
+		});
+
+		context('for a component with no default export', async function () {
+			let script;
+
+			beforeEach(async function () {
+				const request = httpMock.createRequest();
+				const response = httpMock.createResponse();
+				response.startTime = sinon.spy();
+				response.endTime = sinon.spy();
+				request.app = {
+					ft: {
+						options: {
+							npmRegistryURL: 'https://registry.npmjs.org'
+						}
+					}
+				};
+				request.query.system_code = 'origami';
+				request.query.components = 'o-test-component@2.2.9';
+
+				await createJavaScriptBundle(request, response);
+
+				const bundle = response._getData();
+
+				script = new vm.Script(bundle);
+			});
+
+			it('adds an empty object to the global object', async () => {
+				const context = {};
+				context.self = context;
+				script.runInNewContext(context);
+				proclaim.isObject(context.Origami);
+				proclaim.deepEqual(context.Origami['o-test-component'], {});
+			});
+		});
+
+
 		context('and the response takes more than 25 seconds to be generated', function () {
 			this.timeout(30000);
 
