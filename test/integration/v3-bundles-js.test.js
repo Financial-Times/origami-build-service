@@ -434,63 +434,87 @@ describe('GET /v3/bundles/js', function() {
 
 	describe('regression test for the default property on the exported components under self.Origami', function() {
 
-		/**
-		 * @type {request.Response}
-		 */
-		let response;
-		before(async function () {
-			response = await request(this.app)
-				.get('/v3/bundles/js?brand=internal&components=o-layout@5.0.0,o-expander@6.0.0,o-tooltip@5.0.0,o-date@5.0.0,o-table@9.0.0,o-header-services@5.0.0,o-toggle@3.0.0,o-autoinit@3.0.0,o-utils@2.0.0&system_code=origami')
-				.redirects(5)
-				.set('Connection', 'close');
+		context('for a component with a default export', async function () {
+			let response;
+
+			beforeEach(async function () {
+				response = await request(this.app)
+					.get('/v3/bundles/js?brand=internal&components=o-test-component@3.1.0&system_code=origami')
+					.redirects(5)
+					.set('Connection', 'close');
+			});
+
+			it('adds a default property as an alias to the component\'s API', async () => {
+				const script = new vm.Script(response.text);
+
+				const context = {
+					start_app: sinon.spy(),
+				};
+				context.self = context;
+				script.runInNewContext(context);
+				assert.property(context.Origami['o-test-component'], 'default');
+				assert.equal(context.Origami['o-test-component'], context.Origami['o-test-component'].default);
+			});
 		});
 
-		it('should respond with a 200 status', function() {
-			assert.equal(response.status, 200);
+		context('for a component with no default export', async function () {
+			let response;
+
+			beforeEach(async function () {
+				response = await request(this.app)
+					.get('/v3/bundles/js?brand=internal&components=o-test-component@2.2.9&system_code=origami')
+					.redirects(5)
+					.set('Connection', 'close');
+			});
+
+			it('should respond with a 200 status', function () {
+				assert.equal(response.status, 200);
+			});
+
+			it('does not add a default property with alias to the component API', async () => {
+				const script = new vm.Script(response.text);
+
+				const context = {
+					start_app: sinon.spy(),
+				};
+				context.self = context;
+				script.runInNewContext(context);
+				assert.notProperty(context.Origami['o-test-component'], 'default');
+			});
 		});
 
-		it('should respond with the bundled JavaScript and not throw any errors', function() {
-			assert.matchSnapshot(response.text);
-			assert.deepStrictEqual(getEcmaVersion(response.text), 5);
+		describe('where a default property exists already on the bundled component API', function() {
 
-			const script = new vm.Script(response.text);
+			/**
+			 * @type {request.Response}
+			 */
+			let response;
+			before(async function () {
+				response = await request(this.app)
+					.get('/v3/bundles/js?brand=internal&components=o-autoinit@3.0.0&system_code=origami')
+					.redirects(5)
+					.set('Connection', 'close');
+			});
 
-			const context = {
-				start_app: sinon.spy(),
-			};
-			context.self = context;
-			script.runInNewContext(context);
-			assert.isObject(context.Origami);
-			assert.isFunction(context.Origami['o-date']);
-			assert.deepEqual(context.Origami['o-date'],context.Origami['o-date'].default);
-			assert.isFunction(context.Origami['o-expander']);
-			assert.deepEqual(context.Origami['o-expander'],context.Origami['o-expander'].default);
-			assert.isFunction(context.Origami['o-header-services']);
-			assert.deepEqual(context.Origami['o-header-services'],context.Origami['o-header-services'].default);
-			assert.isFunction(context.Origami['o-layout']);
-			assert.deepEqual(context.Origami['o-layout'],context.Origami['o-layout'].default);
-			assert.isFunction(context.Origami['o-table']);
-			assert.deepEqual(context.Origami['o-table'],context.Origami['o-table'].default);
-			assert.isFunction(context.Origami['o-toggle']);
-			assert.deepEqual(context.Origami['o-toggle'],context.Origami['o-toggle'].default);
-			assert.isFunction(context.Origami['o-tooltip']);
-			assert.deepEqual(context.Origami['o-tooltip'],context.Origami['o-tooltip'].default);
-			assert.isFunction(context.Origami['o-utils'].debounce);
-			assert.isFunction(context.Origami['o-utils'].throttle);
-			assert.isTrue(context.start_app.calledOnce);
-			assert.deepStrictEqual(context.start_app.firstCall.args, [
-				context.Origami
-			]);
+			it('should respond with a 200 status', function() {
+				assert.equal(response.status, 200);
+			});
+
+			it('should not add a default property as the alias the of the component API', function() {
+				assert.notMatch(response.text, /Origami\["o-autoinit"\]\./);
+				assert.notMatch(response.text, /Origami\["o-autoinit"\]\[/);
+				assert.deepStrictEqual(getEcmaVersion(response.text), 5);
+			});
+
+			it('should respond with the expected `Content-Type` header', function() {
+				assert.deepEqual(response.headers['content-type'], 'application/javascript; charset=utf-8');
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
+				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
+			});
+
 		});
-
-		it('should respond with the expected `Content-Type` header', function() {
-			assert.deepEqual(response.headers['content-type'], 'application/javascript; charset=utf-8');
-		});
-
-		it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
-			assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
-		});
-
 	});
 
 });
