@@ -64,6 +64,13 @@ describe('POST /url-updater', function () {
 			// expect a release of v2 or later in the updated url
 			assert.notInclude(response.text, 'missing query parameter');
 		});
+
+		it('should not be cached by fastly', function () {
+			assert.deepEqual(
+				response.headers['cache-control'],
+				'max-age=0, must-revalidate, no-cache, no-store, private'
+			);
+		});
 	});
 
 	describe('with a valid build service url which contains a very outdated component request', function () {
