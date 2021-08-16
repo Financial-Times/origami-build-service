@@ -364,6 +364,25 @@ describe('GET /v3/bundles/js', function() {
 
 	});
 
+	describe('when the system_code parameter is a placeholder value', function() {
+		const componentName = 'o-test-component@2.2.9';
+		const systemCode = '$$$-no-bizops-system-code-$$$';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
+		});
+	});
 	describe('when the system_code parameter is an invalid value', function() {
 		const componentName = 'o-test-component@2.2.9';
 		const systemCode = '$$origami!';
