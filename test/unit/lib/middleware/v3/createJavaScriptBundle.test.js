@@ -567,6 +567,35 @@ describe('createJavaScriptBundle', function () {
 	);
 
 	context(
+		'when given a request with a placeholder system code',
+		async () => {
+			it('it responds with javascript', async () => {
+				const request = httpMock.createRequest();
+				const response = httpMock.createResponse();
+				response.startTime = sinon.spy();
+				response.endTime = sinon.spy();
+				request.app = {
+					ft: {
+						options: {
+							npmRegistryURL: 'https://registry.npmjs.org'
+						}
+					}
+				};
+				request.query.components = 'o-test-component@2.2.9';
+				request.query.system_code = '$$$-no-bizops-system-code-$$$';
+
+				await createJavaScriptBundle(request, response);
+
+				proclaim.deepStrictEqual(
+					response.getHeader('content-type'),
+					'application/javascript;charset=UTF-8'
+				);
+				proclaim.deepStrictEqual(response.statusCode, 200);
+			});
+		}
+	);
+
+	context(
 		'when given a request with an invalid system code',
 		async () => {
 			it('it responds with a plain text error message', async () => {

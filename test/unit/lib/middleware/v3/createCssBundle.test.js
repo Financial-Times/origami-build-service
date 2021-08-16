@@ -593,6 +593,35 @@ describe('createCssBundle', function () {
 		}
 	);
 	context(
+		'when given a request with a placeholder system_code parameter',
+		async () => {
+			it('it responds with css', async () => {
+				const request = httpMock.createRequest();
+				const response = httpMock.createResponse();
+				response.startTime = sinon.spy();
+				response.endTime = sinon.spy();
+				request.app = {
+					ft: {
+						options: {
+							npmRegistryURL: 'https://registry.npmjs.org'
+						}
+					}
+				};
+				request.query.components = 'o-test-component@v2.2.2';
+				request.query.brand = 'master';
+				request.query.system_code = '$$$-no-bizops-system-code-$$$';
+
+				await createCssBundle(request, response);
+
+				proclaim.deepStrictEqual(
+					response.getHeader('content-type'),
+					'text/css; charset=UTF-8'
+				);
+				proclaim.deepStrictEqual(response.statusCode, 200);
+			});
+		}
+	);
+	context(
 		'when given a request with an invalid system_code parameter',
 		async () => {
 			it('it responds with a plain text error message', async () => {

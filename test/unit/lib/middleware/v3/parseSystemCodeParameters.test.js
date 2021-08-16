@@ -70,4 +70,8 @@ describe('parseSystemCodeParameter', () => {
 	it('returns the system_code value if it is a valid system-code', async () => {
 		proclaim.deepStrictEqual(await parseSystemCodeParameter('origami'), 'origami');
 	});
+
+	it('returns the placeholder system_code value', async () => {
+		proclaim.deepStrictEqual(await parseSystemCodeParameter('$$$-no-bizops-system-code-$$$'), '$$$-no-bizops-system-code-$$$');
+	});
 });
