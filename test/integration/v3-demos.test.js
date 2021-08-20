@@ -538,6 +538,27 @@ describe('GET /v3/demo', function() {
 			;
 		});
 	});
+	describe('when the request contains a placeholder system_code parameter', function() {
+		const component = 'o-test-component@2.2.9';
+		const demo = 'test-demo';
+		const system_code = '$$$-no-bizops-system-code-$$$';
+		const brand = 'master';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/demo?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
+		});
+	});
 	describe('when the request contains an invalid system_code parameter', function() {
 		const component = 'o-test-component@2.2.9';
 		const demo = 'test-demo';
