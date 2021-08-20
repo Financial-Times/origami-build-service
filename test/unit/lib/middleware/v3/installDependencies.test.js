@@ -6,13 +6,17 @@ const mockery = require('mockery');
 const sinon = require('sinon');
 const fs = require('fs').promises;
 const path = require('path');
+const appRoot = require('app-root-path');
+const npm = path.join(appRoot.toString(), './node_modules/.bin/npm');
+const npmCacheLocation = path.join(appRoot.toString(), './.npm-cache');
 
 describe('installDependencies', () => {
 	let installDependencies;
 	let execa;
 
 	beforeEach(function() {
-		execa = sinon.spy();
+		execa = sinon.stub();
+		execa.command = sinon.stub().resolves();
 		mockery.registerMock('execa', execa);
 		installDependencies = require('../../../../../lib/middleware/v3/installDependencies').installDependencies;
 	});
@@ -22,70 +26,66 @@ describe('installDependencies', () => {
 	});
 
 	it('it runs `npm install` within the provided location and with the default registry', async () => {
-		const appRoot = require('app-root-path');
-
-		const npm = path.join(appRoot.toString(), './node_modules/.bin/npm');
 		await fs.mkdir('/tmp/bundle/', {recursive: true});
 
 		const location = await fs.mkdtemp('/tmp/bundle/');
-		await fs.writeFile(path.join(location, 'package.json'), '{"dependencies":{"preact":"^10"}}', 'utf-8');
+		await fs.writeFile(path.join(location, 'package.json'), '{"dependencies":{"@financial-times/o-table":"9.0.2"}}', 'utf-8');
 
 		await installDependencies(location);
 
-		proclaim.isTrue(execa.calledOnce);
-		proclaim.isTrue(execa.calledWithExactly(npm,
-			[
-				'install',
-				'--production',
-				'--ignore-scripts',
-				'--no-package-lock',
-				'--no-audit',
-				'--prefer-offline',
-				'--progress=false',
-				'--fund=false',
-				'--package-lock=false',
-				'--strict-peer-deps',
-				'--update-notifier=false',
-				'--bin-links=false',
-				'--registry=https://registry.npmjs.org/'
-			],
+		proclaim.isTrue(execa.command.calledOnce);
+		proclaim.isTrue(execa.command.calledWithExactly(
+			`${npm} install --production --ignore-scripts --no-package-lock --no-audit --offline --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
 			{
 				cwd: location,
-				preferLocal: true
+				preferLocal: false,
+				shell: true,
 			}));
 	});
 
 	it('it runs `npm install` within the provided location and with the provided registry', async () => {
-		const appRoot = require('app-root-path');
-
-		const npm = path.join(appRoot.toString(), './node_modules/.bin/npm');
 		await fs.mkdir('/tmp/bundle/', {recursive: true});
 
 		const location = await fs.mkdtemp('/tmp/bundle/');
-		await fs.writeFile(path.join(location, 'package.json'), '{"dependencies":{"preact":"^10"}}', 'utf-8');
+		await fs.writeFile(path.join(location, 'package.json'), '{"dependencies":{"@financial-times/o-table":"9.0.2"}}', 'utf-8');
+		const registry = 'https://registry.npmjs.org';
+		await installDependencies(location, registry);
 
-		await installDependencies(location, 'https://registry.npmjs.org');
-
-		proclaim.isTrue(execa.calledOnce);
-		proclaim.isTrue(execa.calledWithExactly(npm,
-			[
-				'install',
-				'--production',
-				'--ignore-scripts',
-				'--no-package-lock',
-				'--no-audit',
-				'--prefer-offline',
-				'--progress=false',
-				'--fund=false',
-				'--package-lock=false',
-				'--strict-peer-deps',
-				'--update-notifier=false',
-				'--bin-links=false',
-				'--registry=https://registry.npmjs.org'
-			],
+		proclaim.isTrue(execa.command.calledOnce);
+		proclaim.isTrue(execa.command.calledWithExactly(
+			`${npm} install --production --ignore-scripts --no-package-lock --no-audit --offline --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=${registry} --cache=${npmCacheLocation}`,
 			{
 				cwd: location,
-				preferLocal: true
+				preferLocal: false,
+				shell: true,
+			}));
+	});
+
+	it('if `npm install` fails, it runs `npm install` again but this time allowing network requests to be made', async () => {
+		await fs.mkdir('/tmp/bundle/', {recursive: true});
+
+		const location = await fs.mkdtemp('/tmp/bundle/');
+		await fs.writeFile(path.join(location, 'package.json'), '{"dependencies":{"@financial-times/o-table":"9.0.2"}}', 'utf-8');
+		
+		// Mimic the first call to npm failing and the second call succeeding
+		execa.command.onFirstCall().rejects().onSecondCall().resolves();
+
+		await installDependencies(location);
+
+		proclaim.isTrue(execa.command.calledTwice);
+		proclaim.isTrue(execa.command.firstCall.calledWithExactly(
+			`${npm} install --production --ignore-scripts --no-package-lock --no-audit --offline --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+			{
+				cwd: location,
+				preferLocal: false,
+				shell: true,
+			}));
+		proclaim.isTrue(execa.command.secondCall.calledWithExactly(
+			`${npm} install --production --ignore-scripts --no-package-lock --no-audit --prefer-offline --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+			{
+				cwd: location,
+				preferLocal: false,
+				shell: true,
 			}));
 	});
 });
