@@ -17,8 +17,8 @@ describe('lib/middleware/v3/createPackageJsonFile', () => {
 		const location = await fs.mkdtemp('/tmp/bundle/');
 
 		const modules = new Map([
-			['lodash', '^5'],
-			['preact', '^10.5.5']
+			['@financial-times/o-grid', '^6'],
+			['@financial-times/o-table', '9.0.2']
 		]);
 
 		await createPackageJsonFile(location, modules);

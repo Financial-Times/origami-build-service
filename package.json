@@ -51,7 +51,7 @@
     "denodeify": "^1.2.1",
     "dotenv": "^8.2.0",
     "esbuild": "^0.8.21",
-    "execa": "^1.0.0",
+    "execa": "^5.1.1",
     "express-ftwebservice": "^2.0.2",
     "falafel": "^1.2.0",
     "fs-extra": "^9.0.1",
@@ -83,7 +83,7 @@
     "mustache": "^4.1.0",
     "node-sass": "^5.0.0",
     "node.extend": "^2.0.2",
-    "npm": "^7.1.1",
+    "npm": "^7.20.5",
     "postcss": "^5.2.18",
     "prettier": "^2.2.1",
     "q": "^1.5.1",
@@ -127,11 +127,11 @@
   },
   "engines": {
     "node": "^12",
-    "npm": "^7"
+    "npm": "7.20.5"
   },
   "engineStrict": true,
   "volta": {
     "node": "12.20.1",
-    "npm": "7.5.4"
+    "npm": "7.20.5"
   }
 }

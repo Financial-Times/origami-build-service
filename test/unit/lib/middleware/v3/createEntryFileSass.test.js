@@ -65,7 +65,7 @@ describe('lib/middleware/v3/createEntryFileSass', function() {
 		const components = {
 			'@financial-times/o-table': 'prerelease',
 			'@financial-times/o-grid': 'prerelease',
-			'preact': '^10.5.5'
+			'@financial-times/o-utils': 'prerelease'
 		};
 
 		await fs.writeFile(path.join(location, 'package.json'), JSON.stringify({
