@@ -326,7 +326,7 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@99.0.0 is not in the npm registry"');
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/o-test-component@99.0.0 is not in this registry"');
 		});
 
 	});
@@ -353,7 +353,7 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/jquery@3.0.0 is not in the npm registry"')
+			assert.deepEqual(response.text, 'Origami Build Service returned an error: "@financial-times/jquery@3.0.0 is not in this registry"')
 			;
 		});
 	});
