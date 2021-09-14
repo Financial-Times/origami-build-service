@@ -96,7 +96,7 @@ describe('GET /v3/bundles/js', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepStrictEqual(response.text,'Origami Build Service returned an error: "@financial-times/hello-nonexistent-component@1 is not in the npm registry"');
+			assert.deepStrictEqual(response.text,'Origami Build Service returned an error: "@financial-times/hello-nonexistent-component@1 is not in this registry"');
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
