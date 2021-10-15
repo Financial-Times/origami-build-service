@@ -9,7 +9,9 @@
 
     <h2 id="v2-to-v3-migration">Migrating from v2 to v3</h2>
 
-    <p>Use the <a href="/url-updater">URL updater</a> to help guide you through the migration from v2 to v3.</p>
+    <p>Use the <a href="{{@root.basePath}}/url-updater">URL updater</a> to help guide you through the migration from v2 to v3.</p>
+
+    <h3 id="v2-to-v3-migration-update-query-parameters">Update global query parameters</h3>
 
     <p>Version 3 introduces new query parameters, and requires others which were previously optional (see the <a href="/v3/docs/api">v3 API docs<a/> for more details):</p>
     <ul>
@@ -18,13 +20,17 @@
         <li>The <code>modules</code> query parameter for the bundles endpoints has been renamed to <code>components</code>.</li>
     </ul>
 
+    <h3 id="v2-to-v3-migration-upgrade-components">Upgrade component versions</h3>
     <p>Version 3 can not bundle Origami components which follow version 1 of the Origami component specification, if you see an error related to v1 of the specification upgrade to a newer version of the component.</p>
 
+    <h3 id="v2-to-v3-remove-module-and-file-endpoint-use">Remove module and file endpoint use</h3>
     <p>The <code>/modules</code> and <code>/files</code> endpoints have been removed. Instead of <code>/files</code> use the <code>/v3/font</code> API endpoint instead to request font files. There is no direct replacement for other component files, and no direct replacement for the <code>/modules</code> endpoint. Please speak to the Origami team if your project depends on either of those features.</p>
 
-    <h3>JS endpoint</h3>
+    <h3 id="v2-to-v3-update-js-endpoint-query-parameters-and-include-o-autoinit">Update your JS bundle query parameters</h3>
 
-    <p>In addition, <code>/bundles/js</code> endpoint has removed support for several configuration parameters which are listed below:</p>
+    <p>The <code>/bundles/js</code> endpoint has removed support for several configuration parameters which are listed below.</p>
+
+    <p>If your Build Service v2 request does not include the query parameter <code>autoinit=0</code>, which disables component initalisation, add the <a href="https://registry.origami.ft.com/components/o-autoinit/readme">latest version of o-autoinit</a> to your <code>components</code> query parameter. The <code>o-autoinit</code> component is no longer included in JS bundles by default.</p>
 
     <table class="o-table o-table--horizontal-lines" data-o-component="o-table">
         <thead>
@@ -57,9 +63,7 @@
         </tbody>
     </table>
 
-    <p>The <code>o-autoinit</code> component is no longer included in JS bundles by default. Unless your Build Service v2 request includes <code>autoinit=0</code>, which disables component initalisation, add the <a href="https://registry.origami.ft.com/components/o-autoinit/readme">latest version of o-autoinit</a> to your <code>components</code> query parameter.</p>
-
-    <h3>Example v3 migrations</h3>
+    <h3 id="v2-to-v3-example-v3-migrations">Example v3 migrations</h3>
 
     <table class="o-table o-table--horizontal-lines" data-o-component="o-table">
         <thead>
