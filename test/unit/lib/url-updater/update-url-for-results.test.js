@@ -1,9 +1,53 @@
 'use strict';
 
 const proclaim = require('proclaim');
-const updateUrlForResults = require('../../../../lib/url-updater/update-url-for-results');
+const mockery = require('mockery');
+const sinon = require('sinon');
+
+const mockRepoDataClientVersionEntity = require('../../mock/repo-data-client-version-entity');
 
 describe('lib/update-url-for-results.test', () => {
+
+	let updateUrlForResults;
+	let repoDataClientMock;
+	let repoDataClientMockListVersionsStub;
+
+	beforeEach(function () {
+		repoDataClientMockListVersionsStub = sinon.stub();
+		repoDataClientMockListVersionsStub.withArgs('o-autoinit').returns([
+			Object.assign({}, mockRepoDataClientVersionEntity, {
+				name: 'o-autoinit',
+				version: '1.0.0',
+				versionTag: 'v1.0.0',
+				origamiVersion: 1
+			}),
+			Object.assign({}, mockRepoDataClientVersionEntity, {
+				name: 'o-autoinit',
+				version: '2.0.0',
+				versionTag: 'v2.0.0',
+				origamiVersion: 1
+			}),
+			Object.assign({}, mockRepoDataClientVersionEntity, {
+				name: 'o-autoinit',
+				version: '3.0.0-beta.1',
+				versionTag: 'v3.0.0-beta.1',
+				origamiVersion: 'v2'
+			}),
+			Object.assign({}, mockRepoDataClientVersionEntity, {
+				name: 'o-autoinit',
+				version: '3.0.0',
+				versionTag: 'v3.0.0',
+				origamiVersion: 'v2'
+			})
+		]);
+		repoDataClientMock = function () { };
+		repoDataClientMock.prototype.listVersions = repoDataClientMockListVersionsStub;
+		mockery.registerMock(
+			'@financial-times/origami-repo-data-client',
+			repoDataClientMock
+		);
+		updateUrlForResults = require('../../../../lib/url-updater/update-url-for-results');
+	});
 
 	const specV1Result = {
 		name: 'o-example',
