@@ -64,7 +64,7 @@
     "gulp-if-else": "^1.0.3",
     "gulp-mustache": "^2.2.0",
     "gulp-rename": "^1.4.0",
-    "gulp-sass": "^3.2.1",
+    "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.6",
     "http-errors": "^1.8.0",
@@ -101,8 +101,8 @@
     "uuid": "^8.3.2",
     "valid-filename": "^3.1.0",
     "validate-npm-package-name": "^3.0.0",
-    "webpack": "^3.12.0",
-    "webpack-stream": "^4.0.0"
+    "webpack": "^4.0.0",
+    "webpack-stream": "^7.0.0"
   },
   "devDependencies": {
     "chai": "^4.3.3",
