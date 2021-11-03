@@ -433,8 +433,7 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The brand query parameter must be a string. Either `master`, `internal`, or `whitelabel`."')
-			;
+			assert.include(response.text, 'The brand query parameter must be a string');
 		});
 	});
 	describe('when the request contains an invalid brand parameter', function() {
@@ -459,7 +458,7 @@ describe('GET /v3/demo', function() {
 		});
 
 		it('should respond with an error message', function() {
-			assert.deepEqual(response.text, 'Origami Build Service returned an error: "The brand query parameter must be either `master`, `internal`, or `whitelabel`."')
+			assert.include(response.text, 'The brand query parameter must be either')
 			;
 		});
 	});

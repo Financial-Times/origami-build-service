@@ -508,9 +508,9 @@ describe('createCssBundle', function () {
 				);
 				proclaim.deepStrictEqual(response.statusCode, 400);
 
-				proclaim.deepStrictEqual(
+				proclaim.include(
 					bundle,
-					'Origami Build Service returned an error: \"The brand query parameter must be either `master`, `internal`, or `whitelabel`.\"'
+					'The brand query parameter must be either'
 				);
 			});
 		}
@@ -546,9 +546,9 @@ describe('createCssBundle', function () {
 				);
 				proclaim.deepStrictEqual(response.statusCode, 400);
 
-				proclaim.deepStrictEqual(
+				proclaim.include(
 					bundle,
-					'Origami Build Service returned an error: \"The brand query parameter must be a string. Either `master`, `internal`, or `whitelabel`.\"'
+					'The brand query parameter must be a string'
 				);
 			});
 		}

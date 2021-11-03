@@ -61,7 +61,7 @@ describe('GET /v3/bundles/css', function() {
 		});
 
 		it('should respond with the css', function() {
-			assert.deepStrictEqual(response.text, 'Origami Build Service returned an error: "The brand query parameter must be either `master`, `internal`, or `whitelabel`."');
+			assert.include(response.text, '"The brand query parameter must be either');
 		});
 
 		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
@@ -72,6 +72,48 @@ describe('GET /v3/bundles/css', function() {
 			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
 				assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
 			});
+		});
+	});
+
+	describe('when a valid "core" brand component is requested with a deprecated "master" brand query parameter value', function() {
+		const componentName = 'o-layout@5.0.6';
+		const brand = 'master';
+		const systemCode = 'origami';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
+		});
+	});
+
+	describe('when a valid "master" brand component is requested with the replacement "core" brand query parameter value', function() {
+		const componentName = 'o-test-component@v2.2.9';
+		const brand = 'core';
+		const systemCode = 'origami';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function() {
+			assert.equal(response.status, 200);
 		});
 	});
 
