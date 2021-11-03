@@ -55,7 +55,7 @@ describe('parseBrandParameter', () => {
 
 		proclaim.throws(() => {
 			parseBrandParameter('');
-		}, 'The brand query parameter can not be empty. It must be set to either `core`, `internal`, or `whitelabel`. Note the `master` brand has been renamed the `core` brand, the `master` brand is deprecated.');
+		}, /The brand query parameter can not be empty./);
 	});
 
 	it('throws UserError if brand parameter is not a valid value', async () => {
