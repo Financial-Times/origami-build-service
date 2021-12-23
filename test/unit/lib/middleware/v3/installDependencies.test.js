@@ -35,7 +35,7 @@ describe('installDependencies', () => {
 
 		proclaim.isTrue(execa.command.calledOnce);
 		proclaim.isTrue(execa.command.calledWithExactly(
-			`${npm} install --offline --production --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
 			{
 				cwd: location,
 				preferLocal: false,
@@ -53,7 +53,7 @@ describe('installDependencies', () => {
 
 		proclaim.isTrue(execa.command.calledOnce);
 		proclaim.isTrue(execa.command.calledWithExactly(
-			`${npm} install --offline --production --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=${registry} --cache=${npmCacheLocation}`,
+			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=${registry} --cache=${npmCacheLocation} --production`,
 			{
 				cwd: location,
 				preferLocal: false,
@@ -66,7 +66,7 @@ describe('installDependencies', () => {
 
 		const location = await fs.mkdtemp('/tmp/bundle/');
 		await fs.writeFile(path.join(location, 'package.json'), '{"dependencies":{"@financial-times/o-table":"9.0.2"}}', 'utf-8');
-		
+
 		// Mimic the first call to npm failing and the second call succeeding
 		execa.command.onFirstCall().rejects().onSecondCall().resolves();
 
@@ -74,14 +74,14 @@ describe('installDependencies', () => {
 
 		proclaim.isTrue(execa.command.calledTwice);
 		proclaim.isTrue(execa.command.firstCall.calledWithExactly(
-			`${npm} install --offline --production --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
 			{
 				cwd: location,
 				preferLocal: false,
 				shell: true,
 			}));
 		proclaim.isTrue(execa.command.secondCall.calledWithExactly(
-			`${npm} install --prefer-offline --production --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+			`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
 			{
 				cwd: location,
 				preferLocal: false,
@@ -94,7 +94,7 @@ describe('installDependencies', () => {
 
 		const location = await fs.mkdtemp('/tmp/bundle/');
 		await fs.writeFile(path.join(location, 'package.json'), '{"dependencies":{"@financial-times/o-table":"9.0.2"}}', 'utf-8');
-		
+
 		// Mimic the first call to npm failing and the second call succeeding
 		execa.command.onFirstCall().rejects().onSecondCall().rejects().onThirdCall().resolves();
 
@@ -102,14 +102,14 @@ describe('installDependencies', () => {
 
 		proclaim.isFalse(execa.command.calledTwice);
 		proclaim.isTrue(execa.command.firstCall.calledWithExactly(
-			`${npm} install --offline --production --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
 			{
 				cwd: location,
 				preferLocal: false,
 				shell: true,
 			}));
 		proclaim.isTrue(execa.command.secondCall.calledWithExactly(
-			`${npm} install --prefer-offline --production --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+			`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
 			{
 				cwd: location,
 				preferLocal: false,
@@ -117,11 +117,49 @@ describe('installDependencies', () => {
 			}));
 
 		proclaim.isTrue(execa.command.thirdCall.calledWithExactly(
-			`${npm} install --production --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+			`${npm} install --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
 			{
 				cwd: location,
 				preferLocal: false,
 				shell: true,
 			}));
+	});
+
+	context('when installOnlyProductionDependencies is set to false', () => {
+		it('it installs all dependencies', async () => {
+			await fs.mkdir('/tmp/bundle/', {recursive: true});
+
+			const location = await fs.mkdtemp('/tmp/bundle/');
+			await fs.writeFile(path.join(location, 'package.json'), '{"dependencies":{"@financial-times/o-table":"9.0.2"}}', 'utf-8');
+
+			// Mimic the first call to npm failing and the second call succeeding
+			execa.command.onFirstCall().rejects().onSecondCall().rejects().onThirdCall().resolves();
+
+			await installDependencies(location, 'https://registry.npmjs.org/', false);
+
+			proclaim.isFalse(execa.command.calledTwice);
+			proclaim.isTrue(execa.command.firstCall.calledWithExactly(
+				`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+				{
+					cwd: location,
+					preferLocal: false,
+					shell: true,
+				}));
+			proclaim.isTrue(execa.command.secondCall.calledWithExactly(
+				`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+				{
+					cwd: location,
+					preferLocal: false,
+					shell: true,
+				}));
+
+			proclaim.isTrue(execa.command.thirdCall.calledWithExactly(
+				`${npm} install --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+				{
+					cwd: location,
+					preferLocal: false,
+					shell: true,
+				}));
+		});
 	});
 });
