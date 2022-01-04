@@ -139,14 +139,14 @@ describe('installDependencies', () => {
 
 			proclaim.isFalse(execa.command.calledTwice);
 			proclaim.isTrue(execa.command.firstCall.calledWithExactly(
-				`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+				`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --omit`,
 				{
 					cwd: location,
 					preferLocal: false,
 					shell: true,
 				}));
 			proclaim.isTrue(execa.command.secondCall.calledWithExactly(
-				`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+				`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --omit`,
 				{
 					cwd: location,
 					preferLocal: false,
@@ -154,7 +154,7 @@ describe('installDependencies', () => {
 				}));
 
 			proclaim.isTrue(execa.command.thirdCall.calledWithExactly(
-				`${npm} install --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation}`,
+				`${npm} install --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --omit`,
 				{
 					cwd: location,
 					preferLocal: false,
