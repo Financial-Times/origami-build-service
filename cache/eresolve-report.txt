@@ -1,0 +1,473 @@
+# npm resolution error report
+
+2021-12-24T14:53:32.343Z
+
+While resolving: @financial-times/o-autocomplete@1.0.0
+Found: @financial-times/o-visual-effects@4.0.0-beta.0
+node_modules/@financial-times/o-visual-effects
+  @financial-times/o-visual-effects@"4.0.0-beta.0" from the root project
+  peer @financial-times/o-visual-effects@"prerelease" from @financial-times/o-banner@4.0.0-beta.0
+  node_modules/@financial-times/o-banner
+    @financial-times/o-banner@"^4.0.0-beta.0" from the root project
+  peer @financial-times/o-visual-effects@"prerelease" from @financial-times/o-cookie-message@6.0.0-beta.0
+  node_modules/@financial-times/o-cookie-message
+    @financial-times/o-cookie-message@"^6.0.0-beta.0" from the root project
+  peer @financial-times/o-visual-effects@"prerelease" from @financial-times/o-header@9.0.0-beta.0
+  node_modules/@financial-times/o-header
+    @financial-times/o-header@"^9.0.0-beta.0" from the root project
+  peer @financial-times/o-visual-effects@"prerelease" from @financial-times/o-header-services@5.0.0-beta.0
+  node_modules/@financial-times/o-header-services
+    @financial-times/o-header-services@"^5.0.0-beta.0" from the root project
+  peer @financial-times/o-visual-effects@"prerelease" from @financial-times/o-layout@5.0.0-beta.0
+  node_modules/@financial-times/o-layout
+    @financial-times/o-layout@"^5.0.0-beta.0" from the root project
+  peer @financial-times/o-visual-effects@"prerelease" from @financial-times/o-table@9.0.0-beta.0
+  node_modules/@financial-times/o-table
+    @financial-times/o-table@"^9.0.0-beta.0" from the root project
+  peer @financial-times/o-visual-effects@"prerelease" from @financial-times/o-tooltip@5.0.0-beta.0
+  node_modules/@financial-times/o-tooltip
+    @financial-times/o-tooltip@"^5.0.0-beta.0" from the root project
+
+Could not resolve dependency:
+peer @financial-times/o-visual-effects@"^4.0.1" from @financial-times/o-autocomplete@1.0.0
+node_modules/@financial-times/o-autocomplete
+  @financial-times/o-autocomplete@"^1.0.0" from the root project
+
+Conflicting peer dependency: @financial-times/o-visual-effects@4.1.0
+node_modules/@financial-times/o-visual-effects
+  peer @financial-times/o-visual-effects@"^4.0.1" from @financial-times/o-autocomplete@1.0.0
+  node_modules/@financial-times/o-autocomplete
+    @financial-times/o-autocomplete@"^1.0.0" from the root project
+
+Fix the upstream dependency conflict, or retry
+this command with --force, or --legacy-peer-deps
+to accept an incorrect (and potentially broken) dependency resolution.
+
+Raw JSON explanation object:
+
+{
+  "code": "ERESOLVE",
+  "edge": {
+    "type": "peer",
+    "name": "@financial-times/o-visual-effects",
+    "spec": "^4.0.1",
+    "error": "INVALID",
+    "from": {
+      "name": "@financial-times/o-autocomplete",
+      "version": "1.0.0",
+      "location": "node_modules/@financial-times/o-autocomplete",
+      "isWorkspace": false,
+      "dependents": [
+        {
+          "type": "prod",
+          "name": "@financial-times/o-autocomplete",
+          "spec": "^1.0.0",
+          "from": {
+            "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+          }
+        }
+      ]
+    }
+  },
+  "dep": {
+    "name": "@financial-times/o-visual-effects",
+    "version": "4.1.0",
+    "whileInstalling": {
+      "name": "@financial-times/o-autocomplete",
+      "version": "1.0.0",
+      "path": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service/node_modules/@financial-times/o-autocomplete"
+    },
+    "location": "node_modules/@financial-times/o-visual-effects",
+    "isWorkspace": false,
+    "dependents": [
+      {
+        "type": "peer",
+        "name": "@financial-times/o-visual-effects",
+        "spec": "^4.0.1",
+        "error": "INVALID",
+        "from": {
+          "name": "@financial-times/o-autocomplete",
+          "version": "1.0.0",
+          "location": "node_modules/@financial-times/o-autocomplete",
+          "isWorkspace": false,
+          "dependents": [
+            {
+              "type": "prod",
+              "name": "@financial-times/o-autocomplete",
+              "spec": "^1.0.0",
+              "from": {
+                "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "current": {
+    "name": "@financial-times/o-visual-effects",
+    "version": "4.0.0-beta.0",
+    "location": "node_modules/@financial-times/o-visual-effects",
+    "isWorkspace": false,
+    "dependents": [
+      {
+        "type": "prod",
+        "name": "@financial-times/o-visual-effects",
+        "spec": "4.0.0-beta.0",
+        "from": {
+          "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+        }
+      },
+      {
+        "type": "peer",
+        "name": "@financial-times/o-visual-effects",
+        "spec": "prerelease",
+        "from": {
+          "name": "@financial-times/o-banner",
+          "version": "4.0.0-beta.0",
+          "location": "node_modules/@financial-times/o-banner",
+          "isWorkspace": false,
+          "dependents": [
+            {
+              "type": "prod",
+              "name": "@financial-times/o-banner",
+              "spec": "^4.0.0-beta.0",
+              "from": {
+                "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "peer",
+        "name": "@financial-times/o-visual-effects",
+        "spec": "prerelease",
+        "from": {
+          "name": "@financial-times/o-cookie-message",
+          "version": "6.0.0-beta.0",
+          "location": "node_modules/@financial-times/o-cookie-message",
+          "isWorkspace": false,
+          "dependents": [
+            {
+              "type": "prod",
+              "name": "@financial-times/o-cookie-message",
+              "spec": "^6.0.0-beta.0",
+              "from": {
+                "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "peer",
+        "name": "@financial-times/o-visual-effects",
+        "spec": "prerelease",
+        "from": {
+          "name": "@financial-times/o-header",
+          "version": "9.0.0-beta.0",
+          "location": "node_modules/@financial-times/o-header",
+          "isWorkspace": false,
+          "dependents": [
+            {
+              "type": "prod",
+              "name": "@financial-times/o-header",
+              "spec": "^9.0.0-beta.0",
+              "from": {
+                "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "peer",
+        "name": "@financial-times/o-visual-effects",
+        "spec": "prerelease",
+        "from": {
+          "name": "@financial-times/o-header-services",
+          "version": "5.0.0-beta.0",
+          "location": "node_modules/@financial-times/o-header-services",
+          "isWorkspace": false,
+          "dependents": [
+            {
+              "type": "prod",
+              "name": "@financial-times/o-header-services",
+              "spec": "^5.0.0-beta.0",
+              "from": {
+                "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "peer",
+        "name": "@financial-times/o-visual-effects",
+        "spec": "prerelease",
+        "from": {
+          "name": "@financial-times/o-layout",
+          "version": "5.0.0-beta.0",
+          "location": "node_modules/@financial-times/o-layout",
+          "isWorkspace": false,
+          "dependents": [
+            {
+              "type": "prod",
+              "name": "@financial-times/o-layout",
+              "spec": "^5.0.0-beta.0",
+              "from": {
+                "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "peer",
+        "name": "@financial-times/o-visual-effects",
+        "spec": "prerelease",
+        "from": {
+          "name": "@financial-times/o-table",
+          "version": "9.0.0-beta.0",
+          "location": "node_modules/@financial-times/o-table",
+          "isWorkspace": false,
+          "dependents": [
+            {
+              "type": "prod",
+              "name": "@financial-times/o-table",
+              "spec": "^9.0.0-beta.0",
+              "from": {
+                "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "peer",
+        "name": "@financial-times/o-visual-effects",
+        "spec": "prerelease",
+        "from": {
+          "name": "@financial-times/o-tooltip",
+          "version": "5.0.0-beta.0",
+          "location": "node_modules/@financial-times/o-tooltip",
+          "isWorkspace": false,
+          "dependents": [
+            {
+              "type": "prod",
+              "name": "@financial-times/o-tooltip",
+              "spec": "^5.0.0-beta.0",
+              "from": {
+                "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "peerConflict": {
+    "current": {
+      "name": "@financial-times/o-visual-effects",
+      "version": "4.0.0-beta.0",
+      "location": "node_modules/@financial-times/o-visual-effects",
+      "isWorkspace": false,
+      "dependents": [
+        {
+          "type": "prod",
+          "name": "@financial-times/o-visual-effects",
+          "spec": "4.0.0-beta.0",
+          "from": {
+            "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+          }
+        },
+        {
+          "type": "peer",
+          "name": "@financial-times/o-visual-effects",
+          "spec": "prerelease",
+          "from": {
+            "name": "@financial-times/o-banner",
+            "version": "4.0.0-beta.0",
+            "location": "node_modules/@financial-times/o-banner",
+            "isWorkspace": false,
+            "dependents": [
+              {
+                "type": "prod",
+                "name": "@financial-times/o-banner",
+                "spec": "^4.0.0-beta.0",
+                "from": {
+                  "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "peer",
+          "name": "@financial-times/o-visual-effects",
+          "spec": "prerelease",
+          "from": {
+            "name": "@financial-times/o-cookie-message",
+            "version": "6.0.0-beta.0",
+            "location": "node_modules/@financial-times/o-cookie-message",
+            "isWorkspace": false,
+            "dependents": [
+              {
+                "type": "prod",
+                "name": "@financial-times/o-cookie-message",
+                "spec": "^6.0.0-beta.0",
+                "from": {
+                  "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "peer",
+          "name": "@financial-times/o-visual-effects",
+          "spec": "prerelease",
+          "from": {
+            "name": "@financial-times/o-header",
+            "version": "9.0.0-beta.0",
+            "location": "node_modules/@financial-times/o-header",
+            "isWorkspace": false,
+            "dependents": [
+              {
+                "type": "prod",
+                "name": "@financial-times/o-header",
+                "spec": "^9.0.0-beta.0",
+                "from": {
+                  "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "peer",
+          "name": "@financial-times/o-visual-effects",
+          "spec": "prerelease",
+          "from": {
+            "name": "@financial-times/o-header-services",
+            "version": "5.0.0-beta.0",
+            "location": "node_modules/@financial-times/o-header-services",
+            "isWorkspace": false,
+            "dependents": [
+              {
+                "type": "prod",
+                "name": "@financial-times/o-header-services",
+                "spec": "^5.0.0-beta.0",
+                "from": {
+                  "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "peer",
+          "name": "@financial-times/o-visual-effects",
+          "spec": "prerelease",
+          "from": {
+            "name": "@financial-times/o-layout",
+            "version": "5.0.0-beta.0",
+            "location": "node_modules/@financial-times/o-layout",
+            "isWorkspace": false,
+            "dependents": [
+              {
+                "type": "prod",
+                "name": "@financial-times/o-layout",
+                "spec": "^5.0.0-beta.0",
+                "from": {
+                  "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "peer",
+          "name": "@financial-times/o-visual-effects",
+          "spec": "prerelease",
+          "from": {
+            "name": "@financial-times/o-table",
+            "version": "9.0.0-beta.0",
+            "location": "node_modules/@financial-times/o-table",
+            "isWorkspace": false,
+            "dependents": [
+              {
+                "type": "prod",
+                "name": "@financial-times/o-table",
+                "spec": "^9.0.0-beta.0",
+                "from": {
+                  "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "peer",
+          "name": "@financial-times/o-visual-effects",
+          "spec": "prerelease",
+          "from": {
+            "name": "@financial-times/o-tooltip",
+            "version": "5.0.0-beta.0",
+            "location": "node_modules/@financial-times/o-tooltip",
+            "isWorkspace": false,
+            "dependents": [
+              {
+                "type": "prod",
+                "name": "@financial-times/o-tooltip",
+                "spec": "^5.0.0-beta.0",
+                "from": {
+                  "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "peer": {
+      "name": "@financial-times/o-visual-effects",
+      "version": "4.1.0",
+      "whileInstalling": {
+        "name": "@financial-times/o-autocomplete",
+        "version": "1.0.0",
+        "path": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service/node_modules/@financial-times/o-autocomplete"
+      },
+      "location": "node_modules/@financial-times/o-visual-effects",
+      "isWorkspace": false,
+      "dependents": [
+        {
+          "type": "peer",
+          "name": "@financial-times/o-visual-effects",
+          "spec": "^4.0.1",
+          "error": "INVALID",
+          "from": {
+            "name": "@financial-times/o-autocomplete",
+            "version": "1.0.0",
+            "location": "node_modules/@financial-times/o-autocomplete",
+            "isWorkspace": false,
+            "dependents": [
+              {
+                "type": "prod",
+                "name": "@financial-times/o-autocomplete",
+                "spec": "^1.0.0",
+                "from": {
+                  "location": "/Users/jake.champion/Code/repo-data-cli/repos/origami-build-service"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "strictPeerDeps": false,
+  "force": false,
+  "isMine": true
+}
