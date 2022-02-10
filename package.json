@@ -81,7 +81,7 @@
     "mkdirp": "^1.0.4",
     "morgan": "^1.10.0",
     "mustache": "^4.1.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "node.extend": "^2.0.2",
     "npm": "^7.20.5",
     "postcss": "^5.2.18",
