@@ -47,11 +47,11 @@ describe('parseVersionParameter', () => {
 
 		proclaim.throws(() => {
 			parseVersionParameter('5wg');
-		}, 'The version 5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+		}, 'The version 5wg is not a valid version. Please refer to Origami Build Service v3 documentation for what is a valid version (https://www.ft.com/__origami/service/build/v3/).');
 
 		proclaim.throws(() => {
 			parseVersionParameter('5wg');
-		}, 'The version 5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+		}, 'The version 5wg is not a valid version. Please refer to Origami Build Service v3 documentation for what is a valid version (https://www.ft.com/__origami/service/build/v3/).');
 	});
 
 	it('returns the provided version if it is a valid version', async () => {
