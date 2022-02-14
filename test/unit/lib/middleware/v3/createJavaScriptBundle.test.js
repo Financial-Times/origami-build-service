@@ -447,7 +447,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The bundle request contains o-test with no version range, a version range is required.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
+					'Origami Build Service returned an error: "The bundle request contains o-test with no version range, a version range is required Please refer to Origami Build Service v3 documentation for what is a valid version (https://www.ft.com/__origami/service/build/v3/)."'
 				);
 			});
 		}
@@ -486,7 +486,7 @@ describe('createJavaScriptBundle', function () {
 
 				proclaim.deepStrictEqual(
 					bundle,
-					'Origami Build Service returned an error: "The version 5wg in o-test@5wg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
+					'Origami Build Service returned an error: "The version 5wg in o-test@5wg is not a valid version Please refer to Origami Build Service v3 documentation for what is a valid version (https://www.ft.com/__origami/service/build/v3/)."'
 				);
 			});
 		}

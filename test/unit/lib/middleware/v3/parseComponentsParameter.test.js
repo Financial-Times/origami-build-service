@@ -72,11 +72,11 @@ describe('parseComponentsParameter', () => {
 
 		proclaim.throws(() => {
 			parseComponentsParameter('o-test');
-		}, 'The bundle request contains o-test with no version range, a version range is required.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+		}, 'The bundle request contains o-test with no version range, a version range is required. Please refer to Origami Build Service v3 documentation for what is a valid version (https://www.ft.com/__origami/service/build/v3/).');
 
 		proclaim.throws(() => {
 			parseComponentsParameter('o-test');
-		}, 'The bundle request contains o-test with no version range, a version range is required.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+		}, 'The bundle request contains o-test with no version range, a version range is required. Please refer to Origami Build Service v3 documentation for what is a valid version (https://www.ft.com/__origami/service/build/v3/).');
 	});
 
 	it('throws UserError if components parameter contains component name with an invalid version', async () => {
@@ -86,11 +86,11 @@ describe('parseComponentsParameter', () => {
 
 		proclaim.throws(() => {
 			parseComponentsParameter('o-test@5wg');
-		}, 'The version 5wg in o-test@5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+		}, 'The version 5wg in o-test@5wg is not a valid version. Please refer to Origami Build Service v3 documentation for what is a valid version (https://www.ft.com/__origami/service/build/v3/).');
 
 		proclaim.throws(() => {
 			parseComponentsParameter('o-test@5wg');
-		}, 'The version 5wg in o-test@5wg is not a valid version.\nPlease refer to TODO (build service documentation) for what is a valid version.');
+		}, 'The version 5wg in o-test@5wg is not a valid version. Please refer to Origami Build Service v3 documentation for what is a valid version (https://www.ft.com/__origami/service/build/v3/).');
 	});
 
 	it('throws UserError if components parameter contains invalid component names', async () => {

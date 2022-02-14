@@ -49,7 +49,7 @@ describe('GET /v3/font', function () {
 		it('should respond with an error message', function () {
 			assert.deepEqual(
 				response.text,
-				'"Origami Build Service returned an error: The version 1hg is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
+				'"Origami Build Service returned an error: The version 1hg is not a valid version Please refer to Origami Build Service v3 documentation for what is a valid version (https://www.ft.com/__origami/service/build/v3/)."'
 			);
 
 
@@ -207,7 +207,7 @@ describe('GET /v3/font', function () {
 		it('should respond with an error message', function () {
 
 			assert.deepStrictEqual(						response.text,
-				'"Origami Build Service returned an error: The version http://1.2.3.4/ is not a valid version.\\nPlease refer to TODO (build service documentation) for what is a valid version."'
+				'"Origami Build Service returned an error: The version http://1.2.3.4/ is not a valid version Please refer to Origami Build Service v3 documentation for what is a valid version (https://www.ft.com/__origami/service/build/v3/)."'
 			);
 
 

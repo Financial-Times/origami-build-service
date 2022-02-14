@@ -29,7 +29,7 @@ describe('GET /v2', function() {
 		assert.deepEqual(response.headers['surrogate-key'], 'website');
 	});
 
-	it('should respond with the build service documentation', function() {
+	it('should respond with the Origami Build Service v3 documentation', function() {
 		assert.match(response.text, /origami build service/i);
 	});
 
