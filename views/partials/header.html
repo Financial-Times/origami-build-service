@@ -29,7 +29,7 @@
 			<li {{#if subnav}}data-o-header-services-level="1" {{/if}}>
 				<a
 					class="o-header-services__nav-link"
-					href="{{@root.basePath}}{{href}}"
+					href="/__origami/service/build/{{href}}"
 					{{#current}}aria-current="page"{{/current}}
 					>{{name}}</a
 				>{{#each subnavItems}}{{#if @first}}<!--
@@ -42,7 +42,7 @@
 				<ul data-o-header-services-level="2" aria-hidden="true">
 					{{/if}}
 					<li>
-						<a {{#label}}aria-label="{{.}}"{{/label}} href="{{@root.basePath}}{{href}}">{{name}}</a>
+						<a {{#label}}aria-label="{{.}}"{{/label}} href="/__origami/service/build/{{href}}">{{name}}</a>
 					</li>
 					{{#if @last}}
 					<li>

@@ -30,7 +30,6 @@ before(function() {
 	if (HOST) {
 		return new Promise(resolve => {
 			this.app = HOST;
-			this.basepath = new URL(HOST).pathname;
 			resolve();
 		});
 	} else {
@@ -48,7 +47,6 @@ before(function() {
 			.listen()
 			.then(app => {
 				this.app = app;
-				this.basepath = '/';
 			});
 	}
 });

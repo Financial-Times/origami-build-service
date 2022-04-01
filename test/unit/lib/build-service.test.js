@@ -88,12 +88,6 @@ describe('lib/build-service', () => {
 			assert.strictEqual(options.about, about);
 		});
 
-		it('creates and mounts getBasePath middleware', () => {
-			assert.calledOnce(origamiService.middleware.getBasePath);
-			assert.calledWithExactly(origamiService.middleware.getBasePath);
-			assert.calledWith(origamiService.mockApp.use, origamiService.middleware.getBasePath.firstCall.returnValue);
-		});
-
 		it('creates and mounts logHostname middleware', () => {
 			assert.called(logHostname);
 			assert.calledWithExactly(logHostname, options.log);

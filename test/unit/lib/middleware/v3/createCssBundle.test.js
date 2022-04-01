@@ -39,7 +39,6 @@ describe('createCssBundle', function () {
 						}
 					}
 				};
-				request.basePath = '/';
 				request.path = '/v3/bundles/css';
 				request.query.components = 'o-test-component@v2.2.2';
 				request.query.brand = 'master';
@@ -50,7 +49,7 @@ describe('createCssBundle', function () {
 				proclaim.deepStrictEqual(response.statusCode, 307);
 				proclaim.deepStrictEqual(
 					response.getHeader('location'),
-					'/v3/bundles/css?components=o-test-component%40v2.2.2&brand=master&system_code=origami'
+					'/__origami/service/build/v3/bundles/css?components=o-test-component%40v2.2.2&brand=master&system_code=origami'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),

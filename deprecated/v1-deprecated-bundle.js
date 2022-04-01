@@ -17,7 +17,7 @@ module.exports = function handleDeprecatedBundle(req, res) {
 			bundleStream.pipe(res);
 		})
 		.catch(() => {
-			req.url = req.url.replace(`${req.basePath}v1/`, req.basePath);
+			req.url = req.url.replace('/v1/', '/');
 			handleDeprecatedRoute(req, res);
 			metrics.count('routes.bundle.deprecated.redirect', 1);
 		});

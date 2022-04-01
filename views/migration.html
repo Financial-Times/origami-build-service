@@ -9,11 +9,11 @@
 
     <h2 id="v2-to-v3-migration">Migrating from v2 to v3</h2>
 
-    <p>Use the <a href="{{@root.basePath}}/url-updater">URL updater</a> to help guide you through the migration from v2 to v3.</p>
+    <p>Use the <a href="/__origami/service/build/url-updater">URL updater</a> to help guide you through the migration from v2 to v3.</p>
 
     <h3 id="v2-to-v3-migration-update-query-parameters">Update global query parameters</h3>
 
-    <p>Version 3 introduces new query parameters, and requires others which were previously optional (see the <a href="{{@root.basePath}}/v3/docs/api">v3 API docs<a/> for more details):</p>
+    <p>Version 3 introduces new query parameters, and requires others which were previously optional (see the <a href="/__origami/service/build/v3/docs/api">v3 API docs<a/> for more details):</p>
     <ul>
         <li>A <code>system_code</code> query parameter is now required, and must be set to a valid <a href="https://biz-ops.in.ft.com/list/Systems">bizops system code</a> for the system which is making the build service request.</li>
         <li>The <code>brand</code> query parameter is required for the css bundle endpoint, where once it was optional.</li>

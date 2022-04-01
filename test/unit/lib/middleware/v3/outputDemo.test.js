@@ -38,7 +38,6 @@ describe('outputDemo', function () {
 						}
 					}
 				};
-				request.basePath = '/';
 				request.path = '/v3/demo';
 				request.query.component = 'o-test-component@2.2.1';
 				request.query.demo = 'test-demo';
@@ -50,7 +49,7 @@ describe('outputDemo', function () {
 				proclaim.deepStrictEqual(response.statusCode, 307);
 				proclaim.deepStrictEqual(
 					response.getHeader('location'),
-					'/v3/demo?component=o-test-component%402.2.1&demo=test-demo&system_code=origami&brand=master'
+					'/__origami/service/build/v3/demo?component=o-test-component%402.2.1&demo=test-demo&system_code=origami&brand=master'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),

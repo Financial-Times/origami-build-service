@@ -8,7 +8,7 @@ const URL = require('url');
 const defaultStaticBundlesDirectory = path.resolve(__dirname, 'static-bundles');
 
 function getStaticBundleStream(url, staticBundlesDirectory) {
-	const filePath = module.exports.getStaticBundleFilePath(url, staticBundlesDirectory);
+	const filePath = module.exports.getStaticBundleFilePath(url.replace('/__origami/service/build', ''), staticBundlesDirectory);
 	return fs.stat(filePath).then((stats) => {
 		if (!stats.isFile()) {
 			throw new Error('Static bundle is not a file');
