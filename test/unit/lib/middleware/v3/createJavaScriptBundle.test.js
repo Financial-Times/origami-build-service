@@ -80,7 +80,6 @@ describe('createJavaScriptBundle', function () {
 						}
 					}
 				};
-				request.basePath = '/';
 				request.path = '/v3/bundles/js';
 				request.query.components = 'o-test-component@2.2.9';
 				request.query.system_code = 'origami';
@@ -90,7 +89,7 @@ describe('createJavaScriptBundle', function () {
 				proclaim.deepStrictEqual(response.statusCode, 307);
 				proclaim.deepStrictEqual(
 					response.getHeader('location'),
-					'/v3/bundles/js?components=o-test-component%402.2.9&system_code=origami'
+					'/__origami/service/build/v3/bundles/js?components=o-test-component%402.2.9&system_code=origami'
 				);
 				proclaim.deepStrictEqual(
 					response.getHeader('cache-control'),

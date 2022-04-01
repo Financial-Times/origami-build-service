@@ -101,7 +101,7 @@ describe('lib/middleware/outputDemo', function() {
 								assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
 								assert.calledOnce(response.redirect);
 								assert.equal(request.query.redirects, 1);
-								assert.calledWithExactly(response.redirect, 307, '/?redirects=1');
+								assert.calledWithExactly(response.redirect, 307, '/__origami/service/build/?redirects=1');
 							});
 					});
 				});
@@ -116,7 +116,7 @@ describe('lib/middleware/outputDemo', function() {
 								assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
 								assert.calledOnce(response.redirect);
 								assert.equal(request.query.redirects, 2);
-								assert.calledWithExactly(response.redirect, 307, '/?redirects=2');
+								assert.calledWithExactly(response.redirect, 307, '/__origami/service/build/?redirects=2');
 							});
 					});
 				});
@@ -131,7 +131,7 @@ describe('lib/middleware/outputDemo', function() {
 								assert.strictEqual(global.setTimeout.firstCall.args[1], 20000);
 								assert.calledOnce(response.redirect);
 								assert.equal(request.query.redirects, 3);
-								assert.calledWithExactly(response.redirect, 307, '/?redirects=3');
+								assert.calledWithExactly(response.redirect, 307, '/__origami/service/build/?redirects=3');
 							});
 					});
 				});
@@ -181,7 +181,7 @@ describe('lib/middleware/outputDemo', function() {
 						return middleware(request, response, next)
 							.then(() => {
 								assert.calledOnce(response.redirect);
-								assert.calledWithExactly(response.redirect, 307, '/');
+								assert.calledWithExactly(response.redirect, 307, '/__origami/service/build/');
 							});
 					});
 				});

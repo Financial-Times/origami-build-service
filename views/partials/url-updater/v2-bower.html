@@ -1,8 +1,8 @@
-<p>Your Origami Build Service URL includes some components which are more than one major version behind the latest release, and are not compatible with the latest version of the Origami Build Service (<a href="{{@root.basePath}}/v3/docs/api">v3</a>).</p>
+<p>Your Origami Build Service URL includes some components which are more than one major version behind the latest release, and are not compatible with the latest version of the Origami Build Service (<a href="/__origami/service/build/v3/docs/api">v3</a>).</p>
 
 <ol>
     <li>
-        <p>We recommend upgrading your components incrementally. First, migrate the following components to the last version compatible with <a href="{{@root.basePath}}/v2/docs/api">v2</a> of the Origami Build Service only (not to the latest release yet). Follow the linked to migration guide for each component and use the updated Origami Build Service URL provided:</p>
+        <p>We recommend upgrading your components incrementally. First, migrate the following components to the last version compatible with <a href="/__origami/service/build/v2/docs/api">v2</a> of the Origami Build Service only (not to the latest release yet). Follow the linked to migration guide for each component and use the updated Origami Build Service URL provided:</p>
         <ul>
         {{#results}}
             {{#if belowLatestBowerRelease}}
@@ -16,6 +16,6 @@
         <pre><code>{{updatedBuildServiceUrl}}</code></pre>
     </li>
     <li>
-        <p>Next, place your updated Build Service URL back into this tool for instructions to upgrade to <a href="{{@root.basePath}}/v3/docs/api">v3</a> of the Origami Build Service, which will enable you to include the latest release of each component.</p>
+        <p>Next, place your updated Build Service URL back into this tool for instructions to upgrade to <a href="/__origami/service/build/v3/docs/api">v3</a> of the Origami Build Service, which will enable you to include the latest release of each component.</p>
     </li>
 </ol>
