@@ -115,7 +115,7 @@ describe('POST /url-updater', function () {
 		});
 	});
 
-	describe.only('with a valid build service url which does not specify a version number', function () {
+	describe('with a valid build service url which does not specify a version number', function () {
 		const modules = 'o-tracking';
 
 		/**
