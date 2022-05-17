@@ -115,6 +115,52 @@ describe('POST /url-updater', function () {
 		});
 	});
 
+	describe.only('with a valid build service url which does not specify a version number', function () {
+		const modules = 'o-tracking';
+
+		/**
+		 * @type {request.Response}
+		 */
+		let response;
+		before(async function () {
+			response = await request(this.app)
+				.post('/url-updater')
+				.send(`build-service-url=https://www.ft.com/__origami/service/build/v2/bundles/css?modules=${modules}%26brand=internal%26system_code=origami`)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 200 status', function () {
+			assert.equal(response.status, 200);
+		});
+
+		it('should respond with an updated build service v2 url (not v3)', function () {
+			// so users may upgrade components to their last Bower version before
+			// then migrating to v3 of the Origami Build Service
+			assert.include(response.text, 'v2/bundles/css?modules&#x3D;o-tracking@^3.0.0');
+		});
+
+		it('should respond with an updated build service v2 url (not v3)', function () {
+			// so users may upgrade components to their last Bower version before
+			// then migrating to v3 of the Origami Build Service
+			assert.include(response.text, 'v2/bundles/css?modules&#x3D;o-tracking@^3.0.0');
+		});
+
+		it('does not mention autoinit', function () {
+			// o-autoinit is included by default in OBS v2, no changes
+			// should be recommended
+			assert.include(response.text, 'autoinit');
+		});
+
+		it('should respond with an explanation to migrate to the latest Bower release first', function () {
+			// OBS v2 pinned to an old version number when no version was specified and not the latest version.
+			// OBS v2 used to return the latest version of the component bundle but this could cause breaking
+			// changes where any new major version introduced markup changes.
+			// OBS v3 now explicity requires a version number / range is requested.
+			assert.include(response.text, 'not compatible with the latest version of the Origami Build Service');
+			assert.include(response.text, 'We recommend upgrading your components incrementally.');
+		});
+	});
+
 	describe('with an outdated build service url and missing parameters', function () {
 		const modules = 'o-test-component@^1.0.0';
 
