@@ -56,6 +56,8 @@ We configure Origami Build Service using environment variables. In development, 
 
   * `NODE_ENV`: The environment to run the application in. One of `production`, `development` (default), or `test` (for use in automated tests).
   * `PORT`: The port to run the application on.
+  * `AWS_ACCESS_KEY_ID`: An AWS key with access to the AWS S3 bucket which stores archived responses.
+  * `AWS_SECRET_ACCESS_KEY`: An AWS secret with access to the AWS S3 bucket which stores archived responses.
 
 ### Required in Heroku
 
@@ -67,7 +69,10 @@ We configure Origami Build Service using environment variables. In development, 
   * `CHANGE_API_KEY`: The change-log API key to use when creating and closing change-logs.
   * `RELEASE_ENV`: The Salesforce environment to include in change-logs. One of `Test` or `Production`
   * `SENTRY_DSN`: The Sentry URL to send error information to
-
+  * `ARCHIVE`: Control use of archived responses for v2 endpoints. One of:
+    * default (not set): don't use the archive and don't return stored responses
+    * `fallback`: try to use the static archive but fall back to generating a response, given a request with no archived response
+    * `full`: use the static archive and 404 for any request with no archived response
 #### Deprecated:
 
 The following keys are required for v2 of the Build Service. They are deprecated and should not be used when developing new features, instead use `ORIGAMI_GITHUB_TOKEN`.
