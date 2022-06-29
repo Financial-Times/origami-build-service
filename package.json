@@ -64,7 +64,7 @@
     "gulp-if-else": "^1.0.3",
     "gulp-mustache": "^2.2.0",
     "gulp-rename": "^1.4.0",
-    "gulp-sass": "^3.2.1",
+    "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.6",
     "http-errors": "^1.8.0",
@@ -81,7 +81,7 @@
     "mkdirp": "^1.0.4",
     "morgan": "^1.10.0",
     "mustache": "^4.1.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "node.extend": "^2.0.2",
     "npm": "^7.20.5",
     "postcss": "^5.2.18",
@@ -126,12 +126,12 @@
     "vinyl": "^2.2.1"
   },
   "engines": {
-    "node": "^12",
-    "npm": "7.20.5"
+    "node": "^16",
+    "npm": "^8"
   },
   "engineStrict": true,
   "volta": {
-    "node": "12.20.1",
-    "npm": "7.20.5"
+    "node": "16.15.1",
+    "npm": "8.13.1"
   }
 }
