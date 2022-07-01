@@ -71,8 +71,9 @@ const pathToFilename = path => {
 	// https://origami-build.ft.com/[...]
 	// https://www.ft.com/__origami/service/build/[...]
 	const pathWithoutOrigin = removeOrigin(path).replace(/.+build\//g, '').replace(/^\//, '');
+	const decodedPathWithoutOrigin = decodeURIComponent(pathWithoutOrigin);
 	// Decode for human readability.
-	return decodeURIComponent(pathWithoutOrigin)
+	return decodedPathWithoutOrigin
 		// Responses for one endpoint under one directory.
 		// File for query param combination.
 		.replace(/\?/, '/?')
