@@ -93,6 +93,7 @@
     "request": "^2.88.2",
     "require-all": "^3.0.0",
     "rimraf": "^3.0.2",
+    "sass-bin": "^1.43.2",
     "semver": "^7.3.4",
     "server-timing": "^3.3.1",
     "stream-combiner2": "1.0.2",
