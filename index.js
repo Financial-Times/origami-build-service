@@ -21,7 +21,8 @@ const options = {
 		process.env.BOWER_REGISTRY_URL || 'http://origami-bower-registry.ft.com',
 	tempdir: `/tmp/buildservice-${process.pid}/`,
 	testHealthcheckFailure: process.env.TEST_HEALTHCHECK_FAILURE || false,
-	npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org'
+	npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org',
+	archiveBucketName: process.env.ARCHIVE_BUCKET_NAME || 'origami-build-service-bundles-archive-test'
 };
 
 /**
