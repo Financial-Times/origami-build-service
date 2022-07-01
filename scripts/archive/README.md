@@ -2,11 +2,14 @@
 
 A script to store Origami Build Service responses to an AWS S3 archive.
 
-Requires `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables, as documented in the [main README](../../README.md).
+Environment variables, as documented in the [main README](../../README.md):
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `ARCHIVE_BUCKET_NAME`
 
 Example usage:
 ```bash
-cat scripts/archive/example-input.txt | scripts/archive/crawl-build.bash | node scripts/archive/index.js
+ARCHIVE_BUCKET_NAME=origami-build-service-bundles-archive-test cat scripts/archive/example-input.txt | scripts/archive/crawl-build.bash | node scripts/archive/index.js
 ```
 
 - `cat scripts/archive/example-input.txt`: Outputs the content of a file to stdout.

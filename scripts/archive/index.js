@@ -12,6 +12,7 @@ const totalLimit = 0;
 
 dotenv.config();
 const s3BundleArchiveClient = new S3Client({ region: 'eu-west-1' });
+const s3BucketName = process.env.ARCHIVE_BUCKET_NAME || 'origami-build-service-bundles-archive-test';
 
 const checkBuild = async path => {
 	try {
@@ -37,7 +38,7 @@ const getBundle = async path => {
 const pushBundleToAws = async (filename, bundle) => {
 	try {
 		await s3BundleArchiveClient.send(new PutObjectCommand({
-			Bucket: 'origami-build-service-v2-bundles-archive-test',
+			Bucket: s3BucketName,
 			Key: filename,
 			Body: bundle.data.toString(),
 			ContentType: bundle.headers['content-type']
@@ -50,7 +51,7 @@ const pushBundleToAws = async (filename, bundle) => {
 const archiveExists = async (filename) => {
 	try {
 		await s3BundleArchiveClient.send(new HeadObjectCommand({
-			Bucket: 'origami-build-service-v2-bundles-archive-test',
+			Bucket: s3BucketName,
 			Key: filename
 		}));
 		return true;
@@ -85,7 +86,7 @@ const pathToFilename = path => {
 		.replace(/(?:[?])(?:.+)?[/]/g, '_')
 		// Append hash to avoid conflicts having crudely sanitised the url.
 		+ '-' +
-		crypto.createHash('md5').update(pathWithoutOrigin).digest('hex');
+		crypto.createHash('md5').update(decodedPathWithoutOrigin).digest('hex');
 };
 
 const archive = async path => {
