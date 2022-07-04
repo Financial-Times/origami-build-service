@@ -56,8 +56,6 @@ We configure Origami Build Service using environment variables. In development, 
 
   * `NODE_ENV`: The environment to run the application in. One of `production`, `development` (default), or `test` (for use in automated tests).
   * `PORT`: The port to run the application on.
-  * `AWS_ACCESS_KEY_ID`: An AWS key with access to the AWS S3 bucket which stores archived responses.
-  * `AWS_SECRET_ACCESS_KEY`: An AWS secret with access to the AWS S3 bucket which stores archived responses.
 
 ### Required in Heroku
 

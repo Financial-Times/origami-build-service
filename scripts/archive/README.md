@@ -2,10 +2,10 @@
 
 A script to store Origami Build Service responses to an AWS S3 archive.
 
-Environment variables, as documented in the [main README](../../README.md):
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
-- `ARCHIVE_BUCKET_NAME`
+Environment variables:
+- `AWS_ACCESS_KEY_ID`: An AWS key with write access to the AWS S3 bucket which stores archived responses.
+- `AWS_SECRET_ACCESS_KEY`: An AWS secret with write access to the AWS S3 bucket which stores archived responses.
+- `ARCHIVE_BUCKET_NAME`: As documented in the [main README](../../README.md).
 
 Example usage:
 ```bash
