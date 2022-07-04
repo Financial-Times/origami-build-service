@@ -41,7 +41,8 @@ const pushBundleToAws = async (filename, bundle) => {
 			Bucket: s3BucketName,
 			Key: filename,
 			Body: bundle.data.toString(),
-			ContentType: bundle.headers['content-type']
+			ContentType: bundle.headers['content-type'],
+			ACL:'public-read'
 		}));
 	} catch (error) {
 		throw new Error(`failed push to s3 (${error.message})`);
