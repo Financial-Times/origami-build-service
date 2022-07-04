@@ -42,6 +42,7 @@ before(function() {
 			graphiteApiKey: 'xxx',
 			staticBundlesDirectory: `${__dirname}/mock-static-bundles`,
 			npmRegistryURL: process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org',
+			archiveBucketName: process.env.ARCHIVE_BUCKET_NAME || 'origami-build-service-bundles-archive-test',
 			tempdir
 		})
 			.listen()
