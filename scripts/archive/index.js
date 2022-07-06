@@ -7,7 +7,7 @@ const { stdin: input } = require('node:process');
 const axios = require('axios').default;
 const { S3Client, PutObjectCommand, HeadObjectCommand } = require('@aws-sdk/client-s3');
 
-const batchLimit = 3;
+const batchLimit = 50;
 const totalLimit = 0;
 
 dotenv.config();
