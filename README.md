@@ -71,7 +71,7 @@ We configure Origami Build Service using environment variables. In development, 
     * default (not set): don't use the archive and don't return stored responses
     * `fallback`: try to use the static archive but fall back to generating a response, given a request with no archived response
     * `full`: use the static archive and 404 for any request with no archived response
-  * `ARCHIVE_BUCKET_NAME`: `origami-build-service-archive-test` (default) or `origami-build-service-bundles-archive-prod`
+  * `ARCHIVE_BUCKET_NAME`: `origami-build-service-archive-prod` (default) or `origami-build-service-archive-test`
 #### Deprecated:
 
 The following keys are required for v2 of the Build Service. They are deprecated and should not be used when developing new features, instead use `ORIGAMI_GITHUB_TOKEN`.
