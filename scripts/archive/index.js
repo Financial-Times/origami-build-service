@@ -12,7 +12,7 @@ const totalLimit = 0;
 
 dotenv.config();
 const s3BundleArchiveClient = new S3Client({ region: 'eu-west-1' });
-const s3BucketName = process.env.ARCHIVE_BUCKET_NAME || 'origami-build-service-bundles-archive-test';
+const s3BucketName = process.env.ARCHIVE_BUCKET_NAME || 'origami-build-service-archive-test';
 
 const checkBuild = async path => {
 	try {
