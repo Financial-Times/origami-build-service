@@ -72,7 +72,7 @@ const pathToFilename = path => {
 	// Same name regardless of host.
 	// https://origami-build.ft.com/[...]
 	// https://www.ft.com/__origami/service/build/[...]
-	const pathWithoutOrigin = removeOrigin(path).replace(/.+build\//g, '').replace(/^\//, '');
+	const pathWithoutOrigin = removeOrigin(path).replace(/^\/?__origami\/service\/build\/?/, '').replace(/^\//, '');
 	const decodedPathWithoutOrigin = decodeURIComponent(pathWithoutOrigin);
 	// Decode for human readability.
 	return decodedPathWithoutOrigin
