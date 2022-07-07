@@ -7,7 +7,3 @@ node_modules
 npm-debug.log
 .DS_Store
 .nyc_output
-.npm-cache/_logs
-.npm-cache/_cacache/tmp
-.npm-cache/_update-notifier-last-checked
-.npm-cache/eresolve-report.txt

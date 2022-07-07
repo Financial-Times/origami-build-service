@@ -8,7 +8,6 @@ const fs = require('fs').promises;
 const path = require('path');
 const appRoot = require('app-root-path');
 const npm = path.join(appRoot.toString(), './node_modules/.bin/npm');
-const npmCacheLocation = path.join(appRoot.toString(), './.npm-cache');
 
 describe('installDependencies', () => {
 	let installDependencies;
@@ -35,7 +34,7 @@ describe('installDependencies', () => {
 
 		proclaim.isTrue(execa.command.calledOnce);
 		proclaim.isTrue(execa.command.calledWithExactly(
-			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
+			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --production`,
 			{
 				cwd: location,
 				preferLocal: false,
@@ -53,7 +52,7 @@ describe('installDependencies', () => {
 
 		proclaim.isTrue(execa.command.calledOnce);
 		proclaim.isTrue(execa.command.calledWithExactly(
-			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=${registry} --cache=${npmCacheLocation} --production`,
+			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=${registry} --production`,
 			{
 				cwd: location,
 				preferLocal: false,
@@ -74,14 +73,14 @@ describe('installDependencies', () => {
 
 		proclaim.isTrue(execa.command.calledTwice);
 		proclaim.isTrue(execa.command.firstCall.calledWithExactly(
-			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
+			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --production`,
 			{
 				cwd: location,
 				preferLocal: false,
 				shell: true,
 			}));
 		proclaim.isTrue(execa.command.secondCall.calledWithExactly(
-			`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
+			`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --production`,
 			{
 				cwd: location,
 				preferLocal: false,
@@ -102,14 +101,14 @@ describe('installDependencies', () => {
 
 		proclaim.isFalse(execa.command.calledTwice);
 		proclaim.isTrue(execa.command.firstCall.calledWithExactly(
-			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
+			`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --production`,
 			{
 				cwd: location,
 				preferLocal: false,
 				shell: true,
 			}));
 		proclaim.isTrue(execa.command.secondCall.calledWithExactly(
-			`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
+			`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --production`,
 			{
 				cwd: location,
 				preferLocal: false,
@@ -117,7 +116,7 @@ describe('installDependencies', () => {
 			}));
 
 		proclaim.isTrue(execa.command.thirdCall.calledWithExactly(
-			`${npm} install --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --production`,
+			`${npm} install --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --production`,
 			{
 				cwd: location,
 				preferLocal: false,
@@ -139,14 +138,14 @@ describe('installDependencies', () => {
 
 			proclaim.isFalse(execa.command.calledTwice);
 			proclaim.isTrue(execa.command.firstCall.calledWithExactly(
-				`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --omit`,
+				`${npm} install --offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --omit`,
 				{
 					cwd: location,
 					preferLocal: false,
 					shell: true,
 				}));
 			proclaim.isTrue(execa.command.secondCall.calledWithExactly(
-				`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --omit`,
+				`${npm} install --prefer-offline --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --omit`,
 				{
 					cwd: location,
 					preferLocal: false,
@@ -154,7 +153,7 @@ describe('installDependencies', () => {
 				}));
 
 			proclaim.isTrue(execa.command.thirdCall.calledWithExactly(
-				`${npm} install --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --cache=${npmCacheLocation} --omit`,
+				`${npm} install --ignore-scripts --no-package-lock --no-audit --progress=false --fund=false --package-lock=false --strict-peer-deps --update-notifier=false --bin-links=false --registry=https://registry.npmjs.org/ --omit`,
 				{
 					cwd: location,
 					preferLocal: false,
