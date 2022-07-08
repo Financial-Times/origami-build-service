@@ -5,7 +5,8 @@ const crypto = require('node:crypto');
 const dotenv = require('dotenv');
 const { stdin: input } = require('node:process');
 const axios = require('axios').default;
-const { S3Client, PutObjectCommand, HeadObjectCommand } = require('@aws-sdk/client-s3');
+const { Upload } = require('@aws-sdk/lib-storage');
+const { S3Client, HeadObjectCommand } = require('@aws-sdk/client-s3');
 
 const batchLimit = 50;
 const totalLimit = 0;
@@ -25,7 +26,9 @@ const checkBuild = async path => {
 
 const getBundle = async path => {
 	try {
-		const response = await axios.get(path);
+		const response = await axios.get(path, {
+			responseType: 'stream'
+		});
 		return {
 			data: response.data,
 			headers: response.headers
@@ -37,13 +40,23 @@ const getBundle = async path => {
 
 const pushBundleToAws = async (filename, bundle) => {
 	try {
-		await s3BundleArchiveClient.send(new PutObjectCommand({
-			Bucket: s3BucketName,
-			Key: filename,
-			Body: bundle.data.toString(),
-			ContentType: bundle.headers['content-type'],
-			ACL:'public-read'
-		}));
+		const s3upload = new Upload({
+			client: s3BundleArchiveClient,
+			params: {
+				Bucket: s3BucketName,
+				Key: filename,
+				Body: bundle.data,
+				ContentType: bundle.headers['content-type'],
+				ACL: 'public-read'
+			},
+			tags: [],
+			queueSize: 4, // optional concurrency configuration
+			partSize: 1024 * 1024 * 5, // optional size of each part, in bytes, at least 5MB
+			leavePartsOnError: false, // optional manually handle dropped parts
+		  });
+
+  		await s3upload.done();
+
 	} catch (error) {
 		throw new Error(`failed push to s3 (${error.message})`);
 	}
@@ -103,9 +116,8 @@ const archive = async path => {
 
 		await checkBuild(path);
 
-		const bundleResult = await getBundle(path);
-
-		await pushBundleToAws(filename, bundleResult);
+		const bundle = await getBundle(path);
+		await pushBundleToAws(filename, bundle);
 
 		console.log(`archive complete: ${path} (${filename})`);
 	} catch (error) {
