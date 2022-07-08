@@ -1,12 +1,12 @@
 'use strict';
 
 const readline = require('node:readline');
-const crypto = require('node:crypto');
 const dotenv = require('dotenv');
 const { stdin: input } = require('node:process');
 const axios = require('axios').default;
 const { Upload } = require('@aws-sdk/lib-storage');
 const { S3Client, HeadObjectCommand } = require('@aws-sdk/client-s3');
+const pathToFilename = require('../../lib/path-to-archive-filename');
 
 const batchLimit = 50;
 const totalLimit = 0;
@@ -75,32 +75,6 @@ const archiveExists = async (filename) => {
 		}
 		return false;
 	}
-};
-
-const pathToFilename = path => {
-	const removeOrigin = path => {
-		const url = new URL(path);
-		return path.replace(url.origin, '');
-	};
-	// Same name regardless of host.
-	// https://origami-build.ft.com/[...]
-	// https://www.ft.com/__origami/service/build/[...]
-	const pathWithoutOrigin = removeOrigin(path).replace(/^\/?__origami\/service\/build\/?/, '').replace(/^\//, '');
-	const decodedPathWithoutOrigin = decodeURIComponent(pathWithoutOrigin);
-	// Decode for human readability.
-	return decodedPathWithoutOrigin
-		// Responses for one endpoint under one directory.
-		// File for query param combination.
-		.replace(/\?/, '/?')
-		// Sanitise url. Keep select special characters for
-		// human readability.
-		.replace(/[^a-zA-Z0-9-_^,&?/]/g, '_')
-		// Remove any slash from a query param (we decoded the url, and don't want
-		// someone to manipulate the structure of our s3 bucket with a query param).
-		.replace(/(?:[?])(?:.+)?[/]/g, '_')
-		// Append hash to avoid conflicts having crudely sanitised the url.
-		+ '-' +
-		crypto.createHash('md5').update(decodedPathWithoutOrigin).digest('hex');
 };
 
 const archive = async path => {
