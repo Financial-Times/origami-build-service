@@ -125,6 +125,17 @@ rl.on('line', async (line) => {
 	}
 	const job = archive.bind(null, line);
 	queue.push(job);
+	// To handle requests via ft.con-cdn as well as direct to the backend: Also
+	// archive a version of the url with sorted query params and and no trailing
+	// ? where no query params are given. Optimising for reduced Build Service
+	// complexity here, not archive size.
+	// https://github.com/Financial-Times/ft.com-cdn/blob/da01b97de677f74606f7ed76533905255c536cdd/src/vcl/req-boltsort.vcl#L4
+	try {
+		const lineURL = new URL(line);
+		lineURL.searchParams.sort();
+		const jobOrderedQueryParam = archive.bind(null, lineURL.toString());
+		queue.push(jobOrderedQueryParam);
+	} catch (error) {}
 	await processQueue();
 });
 
