@@ -4,14 +4,12 @@ const assert = require('chai').assert;
 const URL = require('url');
 const fs = require('fs');
 const querystring = require('querystring');
-const supertest = require('supertest');
 const testhelper = require('./testhelper');
 const hostnames = require('../lib/utils/hostnames');
 const log = require('./mock/log.mock');
 const metrics = require('./unit/mock/origami-service.mock').mockApp.ft.metrics;
 
 const InstallationManager = testhelper.InstallationManager;
-const createApp = testhelper.createApp;
 
 describeWithPackages('files-api', [], function(temporaryDirectory){
 	this.timeout(60*1000);
@@ -88,24 +86,5 @@ describeWithPackages('files-api', [], function(temporaryDirectory){
 		assert.include(unescaped, '//' + hostnames.preferred + '/v2/bundles/js?modules=html2@v1.0,html@9.99,foo', '2');
 		assert.include(unescaped, 'differenthost,html,foo@*');
 		assert.include(unescaped, 'otherargs=zzz&amp;modules=singlequotes,html@9.99');
-	});
-
-	it('gallery-lock has_external_dependency', function(done){
-		const app = createApp({
-			defaultLayout: 'main',
-			environment: 'test',
-			log: log,
-			port: 0,
-			requestLogFormat: null,
-			staticBundlesDirectory: `${__dirname}/mock-static-bundles`,
-			tempdir: temporaryDirectory
-		});
-		app.listen().then(app => {
-			const regexp = new RegExp('/bundles/css\\?modules=o-gallery%401\\.1\\.0%3A%2Fdemos%2Fsrc%2Fdemo\\.scss"');
-			supertest(app)
-				.get('/v2/files/o-gallery@1.1.0/demos/declarative.html')
-				.expect(200)
-				.expect(regexp, done);
-		});
 	});
 });

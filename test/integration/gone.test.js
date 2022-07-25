@@ -5,10 +5,13 @@ const {assert} = require('chai');
 
 const gone = [
 	'/__origami/service/build/modules/o-test-component@1.0.16',
-	'/__origami/service/build/modules/not-a-valid-component',
-
 	'/__origami/service/build/v1/modules/o-test-component@1.0.16',
-	'/__origami/service/build/v1/modules/not-a-valid-component'
+
+	'/__origami/service/build/modules/not-a-valid-component',
+	'/__origami/service/build/v1/modules/not-a-valid-component',
+
+	'/__origami/service/build/files/o-test-component@1.0.13/readme.md',
+	'/__origami/service/build/v1/files/o-test-component@1.0.13/readme.md'
 ];
 
 for (const url of gone) {
