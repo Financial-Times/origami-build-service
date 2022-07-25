@@ -7,6 +7,49 @@ describe('Archived routes', function() {
 	this.timeout(20000);
 	this.slow(5000);
 
+	describe('GET /v2/files', function() {
+
+		describe('a request with archived response', function() {
+			/**
+			 * @type {request.Response}
+			 */
+			let response;
+			before(async function () {
+				response = await request(this.app)
+					.get('/v2/files/o-comments@3.5.0/src/images/comment_featured_close_quote.png')
+					.redirects(5)
+					.set('Connection', 'close');
+			});
+
+			it('should respond with a 200 status', function() {
+				assert.equal(response.status, 200);
+			});
+
+			it('should respond with the file', function() {
+				assert.include(response.headers['content-type'], 'png');
+			});
+		});
+
+		describe('a request with no response saved in the archive', function() {
+			/**
+			 * @type {request.Response}
+			 */
+			let response;
+			before(async function () {
+				const now = (new Date()).toISOString();
+				response = await request(this.app)
+					// export used to cache bust, unrecognised params are removed by the archive
+					.get(`/v2/files/o-comments@3.5.0/src/images/comment_featured_close_quote.png?export=${now.replace(/[^a-zA-Z0-9]/g, '')}`)
+					.redirects(5)
+					.set('Connection', 'close');
+			});
+
+			it('should respond with a 404 status', function() {
+				assert.equal(response.status, 404);
+			});
+		});
+	});
+
 	describe('GET /__origami/service/build/v2/demos', function() {
 
 		describe('a request with archived response', function() {
@@ -272,49 +315,6 @@ describe('Archived routes', function() {
 					});
 				});
 			});
-
-			describe('GET /v2/files', function() {
-
-				describe('a request with archived response', function() {
-					/**
-					 * @type {request.Response}
-					 */
-					let response;
-					before(async function () {
-						response = await request(this.app)
-							.get('/v2/files/o-comments@3.5.0/src/images/comment_featured_close_quote.png')
-							.redirects(5)
-							.set('Connection', 'close');
-					});
-
-					it('should respond with a 200 status', function() {
-						assert.equal(response.status, 200);
-					});
-
-					it('should respond with the file', function() {
-						assert.include(response.headers['content-type'], 'png');
-					});
-				});
-
-				describe('a request with no response saved in the archive', function() {
-					/**
-					 * @type {request.Response}
-					 */
-					let response;
-					before(async function () {
-						const now = (new Date()).toISOString();
-						response = await request(this.app)
-							// export used to cache bust, unrecognised params are removed by the archive
-							.get(`/v2/files/o-comments@3.5.0/src/images/comment_featured_close_quote.png?export=${now.replace(/[^a-zA-Z0-9]/g, '')}`)
-							.redirects(5)
-							.set('Connection', 'close');
-					});
-
-					it('should respond with a 404 status', function() {
-						assert.equal(response.status, 404);
-					});
-				});
-			});
 		});
 
 		describe('Archive behaviour set to "fallback"', function() {
@@ -479,60 +479,6 @@ describe('Archived routes', function() {
 					});
 				});
 			});
-
-			describe('GET /v2/files', function() {
-				describe('a request with archived response', function() {
-					/**
-					 * @type {request.Response}
-					 */
-					let response;
-					before(async function () {
-						response = await request(this.app)
-							.get('/v2/files/o-comments@3.5.0/src/images/comment_featured_close_quote.png')
-							.redirects(5)
-							.set('Connection', 'close');
-					});
-
-					it('should respond with a 200 status', function() {
-						assert.equal(response.status, 200);
-					});
-
-					it('should respond with the file', function() {
-						assert.include(response.headers['content-type'], 'png');
-					});
-
-					it('uses archive cache control policy', function() {
-						assert.include(response.headers['cache-control'], 's-maxage=600');
-					});
-				});
-
-				describe('a request with no response saved in the archive', function() {
-					/**
-					 * @type {request.Response}
-					 */
-					let response;
-					before(async function () {
-						const now = (new Date()).toISOString();
-						response = await request(this.app)
-							// export used to cache bust, unrecognised params are removed by the archive
-							.get(`/v2/files/o-comments@3.5.0/src/images/comment_featured_close_quote.png?export=${now.replace(/[^a-zA-Z0-9]/g, '')}`)
-							.redirects(5)
-							.set('Connection', 'close');
-					});
-
-					it('should respond with a 200 status', function() {
-						assert.equal(response.status, 200);
-					});
-
-					it('should respond with the file', function() {
-						assert.include(response.headers['content-type'], 'png');
-					});
-
-					it('does not have archive cache control policy', function() {
-						assert.notInclude(response.headers['cache-control'], 's-maxage=600');
-					});
-				});
-			});
 		});
 	}
 	describe('Archive behaviour not set', function() {
@@ -593,34 +539,6 @@ describe('Archived routes', function() {
 				});
 			});
 		});
-
-		describe('GET /v2/files', function() {
-			describe('a request with archived response', function() {
-				/**
-				 * @type {request.Response}
-				 */
-				let response;
-				before(async function () {
-					response = await request(this.app)
-						.get('/v2/files/o-comments@3.5.0/src/images/comment_featured_close_quote.png')
-						.redirects(5)
-						.set('Connection', 'close');
-				});
-
-				it('should respond with a 200 status', function() {
-					assert.equal(response.status, 200);
-				});
-
-				it('should respond with the file', function() {
-					assert.include(response.headers['content-type'], 'png');
-				});
-
-				it('does not have archive cache control policy', function() {
-					assert.notInclude(response.headers['cache-control'], 's-maxage=600');
-				});
-			});
-		});
-
 	});
 
 });
