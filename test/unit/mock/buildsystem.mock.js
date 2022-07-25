@@ -10,9 +10,7 @@ buildSystem.httpProxyTtl = sinon.stub();
 buildSystem.installationManager = sinon.stub();
 buildSystem.bundler = sinon.stub();
 buildSystem.fileProxy = sinon.stub();
-buildSystem.moduleMetadata = sinon.stub();
 buildSystem.outputBundle = sinon.stub();
-buildSystem.outputModuleMetadata = sinon.stub().resolves();
 buildSystem.outputFile = sinon.stub();
 
 buildSystem.returns({
@@ -21,8 +19,6 @@ buildSystem.returns({
 	installationManager: buildSystem.installationManager,
 	bundler: buildSystem.bundler,
 	fileProxy: buildSystem.fileProxy,
-	moduleMetadata: buildSystem.moduleMetadata,
 	outputBundle: buildSystem.outputBundle,
-	outputModuleMetadata: buildSystem.outputModuleMetadata,
 	outputFile: buildSystem.outputFile
 });
