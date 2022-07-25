@@ -100,7 +100,6 @@ The tests are split into unit tests, integration tests, and an old suite of test
 make test              # run all the tests
 make test-unit         # run the unit tests
 make test-integration  # run the integration tests
-make test-old          # run the old suite of tests
 ```
 
 You can run the unit tests with coverage reporting, which expects 90% coverage or more:

@@ -20,6 +20,3 @@ jobs:
     - run: make test-integration
       env:
         ORIGAMI_GITHUB_TOKEN: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}
-    - run: make test-old
-      env:
-        ORIGAMI_GITHUB_TOKEN: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}

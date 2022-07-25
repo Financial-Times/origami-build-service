@@ -4,6 +4,12 @@ const request = require('supertest');
 const {assert} = require('chai');
 
 const gone = [
+	'/__origami/service/build/bundles/css?modules=o-test-component@1.0.16',
+	'/__origami/service/build/v1/bundles/css?modules=o-test-component@1.0.16',
+
+	'/__origami/service/build/bundles/js?modules=o-test-component@1.0.16',
+	'/__origami/service/build/v1/bundles/js?modules=o-test-component@1.0.16',
+
 	'/__origami/service/build/modules/o-test-component@1.0.16',
 	'/__origami/service/build/v1/modules/o-test-component@1.0.16',
 

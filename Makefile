@@ -59,10 +59,3 @@ test-unit-coverage:
 # Run the integration tests using mocha
 test-integration:
 	@if [ -d test/integration ]; then mocha "test/integration/**/*.test.js" --recursive --exit ${CI:+--forbid-only} --timeout $(INTEGRATION_TIMEOUT) --slow $(INTEGRATION_SLOW) $(INTEGRATION_FLAGS) && $(TASK_DONE); fi
-
-# Additional test tasks
-# ---------------------
-
-test-old:
-	@NODE_ENV=test mocha test --exit
-	@$(DONE)
