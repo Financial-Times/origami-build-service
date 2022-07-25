@@ -32,12 +32,12 @@ describe('lib/utils/getOrigamiJson', function() {
 		});
 
 		describe('when `path` points to a directory which does not contain an origami.json file', function() {
-
+			let tmpDir;
 			beforeEach(async function() {
-				await fs.mkdtemp('./directory-does-exist');
+				tmpDir = await fs.mkdtemp('./directory-does-exist');
 			});
 			afterEach(async function() {
-				await rmrf('./directory-does-exist');
+				await rmrf(tmpDir);
 			});
 
 			it('returns `undefined`', function() {
