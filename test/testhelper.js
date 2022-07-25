@@ -18,7 +18,6 @@ const JsBundler = require('../lib/jsbundler');
 const CssBundler = require('../lib/cssbundler');
 const DemoCompiler = require('../lib/democompiler');
 const Registry = require('../lib/registry.js');
-const ModuleMetadata = require('../lib/modulemetadata');
 const FileProxy = require('../lib/fileproxy');
 
 const createApp = require('../lib/build-service');
@@ -139,7 +138,6 @@ module.exports = {
 	PromiseCache: PromiseCache,
 	Registry: Registry,
 	FileProxy: FileProxy,
-	ModuleMetadata: ModuleMetadata,
 	createApp: createApp,
 	bufferStream: bufferStream
 };
