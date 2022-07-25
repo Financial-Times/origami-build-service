@@ -67,10 +67,6 @@ We configure Origami Build Service using environment variables. In development, 
   * `CHANGE_API_KEY`: The change-log API key to use when creating and closing change-logs.
   * `RELEASE_ENV`: The Salesforce environment to include in change-logs. One of `Test` or `Production`
   * `SENTRY_DSN`: The Sentry URL to send error information to
-  * `ARCHIVE`: Control use of archived responses for v2 endpoints. One of:
-    * default (not set): don't use the archive and don't return stored responses
-    * `fallback`: try to use the static archive but fall back to generating a response, given a request with no archived response
-    * `full`: use the static archive and 404 for any request with no archived response
   * `ARCHIVE_BUCKET_NAME`: `origami-build-service-archive-prod` (default) or `origami-build-service-archive-test`
 #### Deprecated:
 
