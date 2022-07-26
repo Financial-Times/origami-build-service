@@ -1,24 +1,46 @@
 <div class="o-layout__sidebar"></div>
 
-<div class="o-layout__main o-layout-typography" data-o-component="o-syntax-highlight">
-    <h1 id="api-reference">
-        API reference
-    </h1>
+<div class="o-layout__main" data-o-component="o-syntax-highlight">
 
-    <p>
-        The current version of the API is 2. It has exactly the same API interface as v1, but uses <a href="https://github.com/Financial-Times/origami-build-tools">Origami Build Tools</a>
-        for the builds. This uses libsass and is not 100% compatible with Ruby Sass, so we still make Ruby Sass builds available on the v1 endpoint. JavaScript bundles are built with OBT on both v1 and v2 endpoints.
-    </p>
+    <div class="o-layout-typography">
+        <h1 id="api-reference">
+            V2 API reference
+        </h1>
+    </div>
 
-    <h2 id="get-v1-bundles-js">
-        GET /v2/bundles/js
-    </h2>
+    <div class="o-spacing-s6">
+        <div class="o-message o-message--notice o-message--inner o-message--warning-light" data-o-component="o-message" data-o-message-close="false">
+            <div class="o-message__container">
+                <div class="o-message__content">
+                    <p class="o-message__content-main">
+                        Origami Build Service v2 is decommissioned. For continued support migrate to Origami Build Service v3.
+                    </p>
 
-    <p>
-        Fetch a set of modules and build a JavaScript bundle.
-    </p>
+                    <div class="o-message__actions">
+                        <a href="/__origami/service/build/v2/docs/migration#v2-to-v3-migration" class="o-message__actions__primary">migration guide</a>
+                        <a href="/__origami/service/build/v3/docs/api" class="o-message__actions__secondary">v3 api reference</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <table class="o-table o-table--responsive-lines" data-o-component="o-table" >
+    <div class="o-layout-typography">
+
+        <p>
+            Origami Build Service v2 is decommissioned. Some requests are now served from a static archive, however, new requests will return a 404. <a href="/__origami/service/build/v2/docs/migration#v2-to-v3-migration">Migrate to Origami Build Service v3</a> for continued support and new component releases.
+        </p>
+
+        <h2 id="get-v1-bundles-js">
+            GET /v2/bundles/js
+        </h2>
+
+        <p>
+            Fetch a set of modules and build a JavaScript bundle.
+        </p>
+    </div>
+
+    <table class="o-table o-table--responsive-lines o-layout-typography" data-o-component="o-table" >
         <thead>
             <tr>
                 <th>Param</th>
@@ -100,22 +122,24 @@
         </tbody>
     </table>
 
-    <p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+    <div class="o-layout-typography">
+        <p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
 
-    <p>The following HTTP errors can be returned:</p>
+        <p>The following HTTP errors can be returned:</p>
 
-    <ul>
-        <li><code>400 Bad Request</code>: The request was invalid</li>
-        <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
-        <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
-        <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
-    </ul>
+        <ul>
+            <li><code>400 Bad Request</code>: The request was invalid</li>
+            <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
+            <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
+            <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+        </ul>
 
-    <h3 id="get-v2-bundles-css">GET /v2/bundles/css</h3>
+        <h3 id="get-v2-bundles-css">GET /v2/bundles/css</h3>
 
-    <p>Fetch a set of modules and build a CSS bundle.</p>
+        <p>Fetch a set of modules and build a CSS bundle.</p>
+    </div>
 
-    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
+    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable o-layout-typography" data-o-component="o-table" >
         <thead>
             <tr>
                 <th>Param</th>
@@ -151,21 +175,23 @@
         <tbody></tbody>
     </table>
 
-    <p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
+    <div class="o-layout-typography">
+        <p><em>Due to the expected long duration of the build process, this method may return a redirect to keep the connection alive while the build continues in the background.</em></p>
 
-    <p>The following HTTP errors can be returned:</p>
+        <p>The following HTTP errors can be returned:</p>
 
-    <ul>
-        <li><code>400 Bad Request</code>: The request was invalid</li>
-        <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
-        <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
-        <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
-    </ul>
+        <ul>
+            <li><code>400 Bad Request</code>: The request was invalid</li>
+            <li><code>409 Conflict</code>: There was a dependency conflict in the bundle of modules specified</li>
+            <li><code>500 Internal Server Error</code>: There was a server error with the build service</li>
+            <li><code>560 Compilation Error</code> (non-standard): There was an error compiling the module code, reported from the build tools. This is likely an issue with the module, not with the build service itself</li>
+        </ul>
 
-    <h3 id="get-v1-files-module-version-path-">GET /v2/files/<code>module</code>@<code>version</code>/<code>path</code></h3>
+        <h3 id="get-v1-files-module-version-path-">GET /v2/files/<code>module</code>@<code>version</code>/<code>path</code></h3>
 
-    <p>Loads and returns a file from a module component&#39;s repo.</p>
-    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
+        <p>Loads and returns a file from a module component&#39;s repo.</p>
+    </div>
+    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable o-layout-typography" data-o-component="o-table" >
         <thead>
             <tr>
                 <th>Param</th>
@@ -192,13 +218,14 @@
         </tbody>
     </table>
 
-    <p>The most recent tagged version of the file that matches the specified Semver version number will be returned.</p>
+    <div class="o-layout-typography">
+        <p>The most recent tagged version of the file that matches the specified Semver version number will be returned.</p>
 
-    <h3 id="get-v1-modules-module-version-">GET /v2/modules/<code>module</code>@<code>version</code></h3>
+        <h3 id="get-v1-modules-module-version-">GET /v2/modules/<code>module</code>@<code>version</code></h3>
 
-    <p>Returns information in JSON format describing the module.</p>
-
-    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable" data-o-component="o-table" >
+        <p>Returns information in JSON format describing the module.</p>
+    </div>
+    <table class="o-table o-table--horizontal-lines o-table--row-headings o-table--sortable o-layout-typography" data-o-component="o-table" >
         <thead>
             <tr>
                 <th>Property</th>
