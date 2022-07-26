@@ -7,7 +7,6 @@ on:
       - reopened
       - synchronize
     paths:
-      - "bower.json"
       - "origami.json"
       - "main.js"
       - "main.scss"
@@ -16,7 +15,6 @@ on:
   push:
     branches: main
     paths:
-      - "bower.json"
       - "origami.json"
       - "main.js"
       - "main.scss"

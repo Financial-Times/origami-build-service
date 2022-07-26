@@ -62,34 +62,14 @@ We configure Origami Build Service using environment variables. In development, 
   * `ORIGAMI_GITHUB_TOKEN`: A GitHub token with permission to read the private `o-fonts-assets` repository.
   * `GRAPHITE_API_KEY`: The FT's internal Graphite API key
   * `GRAPHITE_HOST`: The hostname of a Graphite server to gather metrics with.
-  * `PREFERRED_HOSTNAME`: The hostname to use in documentation and as a base URL in bundle requests. This defaults to `www.ft.com/__origami/service/build`.
   * `REGION`: The region the application is running in. One of `QA`, `EU`, or `US`
   * `CHANGE_API_KEY`: The change-log API key to use when creating and closing change-logs.
   * `RELEASE_ENV`: The Salesforce environment to include in change-logs. One of `Test` or `Production`
   * `SENTRY_DSN`: The Sentry URL to send error information to
-  * `ARCHIVE`: Control use of archived responses for v2 endpoints. One of:
-    * default (not set): don't use the archive and don't return stored responses
-    * `fallback`: try to use the static archive but fall back to generating a response, given a request with no archived response
-    * `full`: use the static archive and 404 for any request with no archived response
   * `ARCHIVE_BUCKET_NAME`: `origami-build-service-archive-prod` (default) or `origami-build-service-archive-test`
-#### Deprecated:
-
-The following keys are required for v2 of the Build Service. They are deprecated and should not be used when developing new features, instead use `ORIGAMI_GITHUB_TOKEN`.
-
-  * `GITHUB_USERNAME`: A GitHub username with permission to view required private repositories.
-  * `GITHUB_PASSWORD`: The GitHub password corresponding to `GITHUB_USERNAME`.
-
 ### Optional
 
   * `NPM_REGISTRY_URL`: The npm Registry url to use when installing npm dependencies. Defaults to `https://registry.npmjs.org`.
-  * `BOWER_REGISTRY_URL`: The Bower Registry url to use when installing Bower dependencies. Defaults to `http://origami-bower-registry.ft.com`.
-
-### Headers
-
-The service can also be configured by sending HTTP headers, these would normally be set in your CDN config:
-
-  * `FT-Origami-Service-Base-Path`: The base path for the service, this gets prepended to all paths in the HTML and ensures that redirects work when the CDN rewrites URLs.
-
 
 Testing
 -------
