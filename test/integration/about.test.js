@@ -11,7 +11,7 @@ describe('GET /__about', function () {
 	 */
 	let response;
 	before(async function () {
-		response = await request(this.app).get('/__origami/service/build/__about');
+		response = await request(this.app).get('/__about');
 	});
 
 	it('should respond with a 200 status', function () {
