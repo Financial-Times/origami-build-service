@@ -3,7 +3,7 @@
 const request = require('supertest');
 const {assert} = require('chai');
 
-describe('GET /v3', function() {
+describe('GET /__origami/service/build/v3', function() {
 	this.timeout(20000);
 	this.slow(5000);
 
@@ -13,7 +13,7 @@ describe('GET /v3', function() {
 	let response;
 	before(async function () {
 		response = await request(this.app)
-			.get('/v3')
+			.get('/__origami/service/build/v3')
 			.set('Connection', 'close');
 	});
 

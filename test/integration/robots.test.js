@@ -13,7 +13,7 @@ describe('GET /robots.txt', function() {
 	let response;
 	before(async function () {
 		response = await request(this.app)
-			.get('/robots.txt')
+			.get('/__origami/service/build/robots.txt')
 			.set('Connection', 'close');
 	});
 
