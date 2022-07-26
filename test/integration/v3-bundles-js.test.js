@@ -30,7 +30,7 @@ const executeScript = (script, givenWindow) => {
 	return window;
 };
 
-describe('GET /v3/bundles/js', function() {
+describe('GET /__origami/service/build/v3/bundles/js', function() {
 	this.timeout(20000);
 	this.slow(5000);
 
@@ -44,7 +44,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -86,7 +86,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -117,7 +117,7 @@ describe('GET /v3/bundles/js', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -152,7 +152,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -186,7 +186,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -220,7 +220,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?components[]=foo&components[]=bar&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?components[]=foo&components[]=bar&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -255,7 +255,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -290,7 +290,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}&callback=${callback}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}&callback=${callback}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -326,7 +326,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}&callback=${callback}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}&callback=${callback}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -374,7 +374,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -393,7 +393,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -426,7 +426,7 @@ describe('GET /v3/bundles/js', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/js?components=${componentName}`)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});

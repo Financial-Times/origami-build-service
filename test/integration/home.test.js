@@ -13,7 +13,7 @@ describe('GET /', function() {
 	let response;
 	before(async function () {
 		response = await request(this.app)
-			.get('/')
+			.get('/__origami/service/build/')
 			.set('Connection', 'close');
 	});
 

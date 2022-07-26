@@ -3,7 +3,7 @@
 const request = require('supertest');
 const {assert} = require('chai');
 
-describe('GET /v3/demo/html', function() {
+describe('GET /__origami/service/build/v3/demo/html', function() {
 	this.timeout(60000);
 	this.slow(5000);
 
@@ -19,7 +19,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -50,7 +50,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -87,7 +87,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -118,7 +118,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -149,7 +149,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -186,7 +186,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -224,7 +224,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -262,7 +262,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -289,7 +289,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -316,7 +316,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -343,7 +343,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -369,7 +369,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -395,7 +395,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -421,7 +421,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -446,7 +446,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -471,7 +471,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -496,7 +496,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo[]=foo&demo[]=bar&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo[]=foo&demo[]=bar&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -521,7 +521,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -547,7 +547,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -568,7 +568,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -593,7 +593,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -619,7 +619,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -646,7 +646,7 @@ describe('GET /v3/demo/html', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
+				.get(`/__origami/service/build/v3/demo/html?component=${component}&demo=${demo}&system_code=${system_code}&brand=${brand}`)
 				.set('Connection', 'close');
 		});
 

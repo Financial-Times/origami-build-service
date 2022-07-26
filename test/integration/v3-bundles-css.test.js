@@ -3,7 +3,7 @@
 const {assert} = require('chai');
 const request = require('supertest');
 
-describe('GET /v3/bundles/css', function() {
+describe('GET /__origami/service/build/v3/bundles/css', function() {
 	this.timeout(20000);
 	this.slow(5000);
 
@@ -18,7 +18,7 @@ describe('GET /v3/bundles/css', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -51,7 +51,7 @@ describe('GET /v3/bundles/css', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -86,7 +86,7 @@ describe('GET /v3/bundles/css', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -107,7 +107,7 @@ describe('GET /v3/bundles/css', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -128,7 +128,7 @@ describe('GET /v3/bundles/css', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -163,7 +163,7 @@ describe('GET /v3/bundles/css', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -195,7 +195,7 @@ describe('GET /v3/bundles/css', function() {
 
 		beforeEach(function() {
 			this.request = request(this.app)
-				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -229,7 +229,7 @@ describe('GET /v3/bundles/css', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -264,7 +264,7 @@ describe('GET /v3/bundles/css', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/css?brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -299,7 +299,7 @@ describe('GET /v3/bundles/css', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/css?components[]=foo&components[]=bar&brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?components[]=foo&components[]=bar&brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});
@@ -335,7 +335,7 @@ describe('GET /v3/bundles/css', function() {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.get(`/__origami/service/build/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
 				.redirects(5)
 				.set('Connection', 'close');
 		});

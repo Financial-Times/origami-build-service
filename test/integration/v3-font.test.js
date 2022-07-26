@@ -3,7 +3,7 @@
 const {assert} = require('chai');
 const request = require('supertest');
 
-describe('GET /v3/font', function () {
+describe('GET /__origami/service/build/v3/font', function () {
 	this.timeout(20000);
 	this.slow(5000);
 
@@ -19,7 +19,7 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
+				.get(`/__origami/service/build/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
 				.redirects(5);
 		});
 
@@ -42,7 +42,7 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/font?version=${version}&file=${file}&system_code=${system}`)
+				.get(`/__origami/service/build/v3/font?version=${version}&file=${file}&system_code=${system}`)
 				.redirects(5);
 		});
 
@@ -82,7 +82,7 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
+				.get(`/__origami/service/build/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
 				.redirects(5);
 		});
 
@@ -121,7 +121,7 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/font?font_name=${font}&font_format=${format}&system_code=${system}`)
+				.get(`/__origami/service/build/v3/font?font_name=${font}&font_format=${format}&system_code=${system}`)
 				.redirects(5);
 		});
 
@@ -158,7 +158,7 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/font?version[]=foo&version[]=bar&font_name=${font}&font_format=${format}&system_code=${system}`)
+				.get(`/__origami/service/build/v3/font?version[]=foo&version[]=bar&font_name=${font}&font_format=${format}&system_code=${system}`)
 				.redirects(5);
 		});
 
@@ -196,7 +196,7 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
+				.get(`/__origami/service/build/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
 				.redirects(5);
 		});
 
@@ -236,7 +236,7 @@ describe('GET /v3/font', function () {
 		let response;
 		before(async function () {
 			response = await request(this.app)
-				.get(`/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
+				.get(`/__origami/service/build/v3/font?version=${version}&font_name=${font}&font_format=${format}&system_code=${system}`)
 				.redirects(5);
 		});
 

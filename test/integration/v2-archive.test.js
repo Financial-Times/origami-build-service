@@ -7,7 +7,7 @@ describe('Archived routes', function() {
 	this.timeout(20000);
 	this.slow(5000);
 
-	describe('GET /v2/files', function() {
+	describe('GET /__origami/service/build/v2/files', function() {
 
 		describe('a request with archived response', function() {
 			/**
@@ -39,7 +39,7 @@ describe('Archived routes', function() {
 				const now = (new Date()).toISOString();
 				response = await request(this.app)
 					// export used to cache bust, unrecognised params are removed by the archive
-					.get(`/v2/files/o-comments@3.5.0/src/images/comment_featured_close_quote.png?export=${now.replace(/[^a-zA-Z0-9]/g, '')}`)
+					.get(`/__origami/service/build/v2/files/o-comments@3.5.0/src/images/comment_featured_close_quote.png?export=${now.replace(/[^a-zA-Z0-9]/g, '')}`)
 					.redirects(5)
 					.set('Connection', 'close');
 			});
@@ -178,7 +178,7 @@ describe('Archived routes', function() {
 		});
 	});
 
-	describe('GET /v2/bundles/css', function() {
+	describe('GET /__origami/service/build/v2/bundles/css', function() {
 
 		describe('a request with archived response', function() {
 			/**
@@ -231,7 +231,7 @@ describe('Archived routes', function() {
 				const now = (new Date()).toISOString();
 				response = await request(this.app)
 					// export used to cache bust, unrecognised params are removed by the archive
-					.get(`/v2/bundles/css?modules=o-card@%5E3.0.0&export=${now.replace(/[^a-zA-Z0-9]/g, '')}`)
+					.get(`/__origami/service/build/v2/bundles/css?modules=o-card@%5E3.0.0&export=${now.replace(/[^a-zA-Z0-9]/g, '')}`)
 					.redirects(5)
 					.set('Connection', 'close');
 			});
@@ -242,7 +242,7 @@ describe('Archived routes', function() {
 		});
 	});
 
-	describe('GET /v2/bundles/js', function() {
+	describe('GET /__origami/service/build/v2/bundles/js', function() {
 
 		describe('a request with archived response', function() {
 			/**
@@ -295,7 +295,7 @@ describe('Archived routes', function() {
 				const now = (new Date()).toISOString();
 				response = await request(this.app)
 					// export used to cache bust, unrecognised params are removed by the archive
-					.get(`/v2/bundles/js?modules=o-tracking&export=${now.replace(/[^a-zA-Z0-9]/g, '')}`)
+					.get(`/__origami/service/build/v2/bundles/js?modules=o-tracking&export=${now.replace(/[^a-zA-Z0-9]/g, '')}`)
 					.redirects(5)
 					.set('Connection', 'close');
 			});
