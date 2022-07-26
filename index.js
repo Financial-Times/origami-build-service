@@ -2,9 +2,6 @@
 
 const buildService = require('./lib/build-service');
 const dotenv = require('dotenv');
-const fs = require('fs');
-const mkdirp = require('mkdirp');
-const path = require('path');
 
 dotenv.config({
 	silent: true,
