@@ -1,15 +1,10 @@
+# Origami Build Service [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)][license]
 
-Origami Build Service [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)][license]
-=====================
+Use the Origami Build Service to include [Origami components](https://origami.ft.com/) in your project with a `<script>` and `<style>` tag, no build step required.
 
-  * Creates bundles of JavaScript and CSS from Origami (and Origami-compatible modules)
-  * Provides a proxy for static file serving from Origami repos
-  * Compiles Origami component demos
+To learn more about using the Origami Build Service refer to the [API reference][production-url] and [Origami Build Service Tutorial][tutorial].
 
-See [the production service][production-url] for API information.
-
-Table Of Contents
------------------
+## Table Of Contents
 
   * [Requirements](#requirements)
   * [Running Locally](#running-locally)
@@ -18,19 +13,14 @@ Table Of Contents
   * [Deployment](#deployment)
   * [Monitoring](#monitoring)
   * [Trouble-Shooting](#trouble-shooting)
-  * [Project Structure](#project-structure)
-    * [ES6/Promises patterns](#es6promises-patterns)
   * [License](#license)
 
 
-Requirements
-------------
+## Requirements
 
 Running Origami Build Service requires [Node.js] and [npm].
 
-
-Running Locally
----------------
+## Running Locally
 
 Before we can run the application, we'll need to install dependencies:
 
@@ -47,8 +37,7 @@ make run-dev
 Now you can access the app over HTTP on port `8080`: [http://localhost:8080/](http://localhost:8080/)
 
 
-Configuration
--------------
+## Configuration
 
 We configure Origami Build Service using environment variables. In development, configurations are set in a `.env` file. In production, these are set through Heroku config. Further documentation on the available options can be found in the [Origami Service documentation][service-options].
 
@@ -66,13 +55,12 @@ We configure Origami Build Service using environment variables. In development, 
   * `CHANGE_API_KEY`: The change-log API key to use when creating and closing change-logs.
   * `RELEASE_ENV`: The Salesforce environment to include in change-logs. One of `Test` or `Production`
   * `SENTRY_DSN`: The Sentry URL to send error information to
-  * `ARCHIVE_BUCKET_NAME`: `origami-build-service-archive-prod` (default) or `origami-build-service-archive-test`
+  * `ARCHIVE_BUCKET_NAME`: The AWS S3 bucket to use to retrieve archived responses. One of `origami-build-service-archive-prod` (default) or `origami-build-service-archive-test`.
 ### Optional
 
   * `NPM_REGISTRY_URL`: The npm Registry url to use when installing npm dependencies. Defaults to `https://registry.npmjs.org`.
 
-Testing
--------
+## Testing
 
 The tests are split into unit tests, integration tests, and an old suite of tests that we're migrating. To run tests on your machine you'll need to install [Node.js] and run `make install`. Then you can run the following commands:
 
@@ -82,7 +70,7 @@ make test-unit         # run the unit tests
 make test-integration  # run the integration tests
 ```
 
-You can run the unit tests with coverage reporting, which expects 90% coverage or more:
+You can run the unit tests with coverage reporting.
 
 ```sh
 make test-unit-coverage verify-coverage
@@ -102,9 +90,7 @@ You can run the integration tests against a URL by setting a `HOST` environment 
 HOST="https://www.example.com" make test-integration
 ```
 
-
-Deployment
-----------
+## Deployment
 
 The production ([EU][heroku-production-eu]/[US][heroku-production-us]) and [QA][heroku-qa] applications run on [Heroku]. We deploy continuously to QA via [CI][ci], you should never need to deploy to QA manually. We use a [Heroku pipeline][heroku-pipeline] to promote QA deployments to production.
 
@@ -116,8 +102,7 @@ make promote
 
 You may need to [clear cdn cache](#cache-purge) for the release to take immediate effect. For example when updating documentation.
 
-Cache Purge
-----------
+## Cache Purge
 
 First, change the hostname in your request to `origami-build-service-eu.herokuapp.com`. If your update does not appear, an old version is cached on the file system. Clear this by restarting the Heroku dynos:
 
@@ -125,11 +110,7 @@ First, change the hostname in your request to `origami-build-service-eu.herokuap
 heroku restart --app origami-build-service-eu
 ```
 
-If your change does appear then the old result may be cached by our CDN. You'll need to wait for a while, or clear the CDN cache. To clear CDN cache login to Fastly and find the `Origami Build Service` Fastly service. Clear a specific URL (e.g. for a documentation update) or one or more of the following [surrogate keys](https://docs.fastly.com/en/guides/getting-started-with-surrogate-keys):
-
-By origin:
-- eu
-- us
+If your change does appear then the old result may be cached by our CDN. You'll need to wait for a while, or clear the CDN cache. To clear CDN cache login to Fastly and find the [www.ft.com Fastly service](https://manage.fastly.com/configure/services/133g5BGAc00Hv4v8t0dMry). Clear a specific URL (e.g. for a documentation update) or one or more of the following [surrogate keys](https://docs.fastly.com/en/guides/getting-started-with-surrogate-keys):
 
 All documentation pages e.g. `/v2`, `/v2/api`, `/v2/migration`, `/v3/`, `/v3/api`, `/url-updater`:
 - website
@@ -152,8 +133,7 @@ By vary headers:
 - vary-origin
 - vary-access-control-request-headers
 
-Monitoring
-----------
+## Monitoring
 
   * [Grafana dashboard][grafana]: graph memory, load, and number of requests
   * [Pingdom check (Production EU)][pingdom-eu]: checks that the EU production app is responding
@@ -162,8 +142,7 @@ Monitoring
   * [Splunk (Production)][splunk]: query application logs (see below)
 
 
-Logging
--------
+## Logging
 
 We use [Splunk] to store and query our application and CDN log files. Using Splunk we can answer many questions, such as: which product is using our services the most; which components are not being requested (good candidates to deprecate).
 
@@ -172,8 +151,7 @@ We use [Splunk] to store and query our application and CDN log files. Using Splu
 [Here is an example query](https://financialtimes.splunkcloud.com/en-US/app/search/search?q=search%20sourcetype%3D%22fastly%22%20%20serviceid%3D4kUyjWYbCqkUHQZ7mBwMzl&display.page.search.mode=fast&dispatch.sample_ratio=1&earliest=-1h&latest=now&display.page.search.tab=events&display.general.type=events&sid=1476358197.36513) which shows the last hour of logs from our CDN.
 
 
-Trouble-Shooting
-----------------
+## Trouble-Shooting
 
 We've outlined some common issues that can occur when running the Build Service:
 
@@ -201,58 +179,7 @@ CR_API_KEY=<API-KEY> make deploy
 
 This is most likely due to the heavy caching we use. See [Cache Purge](#cache-purge).
 
-Project Structure
------------------
-
-### ES6/Promises patterns
-
-You'll need to understand [promises] ([Q implementation][q]) and how they use the `yield` operator.
-
-  * Asynchronous programming changes `use(func(arg))` into `func(arg, use)`.
-  * Promises change `func(arg, use)` into `func(arg).then(use)`.
-  * ES6 enables turning `func(arg).then(use)` into  `use(yield func(arg))`.
-
-The code uses promises and promise-wrapped versions of node functions. `Q.denodeify(func)` converts callback-based function into promise-returning function.
-
-If you do `doPromise = Q.denodeify(doAsync)` then this code:
-
-```js
-doAsync1(arg1, function(err, result1){
-    if (err) throw err;
-    doAsync2(arg2, function(err, result2) {
-        if (err) throw err;
-    });
-});
-```
-
-is roughly equal to:
-
-```js
-doPromise1(arg1)
-.then(function(result1){
-    return doPromise2(arg2);
-})
-.then(function(result2){
-})
-.done();
-```
-
-Instead of nesting callbacks, you chain `.then()` calls. Callbacks in `then` may return (a promise of) the result for the next `then` callback.
-
-You can simplify further with `Q.async()`. This enables waiting for promises with the `yield` operator:
-
-```js
-Q.async(function*(){
-    var result1 = yield doPromise1(arg1);
-    var result2 = yield doPromise2(arg2);
-});
-```
-
-`Q.async` returns a promise as well, so we can chain it with other promises.
-
-
-License
--------
+## License
 
 The Financial Times has published this software under the [MIT license][license].
 
@@ -274,3 +201,4 @@ The Financial Times has published this software under the [MIT license][license]
 [sentry-production]: https://sentry.io/nextftcom/build-service-prod/
 [sentry-qa]: https://sentry.io/nextftcom/build-service-dev/
 [splunk]: https://financialtimes.splunkcloud.com/
+[tutorial]: https://origami.ft.com/documentation/tutorials/build-service/
