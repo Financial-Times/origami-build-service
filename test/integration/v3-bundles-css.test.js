@@ -32,7 +32,7 @@ describe('GET /__origami/service/build/v3/bundles/css', function() {
 		});
 
 		it('should respond with surrogate-key containing `css`', function() {
-			assert.deepEqual(response.headers['surrogate-key'], 'origami-build-service-css');
+			assert.deepEqual(response.headers['surrogate-key'], 'origami-build-service-v3-css');
 		});
 
 		it('should respond with the expected `Content-Type` header', function() {
