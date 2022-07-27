@@ -32,6 +32,10 @@ describe('GET /__origami/service/build/v3/demo', function() {
 			assert.deepEqual(response.headers['content-type'], 'text/html; charset=utf-8');
 		});
 
+		it('should respond with surrogate-key containing `demo`', function() {
+			assert.deepEqual(response.headers['surrogate-key'], 'origami-build-service-demo');
+		});
+
 		it('should respond with the built demo', function() {
 			assert.matchSnapshot(response.text);
 		});

@@ -26,7 +26,7 @@ describe('GET /__origami/service/build/v2', function() {
 	});
 
 	it('should respond with surrogate-key containing `website`', function() {
-		assert.deepEqual(response.headers['surrogate-key'], 'website');
+		assert.deepEqual(response.headers['surrogate-key'], 'origami-build-service-website');
 	});
 
 	it('should respond with the Origami Build Service v3 documentation', function() {
@@ -58,7 +58,7 @@ describe('GET /__origami/service/build/v2', function() {
 	});
 
 	it('should respond with surrogate-key containing `website`', function() {
-		assert.deepEqual(response.headers['surrogate-key'], 'website');
+		assert.deepEqual(response.headers['surrogate-key'], 'origami-build-service-website');
 	});
 
 	it('should respond with the Origami Build Service v3 documentation', function() {

@@ -29,6 +29,9 @@ describe('GET /__origami/service/build/v3/font', function () {
 		it('should respond with the expected `Content-Type` header', function () {
 			assert.equal(response.headers['content-type'], 'font/woff2');
 		});
+		it('should respond with surrogate-key containing `font`', function() {
+			assert.deepEqual(response.headers['surrogate-key'], 'origami-build-service-font');
+		});
 	});
 
 	describe('when an invalid version is requested', function () {
