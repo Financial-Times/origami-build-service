@@ -32,6 +32,10 @@ describe('GET /__origami/service/build/v3/demo/html', function() {
 			assert.deepEqual(response.headers['content-type'], 'text/plain; charset=utf-8');
 		});
 
+		it('should respond with surrogate-key containing `demo`', function() {
+			assert.deepEqual(response.headers['surrogate-key'], 'origami-build-service-demo');
+		});
+
 		it('should respond with the demo html contents', function() {
 			assert.deepEqual(response.text, '<div data-o-component="o-test-component" class="o-test-component"></div>');
 		});

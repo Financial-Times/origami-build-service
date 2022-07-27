@@ -112,26 +112,34 @@ heroku restart --app origami-build-service-eu
 
 If your change does appear then the old result may be cached by our CDN. You'll need to wait for a while, or clear the CDN cache. To clear CDN cache login to Fastly and find the [www.ft.com Fastly service](https://manage.fastly.com/configure/services/133g5BGAc00Hv4v8t0dMry). Clear a specific URL (e.g. for a documentation update) or one or more of the following [surrogate keys](https://docs.fastly.com/en/guides/getting-started-with-surrogate-keys):
 
+### Documentation Cache Purge
+
 All documentation pages e.g. `/v2`, `/v2/api`, `/v2/migration`, `/v3/`, `/v3/api`, `/url-updater`:
-- website
+- origami-build-service-website
+
+### V3 API Cache Purge
+
+All bundle pages e.g. `/v3/bundles/css`:
+- origami-build-service-v3-js
+- origami-build-service-v3-css
+
+All fonts i.e. `/v3/font`:
+- origami-build-service-v3-font
+
+All demo pages e.g. `/v3/demo`:
+- origami-build-service-v3-demo
+
+### V2 API Cache Purge
 
 All bundle pages e.g. `/v2/bundles/css`:
-- js
-- css
+- origami-build-service-v2-js
+- origami-build-service-v2-css
 
 All file pages i.e. `/v2/files`:
-- files
+- origami-build-service-v2-files
 
-All module pages i.e. `/v2/modules`:
-- modules
-
-All demo pages i.e. `/v2/demos`:
-- demos
-
-By vary headers:
-- vary-accept-encoding
-- vary-origin
-- vary-access-control-request-headers
+All demo pages e.g. `/v2/demos`:
+- origami-build-service-v2-demos
 
 ## Monitoring
 

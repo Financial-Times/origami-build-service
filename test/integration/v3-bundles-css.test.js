@@ -31,6 +31,10 @@ describe('GET /__origami/service/build/v3/bundles/css', function() {
 			assert.deepStrictEqual(response.text, '.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:\'Hello world!  The square root of 64 is "8".\'}\n');
 		});
 
+		it('should respond with surrogate-key containing `css`', function() {
+			assert.deepEqual(response.headers['surrogate-key'], 'origami-build-service-css');
+		});
+
 		it('should respond with the expected `Content-Type` header', function() {
 			assert.deepEqual(response.headers['content-type'], 'text/css; charset=utf-8');
 		});

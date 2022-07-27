@@ -70,6 +70,10 @@ describe('GET /__origami/service/build/v3/bundles/js', function() {
 			assert.deepEqual(response.headers['content-type'], 'application/javascript; charset=utf-8');
 		});
 
+		it('should respond with surrogate-key containing `js`', function() {
+			assert.deepEqual(response.headers['surrogate-key'], 'origami-build-service-js');
+		});
+
 		it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function() {
 			assert.deepEqual(response.headers['x-content-type-options'], 'nosniff');
 		});
