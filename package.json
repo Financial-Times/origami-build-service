@@ -67,7 +67,7 @@
     "detect-es-version": "^0.1.4",
     "eslint": "^7.32.0",
     "jsdom": "^16.5.3",
-    "mocha": "^8.4.0",
+    "mocha": "^10.2.0",
     "mockery": "^2.1.0",
     "node-mocks-http": "^1.10.1",
     "nyc": "^15.1.0",
