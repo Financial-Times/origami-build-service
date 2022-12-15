@@ -68,7 +68,7 @@ describe('bundleSass', () => {
 
 					await fs.writeFile(
 						entryPointPath,
-						'* {flex-wrap: wrap;display: flex;}',
+						'* {appearance: none;}',
 						'utf-8'
 					);
 				});
@@ -81,7 +81,7 @@ describe('bundleSass', () => {
 					const bundledJavaScript = await bundleSass(location, entryPointPath);
 					proclaim.deepStrictEqual(
 						bundledJavaScript,
-						'*{-ms-flex-wrap:wrap;flex-wrap:wrap;display:-ms-flexbox;display:flex}\n'
+						'*{-webkit-appearance:none;-moz-appearance:none;appearance:none}\n'
 					);
 				});
 			}
