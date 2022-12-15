@@ -29,7 +29,7 @@
     "@financial-times/origami-service": "^5.0.2",
     "@financial-times/origami-service-makefile": "^7.0.3",
     "app-root-path": "^3.0.0",
-    "autoprefixer": "^6.7.7",
+    "autoprefixer": "^10.0.0",
     "axios": "^0.21.1",
     "babel-core": "^6.26.0",
     "cheerio": "^0.22.0",
@@ -45,7 +45,7 @@
     "mkdirp": "^1.0.4",
     "mustache": "^4.1.0",
     "npm": "^7.20.5",
-    "postcss": "^5.2.18",
+    "postcss": "^8.0.0",
     "prettier": "^2.2.1",
     "raven": "^2.6.4",
     "require-all": "^3.0.0",
@@ -82,7 +82,7 @@
   },
   "engineStrict": true,
   "volta": {
-    "node": "16.15.1",
+    "node": "16.19.0",
     "npm": "8.13.1"
   }
 }
