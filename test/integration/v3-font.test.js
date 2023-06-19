@@ -9,7 +9,7 @@ describe('GET /__origami/service/build/v3/font', function () {
 
 	describe('when a valid font is requested', function () {
 		const version = '*';
-		const font = 'BentonSans-Bold';
+		const font = 'Metric2-Bold';
 		const format = 'woff2';
 		const system = 'origami';
 
@@ -36,7 +36,7 @@ describe('GET /__origami/service/build/v3/font', function () {
 
 	describe('when an invalid version is requested', function () {
 		const version = '1hg';
-		const file = 'BentonSans-Bold.woff2';
+		const file = 'Metric2-Bold.woff2';
 		const system = 'origami';
 
 		/**
@@ -269,7 +269,7 @@ describe('GET /__origami/service/build/v3/font', function () {
 
 	describe('when a valid font is requested', function () {
 		const version = '*';
-		const font = 'BentonSans-Bold';
+		const font = 'Metric2-Bold';
 		const format = 'woff2';
 		const system = 'origami';
 
@@ -293,7 +293,7 @@ describe('GET /__origami/service/build/v3/font', function () {
 
 	describe('when an invalid version is requested', function () {
 		const version = '1hg';
-		const file = 'BentonSans-Bold.woff2';
+		const file = 'Metric2-Bold.woff2';
 		const system = 'origami';
 
 		/**
