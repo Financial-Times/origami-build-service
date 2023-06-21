@@ -17,7 +17,15 @@ const gone = [
 	'/__origami/service/build/v1/modules/not-a-valid-component',
 
 	'/__origami/service/build/files/o-test-component@1.0.13/readme.md',
-	'/__origami/service/build/v1/files/o-test-component@1.0.13/readme.md'
+	'/__origami/service/build/v1/files/o-test-component@1.0.13/readme.md',
+
+	'/__origami/service/build/v3/font?font_name=MillerDisplay-Bold&system_code=$$$-no-bizops-system-code-$$$&font_weight=400&font_style=normal&font_format=woff&version=1.23.0',
+	'/__origami/service/build/v3/font?font_name=BentonSans-Bold&system_code=$$$-no-bizops-system-code-$$$&font_weight=400&font_style=normal&font_format=woff&version=1.23.0',
+	'/__origami/service/build/v3/font?font_name=BentonSansBook-Regular&system_code=$$$-no-bizops-system-code-$$$&font_weight=400&font_style=normal&font_format=woff&version=1.23.0',
+
+	'/__origami/service/build/v2/files/o-fonts-assets@1.13.0/BentonSans-Bold.woff',
+	'/__origami/service/build/v2/files/o-fonts-assets@1.13.0/MillerDisplay-Bold.woff',
+	'/__origami/service/build/v2/files/o-fonts-assets@1.13.0/BentonSansBook-Regular.woff',
 ];
 
 for (const url of gone) {
