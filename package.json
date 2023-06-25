@@ -51,7 +51,7 @@
     "require-all": "^3.0.0",
     "rimraf": "^3.0.2",
     "sass-bin": "^1.43.2",
-    "semver": "^7.3.4",
+    "semver": "^7.5.2",
     "server-timing": "^3.3.1",
     "uuid": "^8.3.2",
     "valid-filename": "^3.1.0",
