@@ -1,4 +1,5 @@
-const isFontDeprecated = require("../../../../lib/utils/isFontDeprecated");
+'use strict';
+const isFontDeprecated = require('../../../../lib/utils/isFontDeprecated');
 const assert = require('chai').assert;
 
 describe('isFontDeprecated', () => {
