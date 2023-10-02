@@ -26,7 +26,7 @@
     "@babel/preset-env": "^7.12.1",
     "@financial-times/health-check": "^2.1.8",
     "@financial-times/origami-repo-data-client": "^1.6.4",
-    "@financial-times/origami-service": "^5.0.2",
+    "@financial-times/origami-service": "^6.0.0",
     "@financial-times/origami-service-makefile": "^7.0.3",
     "app-root-path": "^3.0.0",
     "autoprefixer": "^10.0.0",
@@ -67,7 +67,7 @@
     "detect-es-version": "^0.1.4",
     "eslint": "^7.32.0",
     "jsdom": "^16.5.3",
-    "mocha": "^8.4.0",
+    "mocha": "^10.2.0",
     "mockery": "^2.1.0",
     "node-mocks-http": "^1.10.1",
     "nyc": "^15.1.0",
@@ -77,12 +77,12 @@
     "supertest": "^6.1.3"
   },
   "engines": {
-    "node": "^16",
+    "node": "^18",
     "npm": "^8"
   },
   "engineStrict": true,
   "volta": {
-    "node": "16.19.0",
+    "node": "18.18.0",
     "npm": "8.13.1"
   }
 }
