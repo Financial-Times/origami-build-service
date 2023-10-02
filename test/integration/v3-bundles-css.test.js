@@ -222,6 +222,36 @@ describe('GET /__origami/service/build/v3/bundles/css', function() {
 
 	});
 
+	describe('when an invalid component is requested (origami v3)', function() {
+		const componentName = 'o3-utils@1';
+		const brand = 'master';
+		const systemCode = 'origami';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/__origami/service/build/v3/bundles/css?components=${componentName}&brand=${brand}&system_code=${systemCode}`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(response => {
+				assert.deepStrictEqual(response.status, 400);
+			}).end(done);
+		});
+
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
+
+	});
+
 	describe('when an invalid component is requested (Sass compilation error)', function() {
 		const componentName = 'o-test-component@2.2.3';
 		const brand = 'master';
