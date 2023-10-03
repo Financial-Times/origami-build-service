@@ -234,9 +234,10 @@ describe('GET /__origami/service/build/v3/bundles/css', function() {
 				.set('Connection', 'close');
 		});
 
-		it('should respond with a 400 status', function(done) {
+		it('should respond with a 400 status with correct text', function (done) {
 			this.request.expect(response => {
 				assert.deepStrictEqual(response.status, 400);
+				assert.deepStrictEqual(response.text, 'Origami Build Service returned an error: "o3-utils@1 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components."');
 			}).end(done);
 		});
 
