@@ -1,0 +1,24 @@
+@startuml C4_Elements
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+'get a bundle for a component based on request params, includes a reference to the calling system
+System(webApp, "Web App", "Any web app")
+
+System(origamiRegistry, "Origami Registry", "Displays demos of Origami components")
+System(fastly, "Fastly", "Edge system, caching, routing etc")
+Container(buildService, "Build service", "REST API", "Generates Origami component assets")
+System(npm, "Node Package Manager", "Installs dependencies")
+System(gitHub, "GitHub", "Repository for fonts")
+System(npmRegistry, "NPM Registry", "Repository for Origami components")
+System(npmLocalCache, "NPM Local Cache", "Local storage cache for previously installed npm packages")
+
+Rel(webApp, fastly, "Requests Origami component assets", "GET /build/v3/bundles/(js|css)")
+Rel(webApp, fastly, "Requests fonts", "GET /build/v3/fonts")
+Rel(origamiRegistry, fastly, "Requests Origami component assets", "GET /build/v3/demo")
+Rel(fastly, buildService, "Origami component assets", "GET /build/v3/demo")
+
+Rel(buildService, npm, "Install dependencies")
+Rel(npm, gitHub, "Uses source")
+Rel(npm, npmRegistry, "Uses source")
+Rel_R(npm, npmLocalCache, "Uses source")
+
+@enduml
