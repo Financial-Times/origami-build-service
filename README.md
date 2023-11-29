@@ -34,7 +34,7 @@ Run the application in development mode with
 npm start
 ```
 
-Now you can access the app over HTTP on port `8080`: [http://localhost:8080/__origami/service/build/v2](http://localhost:8080/__origami/service/build/v2)
+Now you can access the app over HTTP on port `8080`: [http://localhost:8080/__origami/service/build/v3](http://localhost:8080/__origami/service/build/v3)
 
 
 ## Configuration
