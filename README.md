@@ -6,14 +6,14 @@ To learn more about using the Origami Build Service refer to the [API reference]
 
 ## Table Of Contents
 
-  * [Requirements](#requirements)
-  * [Running Locally](#running-locally)
-  * [Configuration](#configuration)
-  * [Testing](#testing)
-  * [Deployment](#deployment)
-  * [Monitoring](#monitoring)
-  * [Trouble-Shooting](#trouble-shooting)
-  * [License](#license)
+* [Requirements](#requirements)
+* [Running Locally](#running-locally)
+* [Configuration](#configuration)
+* [Testing](#testing)
+* [Deployment](#deployment)
+* [Monitoring](#monitoring)
+* [Trouble-Shooting](#trouble-shooting)
+* [License](#license)
 
 
 ## Requirements
@@ -31,34 +31,34 @@ npm install
 Run the application in development mode with
 
 ```sh
-make run-dev
+npm start
 ```
 
-Now you can access the app over HTTP on port `8080`: [http://localhost:8080/](http://localhost:8080/)
+Now you can access the app over HTTP on port `8080`: [http://localhost:8080/__origami/service/build/v3](http://localhost:8080/__origami/service/build/v3)
 
 
 ## Configuration
 
-We configure Origami Build Service using environment variables. In development, configurations are set in a `.env` file. In production, these are set through Heroku config. Further documentation on the available options can be found in the [Origami Service documentation][service-options].
+We configure Origami Build Service using environment variables. In local development environment configuration is not needed, unless you need to change `PORT` or `NODE_ENV` default variables. In production, these are set through Doppler project that will sync variables to Heroku as well.
 
 ### Required everywhere
 
-  * `NODE_ENV`: The environment to run the application in. One of `production`, `development` (default), or `test` (for use in automated tests).
-  * `PORT`: The port to run the application on.
+* `NODE_ENV`: The environment to run the application in. One of `production`, `development` (default), or `test` (for use in automated tests).
+* `PORT`: The port to run the application on.
 
 ### Required in Heroku
 
-  * `ORIGAMI_GITHUB_TOKEN`: A GitHub token with permission to read the private `o-fonts-assets` repository.
-  * `GRAPHITE_API_KEY`: The FT's internal Graphite API key
-  * `GRAPHITE_HOST`: The hostname of a Graphite server to gather metrics with.
-  * `REGION`: The region the application is running in. One of `QA`, `EU`, or `US`
-  * `CHANGE_API_KEY`: The change-log API key to use when creating and closing change-logs.
-  * `RELEASE_ENV`: The Salesforce environment to include in change-logs. One of `Test` or `Production`
-  * `SENTRY_DSN`: The Sentry URL to send error information to
-  * `ARCHIVE_BUCKET_NAME`: The AWS S3 bucket to use to retrieve archived responses. One of `origami-build-service-archive-prod` (default) or `origami-build-service-archive-test`.
+* `CHANGE_API_KEY`: The change-log API key to use when creating and closing change-logs.
+* `ORIGAMI_GITHUB_TOKEN`: A GitHub token with permission to read the private `o-fonts-assets` repository.
+* `GRAPHITE_API_KEY`: The FT's internal Graphite API key
+* `GRAPHITE_HOST`: The hostname of a Graphite server to gather metrics with.
+* `REGION`: The region the application is running in. One of `QA`, `EU`, or `US`
+* `RELEASE_ENV`: The Salesforce environment to include in change-logs. One of `Test` or `Production`
+* `SENTRY_DSN`: The Sentry URL to send error information to
+* `ARCHIVE_BUCKET_NAME`: The AWS S3 bucket to use to retrieve archived responses. One of `origami-build-service-archive-prod` (default) or `origami-build-service-archive-test`.
 ### Optional
 
-  * `NPM_REGISTRY_URL`: The npm Registry url to use when installing npm dependencies. Defaults to `https://registry.npmjs.org`.
+* `NPM_REGISTRY_URL`: The npm Registry url to use when installing npm dependencies. Defaults to `https://registry.npmjs.org`.
 
 ## Testing
 
@@ -143,11 +143,11 @@ All demo pages e.g. `/v2/demos`:
 
 ## Monitoring
 
-  * [Grafana dashboard][grafana]: graph memory, load, and number of requests
-  * [Pingdom check (Production EU)][pingdom-eu]: checks that the EU production app is responding
-  * [Sentry dashboard (Production)][sentry-production]: records application errors in the production app
-  * [Sentry dashboard (QA)][sentry-qa]: records application errors in the QA app
-  * [Splunk (Production)][splunk]: query application logs (see below)
+* [Grafana dashboard][grafana]: graph memory, load, and number of requests
+* [Pingdom check (Production EU)][pingdom-eu]: checks that the EU production app is responding
+* [Sentry dashboard (Production)][sentry-production]: records application errors in the production app
+* [Sentry dashboard (QA)][sentry-qa]: records application errors in the QA app
+* [Splunk (Production)][splunk]: query application logs (see below)
 
 
 ## Logging
