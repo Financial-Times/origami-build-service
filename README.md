@@ -39,7 +39,7 @@ Now you can access the app over HTTP on port `8080`: [http://localhost:8080/__or
 
 ## Configuration
 
-We configure Origami Build Service using environment variables. In local development environment configuration is nor needed unless you need to change `PORT` or `NODE_ENV` default variables. In production, these are set through Doppler project that will sync variables on Heroku as well.
+We configure Origami Build Service using environment variables. In local development environment configuration is not needed, unless you need to change `PORT` or `NODE_ENV` default variables. In production, these are set through Doppler project that will sync variables to Heroku as well.
 
 ### Required everywhere
 
