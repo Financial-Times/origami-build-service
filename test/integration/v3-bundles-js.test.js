@@ -146,6 +146,37 @@ describe('GET /__origami/service/build/v3/bundles/js', function() {
 
 	});
 
+	describe('when an invalid component is requested (origami v3)', function() {
+		const componentName = 'o3-utils@1';
+		const systemCode = 'origami';
+
+		beforeEach(function() {
+			this.request = request(this.app)
+				.get(`/__origami/service/build/v3/bundles/js?components=${componentName}&system_code=${systemCode}`)
+				.redirects(5)
+				.set('Connection', 'close');
+		});
+
+		it('should respond with a 400 status', function(done) {
+			this.request.expect(400).end(done);
+		});
+
+		it('should respond with an error message', function(done) {
+			this.request.expect('Origami Build Service returned an error: "o3-utils@1 is not an Origami v2 component, the Origami Build Service v3 API only supports Origami v2 components."').end(done);
+		});
+
+		context('is not vulnerable to cross-site-scripting (XSS) attacks', function() {
+			it('should respond with the expected `Content-Type` header', function(done) {
+				this.request.expect('Content-Type', 'text/plain; charset=utf-8').end(done);
+			});
+
+			it('should respond with the expected `X-Content-Type-Options` header set to `nosniff`', function(done) {
+				this.request.expect('X-Content-Type-Options', 'nosniff').end(done);
+			});
+		});
+
+	});
+
 	describe('when an invalid component is requested (JavaScript compilation error)', function() {
 		const componentName = 'o-test-component@2.2.14';
 		const systemCode = 'origami';
