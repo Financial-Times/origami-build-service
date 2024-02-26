@@ -14,8 +14,6 @@ exports[`GET /__origami/service/build/v3/demo when a valid component and demo ar
 		}
 	</style>
 
-		<script src=\\"https://polyfill.io/v3/polyfill.min.js?features=CustomEvent&flags=gated&unknown=polyfill\\"></script>
-
 
 		<style>.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:'Hello world!  The square root of 64 is \\"8\\".'}
 </style>
@@ -44,8 +42,6 @@ exports[`GET /__origami/service/build/v3/demo when a valid component and demo ar
 			margin: 0;
 		}
 	</style>
-
-		<script src=\\"https://polyfill.io/v3/polyfill.min.js?features=CustomEvent&flags=gated&unknown=polyfill\\"></script>
 
 
 		<style>.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:'Hello world!  The square root of 64 is \\"8\\".'}
@@ -76,8 +72,6 @@ exports[`GET /__origami/service/build/v3/demo when a valid component at specific
 		}
 	</style>
 
-		<script src=\\"https://polyfill.io/v3/polyfill.min.js?features=CustomEvent&flags=gated&unknown=polyfill\\"></script>
-
 
 		<style>.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:'Hello employee 317. Hope you find this internal tool or product helpful. The square root of 64 is \\"8\\".'}
 </style>
@@ -106,8 +100,6 @@ exports[`GET /__origami/service/build/v3/demo when a valid component at specific
 			margin: 0;
 		}
 	</style>
-
-		<script src=\\"https://polyfill.io/v3/polyfill.min.js?features=CustomEvent&flags=gated&unknown=polyfill\\"></script>
 
 
 		<style>.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:'Hello employee 317. Hope you find this internal tool or product helpful. The square root of 64 is \\"8\\".'}
@@ -138,8 +130,6 @@ exports[`GET /__origami/service/build/v3/demo when a valid component at specific
 		}
 	</style>
 
-		<script src=\\"https://polyfill.io/v3/polyfill.min.js?features=CustomEvent&flags=gated&unknown=polyfill\\"></script>
-
 
 		<style>.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:'Hello world!  The square root of 64 is \\"8\\".'}
 </style>
@@ -168,8 +158,6 @@ exports[`GET /__origami/service/build/v3/demo when a valid component at specific
 			margin: 0;
 		}
 	</style>
-
-		<script src=\\"https://polyfill.io/v3/polyfill.min.js?features=CustomEvent&flags=gated&unknown=polyfill\\"></script>
 
 
 		<style>.o-test-component{padding:.5em 1em;background-color:pink}.o-test-component:after{content:'Hello world!  The square root of 64 is \\"8\\".'}
