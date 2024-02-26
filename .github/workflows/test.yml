@@ -1,4 +1,4 @@
-name: Test
+name: Unit Test
 on: [pull_request]
 jobs:
   test:
@@ -15,8 +15,5 @@ jobs:
     - run: npm ci
     - run: make verify
     - run: make test-unit-coverage
-      env:
-        ORIGAMI_GITHUB_TOKEN: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}
-    - run: make test-integration
       env:
         ORIGAMI_GITHUB_TOKEN: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}
