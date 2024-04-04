@@ -26,6 +26,8 @@ const gone = [
 	'/__origami/service/build/v2/files/o-fonts-assets@1.13.0/BentonSans-Bold.woff',
 	'/__origami/service/build/v2/files/o-fonts-assets@1.13.0/MillerDisplay-Bold.woff',
 	'/__origami/service/build/v2/files/o-fonts-assets@1.13.0/BentonSansBook-Regular.woff',
+
+	'/__origami/service/build/url-updater/',
 ];
 
 for (const url of gone) {
