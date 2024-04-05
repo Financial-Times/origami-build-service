@@ -114,7 +114,7 @@ If your change does appear then the old result may be cached by our CDN. You'll 
 
 ### Documentation Cache Purge
 
-All documentation pages e.g. `/v2`, `/v2/api`, `/v2/migration`, `/v3/`, `/v3/api`, `/url-updater`:
+All documentation pages e.g. `/v2`, `/v2/api`, `/v2/migration`, `/v3/`, `/v3/api`:
 - origami-build-service-website
 
 ### V3 API Cache Purge

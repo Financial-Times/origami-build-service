@@ -6,11 +6,6 @@
 			"current": false
 		},
 		{
-			"name": "URL Updater",
-			"href": "url-updater",
-			"current": false
-		},
-		{
 			"name": "API Reference",
 			"href": "v3/docs/api",
 			"current": false,
