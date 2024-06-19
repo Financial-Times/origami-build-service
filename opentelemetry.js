@@ -20,6 +20,7 @@ const {
 // Import the OpenTelemetry Semantic Conventions for use in setting resource attributes.
 const {
 	SEMRESATTRS_CLOUD_PROVIDER,
+	SEMRESATTRS_DEPLOYMENT_ENVIRONMENT,
 	SEMRESATTRS_SERVICE_VERSION,
 } = require('@opentelemetry/semantic-conventions');
 
@@ -30,6 +31,7 @@ const resource = new Resource({
 	['heroku.release.creation_timestamp']: process.env.HEROKU_RELEASE_CREATED_AT,
 	[SEMRESATTRS_CLOUD_PROVIDER]: 'heroku',
 	[SEMRESATTRS_SERVICE_VERSION]: process.env.HEROKU_RELEASE_VERSION,
+	[SEMRESATTRS_DEPLOYMENT_ENVIRONMENT]: process.env.NODE_ENV,
 });
 
 // Use an OTLP metric exporter to send metrics to the OpenTelemetry Gateway Collector. Mostly configured using environment variables.
