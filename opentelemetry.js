@@ -1,18 +1,18 @@
 'use strict';
-console.log('starting build-service opentelementry metrics');
-const {NodeSDK} = require('@opentelemetry/sdk-node');
-const {NoopSpanProcessor} = require('@opentelemetry/sdk-trace-base');
-const {PeriodicExportingMetricReader} = require('@opentelemetry/sdk-metrics');
+
+const { NodeSDK } = require('@opentelemetry/sdk-node');
+const { NoopSpanProcessor } = require('@opentelemetry/sdk-trace-base');
+const { PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics');
 const {
 	getNodeAutoInstrumentations,
 } = require('@opentelemetry/auto-instrumentations-node');
 const {
 	OTLPMetricExporter,
 } = require('@opentelemetry/exporter-metrics-otlp-proto');
-const {Resource} = require('@opentelemetry/resources');
+const { Resource } = require('@opentelemetry/resources');
 
 // Instrumentation that is not included by @opentelemetry/auto-instrumentations-node.
-const {HostMetrics} = require('@opentelemetry/host-metrics');
+const { HostMetrics } = require('@opentelemetry/host-metrics');
 const {
 	RuntimeNodeInstrumentation,
 } = require('@opentelemetry/instrumentation-runtime-node');
@@ -27,11 +27,12 @@ const {
 // Set the resource attributes for this Heroku app.
 const resource = new Resource({
 	['heroku.app.id']: process.env.HEROKU_APP_ID,
-	['heroku.release.commit']: process.env.HEROKU_SLUG_COMMIT,
+	['heroku.release.commit']: process.env.HEROKU_BUILD_COMMIT,
 	['heroku.release.creation_timestamp']: process.env.HEROKU_RELEASE_CREATED_AT,
+	['service.instance.id']: process.env.HEROKU_DYNO_ID,
 	[SEMRESATTRS_CLOUD_PROVIDER]: 'heroku',
-	[SEMRESATTRS_DEPLOYMENT_ENVIRONMENT]: process.env.NODE_ENV,
 	[SEMRESATTRS_SERVICE_VERSION]: process.env.HEROKU_RELEASE_VERSION,
+	[SEMRESATTRS_DEPLOYMENT_ENVIRONMENT]: process.env.NODE_ENV,
 });
 
 // Use an OTLP metric exporter to send metrics to the OpenTelemetry Gateway Collector. Mostly configured using environment variables.
