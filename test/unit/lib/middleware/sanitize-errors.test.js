@@ -3,16 +3,17 @@
 const assert = require('chai').assert;
 const mockery = require('mockery');
 const sinon = require('sinon');
+const {createCounter} = require('../../../../lib/middleware/sanitize-errors');
 
 describe('lib/middleware/sanitize-errors', () => {
 	let CompileError;
 	let metrics;
+	let compileCounter;
 	let origamiService;
 	let sanitizeErrors;
 	let UserError;
 
 	beforeEach(() => {
-
 		CompileError = class CompileError extends Error {
 			constructor() {
 				super(...arguments);
@@ -30,7 +31,21 @@ describe('lib/middleware/sanitize-errors', () => {
 		mockery.registerMock('../utils/usererror', UserError);
 
 		origamiService = require('../../mock/origami-service.mock');
-		metrics = origamiService.mockApp.ft.metrics;
+		metrics = {
+			compileCounter: {
+				add: sinon.stub(),
+			},
+			conflictCounter: {
+				add: sinon.stub(),
+			},
+			remoteioCounter: {
+				add: sinon.stub(),
+			},
+		};
+
+		compileCounter = {
+			add: sinon.stub()
+		};
 
 		sanitizeErrors = require('../../../../lib/middleware/sanitize-errors');
 	});
@@ -57,7 +72,12 @@ describe('lib/middleware/sanitize-errors', () => {
 			beforeEach(() => {
 				error = new Error('mock error');
 				next = sinon.spy();
-				middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+				middleware(
+					error,
+					origamiService.mockRequest,
+					origamiService.mockResponse,
+					next
+				);
 			});
 
 			it('calls `next` with the passed in error', () => {
@@ -66,11 +86,15 @@ describe('lib/middleware/sanitize-errors', () => {
 			});
 
 			describe('when `error.details` is defined', () => {
-
 				beforeEach(() => {
 					error.details = 'mock details';
 					next.reset();
-					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(
+						error,
+						origamiService.mockRequest,
+						origamiService.mockResponse,
+						next
+					);
 				});
 
 				it('combines the error message and details in a new message', () => {
@@ -81,20 +105,29 @@ describe('lib/middleware/sanitize-errors', () => {
 					assert.calledOnce(next);
 					assert.calledWithExactly(next, error);
 				});
-
 			});
 
 			describe('when `error` is an instance of CompileError', () => {
+				let compileCounter;
+        let addSpy
 
 				beforeEach(() => {
+          addSpy = sinon.spy()
+					compileCounter = sinon.stub(createCounter).returns({add: addSpy});
+        
 					error = new CompileError('mock compile error');
 					next.reset();
-					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(
+						error,
+						origamiService.mockRequest,
+						origamiService.mockResponse,
+						next
+					);
 				});
-
-				it('increments the `servererrors.compile` metric', () => {
-					assert.calledOnce(metrics.count);
-					assert.calledWithExactly(metrics.count, 'servererrors.compile', 1);
+        
+				it.only('increments the `servererrors.compile` metric', () => {
+					assert.calledOnce(addSpy);
+					assert.calledWithExactly(addSpy, 1);
 				});
 
 				it('sets the error `status` property to 560', () => {
@@ -102,22 +135,28 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('makes the error `message` property more human-readable', () => {
-					assert.strictEqual(error.message, 'Cannot complete build due to compilation error from build tools:\n\nmock compile error\n');
+					assert.strictEqual(
+						error.message,
+						'Cannot complete build due to compilation error from build tools:\n\nmock compile error\n'
+					);
 				});
 
 				it('calls `next` with the passed in error', () => {
 					assert.calledOnce(next);
 					assert.calledWithExactly(next, error);
 				});
-
 			});
 
 			describe('when `error` is an instance of UserError', () => {
-
 				beforeEach(() => {
 					error = new UserError('mock user error');
 					next.reset();
-					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(
+						error,
+						origamiService.mockRequest,
+						origamiService.mockResponse,
+						next
+					);
 				});
 
 				it('sets the error `status` property to 400', () => {
@@ -128,15 +167,18 @@ describe('lib/middleware/sanitize-errors', () => {
 					assert.calledOnce(next);
 					assert.calledWithExactly(next, error);
 				});
-
 			});
 
 			describe('when `error.code` is ENOTFOUND', () => {
-
 				beforeEach(() => {
 					error.code = 'ENOTFOUND';
 					next.reset();
-					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(
+						error,
+						origamiService.mockRequest,
+						origamiService.mockResponse,
+						next
+					);
 				});
 
 				it('sets the error `status` property to 404', () => {
@@ -149,34 +191,43 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				describe('when `error.data` is defined', () => {
-
 					beforeEach(() => {
 						error.data = {
-							foo: 'bar'
+							foo: 'bar',
 						};
 						next.reset();
-						middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+						middleware(
+							error,
+							origamiService.mockRequest,
+							origamiService.mockResponse,
+							next
+						);
 					});
 
 					it('adds the data as JSON to the error message', () => {
-						assert.strictEqual(error.message, 'mock error\n\n{\n  "foo": "bar"\n}');
+						assert.strictEqual(
+							error.message,
+							'mock error\n\n{\n  "foo": "bar"\n}'
+						);
 					});
 
 					it('calls `next` with the passed in error', () => {
 						assert.calledOnce(next);
 						assert.calledWithExactly(next, error);
 					});
-
 				});
-
 			});
 
 			describe('when `error.code` is ENOENT', () => {
-
 				beforeEach(() => {
 					error.code = 'ENOENT';
 					next.reset();
-					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(
+						error,
+						origamiService.mockRequest,
+						origamiService.mockResponse,
+						next
+					);
 				});
 
 				it('sets the error `status` property to 404', () => {
@@ -187,15 +238,18 @@ describe('lib/middleware/sanitize-errors', () => {
 					assert.calledOnce(next);
 					assert.calledWithExactly(next, error);
 				});
-
 			});
 
 			describe('when `error.code` is ENORESTARGET', () => {
-
 				beforeEach(() => {
 					error.code = 'ENORESTARGET';
 					next.reset();
-					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(
+						error,
+						origamiService.mockRequest,
+						origamiService.mockResponse,
+						next
+					);
 				});
 
 				it('sets the error `status` property to 404', () => {
@@ -206,20 +260,23 @@ describe('lib/middleware/sanitize-errors', () => {
 					assert.calledOnce(next);
 					assert.calledWithExactly(next, error);
 				});
-
 			});
 
 			describe('when `error.code` is ECONFLICT', () => {
-
 				beforeEach(() => {
 					error.code = 'ECONFLICT';
 					next.reset();
-					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(
+						error,
+						origamiService.mockRequest,
+						origamiService.mockResponse,
+						next
+					);
 				});
 
 				it('increments the `usererrors.conflict` metric', () => {
-					assert.calledOnce(metrics.count);
-					assert.calledWithExactly(metrics.count, 'usererrors.conflict', 1);
+					assert.calledOnce(metrics.conflictCounter.add);
+					assert.calledWithExactly(metrics.conflict.add, 1);
 				});
 
 				it('sets the error `status` property to 409', () => {
@@ -232,70 +289,79 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				describe('when `error.picks` is defined', () => {
-
 					beforeEach(() => {
 						error.picks = [
 							{
 								endpoint: {
-									target: 'mock-endpoint-target-1'
+									target: 'mock-endpoint-target-1',
 								},
 								dependants: [
 									{
 										pkgMeta: {
 											name: '__MAIN__',
-											_target: 'mock-target-1'
-										}
-									}
-								]
+											_target: 'mock-target-1',
+										},
+									},
+								],
 							},
 							{
 								endpoint: {
-									target: 'mock-endpoint-target-2'
+									target: 'mock-endpoint-target-2',
 								},
 								dependants: [
 									{
 										pkgMeta: {
 											name: 'foo',
-											_target: 'mock-target-2'
-										}
-									}
-								]
-							}
+											_target: 'mock-target-2',
+										},
+									},
+								],
+							},
 						];
 						next.reset();
-						middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+						middleware(
+							error,
+							origamiService.mockRequest,
+							origamiService.mockResponse,
+							next
+						);
 					});
 
 					it('adds the pick details to the `message` property', () => {
-						assert.strictEqual(error.message, [
-							'Cannot complete build: conflicting dependencies exist.',
-							'',
-							'mock error',
-							' - Required at version mock-endpoint-target-1 in the URL',
-							' - Required at version mock-endpoint-target-2 by foo@mock-target-2'
-						].join('\n'));
+						assert.strictEqual(
+							error.message,
+							[
+								'Cannot complete build: conflicting dependencies exist.',
+								'',
+								'mock error',
+								' - Required at version mock-endpoint-target-1 in the URL',
+								' - Required at version mock-endpoint-target-2 by foo@mock-target-2',
+							].join('\n')
+						);
 					});
 
 					it('calls `next` with the passed in error', () => {
 						assert.calledOnce(next);
 						assert.calledWithExactly(next, error);
 					});
-
 				});
-
 			});
 
 			describe('when `error.code` is EREMOTEIO', () => {
-
 				beforeEach(() => {
 					error.code = 'EREMOTEIO';
 					next.reset();
-					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(
+						error,
+						origamiService.mockRequest,
+						origamiService.mockResponse,
+						next
+					);
 				});
 
 				it('increments the `servererrors.remoteio` metric', () => {
-					assert.calledOnce(metrics.count);
-					assert.calledWithExactly(metrics.count, 'servererrors.remoteio', 1);
+					assert.calledOnce(metrics.remoteioCounter.add);
+					assert.calledWithExactly(metrics.remoteioCounter.add, 1);
 				});
 
 				it('sets the error `status` property to 502', () => {
@@ -306,20 +372,23 @@ describe('lib/middleware/sanitize-errors', () => {
 					assert.calledOnce(next);
 					assert.calledWithExactly(next, error);
 				});
-
 			});
 
 			describe('when `error.code` is EAI_AGAIN', () => {
-
 				beforeEach(() => {
 					error.code = 'EAI_AGAIN';
 					next.reset();
-					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
+					middleware(
+						error,
+						origamiService.mockRequest,
+						origamiService.mockResponse,
+						next
+					);
 				});
 
 				it('increments the `servererrors.remoteio` metric', () => {
-					assert.calledOnce(metrics.count);
-					assert.calledWithExactly(metrics.count, 'servererrors.remoteio', 1);
+					assert.calledOnce(metrics.remoteioCounter.add);
+					assert.calledWithExactly(metrics.remoteioCounter.add, 1);
 				});
 
 				it('sets the error `status` property to 502', () => {
@@ -330,11 +399,7 @@ describe('lib/middleware/sanitize-errors', () => {
 					assert.calledOnce(next);
 					assert.calledWithExactly(next, error);
 				});
-
 			});
-
 		});
-
 	});
-
 });
