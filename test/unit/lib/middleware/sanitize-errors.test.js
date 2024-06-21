@@ -31,21 +31,6 @@ describe('lib/middleware/sanitize-errors', () => {
 		mockery.registerMock('../utils/usererror', UserError);
 
 		origamiService = require('../../mock/origami-service.mock');
-		metrics = {
-			compileCounter: {
-				add: sinon.stub(),
-			},
-			conflictCounter: {
-				add: sinon.stub(),
-			},
-			remoteioCounter: {
-				add: sinon.stub(),
-			},
-		};
-
-		compileCounter = {
-			add: sinon.stub()
-		};
 
 		sanitizeErrors = require('../../../../lib/middleware/sanitize-errors');
 	});
@@ -80,6 +65,10 @@ describe('lib/middleware/sanitize-errors', () => {
 				);
 			});
 
+			afterEach(() => {
+				next.resetHistory();
+			});
+
 			it('calls `next` with the passed in error', () => {
 				assert.calledOnce(next);
 				assert.calledWithExactly(next, error);
@@ -88,7 +77,6 @@ describe('lib/middleware/sanitize-errors', () => {
 			describe('when `error.details` is defined', () => {
 				beforeEach(() => {
 					error.details = 'mock details';
-					next.reset();
 					middleware(
 						error,
 						origamiService.mockRequest,
@@ -116,7 +104,6 @@ describe('lib/middleware/sanitize-errors', () => {
 					compileCounter = sinon.stub(createCounter).returns({add: addSpy});
         
 					error = new CompileError('mock compile error');
-					next.reset();
 					middleware(
 						error,
 						origamiService.mockRequest,
@@ -124,7 +111,7 @@ describe('lib/middleware/sanitize-errors', () => {
 						next
 					);
 				});
-        
+
 				it.only('increments the `servererrors.compile` metric', () => {
 					assert.calledOnce(addSpy);
 					assert.calledWithExactly(addSpy, 1);
@@ -150,7 +137,6 @@ describe('lib/middleware/sanitize-errors', () => {
 			describe('when `error` is an instance of UserError', () => {
 				beforeEach(() => {
 					error = new UserError('mock user error');
-					next.reset();
 					middleware(
 						error,
 						origamiService.mockRequest,
@@ -172,7 +158,6 @@ describe('lib/middleware/sanitize-errors', () => {
 			describe('when `error.code` is ENOTFOUND', () => {
 				beforeEach(() => {
 					error.code = 'ENOTFOUND';
-					next.reset();
 					middleware(
 						error,
 						origamiService.mockRequest,
@@ -195,7 +180,6 @@ describe('lib/middleware/sanitize-errors', () => {
 						error.data = {
 							foo: 'bar',
 						};
-						next.reset();
 						middleware(
 							error,
 							origamiService.mockRequest,
@@ -221,7 +205,6 @@ describe('lib/middleware/sanitize-errors', () => {
 			describe('when `error.code` is ENOENT', () => {
 				beforeEach(() => {
 					error.code = 'ENOENT';
-					next.reset();
 					middleware(
 						error,
 						origamiService.mockRequest,
@@ -243,7 +226,6 @@ describe('lib/middleware/sanitize-errors', () => {
 			describe('when `error.code` is ENORESTARGET', () => {
 				beforeEach(() => {
 					error.code = 'ENORESTARGET';
-					next.reset();
 					middleware(
 						error,
 						origamiService.mockRequest,
@@ -265,7 +247,6 @@ describe('lib/middleware/sanitize-errors', () => {
 			describe('when `error.code` is ECONFLICT', () => {
 				beforeEach(() => {
 					error.code = 'ECONFLICT';
-					next.reset();
 					middleware(
 						error,
 						origamiService.mockRequest,
@@ -318,7 +299,6 @@ describe('lib/middleware/sanitize-errors', () => {
 								],
 							},
 						];
-						next.reset();
 						middleware(
 							error,
 							origamiService.mockRequest,
@@ -350,7 +330,6 @@ describe('lib/middleware/sanitize-errors', () => {
 			describe('when `error.code` is EREMOTEIO', () => {
 				beforeEach(() => {
 					error.code = 'EREMOTEIO';
-					next.reset();
 					middleware(
 						error,
 						origamiService.mockRequest,
@@ -377,7 +356,6 @@ describe('lib/middleware/sanitize-errors', () => {
 			describe('when `error.code` is EAI_AGAIN', () => {
 				beforeEach(() => {
 					error.code = 'EAI_AGAIN';
-					next.reset();
 					middleware(
 						error,
 						origamiService.mockRequest,
