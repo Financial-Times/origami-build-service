@@ -3,17 +3,28 @@
 const assert = require('chai').assert;
 const mockery = require('mockery');
 const sinon = require('sinon');
-const {createCounter} = require('../../../../lib/middleware/sanitize-errors');
+const counter = require('../../../../lib/middleware/createCounter');
+
+const proxyquire = require('proxyquire');
 
 describe('lib/middleware/sanitize-errors', () => {
 	let CompileError;
 	let metrics;
-	let compileCounter;
 	let origamiService;
 	let sanitizeErrors;
+	let createCounterStub;
+	let sandbox;
+
 	let UserError;
 
+	afterEach(() => {
+		sandbox.restore();
+	})
+
 	beforeEach(() => {
+		sandbox = sinon.createSandbox();
+		createCounterStub = sandbox.stub(counter, 'createCounter');
+		createCounterStub.returns({add: sandbox.stub()});
 		CompileError = class CompileError extends Error {
 			constructor() {
 				super(...arguments);
@@ -32,7 +43,9 @@ describe('lib/middleware/sanitize-errors', () => {
 
 		origamiService = require('../../mock/origami-service.mock');
 
-		sanitizeErrors = require('../../../../lib/middleware/sanitize-errors');
+		sanitizeErrors = proxyquire('../../../../lib/middleware/sanitize-errors', {
+			'./createCounter': { createCounter: createCounterStub }
+		});
 	});
 
 	it('exports a function', () => {
@@ -52,36 +65,41 @@ describe('lib/middleware/sanitize-errors', () => {
 
 		describe('middleware(error, request, response, next)', () => {
 			let error;
-			let next;
+			let nextSpy;
 
 			beforeEach(() => {
+				nextSpy = sandbox.spy();
 				error = new Error('mock error');
-				next = sinon.spy();
-				middleware(
-					error,
-					origamiService.mockRequest,
-					origamiService.mockResponse,
-					next
-				);
 			});
 
-			afterEach(() => {
-				next.resetHistory();
-			});
-
-			it('calls `next` with the passed in error', () => {
-				assert.calledOnce(next);
-				assert.calledWithExactly(next, error);
-			});
-
-			describe('when `error.details` is defined', () => {
+			describe('given a generic error', () => {
 				beforeEach(() => {
-					error.details = 'mock details';
+					createCounterStub.returns({add: sandbox.stub()});
+					nextSpy.resetHistory();
 					middleware(
 						error,
 						origamiService.mockRequest,
 						origamiService.mockResponse,
-						next
+						nextSpy
+					);
+				});
+
+				it('calls `next` with the passed in error', () => {
+					assert.calledOnce(nextSpy);
+					assert.calledWithExactly(nextSpy, error);
+				});
+			})
+
+
+			describe('when `error.details` is defined', () => {
+				beforeEach(() => {
+					error.details = 'mock details';
+					nextSpy.resetHistory();
+					middleware(
+						error,
+						origamiService.mockRequest,
+						origamiService.mockResponse,
+						nextSpy
 					);
 				});
 
@@ -90,29 +108,32 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('calls `next` with the passed in error', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next, error);
+					assert.calledOnce(nextSpy);
+					assert.calledWithExactly(nextSpy, error);
 				});
 			});
 
 			describe('when `error` is an instance of CompileError', () => {
-				let compileCounter;
-        let addSpy
+				let addSpy;
 
 				beforeEach(() => {
-          addSpy = sinon.spy()
-					compileCounter = sinon.stub(createCounter).returns({add: addSpy});
-        
+					addSpy = sandbox.spy()
+					createCounterStub.withArgs(sinon.match.any, 'servererrors.compile').returns({add: addSpy})
+
 					error = new CompileError('mock compile error');
 					middleware(
 						error,
 						origamiService.mockRequest,
 						origamiService.mockResponse,
-						next
+						nextSpy
 					);
 				});
 
-				it.only('increments the `servererrors.compile` metric', () => {
+				afterEach(() => {
+					addSpy.resetHistory();
+				})
+
+				it('increments the `servererrors.compile` metric', () => {
 					assert.calledOnce(addSpy);
 					assert.calledWithExactly(addSpy, 1);
 				});
@@ -129,19 +150,20 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('calls `next` with the passed in error', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next, error);
+					assert.calledOnce(nextSpy);
+					assert.calledWithExactly(nextSpy, error);
 				});
 			});
 
 			describe('when `error` is an instance of UserError', () => {
 				beforeEach(() => {
+					createCounterStub.returns({add: sandbox.stub()});
 					error = new UserError('mock user error');
 					middleware(
 						error,
 						origamiService.mockRequest,
 						origamiService.mockResponse,
-						next
+						nextSpy
 					);
 				});
 
@@ -150,19 +172,20 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('calls `next` with the passed in error', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next, error);
+					assert.calledOnce(nextSpy);
+					assert.calledWithExactly(nextSpy, error);
 				});
 			});
 
 			describe('when `error.code` is ENOTFOUND', () => {
 				beforeEach(() => {
+					createCounterStub.returns({add: sandbox.stub()});
 					error.code = 'ENOTFOUND';
 					middleware(
 						error,
 						origamiService.mockRequest,
 						origamiService.mockResponse,
-						next
+						nextSpy
 					);
 				});
 
@@ -171,12 +194,14 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('calls `next` with the passed in error', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next, error);
+					assert.calledOnce(nextSpy);
+					assert.calledWithExactly(nextSpy, error);
 				});
 
 				describe('when `error.data` is defined', () => {
 					beforeEach(() => {
+						nextSpy.resetHistory();
+						createCounterStub.returns({add: sandbox.stub()});
 						error.data = {
 							foo: 'bar',
 						};
@@ -184,7 +209,7 @@ describe('lib/middleware/sanitize-errors', () => {
 							error,
 							origamiService.mockRequest,
 							origamiService.mockResponse,
-							next
+							nextSpy
 						);
 					});
 
@@ -196,20 +221,22 @@ describe('lib/middleware/sanitize-errors', () => {
 					});
 
 					it('calls `next` with the passed in error', () => {
-						assert.calledOnce(next);
-						assert.calledWithExactly(next, error);
+						assert.calledOnce(nextSpy);
+						assert.calledWithExactly(nextSpy, error);
 					});
 				});
 			});
 
 			describe('when `error.code` is ENOENT', () => {
 				beforeEach(() => {
+					nextSpy.resetHistory();
+					createCounterStub.returns({add: sandbox.stub()});
 					error.code = 'ENOENT';
 					middleware(
 						error,
 						origamiService.mockRequest,
 						origamiService.mockResponse,
-						next
+						nextSpy
 					);
 				});
 
@@ -218,19 +245,20 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('calls `next` with the passed in error', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next, error);
+					assert.calledOnce(nextSpy);
+					assert.calledWithExactly(nextSpy, error);
 				});
 			});
 
 			describe('when `error.code` is ENORESTARGET', () => {
 				beforeEach(() => {
+					createCounterStub.returns({add: sandbox.stub()});
 					error.code = 'ENORESTARGET';
 					middleware(
 						error,
 						origamiService.mockRequest,
 						origamiService.mockResponse,
-						next
+						nextSpy
 					);
 				});
 
@@ -239,25 +267,30 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('calls `next` with the passed in error', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next, error);
+					assert.calledOnce(nextSpy);
+					assert.calledWithExactly(nextSpy, error);
 				});
 			});
 
 			describe('when `error.code` is ECONFLICT', () => {
+				let addSpy;
+
 				beforeEach(() => {
+					addSpy = sandbox.spy()
+					createCounterStub.withArgs(sinon.match.any, 'usererrors.conflict').returns({add: addSpy})
+
 					error.code = 'ECONFLICT';
 					middleware(
 						error,
 						origamiService.mockRequest,
 						origamiService.mockResponse,
-						next
+						nextSpy
 					);
 				});
 
 				it('increments the `usererrors.conflict` metric', () => {
-					assert.calledOnce(metrics.conflictCounter.add);
-					assert.calledWithExactly(metrics.conflict.add, 1);
+					assert.calledOnce(addSpy);
+					assert.calledWithExactly(addSpy, 1);
 				});
 
 				it('sets the error `status` property to 409', () => {
@@ -265,12 +298,14 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('calls `next` with the passed in error', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next, error);
+					assert.calledOnce(nextSpy);
+					assert.calledWithExactly(nextSpy, error);
 				});
 
 				describe('when `error.picks` is defined', () => {
 					beforeEach(() => {
+						createCounterStub.returns({add: sandbox.stub()});
+						nextSpy.resetHistory();
 						error.picks = [
 							{
 								endpoint: {
@@ -303,7 +338,7 @@ describe('lib/middleware/sanitize-errors', () => {
 							error,
 							origamiService.mockRequest,
 							origamiService.mockResponse,
-							next
+							nextSpy
 						);
 					});
 
@@ -321,26 +356,33 @@ describe('lib/middleware/sanitize-errors', () => {
 					});
 
 					it('calls `next` with the passed in error', () => {
-						assert.calledOnce(next);
-						assert.calledWithExactly(next, error);
+						assert.calledOnce(nextSpy);
+						assert.calledWithExactly(nextSpy, error);
 					});
 				});
 			});
 
 			describe('when `error.code` is EREMOTEIO', () => {
+				let addSpy;
 				beforeEach(() => {
+					addSpy = sandbox.spy()
+					createCounterStub.withArgs(sinon.match.any,'servererrors.remoteio').returns({add: addSpy})
 					error.code = 'EREMOTEIO';
 					middleware(
 						error,
 						origamiService.mockRequest,
 						origamiService.mockResponse,
-						next
+						nextSpy
 					);
 				});
 
+				afterEach(()=>{
+					addSpy.resetHistory();
+				})
+
 				it('increments the `servererrors.remoteio` metric', () => {
-					assert.calledOnce(metrics.remoteioCounter.add);
-					assert.calledWithExactly(metrics.remoteioCounter.add, 1);
+					assert.calledOnce(addSpy);
+					assert.calledWithExactly(addSpy, 1);
 				});
 
 				it('sets the error `status` property to 502', () => {
@@ -348,25 +390,33 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('calls `next` with the passed in error', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next, error);
+					assert.calledOnce(nextSpy);
+					assert.calledWithExactly(nextSpy, error);
 				});
 			});
 
 			describe('when `error.code` is EAI_AGAIN', () => {
+				let addSpy;
+
 				beforeEach(() => {
+					addSpy = sandbox.spy()
+					createCounterStub.withArgs(sinon.match.any, 'servererrors.remoteio').returns({add: addSpy})
 					error.code = 'EAI_AGAIN';
 					middleware(
 						error,
 						origamiService.mockRequest,
 						origamiService.mockResponse,
-						next
+						nextSpy
 					);
 				});
 
+				afterEach(() =>{
+					addSpy.resetHistory();
+				})
+
 				it('increments the `servererrors.remoteio` metric', () => {
-					assert.calledOnce(metrics.remoteioCounter.add);
-					assert.calledWithExactly(metrics.remoteioCounter.add, 1);
+					assert.calledOnce(addSpy);
+					assert.calledWithExactly(addSpy, 1);
 				});
 
 				it('sets the error `status` property to 502', () => {
@@ -374,8 +424,8 @@ describe('lib/middleware/sanitize-errors', () => {
 				});
 
 				it('calls `next` with the passed in error', () => {
-					assert.calledOnce(next);
-					assert.calledWithExactly(next, error);
+					assert.calledOnce(nextSpy);
+					assert.calledWithExactly(nextSpy, error);
 				});
 			});
 		});
