@@ -2,7 +2,6 @@
 
 const log = require('../../mock/log.mock');
 const sinon = require('sinon');
-require('sinon-as-promised');
 
 const origamiService = module.exports = sinon.stub();
 
