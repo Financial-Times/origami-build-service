@@ -53,8 +53,8 @@ describe('lib/middleware/log-hostname', () => {
 			describe('when the request has an `X-Original-Host` header', () => {
 
 				beforeEach(() => {
-					log.info.reset();
-					next.reset();
+					log.info.resetHistory();
+					next.resetHistory();
 					origamiService.mockRequest.url = '/foo/bar';
 					origamiService.mockRequest.headers['x-original-host'] = 'build.service';
 					middleware(origamiService.mockRequest, origamiService.mockResponse, next);
@@ -75,8 +75,8 @@ describe('lib/middleware/log-hostname', () => {
 			describe('when the request URL has a `Referer` header', () => {
 
 				beforeEach(() => {
-					log.info.reset();
-					next.reset();
+					log.info.resetHistory();
+					next.resetHistory();
 					origamiService.mockRequest.url = '/foo/bar';
 					origamiService.mockRequest.headers['referer'] = 'http://referer/';
 					origamiService.mockRequest.headers['x-original-host'] = 'build.service';
@@ -98,8 +98,8 @@ describe('lib/middleware/log-hostname', () => {
 			describe('when the request URL begins with a double underscore', () => {
 
 				beforeEach(() => {
-					log.info.reset();
-					next.reset();
+					log.info.resetHistory();
+					next.resetHistory();
 					origamiService.mockRequest.url = '/__about';
 					origamiService.mockRequest.headers['x-original-host'] = 'build.service';
 					middleware(origamiService.mockRequest, origamiService.mockResponse, next);
