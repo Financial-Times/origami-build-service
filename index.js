@@ -12,7 +12,6 @@ const options = {
 	installationTtl: 24 * 3600 * 1000,
 	installationTtlExact: 3 * 24 * 3600 * 1000,
 	log: console,
-	metricsAppName: 'origami-build-service',
 	name: 'Origami Build Service',
 	tempdir: `/tmp/buildservice-${process.pid}/`,
 	testHealthcheckFailure: process.env.TEST_HEALTHCHECK_FAILURE || false,
