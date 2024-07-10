@@ -6,7 +6,6 @@ const sinon = require('sinon');
 
 describe('lib/middleware/sanitize-errors', () => {
 	let CompileError;
-	let metrics;
 	let origamiService;
 	let sanitizeErrors;
 	let UserError;
@@ -30,7 +29,6 @@ describe('lib/middleware/sanitize-errors', () => {
 		mockery.registerMock('../utils/usererror', UserError);
 
 		origamiService = require('../../mock/origami-service.mock');
-		metrics = origamiService.mockApp.ft.metrics;
 
 		sanitizeErrors = require('../../../../lib/middleware/sanitize-errors');
 	});
@@ -90,11 +88,6 @@ describe('lib/middleware/sanitize-errors', () => {
 					error = new CompileError('mock compile error');
 					next.reset();
 					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
-				});
-
-				it('increments the `servererrors.compile` metric', () => {
-					assert.calledOnce(metrics.count);
-					assert.calledWithExactly(metrics.count, 'servererrors.compile', 1);
 				});
 
 				it('sets the error `status` property to 560', () => {
@@ -217,11 +210,6 @@ describe('lib/middleware/sanitize-errors', () => {
 					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
 				});
 
-				it('increments the `usererrors.conflict` metric', () => {
-					assert.calledOnce(metrics.count);
-					assert.calledWithExactly(metrics.count, 'usererrors.conflict', 1);
-				});
-
 				it('sets the error `status` property to 409', () => {
 					assert.strictEqual(error.status, 409);
 				});
@@ -293,11 +281,6 @@ describe('lib/middleware/sanitize-errors', () => {
 					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
 				});
 
-				it('increments the `servererrors.remoteio` metric', () => {
-					assert.calledOnce(metrics.count);
-					assert.calledWithExactly(metrics.count, 'servererrors.remoteio', 1);
-				});
-
 				it('sets the error `status` property to 502', () => {
 					assert.strictEqual(error.status, 502);
 				});
@@ -315,11 +298,6 @@ describe('lib/middleware/sanitize-errors', () => {
 					error.code = 'EAI_AGAIN';
 					next.reset();
 					middleware(error, origamiService.mockRequest, origamiService.mockResponse, next);
-				});
-
-				it('increments the `servererrors.remoteio` metric', () => {
-					assert.calledOnce(metrics.count);
-					assert.calledWithExactly(metrics.count, 'servererrors.remoteio', 1);
 				});
 
 				it('sets the error `status` property to 502', () => {

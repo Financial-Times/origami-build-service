@@ -26,7 +26,7 @@
     "@babel/preset-env": "^7.12.1",
     "@financial-times/health-check": "^2.1.8",
     "@financial-times/origami-repo-data-client": "^1.6.4",
-    "@financial-times/origami-service": "^6.0.0",
+    "@financial-times/origami-service": "^7.0.0",
     "@financial-times/origami-service-makefile": "^7.0.3",
     "@opentelemetry/api": "^1.9.0",
     "@opentelemetry/auto-instrumentations-node": "^0.47.1",

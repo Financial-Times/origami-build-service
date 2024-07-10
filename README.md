@@ -50,8 +50,6 @@ We configure Origami Build Service using environment variables. In local develop
 
 * `CHANGE_API_KEY`: The change-log API key to use when creating and closing change-logs.
 * `ORIGAMI_GITHUB_TOKEN`: A GitHub token with permission to read the private `o-fonts-assets` repository.
-* `GRAPHITE_API_KEY`: The FT's internal Graphite API key
-* `GRAPHITE_HOST`: The hostname of a Graphite server to gather metrics with.
 * `REGION`: The region the application is running in. One of `QA`, `EU`, or `US`
 * `RELEASE_ENV`: The Salesforce environment to include in change-logs. One of `Test` or `Production`
 * `SENTRY_DSN`: The Sentry URL to send error information to
